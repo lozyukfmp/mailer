@@ -6,17 +6,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class MainController {
 
-    @RequestMapping(value = "/")
+    @RequestMapping(value = { "/", "/welcome" })
     public String getWelcomePage() {
         return "welcome";
     }
 
-    @RequestMapping(value = "/admin")
+    @RequestMapping(value = "/admin**")
     public String getAdminPage() {
         return "admin";
     }
 
-    @RequestMapping(value = "/user")
+    @RequestMapping(value = "/user**")
     public String getUserPage() {
         return "user";
     }
