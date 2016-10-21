@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,7 +15,6 @@
 
     <!-- Bootstrap -->
     <link href="${bootstrapCss}" rel="stylesheet" />
-
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -39,7 +39,8 @@
                 <strong>${logout}</strong>
             </div>
         </c:if>
-        <form action="<c:url value='/j_spring_security_check' />" method='POST'>
+        <c:url value="/login_perform" var="loginUrl" />
+        <form:form action="${loginUrl}" method="POST">
             <div class="form-group">
                 <label for="username">Login:</label>
                 <input type="text" name="username" class="form-control" id="username">
@@ -49,10 +50,7 @@
                 <input type="password" name="password" class="form-control" id="password">
             </div>
             <button type="submit" class="btn btn-success">Login</button>
-
-            <input type="hidden"
-                   name="${_csrf.parameterName}" value="${_csrf.token}" />
-        </form>
+        </form:form>
     </div>
 </div>
 <script src="${bootstrapJs}"></script>

@@ -23,7 +23,7 @@ public class MainController {
         return "user";
     }
 
-    @RequestMapping(value = "/login")
+    @RequestMapping(value = "/loginPage")
     public ModelAndView login(
             @RequestParam(value = "error", required = false) String error,
             @RequestParam(value = "logout", required = false) String logout) {
@@ -38,7 +38,7 @@ public class MainController {
             modelAndView.addObject("logout", "You've been logged out successfully.");
         }
 
-        modelAndView.setViewName("login");
+        modelAndView.setViewName("loginPage");
 
         return modelAndView;
     }

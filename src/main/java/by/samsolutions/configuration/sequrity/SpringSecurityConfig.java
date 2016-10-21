@@ -24,14 +24,15 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/user/**").access("hasRole('ROLE_USER')")
                 .and()
-                    .formLogin().loginPage("/login").failureUrl("/login?error")
-                    .loginProcessingUrl("/j_spring_security_check")
-                    .successForwardUrl("/user")
+                    .formLogin().loginPage("/loginPage").failureUrl("/loginPage?error")
+                    .loginProcessingUrl("/login_perform")
+                    .defaultSuccessUrl("/user")
                     .usernameParameter("username").passwordParameter("password")
                 .and()
-                    .logout().logoutSuccessUrl("/login?logout")
+                    .logout()
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/loginPage?logout")
                 .and()
                     .csrf();
-
     }
 }
