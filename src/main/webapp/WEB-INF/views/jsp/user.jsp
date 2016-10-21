@@ -23,7 +23,37 @@
     <![endif]-->
 </head>
 <body>
-<h1>User page</h1>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Mailer</a>
+        </div>
+
+        <ul class="nav navbar-nav navbar-right">
+            <c:url value="/j_spring_security_logout" var="logoutUrl" />
+            <form action="${logoutUrl}" method="post">
+                <input type="hidden"
+                       name="${_csrf.parameterName}"
+                       value="${_csrf.token}" />
+                <button type="submit" class="btn btn-default">
+                    <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
+                    Logout
+                </button>
+            </form>
+        </ul>
+    </div>
+</nav>
+<h2>User page</h2>
+<c:if test="${pageContext.request.userPrincipal.name != null}">
+    <h2>Welcome : ${pageContext.request.userPrincipal.name}</h2>
+</c:if>
 
 <script src="${bootstrapJs}"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>

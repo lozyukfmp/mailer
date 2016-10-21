@@ -22,9 +22,16 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http.authorizeRequests()
-                .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
                 .antMatchers("/user/**").access("hasRole('ROLE_USER')")
-                .and().formLogin();
+                .and()
+                    .formLogin().loginPage("/login").failureUrl("/login?error")
+                    .loginProcessingUrl("/j_spring_security_check")
+                    .successForwardUrl("/user")
+                    .usernameParameter("username").passwordParameter("password")
+                .and()
+                    .logout().logoutSuccessUrl("/login?logout")
+                .and()
+                    .csrf();
 
     }
 }
