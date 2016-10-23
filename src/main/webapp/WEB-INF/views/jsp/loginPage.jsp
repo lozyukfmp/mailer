@@ -26,31 +26,39 @@
 <body>
 <div class="container" style="vertical-align: middle;">
     <div class="col-md-4 col-md-offset-4">
-        <h2>Login form:</h2>
-        <c:if test="${not empty error}">
-            <div class="alert alert-danger">
-                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                <strong>${error}</strong>
-            </div>
-        </c:if>
-        <c:if test="${not empty logout}">
-            <div class="alert alert-info">
-                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                <strong>${logout}</strong>
-            </div>
-        </c:if>
         <c:url value="/login" var="loginUrl" />
-        <form:form action="${loginUrl}" method="POST">
-            <div class="form-group">
-                <label for="username">Login:</label>
-                <input type="text" name="username" class="form-control" id="username">
+        <div class="panel panel-default">
+            <div class="panel-heading">Login form:</div>
+            <div class="panel-body">
+                <c:if test="${not empty error}">
+                    <div class="alert alert-danger">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <strong>${error}</strong>
+                    </div>
+                </c:if>
+                <c:if test="${not empty logout}">
+                    <div class="alert alert-info">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <strong>${logout}</strong>
+                    </div>
+                </c:if>
+                <form action="${loginUrl}" method="POST" role="form">
+                    <div class="form-group">
+                        <label for="username">Login:</label>
+                        <input type="text" name="username" class="form-control" id="username">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password:</label>
+                        <input type="password" name="password" class="form-control" id="password">
+                    </div>
+                    <span class="input-group-btn">
+                        <span>
+                            <button type='submit' id='register-button' class='btn btn-success btn-large pull-right'>Login</button>
+                        </span>
+                    </span>
+                </form>
             </div>
-            <div class="form-group">
-                <label for="password">Password:</label>
-                <input type="password" name="password" class="form-control" id="password">
-            </div>
-            <button type="submit" class="btn btn-success">Login</button>
-        </form:form>
+        </div>
     </div>
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>

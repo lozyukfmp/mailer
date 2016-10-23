@@ -30,6 +30,11 @@ public class MainController {
         return "user";
     }
 
+    @RequestMapping(value = "/accessDenied")
+    public String accessDenied() {
+        return "accessDenied";
+    }
+
     @RequestMapping(value = "/loginPage")
     public ModelAndView login(
             @RequestParam(value = "error", required = false) String error,

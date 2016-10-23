@@ -34,6 +34,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                     .successHandler(authSuccessHandler)
                     .usernameParameter("username").passwordParameter("password")
                 .and()
+                    .exceptionHandling().accessDeniedPage("/accessDenied")
+                .and()
                     .csrf();
     }
 }
