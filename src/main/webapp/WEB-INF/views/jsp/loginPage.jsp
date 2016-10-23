@@ -39,7 +39,7 @@
                 <strong>${logout}</strong>
             </div>
         </c:if>
-        <c:url value="/login_perform" var="loginUrl" />
+        <c:url value="/login" var="loginUrl" />
         <form:form action="${loginUrl}" method="POST">
             <div class="form-group">
                 <label for="username">Login:</label>
@@ -53,7 +53,7 @@
         </form:form>
     </div>
 </div>
-<script src="${bootstrapJs}"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="${bootstrapJs}"></script>
 </body>
 </html>

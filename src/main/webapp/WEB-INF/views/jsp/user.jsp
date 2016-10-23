@@ -29,9 +29,7 @@
     <h2>Welcome : ${pageContext.request.userPrincipal.name}</h2>
 </c:if>
 <c:url value="/logout" var="logoutUrl" />
-<form:form action="${logoutUrl}" method="POST">
-    <input type="submit" value="Logout" />
-</form:form>
+<a href="${logoutUrl}">Logout</a>
 
 <script src="${bootstrapJs}"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>

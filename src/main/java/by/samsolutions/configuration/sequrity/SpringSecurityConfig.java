@@ -1,6 +1,7 @@
 package by.samsolutions.configuration.sequrity;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -10,6 +11,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @EnableWebSecurity
 @Configuration
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    AuthSuccessHandler authSuccessHandler;
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
@@ -23,15 +27,12 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests()
                 .antMatchers("/user/**").access("hasRole('ROLE_USER')")
+                .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
                 .and()
-                    .formLogin().loginPage("/loginPage").failureUrl("/loginPage?error")
-                    .loginProcessingUrl("/login_perform")
-                    .defaultSuccessUrl("/user")
+                    .formLogin().loginPage("/loginPage")
+                    .loginProcessingUrl("/login")
+                    .successHandler(authSuccessHandler)
                     .usernameParameter("username").passwordParameter("password")
-                .and()
-                    .logout()
-                        .logoutUrl("/logout")
-                        .logoutSuccessUrl("/loginPage?logout")
                 .and()
                     .csrf();
     }
