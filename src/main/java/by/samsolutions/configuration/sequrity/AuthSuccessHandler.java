@@ -1,5 +1,6 @@
 package by.samsolutions.configuration.sequrity;
 
+<<<<<<< HEAD
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.DefaultRedirectStrategy;
@@ -74,4 +75,10 @@ public class AuthSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
     protected RedirectStrategy getRedirectStrategy() {
         return redirectStrategy;
     }
+=======
+/**
+ * Created by Артём on 23.10.2016.
+ */
+public class AuthSuccessHandler {
+>>>>>>> bbefc6722c62e8c6c36301f288042681d4d4fb60
 }
