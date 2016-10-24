@@ -12,6 +12,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
+    AuthSuccessHandler authSuccessHandler;
+
+    @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication().withUser("Artem").password("1234").roles("USER");
         auth.inMemoryAuthentication().withUser("Gena").password("123").roles("USER");
@@ -24,14 +27,12 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/user/**").access("hasRole('ROLE_USER')")
                 .and()
-                    .formLogin().loginPage("/loginPage").failureUrl("/loginPage?error")
-                    .loginProcessingUrl("/login_perform")
-                    .defaultSuccessUrl("/user")
+                    .formLogin().loginPage("/loginPage")
+                    .loginProcessingUrl("/login")
+                    .successHandler(authSuccessHandler)
                     .usernameParameter("username").passwordParameter("password")
                 .and()
-                    .logout()
-                        .logoutUrl("/logout")
-                        .logoutSuccessUrl("/loginPage?logout")
+                    .exceptionHandling().accessDeniedPage("/accessDenied")
                 .and()
                     .csrf();
     }
