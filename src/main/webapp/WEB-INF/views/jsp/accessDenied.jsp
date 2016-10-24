@@ -1,12 +1,14 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Admin page</title>
+    <title>User page</title>
 
     <spring:url value="/static/core/css/bootstrap.min.css" var="bootstrapCss" />
     <spring:url value="/static/core/js/bootstrap.min.js" var="bootstrapJs" />
@@ -23,13 +25,15 @@
     <![endif]-->
 </head>
 <body>
-<h2>Admin page</h2>
-<c:if test="${pageContext.request.userPrincipal.name != null}">
-    <h2>Welcome : ${pageContext.request.userPrincipal.name}</h2>
-</c:if>
-<c:url value="/logout" var="logoutUrl" />
-<a href="${logoutUrl}">Logout</a>
-
+<h2>Access denied page</h2>
+<c:url value="/admin" var="adminPage" />
+<c:url value="/user" var="userPage" />
+    <security:authorize access="hasRole('ROLE_ADMIN')">
+        <a href="${adminPage}">Back</a>
+    </security:authorize>
+    <security:authorize access="hasRole('ROLE_USER')">
+        <a href="${userPage}">Back</a>
+    </security:authorize>
 <script src="${bootstrapJs}"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 </body>

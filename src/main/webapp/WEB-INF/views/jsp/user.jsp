@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,7 +24,12 @@
     <![endif]-->
 </head>
 <body>
-<h1>User page</h1>
+<h2>User page</h2>
+<c:if test="${pageContext.request.userPrincipal.name != null}">
+    <h2>Welcome : ${pageContext.request.userPrincipal.name}</h2>
+</c:if>
+<c:url value="/logout" var="logoutUrl" />
+<a href="${logoutUrl}">Logout</a>
 
 <script src="${bootstrapJs}"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
