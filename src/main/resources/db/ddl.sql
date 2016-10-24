@@ -1,6 +1,26 @@
-CREATE DATABASE `mailer` /*!40100 DEFAULT CHARACTER SET utf8 */;
+CREATE DATABASE IF NOT EXISTS `mailer` /*!40100 DEFAULT CHARACTER SET utf8 */;
 
-CREATE TABLE `comments` (
+CREATE TABLE IF NOT EXISTS `mailer`.`user` (
+  `user_id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_login` varchar(45) NOT NULL,
+  `user_password` varchar(45) NOT NULL,
+  `user_type` enum('ADMIN','USER') NOT NULL,
+  `user_status` enum('BANNED','ACTIVE') NOT NULL,
+  PRIMARY KEY (`user_id`),
+  UNIQUE KEY `user_login_UNIQUE` (`user_login`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `mailer`.`posts` (
+  `post_id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) DEFAULT NULL,
+  `post_date` varchar(45) NOT NULL,
+  `post_text` varchar(45) NOT NULL,
+  PRIMARY KEY (`post_id`),
+  KEY `user_post_id_idx` (`user_id`),
+  CONSTRAINT `user_post_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `mailer`.`comments` (
   `comment_id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
   `post_id` int(11) NOT NULL,
@@ -13,7 +33,7 @@ CREATE TABLE `comments` (
   CONSTRAINT `comment_user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE `likes` (
+CREATE TABLE IF NOT EXISTS `mailer`.`likes` (
   `post_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   PRIMARY KEY (`post_id`,`user_id`),
@@ -22,27 +42,7 @@ CREATE TABLE `likes` (
   CONSTRAINT `like_user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE `posts` (
-  `post_id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) DEFAULT NULL,
-  `post_date` varchar(45) NOT NULL,
-  `post_text` varchar(45) NOT NULL,
-  PRIMARY KEY (`post_id`),
-  KEY `user_post_id_idx` (`user_id`),
-  CONSTRAINT `user_post_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-CREATE TABLE `user` (
-  `user_id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_login` varchar(45) NOT NULL,
-  `user_password` varchar(45) NOT NULL,
-  `user_type` enum('ADMIN','USER') NOT NULL,
-  `user_status` enum('BANNED','ACTIVE') NOT NULL,
-  PRIMARY KEY (`user_id`),
-  UNIQUE KEY `user_login_UNIQUE` (`user_login`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-CREATE TABLE `user_credentials` (
+CREATE TABLE IF NOT EXISTS `mailer`.`user_credentials` (
   `user_id` int(11) NOT NULL,
   `user_firstname` varchar(45) NOT NULL,
   `user_secondname` varchar(45) NOT NULL,
