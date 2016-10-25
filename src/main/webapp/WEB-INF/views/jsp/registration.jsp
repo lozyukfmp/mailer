@@ -8,7 +8,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Login page</title>
+    <title>Registration page</title>
 
     <spring:url value="/static/core/css/bootstrap.min.css" var="bootstrapCss" />
     <spring:url value="/static/core/css/login.css" var="loginCss" />
@@ -28,34 +28,23 @@
     <![endif]-->
 </head>
 <body>
-<div class="container" style="margin-top: 100px;">
+<div class="container">
     <div class="col-md-4 col-md-offset-4">
         <div class="loginmodal-container">
-            <c:if test="${not empty error}">
+            <h1>Create new account</h1><br>
+            <c:if test="${not empty usernameExist}">
                 <div class="alert alert-danger">
                     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                    <strong>${error}</strong>
+                    <strong>${usernameExist}</strong>
                 </div>
             </c:if>
-            <c:if test="${not empty logout}">
-                <div class="alert alert-info">
-                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                    <strong>${logout}</strong>
-                </div>
-            </c:if>
-            <c:if test="${not empty successRegistration}">
-                <div class="alert alert-success">
-                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                    <strong>${successRegistration}</strong>
-                </div>
-            </c:if>
-            <h1>Login to Your Account</h1><br>
-            <c:url value="/login" var="loginUrl" />
-            <form:form action="${loginUrl}" method="post">
-                <input type="text" name="username" placeholder="Username">
-                <input type="password" name="password" placeholder="Password">
-                <input type="submit" name="login" class="login loginmodal-submit" value="Login">
-                <a href="/welcome">Go to welcome page</a>
+            <c:url value="/registration" var="registrationUrl" />
+            <form:form action="${registration}" modelAttribute="user" method="POST" enctype="utf8">
+                    <form:input path="username" value="" />
+                    <form:errors path="username" element="div"/>
+                    <form:input path="password" value="" />
+                    <form:errors path="password" element="div" />
+                    <input type="submit">Register</input>
             </form:form>
         </div>
     </div>

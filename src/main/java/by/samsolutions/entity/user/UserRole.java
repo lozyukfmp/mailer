@@ -12,9 +12,8 @@ public class UserRole {
 
     private String role;
 
-
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_role_id")
     public Integer getUserRoleId() {
         return userRoleId;

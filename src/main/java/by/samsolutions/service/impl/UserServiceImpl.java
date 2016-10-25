@@ -1,10 +1,17 @@
 package by.samsolutions.service.impl;
 
 import by.samsolutions.dao.UserDao;
+import by.samsolutions.dto.UserDto;
 import by.samsolutions.entity.user.User;
+import by.samsolutions.entity.user.UserInfo;
+import by.samsolutions.entity.user.UserRole;
 import by.samsolutions.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -13,12 +20,33 @@ public class UserServiceImpl implements UserService {
     private UserDao userDao;
 
     @Override
+    @Transactional
     public User findByUsername(String username) {
-        return null;
+        return userDao.findByUsername(username);
     }
 
     @Override
-    public User findById(int id) {
-        return null;
+    @Transactional
+    public User createUserAccount(UserDto accountDto) {
+
+        User user = new User();
+        UserRole userRole = new UserRole();
+        userRole.setRole("ROLE_USER");
+        userRole.setUser(user);
+
+        Set<UserRole> userRoleSet = new HashSet<>();
+        userRoleSet.add(userRole);
+
+        user.setUsername(accountDto.getUsername());
+        user.setPassword(accountDto.getPassword());
+        user.setUserRole(userRoleSet);
+        user.setEnabled(true);
+
+        if (userDao.findByUsername(user.getUsername()) != null) {
+            return null;
+        }
+
+        return userDao.saveUser(user);
     }
+
 }
