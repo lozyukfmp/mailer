@@ -1,5 +1,6 @@
 package by.samsolutions.configuration.sequrity;
 
+import by.samsolutions.service.impl.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Configuration;
@@ -7,6 +8,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 @EnableWebSecurity
 @Configuration
@@ -16,10 +18,16 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     AuthSuccessHandler authSuccessHandler;
 
     @Autowired
+    @Qualifier("customUserDetailsService")
+    UserDetailsService userDetailsService;
+
+    @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication().withUser("Artem").password("1234").roles("USER");
+        auth.userDetailsService(userDetailsService);
+
+        /*auth.inMemoryAuthentication().withUser("Artem").password("1234").roles("USER");
         auth.inMemoryAuthentication().withUser("Gena").password("123").roles("USER");
-        auth.inMemoryAuthentication().withUser("Petia").password("1234").roles("ADMIN");
+        auth.inMemoryAuthentication().withUser("Petia").password("1234").roles("ADMIN");*/
     }
 
     @Override
