@@ -12,10 +12,13 @@
 
     <spring:url value="/static/core/css/bootstrap.min.css" var="bootstrapCss" />
     <spring:url value="/static/core/css/login.css" var="loginCss" />
+    <spring:url value="/static/core/css/container.css" var="customContainerCss" />
     <spring:url value="/static/core/js/bootstrap.min.js" var="bootstrapJs" />
 
     <link href="${bootstrapCss}" rel="stylesheet" />
     <link href="${loginCss}" rel="stylesheet" />
+    <link href="${customContainerCss}" rel="stylesheet" />
+
 
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -23,7 +26,7 @@
     <![endif]-->
 </head>
 <body>
-<div class="container" style="margin-top: 100px;">
+<div class="container">
     <div class="jumbotron">
         <div class="container">
             <h1>Welcome page</h1>

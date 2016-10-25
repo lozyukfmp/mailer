@@ -19,6 +19,8 @@
       <jstl.version>1.2</jstl.version>
       <servletapi.version>3.1.0</servletapi.version>
       <spring.security.version>4.1.3.RELEASE</spring.security.version>
+      <mysql.connector.version>5.1.38</mysql.connector.version>
+      <hibernate.version>5.2.3.Final</hibernate.version>
   </properties>
 
   <dependencies>
@@ -68,9 +70,21 @@
       </dependency>
 
       <dependency>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-orm</artifactId>
+          <version>${spring.version}</version>
+      </dependency>
+
+      <dependency>
+          <groupId>mysql</groupId>
+          <artifactId>mysql-connector-java</artifactId>
+          <version>${mysql.connector.version}</version>
+      </dependency>
+
+      <dependency>
           <groupId>org.hibernate</groupId>
           <artifactId>hibernate-core</artifactId>
-          <version>5.2.0.Final</version>
+          <version>${hibernate.version}</version>
       </dependency>
 
   </dependencies>

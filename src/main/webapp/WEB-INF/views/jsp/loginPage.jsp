@@ -12,11 +12,19 @@
 
     <spring:url value="/static/core/css/bootstrap.min.css" var="bootstrapCss" />
     <spring:url value="/static/core/css/login.css" var="loginCss" />
+<<<<<<< HEAD
+=======
+    <spring:url value="/static/core/css/container.css" var="customContainerCss" />
+>>>>>>> 55a369f74a4353a5bfd59fbe03abdd95434eec67
     <spring:url value="/static/core/js/bootstrap.min.js" var="bootstrapJs" />
 
     <!-- Bootstrap -->
     <link href="${bootstrapCss}" rel="stylesheet" />
     <link href="${loginCss}" rel="stylesheet" />
+<<<<<<< HEAD
+=======
+    <link href="${customContainerCss}" rel="stylesheet" />
+>>>>>>> 55a369f74a4353a5bfd59fbe03abdd95434eec67
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
