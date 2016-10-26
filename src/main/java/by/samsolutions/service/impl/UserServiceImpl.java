@@ -29,6 +29,10 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public User createUserAccount(UserDto accountDto) {
 
+        if (userDao.findByUsername(accountDto.getUsername()) != null) {
+            return null;
+        }
+
         User user = new User();
         UserRole userRole = new UserRole();
         userRole.setRole("ROLE_USER");
@@ -41,10 +45,6 @@ public class UserServiceImpl implements UserService {
         user.setPassword(accountDto.getPassword());
         user.setUserRole(userRoleSet);
         user.setEnabled(true);
-
-        if (userDao.findByUsername(user.getUsername()) != null) {
-            return null;
-        }
 
         return userDao.saveUser(user);
     }

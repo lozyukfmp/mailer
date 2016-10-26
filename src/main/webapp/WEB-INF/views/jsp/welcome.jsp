@@ -30,7 +30,10 @@
     <div class="jumbotron">
         <div class="container">
             <h1>Welcome page</h1>
-            <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#login-modal">Login</button>
+            <div class="btn-group">
+                <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#login-modal">Login</button>
+                <a href="/registration" class="btn btn-primary btn-lg">Create account</a>
+            </div>
         </div>
     </div>
 </div>
@@ -44,10 +47,12 @@
                 <input type="text" name="username" placeholder="Username">
                 <input type="password" name="password" placeholder="Password">
                 <input type="submit" name="login" class="login loginmodal-submit" value="Login">
+                <a href="/registration">Create account</a>
             </form:form>
         </div>
     </div>
 </div>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="${bootstrapJs}"></script>
 </body>

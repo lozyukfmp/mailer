@@ -55,7 +55,8 @@
                 <input type="text" name="username" placeholder="Username">
                 <input type="password" name="password" placeholder="Password">
                 <input type="submit" name="login" class="login loginmodal-submit" value="Login">
-                <a href="/welcome">Go to welcome page</a>
+                <a href="/welcome"> Go to welcome page |</a>
+                <a href="/registration"> Create account</a>
             </form:form>
         </div>
     </div>

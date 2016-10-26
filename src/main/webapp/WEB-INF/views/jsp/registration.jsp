@@ -40,11 +40,24 @@
             </c:if>
             <c:url value="/registration" var="registrationUrl" />
             <form:form action="${registration}" modelAttribute="user" method="POST" enctype="utf8">
-                    <form:input path="username" value="" />
-                    <form:errors path="username" element="div"/>
-                    <form:input path="password" value="" />
-                    <form:errors path="password" element="div" />
-                    <input type="submit">Register</input>
+                <form:errors path="username" element="div" cssClass="error-div"/>
+                <form:input type="text" path="username" placeholder="Username"/>
+                <form:errors element="div" cssClass="error-div"/>
+                <form:errors path="password" element="div" cssClass="error-div"/>
+                <form:input type="password" path="password" placeholder="Password" />
+                <form:errors path="confirmPassword" element="div" cssClass="error-div"/>
+                <form:input type="password" path="confirmPassword" placeholder="Confirm"/>
+                <form:errors path="email" element="div" cssClass="error-div"/>
+                <form:input type="text" path="email" placeholder="Email"/>
+                <form:errors path="firstName" element="div" cssClass="error-div"/>
+                <form:input type="text" path="firstName" placeholder="Firstname"/>
+                <form:errors path="secondName" element="div" cssClass="error-div"/>
+                <form:input type="text" path="secondName" placeholder="Secondname"/>
+                <form:errors path="thirdName" element="div" cssClass="error-div"/>
+                <form:input type="text" path="thirdName" placeholder="Thirdname"/>
+                <input type="submit" class="login loginmodal-submit" value="Register"/>
+                <a href="/welcome"> Go to welcome page |</a>
+                <a href="/loginPage"> Login</a>
             </form:form>
         </div>
     </div>

@@ -67,9 +67,9 @@
     color: #fff;
     text-shadow: 0 1px rgba(0,0,0,0.1);
     background-color: #4d90fe;
-    padding: 17px 0px;
+    padding: 10px 0px;
     font-family: roboto;
-    font-size: 14px;
+    font-size: 17px;
     /* background-image: -webkit-gradient(linear, 0 0, 0 100%,   from(#4d90fe), to(#4787ed)); */
 }
 
@@ -96,4 +96,18 @@
 
 .login-help{
     font-size: 12px;
+}
+
+.error-div {
+    color: #ec1d19;
+    border: 1px solid #d24c4c;
+    padding: 5px;
+    margin-bottom: 6px;
+    font-size: 15px;
+    background-color: #f9dfc0;
+    border-radius: 1px;
+}
+
+.error-div:not(:first-child) {
+    margin-top: 10px;
 }
