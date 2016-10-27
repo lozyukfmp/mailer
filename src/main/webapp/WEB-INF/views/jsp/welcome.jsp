@@ -72,8 +72,8 @@
             <h1>${modalLogin}</h1><br>
             <c:url value="/login" var="loginUrl" />
             <form:form action="${loginUrl}" method="post">
-                <input type="text" name="username" placeholder="${username}">
-                <input type="password" name="password" placeholder="${password}">
+                <input type="text" name="username" placeholder="${username}" required>
+                <input type="password" name="password" placeholder="${password}" required>
                 <input type="submit" name="login" class="login loginmodal-submit" value="${login}">
                 <a href="/registration">${register}</a>
             </form:form>

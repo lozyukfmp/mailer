@@ -38,7 +38,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 .collect(Collectors.toList());
     }
 
-
     private org.springframework.security.core.userdetails.User
     buildUserForAuthentication(User user, List<GrantedAuthority> authorities) {
         return new org.springframework.security.core.userdetails.
