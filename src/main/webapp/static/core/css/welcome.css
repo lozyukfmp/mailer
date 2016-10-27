@@ -1,0 +1,37 @@
+.jumbotron {
+    color: rgb(165, 96, 124);
+    background-color: rgba(217, 237, 247, 0.33);
+    position: relative;
+}
+
+.dropdown {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+
+.btn.dropdown-toggle.btn-primary,
+.open > .dropdown-toggle.btn-primary:focus,
+.open > .dropdown-toggle.btn-primary:hover,
+.open > .dropdown-toggle.btn-primary:active {
+    color: #fff;
+    background-color: rgba(38, 231, 249, 0.47);
+    border-color: transparent;
+}
+
+ul.dropdown-menu {
+    background-color: #04d8ef;
+    border-color: transparent;
+    min-width: 103px;
+}
+
+.dropdown-menu > li > a {
+    color: #fff;
+}
+
+.dropdown-menu > li > a:focus,
+.dropdown-menu > li > a:hover {
+    color: #ffffff;
+    text-decoration: underline;
+    background-color: transparent;
+}

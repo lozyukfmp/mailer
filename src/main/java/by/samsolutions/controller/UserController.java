@@ -34,7 +34,7 @@ public class UserController {
         ModelAndView modelAndView = new ModelAndView();
 
         if (error != null) {
-            modelAndView.addObject("error", "Invalid username and password!");
+            modelAndView.addObject("error", "Invalid username or password!");
         }
 
         if (logout != null) {

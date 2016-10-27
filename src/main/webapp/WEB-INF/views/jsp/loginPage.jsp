@@ -15,6 +15,17 @@
     <spring:url value="/static/core/css/container.css" var="customContainerCss" />
     <spring:url value="/static/core/js/bootstrap.min.js" var="bootstrapJs" />
 
+    <!-- localization -->
+    <spring:message code="message.login.username" var="username"/>
+    <spring:message code="message.login.password" var="password"/>
+    <spring:message code="message.login" var="login"/>
+    <spring:message code="message.modal_login" var="modalLogin"/>
+    <spring:message code="message.register" var="register"/>
+    <spring:message code="message.language" var="language"/>
+    <spring:message code="message.russian" var="russian"/>
+    <spring:message code="message.english" var="english"/>
+    <spring:message code="message.go_to_welcome" var="goToWelcome"/>
+
     <!-- Bootstrap -->
     <link href="${bootstrapCss}" rel="stylesheet" />
     <link href="${loginCss}" rel="stylesheet" />
@@ -49,14 +60,14 @@
                     <strong>${successRegistration}</strong>
                 </div>
             </c:if>
-            <h1>Login to Your Account</h1><br>
+            <h1>${modalLogin}</h1><br>
             <c:url value="/login" var="loginUrl" />
             <form:form action="${loginUrl}" method="post">
-                <input type="text" name="username" placeholder="Username">
-                <input type="password" name="password" placeholder="Password">
-                <input type="submit" name="login" class="login loginmodal-submit" value="Login">
-                <a href="/welcome"> Go to welcome page |</a>
-                <a href="/registration"> Create account</a>
+                <input type="text" name="username" placeholder="${username}">
+                <input type="password" name="password" placeholder="${password}">
+                <input type="submit" name="login" class="login loginmodal-submit" value="${login}">
+                <a href="/welcome">${goToWelcome} |</a>
+                <a href="/registration"> ${register}</a>
             </form:form>
         </div>
     </div>

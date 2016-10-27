@@ -8,17 +8,30 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Welcome page</title>
+    <title><spring:message code="message.title.welcome"/></title>
 
+    <!-- .css and .js -->
     <spring:url value="/static/core/css/bootstrap.min.css" var="bootstrapCss" />
     <spring:url value="/static/core/css/login.css" var="loginCss" />
     <spring:url value="/static/core/css/container.css" var="customContainerCss" />
+    <spring:url value="/static/core/css/welcome.css" var="welcomeCss" />
     <spring:url value="/static/core/js/bootstrap.min.js" var="bootstrapJs" />
+
+    <!-- localization -->
+    <spring:message code="message.welcome" var="welcome"/>
+    <spring:message code="message.login.username" var="username"/>
+    <spring:message code="message.login.password" var="password"/>
+    <spring:message code="message.login" var="login"/>
+    <spring:message code="message.modal_login" var="modalLogin"/>
+    <spring:message code="message.register" var="register"/>
+    <spring:message code="message.language" var="language"/>
+    <spring:message code="message.russian" var="russian"/>
+    <spring:message code="message.english" var="english"/>
 
     <link href="${bootstrapCss}" rel="stylesheet" />
     <link href="${loginCss}" rel="stylesheet" />
     <link href="${customContainerCss}" rel="stylesheet" />
-
+    <link href="${welcomeCss}" rel="stylesheet" />
 
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -29,10 +42,23 @@
 <div class="container">
     <div class="jumbotron">
         <div class="container">
-            <h1>Welcome page</h1>
+            <div class="dropdown">
+                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                    ${language}
+                    <span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                    <li><a href="?lang=ru_RU">${russian}</a></li>
+                    <li><a href="?lang=en">${english}</a></li>
+                </ul>
+            </div>
+            <h1>${welcome}</h1>
             <div class="btn-group">
-                <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#login-modal">Login</button>
-                <a href="/registration" class="btn btn-primary btn-lg">Create account</a>
+                <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#login-modal">
+                    ${login}
+                </button>
+                <a href="/registration" class="btn btn-primary btn-lg">
+                    ${register}
+                </a>
             </div>
         </div>
     </div>
@@ -41,13 +67,13 @@
 <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
     <div class="modal-dialog">
         <div class="loginmodal-container">
-            <h1>Login to Your Account</h1><br>
+            <h1>${modalLogin}</h1><br>
             <c:url value="/login" var="loginUrl" />
             <form:form action="${loginUrl}" method="post">
-                <input type="text" name="username" placeholder="Username">
-                <input type="password" name="password" placeholder="Password">
-                <input type="submit" name="login" class="login loginmodal-submit" value="Login">
-                <a href="/registration">Create account</a>
+                <input type="text" name="username" placeholder="${username}">
+                <input type="password" name="password" placeholder="${password}">
+                <input type="submit" name="login" class="login loginmodal-submit" value="${login}">
+                <a href="/registration">${register}</a>
             </form:form>
         </div>
     </div>
