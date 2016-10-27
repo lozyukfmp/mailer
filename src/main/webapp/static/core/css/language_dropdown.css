@@ -1,0 +1,62 @@
+.welcome-dropdown.dropdown {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+
+.welcome-dropdown .btn.dropdown-toggle.btn-primary,
+.welcome-dropdown.open > .dropdown-toggle.btn-primary:focus,
+.welcome-dropdown.open > .dropdown-toggle.btn-primary:hover,
+.welcome-dropdown.open > .dropdown-toggle.btn-primary:active {
+    color: #fff;
+    background-color: rgba(38, 231, 249, 0.47);
+    border-color: transparent;
+}
+
+.welcome-dropdown ul.dropdown-menu {
+    background-color: #04d8ef;
+    border-color: transparent;
+    min-width: 103px;
+}
+
+.welcome-dropdown .dropdown-menu > li > a {
+    color: #fff;
+}
+
+.dropdown-menu > li > a:focus,
+.dropdown-menu > li > a:hover {
+    text-decoration: underline;
+    background-color: transparent;
+}
+
+.welcome-dropdown .dropdown-menu > li > a:focus,
+.welcome-dropdown .dropdown-menu > li > a:hover {
+    color: #ffffff;
+}
+
+.form-dropdown {
+    position: static;
+}
+
+.form-dropdown ul.dropdown-menu {
+    top: 94%;
+    left: inherit;
+    min-width: 90px;
+    position: absolute;
+}
+
+.form-dropdown .btn.btn-link {
+    padding: 0px;
+}
+
+.form-dropdown .btn.btn-link {
+    padding: 0px;
+}
+
+.form-dropdown
+.btn-link:focus,
+.btn-link:hover,
+.btn-link:active {
+    color: #666;
+    text-decoration: none;
+}

@@ -8,11 +8,12 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Login page</title>
+    <title><spring:message code="message.title.login"/></title>
 
     <spring:url value="/static/core/css/bootstrap.min.css" var="bootstrapCss" />
     <spring:url value="/static/core/css/login.css" var="loginCss" />
     <spring:url value="/static/core/css/container.css" var="customContainerCss" />
+    <spring:url value="/static/core/css/language_dropdown.css" var="languageDropdown" />
     <spring:url value="/static/core/js/bootstrap.min.js" var="bootstrapJs" />
 
     <!-- localization -->
@@ -30,6 +31,7 @@
     <link href="${bootstrapCss}" rel="stylesheet" />
     <link href="${loginCss}" rel="stylesheet" />
     <link href="${customContainerCss}" rel="stylesheet" />
+    <link href="${languageDropdown}" rel="stylesheet" />
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -39,7 +41,7 @@
     <![endif]-->
 </head>
 <body>
-<div class="container" style="margin-top: 100px;">
+<div class="container">
     <div class="col-md-4 col-md-offset-4">
         <div class="loginmodal-container">
             <c:if test="${not empty error}">
@@ -67,7 +69,16 @@
                 <input type="password" name="password" placeholder="${password}">
                 <input type="submit" name="login" class="login loginmodal-submit" value="${login}">
                 <a href="/welcome">${goToWelcome} |</a>
-                <a href="/registration"> ${register}</a>
+                <a href="/registration"> ${register} |</a>
+                <div class="form-dropdown dropdown">
+                    <a class="btn btn-link dropdown-toggle" type="button" data-toggle="dropdown">
+                            ${language}
+                        <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="?lang=ru_RU">${russian}</a></li>
+                        <li><a href="?lang=en">${english}</a></li>
+                    </ul>
+                </div>
             </form:form>
         </div>
     </div>
