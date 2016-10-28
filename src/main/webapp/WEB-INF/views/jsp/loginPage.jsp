@@ -77,7 +77,7 @@
                     <a class="btn btn-link dropdown-toggle" type="button" data-toggle="dropdown">
                             ${language}
                         <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
+                    <ul class="dropdown-menu" style="top: 90%;">
                         <li><a href="?lang=ru_RU">${russian}</a></li>
                         <li><a href="?lang=en">${english}</a></li>
                     </ul>
