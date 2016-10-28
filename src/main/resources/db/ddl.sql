@@ -4,17 +4,18 @@ CREATE TABLE IF NOT EXISTS mailer.`user`
 (
     `id` INT(11) NOT NULL AUTO_INCREMENT,
     `username` VARCHAR(45) NOT NULL,
-    `password` VARCHAR(45) NOT NULL,
+    `password` VARCHAR(60) NOT NULL,
     `enabled` BOOLEAN NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE IF NOT EXISTS mailer.`user_role`
+CREATE TABLE user_role
 (
-    `user_role_id` INT PRIMARY KEY AUTO_INCREMENT,
-    `user_id` INT,
-    `role` ENUM('ADMIN', 'USER') DEFAULT 'USER',
-    CONSTRAINT user_role_user_id_fk FOREIGN KEY (`user_role_id`) REFERENCES `user` (`id`)
+  user_role_id INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  user_id INT(11),
+  role ENUM('ROLE_ADMIN', 'ROLE_USER') DEFAULT 'ROLE_USER',
+  CONSTRAINT user_role_user_id_fk FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE INDEX user_role_user_id_fk ON user_role (user_id);
 
 CREATE TABLE IF NOT EXISTS `mailer`.`posts` (
   `post_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -40,7 +41,7 @@ CREATE TABLE IF NOT EXISTS `mailer`.`comments` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `mailer`.`likes` (
-  `post_id` int(11) NOT NULL,
+  `post_id` int(11) NOT NULL, 
   `user_id` int(11) NOT NULL,
   PRIMARY KEY (`post_id`,`user_id`),
   KEY `like_user_id_idx` (`user_id`),

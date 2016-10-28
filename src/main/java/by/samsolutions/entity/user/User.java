@@ -14,7 +14,7 @@ public class User {
     @Column(name = "username", nullable = false, length = 45, unique = true)
     private String username;
 
-    @Column(name = "password", nullable = false, length = 45)
+    @Column(name = "password", nullable = false, length = 60)
     private String password;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")

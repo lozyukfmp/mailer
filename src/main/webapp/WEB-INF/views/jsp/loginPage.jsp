@@ -26,6 +26,9 @@
     <spring:message code="message.russian" var="russian"/>
     <spring:message code="message.english" var="english"/>
     <spring:message code="message.go_to_welcome" var="goToWelcome"/>
+    <spring:message code="message.successRegistration" var="successMessage"/>
+    <spring:message code="message.error" var="errorMessage"/>
+    <spring:message code="message.logout" var="logoutMessage"/>
 
     <!-- Bootstrap -->
     <link href="${bootstrapCss}" rel="stylesheet" />
@@ -47,19 +50,19 @@
             <c:if test="${not empty error}">
                 <div class="alert alert-danger">
                     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                    <strong>${error}</strong>
+                    <strong>${errorMessage}</strong>
                 </div>
             </c:if>
             <c:if test="${not empty logout}">
                 <div class="alert alert-info">
                     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                    <strong>${logout}</strong>
+                    <strong>${logoutMessage}</strong>
                 </div>
             </c:if>
             <c:if test="${not empty successRegistration}">
                 <div class="alert alert-success">
                     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                    <strong>${successRegistration}</strong>
+                    <strong>${successMessage}</strong>
                 </div>
             </c:if>
             <h1>${modalLogin}</h1><br>

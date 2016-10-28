@@ -37,6 +37,7 @@
     <spring:message code="message.russian" var="russian"/>
     <spring:message code="message.english" var="english"/>
     <spring:message code="message.go_to_welcome" var="goToWelcome"/>
+    <spring:message code="message.user_exist" var="userExistMessage"/>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -53,7 +54,7 @@
             <c:if test="${not empty usernameExist}">
                 <div class="alert alert-danger">
                     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                    <strong>${usernameExist}</strong>
+                    <strong>${userExistMessage}</strong>
                 </div>
             </c:if>
             <c:url value="/registration" var="registrationUrl" />
