@@ -2,7 +2,7 @@ package by.samsolutions.dao.impl;
 
 import by.samsolutions.dao.UserDao;
 import by.samsolutions.entity.user.User;
-import by.samsolutions.entity.user.UserInfo;
+import by.samsolutions.entity.user.UserProfile;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +16,9 @@ public class UserDaoImpl implements UserDao {
     @Autowired
     SessionFactory sessionFactory;
 
-    @SuppressWarnings("uncheked")
     @Override
     public User findByUsername(String username) {
+
         List<User> users = sessionFactory.getCurrentSession()
                 .createQuery("FROM User u WHERE u.username = :username")
                 .setParameter("username", username)
@@ -29,7 +29,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public UserInfo addUserInfo(UserInfo userInfo) {
+    public UserProfile addUserInfo(UserProfile userInfo) {
         return null;
     }
 
@@ -40,5 +40,10 @@ public class UserDaoImpl implements UserDao {
         user.getUserRole().forEach(userRole -> session.save(userRole));
 
         return user;
+    }
+
+    @Override
+    public User getUserDetails(String username) {
+        return null;
     }
 }

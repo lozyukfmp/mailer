@@ -1,5 +1,6 @@
 package by.samsolutions.controller;
 
+import by.samsolutions.dto.UserProfileDto;
 import by.samsolutions.dto.UserDto;
 import by.samsolutions.entity.user.User;
 import by.samsolutions.service.UserService;
@@ -57,7 +58,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
-    public ModelAndView showRegistrationForm(Model model) {
+    public ModelAndView showRegistrationForm() {
         return new ModelAndView("registration", "user", new UserDto());
     }
 
@@ -84,5 +85,11 @@ public class UserController {
                     "You've been created account successfully.");
         }
 
+    }
+
+    @RequestMapping(value = "/user/profile", method = RequestMethod.GET)
+    public ModelAndView getUserProfile() {
+
+        return new ModelAndView("profile", "userProfile", new UserProfileDto());
     }
 }

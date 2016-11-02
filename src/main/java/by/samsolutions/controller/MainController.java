@@ -26,4 +26,8 @@ public class MainController {
         return "accessDenied";
     }
 
+    @RequestMapping(value = "/userHeader")
+    public String getHeader() {
+        return "user_header";
+    }
 }

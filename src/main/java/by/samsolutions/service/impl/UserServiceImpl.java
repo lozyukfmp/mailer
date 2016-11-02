@@ -53,4 +53,9 @@ public class UserServiceImpl implements UserService {
         return userDao.saveUser(user);
     }
 
+    @Override
+    @Transactional
+    public User getUserProfileInfo(String username) {
+        return null;
+    }
 }

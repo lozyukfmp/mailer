@@ -13,15 +13,7 @@
     <spring:url value="/static/core/css/bootstrap.min.css" var="bootstrapCss" />
     <spring:url value="/static/core/css/container.css" var="customContainerStyle" />
     <spring:url value="/static/core/css/language_dropdown.css" var="languageDropdown" />
-    <spring:url value="/static/core/js/bootstrap.min.js" var="bootstrapJs" />
-
-    <!-- localization -->
-    <spring:message code="message.language" var="language"/>
-    <spring:message code="message.russian" var="russian"/>
-    <spring:message code="message.english" var="english"/>
-    <spring:message code="message.user.logout" var="logout"/>
-    <spring:message code="message.user.welcome" var="welcome"/>
-
+    <spring:url value="/static/core/js/bootstrap.min.js" var="bootstrapJs"/>
 
     <!-- Bootstrap -->
     <link href="${bootstrapCss}" rel="stylesheet" />
@@ -37,40 +29,9 @@
     <![endif]-->
 </head>
 <body>
+<jsp:include page="${request.contextPath}/userHeader"></jsp:include>
 <div class="container">
-    <!-- Static navbar -->
-    <nav class="navbar navbar-default">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="#">
-                    <c:if test="${pageContext.request.userPrincipal.name != null}">
-                        ${welcome} : ${pageContext.request.userPrincipal.name}
-                    </c:if>
-                </a>
-            </div>
-            <div id="navbar" class="navbar-collapse collapse">
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="form-dropdown dropdown" style="border-width: 0px;padding: 15px;">
-                        <a class="btn btn-link dropdown-toggle" type="button" data-toggle="dropdown">
-                            ${language}
-                            <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="?lang=ru_RU">${russian}</a></li>
-                            <li><a href="?lang=en">${english}</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <c:url value="/logout" var="logoutUrl" />
-                        <a href="${logoutUrl}">
-                            <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
-                            ${logout}
-                        </a>
-                    </li>
-                </ul>
-            </div><!--/.nav-collapse -->
-        </div><!--/.container-fluid -->
-    </nav>
-    <h2>User page</h2>
+    <h2>Home page</h2>
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="${bootstrapJs}"></script>
