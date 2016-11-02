@@ -1,12 +1,14 @@
 package by.samsolutions.entity.user;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Data
 @NoArgsConstructor
+@EqualsAndHashCode(exclude = "user")
 @Entity
 @Table(name = "user_role")
 public class UserRole {
