@@ -82,7 +82,7 @@
                             </c:forEach>
                         </div>
                     </c:if>
-                    <input type="text"
+                    <input type="password"
                            value="<c:out value="${status.value}"/>"
                            name="<c:out value="${status.expression}"/>"
                            placeholder="${password}">
@@ -96,7 +96,7 @@
                             </c:forEach>
                         </div>
                     </c:if>
-                    <input type="text"
+                    <input type="password"
                            value="<c:out value="${status.value}"/>"
                            name="<c:out value="${status.expression}"/>"
                            placeholder="${confirm}">

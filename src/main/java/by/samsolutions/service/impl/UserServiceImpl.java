@@ -47,6 +47,7 @@ public class UserServiceImpl implements UserService {
         Set<UserRole> userRoleSet = new HashSet<>();
         userRoleSet.add(userRole);
 
+        userProfile.setUsername(accountDto.getUsername());
         userProfile.setEmail(accountDto.getUserProfileDto().getEmail());
         userProfile.setFirstName(accountDto.getUserProfileDto().getFirstName());
         userProfile.setSecondName(accountDto.getUserProfileDto().getSecondName());
