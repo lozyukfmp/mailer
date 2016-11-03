@@ -9,5 +9,6 @@ public interface UserService {
 
     User createUserAccount(UserDto accountDto);
 
+    User getUserProfileInfo(String username);
 
 }

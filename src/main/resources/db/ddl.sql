@@ -49,7 +49,7 @@ CREATE TABLE IF NOT EXISTS `mailer`.`likes` (
   CONSTRAINT `like_user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (id) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE IF NOT EXISTS mailer.user_info
+CREATE TABLE IF NOT EXISTS mailer.user_profile
 (
     `user_id` INT(11) PRIMARY KEY NOT NULL,
     `firstname` VARCHAR(45) NOT NULL,
@@ -58,4 +58,4 @@ CREATE TABLE IF NOT EXISTS mailer.user_info
     `email` VARCHAR(45) NOT NULL,
     CONSTRAINT `user_info_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
 );
-CREATE INDEX `user_info_id_idx` ON mailer.user_info (`user_id`)
+CREATE INDEX `user_profile_id_idx` ON mailer.user_profile (`user_id`)

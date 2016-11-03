@@ -5,13 +5,14 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(exclude = "user")
 @Entity
 @Table(name = "user_role")
-public class UserRole {
+public class UserRole implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
