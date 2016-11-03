@@ -23,7 +23,9 @@ public class AuthSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
     private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 
     @Override
-    protected void handle(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+    protected void handle(final HttpServletRequest request,
+                          final HttpServletResponse response,
+                          final Authentication authentication) throws IOException, ServletException {
         String targetUrl = determineTargetUrl(authentication);
 
         if (response.isCommitted()) {
@@ -33,7 +35,7 @@ public class AuthSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
         redirectStrategy.sendRedirect(request, response, targetUrl);
     }
 
-    protected String determineTargetUrl(Authentication authentication) {
+    protected String determineTargetUrl(final Authentication authentication) {
         String url = "";
 
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
@@ -53,15 +55,15 @@ public class AuthSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
         return url;
     }
 
-    private boolean isAdmin(List<String> roles) {
+    private boolean isAdmin(final List<String> roles) {
         return roles.contains("ROLE_ADMIN");
     }
 
-    private boolean isUser(List<String> roles) {
+    private boolean isUser(final List<String> roles) {
         return roles.contains("ROLE_USER");
     }
 
-    public void setRedirectStrategy(RedirectStrategy redirectStrategy) {
+    public void setRedirectStrategy(final RedirectStrategy redirectStrategy) {
         this.redirectStrategy = redirectStrategy;
     }
 

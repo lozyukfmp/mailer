@@ -1,5 +1,7 @@
 CREATE DATABASE IF NOT EXISTS `mailer` /*!40100 DEFAULT CHARACTER SET utf8 */;
 
+USE `mailer`;
+
 CREATE TABLE `mailer`.`user` (
   `username` varchar(45) NOT NULL,
   `password` varchar(60) NOT NULL,
@@ -16,7 +18,7 @@ CREATE TABLE `mailer`.`user_profile` (
   `username` varchar(45) NOT NULL,
   PRIMARY KEY (`username`),
   UNIQUE KEY `user_profile_username_uindex` (`username`),
-  CONSTRAINT `user_profile_user_username_fk` FOREIGN KEY (`username`) REFERENCES `user` (`username`)
+  CONSTRAINT `user_profile_user_username_fk` FOREIGN KEY (`username`) REFERENCES `user` (`username`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `mailer`.`user_role` (
@@ -27,6 +29,13 @@ CREATE TABLE `mailer`.`user_role` (
   KEY `user_role_user_username_fk` (`username`),
   CONSTRAINT `user_role_user_username_fk` FOREIGN KEY (`username`) REFERENCES `user` (`username`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `mailer`.`posts` (
+  `post_id` int(11) NOT NULL AUTO_INCREMENT,
+  `post_date` varchar(45) NOT NULL,
+  `post_text` varchar(45) NOT NULL,
+  PRIMARY KEY (`post_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `mailer`.`likes` (
   `post_id` int(11) NOT NULL,
@@ -42,11 +51,4 @@ CREATE TABLE `mailer`.`comments` (
   PRIMARY KEY (`comment_id`),
   KEY `post_id_idx` (`post_id`),
   CONSTRAINT `comment_post_id` FOREIGN KEY (`post_id`) REFERENCES `posts` (`post_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-CREATE TABLE `mailer`.`posts` (
-  `post_id` int(11) NOT NULL AUTO_INCREMENT,
-  `post_date` varchar(45) NOT NULL,
-  `post_text` varchar(45) NOT NULL,
-  PRIMARY KEY (`post_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

@@ -14,10 +14,10 @@ import java.util.List;
 public class UserDaoImpl implements UserDao {
 
     @Autowired
-    SessionFactory sessionFactory;
+    private SessionFactory sessionFactory;
 
     @Override
-    public User findByUsername(String username) {
+    public User findByUsername(final String username) {
 
         List<User> users = sessionFactory.getCurrentSession()
                 .createQuery("FROM User u WHERE u.username = :username")
@@ -29,7 +29,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public User saveUser(User user) {
+    public User saveUser(final User user) {
         Session session = sessionFactory.getCurrentSession();
         session.save(user);
 
@@ -43,7 +43,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public UserProfile getUserProfile(String username) {
+    public UserProfile getUserProfile(final String username) {
 
         return (UserProfile) sessionFactory.getCurrentSession()
                              .createQuery("from UserProfile u where u.username = :username")
@@ -52,7 +52,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public void saveUserProfile(UserProfile userProfile) {
+    public void saveUserProfile(final UserProfile userProfile) {
         sessionFactory.getCurrentSession().merge(userProfile);
     }
 }

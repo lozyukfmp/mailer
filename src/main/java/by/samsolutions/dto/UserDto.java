@@ -1,7 +1,6 @@
 package by.samsolutions.dto;
 
 import by.samsolutions.validation.PasswordMatches;
-import by.samsolutions.validation.ValidEmail;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.NotEmpty;

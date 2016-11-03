@@ -7,12 +7,12 @@ import javax.validation.ConstraintValidatorContext;
 
 public class PasswordMatchesValidator implements ConstraintValidator<PasswordMatches, Object> {
     @Override
-    public void initialize(PasswordMatches passwordMatches) {
+    public void initialize(final PasswordMatches passwordMatches) {
 
     }
 
     @Override
-    public boolean isValid(Object o, ConstraintValidatorContext constraintValidatorContext) {
+    public boolean isValid(final Object o, final ConstraintValidatorContext constraintValidatorContext) {
         UserDto userDto = (UserDto) o;
 
         return userDto.getPassword().equals(userDto.getConfirmPassword());

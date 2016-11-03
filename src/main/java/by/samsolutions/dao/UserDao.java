@@ -9,7 +9,7 @@ public interface UserDao {
 
     User saveUser(User user);
 
-    UserProfile getUserProfile (String username);
+    UserProfile getUserProfile(String username);
 
     void saveUserProfile(UserProfile userProfile);
 }

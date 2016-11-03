@@ -1,7 +1,6 @@
 package by.samsolutions.entity.user;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;

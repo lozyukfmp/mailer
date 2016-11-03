@@ -22,17 +22,17 @@ public class UserServiceImpl implements UserService {
     private UserDao userDao;
 
     @Autowired
-    PasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
 
     @Override
     @Transactional
-    public User findByUsername(String username) {
+    public User findByUsername(final String username) {
         return userDao.findByUsername(username);
     }
 
     @Override
     @Transactional
-    public User createUserAccount(UserDto accountDto) {
+    public User createUserAccount(final UserDto accountDto) {
 
         if (userDao.findByUsername(accountDto.getUsername()) != null) {
             return null;
@@ -65,13 +65,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public UserProfile getUserProfileInfo(String username) {
+    public UserProfile getUserProfileInfo(final String username) {
         return userDao.getUserProfile(username);
     }
 
     @Override
     @Transactional
-    public void saveUserProfileInfo(UserProfileDto userProfileDto) {
+    public void saveUserProfileInfo(final UserProfileDto userProfileDto) {
         UserProfile userProfile = new UserProfile();
         userProfile.setUsername(userProfileDto.getUsername());
         userProfile.setEmail(userProfileDto.getEmail());

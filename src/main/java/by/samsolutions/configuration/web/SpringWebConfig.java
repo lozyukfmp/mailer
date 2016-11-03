@@ -19,11 +19,11 @@ import java.util.Locale;
 
 @EnableWebMvc
 @Configuration
-@ComponentScan({"by.samsolutions.*"})
+@ComponentScan("by.samsolutions.*")
 public class SpringWebConfig extends WebMvcConfigurerAdapter{
 
     @Override
-    public void addInterceptors(InterceptorRegistry registry) {
+    public void addInterceptors(final InterceptorRegistry registry) {
         LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
         localeChangeInterceptor.setParamName("lang");
         registry.addInterceptor(localeChangeInterceptor);

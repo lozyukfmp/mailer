@@ -17,8 +17,8 @@ import java.util.Properties;
 
 @Configuration
 @EnableTransactionManagement
-@PropertySource(value = {"classpath:/db/hibernate.properties"})
-@ComponentScan({"by.samsolutions.dao"})
+@PropertySource(value = "classpath:/db/hibernate.properties")
+@ComponentScan("by.samsolutions.dao")
 public class HibernateConfiguration {
 
     @Autowired

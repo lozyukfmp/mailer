@@ -17,20 +17,20 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    AuthSuccessHandler authSuccessHandler;
+    private AuthSuccessHandler authSuccessHandler;
 
     @Autowired
     @Qualifier("customUserDetailsService")
     UserDetailsService userDetailsService;
 
     @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+    public void configureGlobal(final AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService)
                 .passwordEncoder(passwordEncoder());
     }
 
     @Override
-    protected void configure(HttpSecurity http) throws Exception {
+    protected void configure(final HttpSecurity http) throws Exception {
 
         http.authorizeRequests()
                 .antMatchers("/user/**").access("hasRole('ROLE_USER')")

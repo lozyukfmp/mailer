@@ -12,7 +12,6 @@ import org.springframework.security.web.authentication.logout.SecurityContextLog
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -31,8 +30,8 @@ public class UserController {
 
     @RequestMapping(value = "/loginPage")
     public ModelAndView login(
-            @RequestParam(value = "error", required = false) String error,
-            @RequestParam(value = "logout", required = false) String logout) {
+            @RequestParam(value = "error", required = false) final String error,
+            @RequestParam(value = "logout", required = false) final String logout) {
 
         ModelAndView modelAndView = new ModelAndView();
 
@@ -50,7 +49,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
-    public String logout(HttpServletRequest request, HttpServletResponse response) {
+    public String logout(final HttpServletRequest request, final HttpServletResponse response) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null) {
             new SecurityContextLogoutHandler().logout(request, response, auth);
@@ -72,11 +71,11 @@ public class UserController {
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
     public ModelAndView registerUser(@ModelAttribute("user")
-                                         @Valid UserDto userDto,
-                                     BindingResult userBindingResult,
+                                         @Valid final UserDto userDto,
+                                     final BindingResult userBindingResult,
                                      @ModelAttribute("userProfile")
-                                         @Valid UserProfileDto userProfileDto,
-				                             BindingResult userProfileBindingResult, Model model) {
+                                         @Valid final UserProfileDto userProfileDto,
+				                             final BindingResult userProfileBindingResult, final Model model) {
         User registered = new User();
         if (!userBindingResult.hasErrors() &&
 				        !userProfileBindingResult.hasErrors()) {
@@ -116,8 +115,8 @@ public class UserController {
 
     @RequestMapping(value = "/user/profile", method = RequestMethod.POST)
     public ModelAndView saveUserProfile(@ModelAttribute("userProfile")
-                                            @Valid UserProfileDto userProfileDto,
-                                        BindingResult userProfileBindingResult) {
+                                            @Valid final UserProfileDto userProfileDto,
+                                        final BindingResult userProfileBindingResult) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         userProfileDto.setUsername(auth.getName());
         if (!userProfileBindingResult.hasErrors()) {

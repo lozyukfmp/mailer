@@ -10,15 +10,12 @@ import javax.persistence.Table;
 
 import java.io.Serializable;
 
-import org.hibernate.annotations.*;
-import org.hibernate.annotations.Parameter;
-
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(exclude = "user")
 @Entity
 @Table(name = "user_role")
-public class UserRole implements Serializable{
+public class UserRole implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

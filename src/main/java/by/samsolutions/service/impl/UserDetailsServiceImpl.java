@@ -24,7 +24,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Transactional(readOnly = true)
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
         User user = userDao.findByUsername(username);
 
         if (user == null) {
@@ -36,7 +36,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         return buildUserForAuthentication(user, authorities);
     }
 
-    private List<GrantedAuthority> buildUserAuthority(Set<UserRole> userRoles) {
+    private List<GrantedAuthority> buildUserAuthority(final Set<UserRole> userRoles) {
 
         return userRoles.stream()
                 .map(role -> new SimpleGrantedAuthority(role.getRole()))
@@ -44,7 +44,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     }
 
     private org.springframework.security.core.userdetails.User
-    buildUserForAuthentication(User user, List<GrantedAuthority> authorities) {
+    buildUserForAuthentication(final User user, final List<GrantedAuthority> authorities) {
         return new org.springframework.security.core.userdetails.
                 User(user.getUsername(), user.getPassword(),
                 user.isEnabled(), true, true, true, authorities);
