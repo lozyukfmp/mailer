@@ -4,6 +4,7 @@ import by.samsolutions.dto.UserDto;
 import by.samsolutions.entity.user.User;
 import by.samsolutions.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
@@ -19,9 +20,13 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.util.Locale;
 
 @Controller
 public class UserController {
+
+    @Autowired
+    MessageSource messageSource;
 
     @Autowired
     UserService userService;
