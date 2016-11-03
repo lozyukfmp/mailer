@@ -22,4 +22,6 @@ public class UserProfileDto {
     @NotEmpty
     private String thirdName;
 
+    private String username;
+
 }

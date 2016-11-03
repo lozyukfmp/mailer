@@ -29,21 +29,30 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public UserProfile addUserInfo(UserProfile userInfo) {
-        return null;
-    }
-
-    @Override
     public User saveUser(User user) {
         Session session = sessionFactory.getCurrentSession();
         session.save(user);
+
+        //saving user roles
         user.getUserRole().forEach(userRole -> session.save(userRole));
+
+        //saving user profile
+        session.save(user.getProfile());
 
         return user;
     }
 
     @Override
-    public User getUserDetails(String username) {
-        return null;
+    public UserProfile getUserProfile(String username) {
+
+        return (UserProfile) sessionFactory.getCurrentSession()
+                             .createQuery("from UserProfile u where u.username = :username")
+                             .setParameter("username", username)
+                             .getSingleResult();
+    }
+
+    @Override
+    public void saveUserProfile(UserProfile userProfile) {
+        sessionFactory.getCurrentSession().merge(userProfile);
     }
 }

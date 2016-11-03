@@ -3,15 +3,16 @@ package by.samsolutions.controller;
 import by.samsolutions.dto.UserProfileDto;
 import by.samsolutions.dto.UserDto;
 import by.samsolutions.entity.user.User;
+import by.samsolutions.entity.user.UserProfile;
 import by.samsolutions.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,16 +22,12 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.util.Locale;
 
 @Controller
 public class UserController {
 
     @Autowired
-    MessageSource messageSource;
-
-    @Autowired
-    UserService userService;
+    private UserService userService;
 
     @RequestMapping(value = "/loginPage")
     public ModelAndView login(
@@ -64,15 +61,27 @@ public class UserController {
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public ModelAndView showRegistrationForm() {
-        return new ModelAndView("registration", "user", new UserDto());
+        ModelAndView modelAndView = new ModelAndView();
+
+        modelAndView.addObject("user", new UserDto());
+        modelAndView.addObject("userProfile", new UserProfileDto());
+        modelAndView.setViewName("registration");
+
+        return modelAndView;
     }
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
-    public ModelAndView registerUser(@ModelAttribute("user") @Valid UserDto accountDto,
-                                     BindingResult result, Model model) {
+    public ModelAndView registerUser(@ModelAttribute("user")
+                                         @Valid UserDto userDto,
+                                     BindingResult userBindingResult,
+                                     @ModelAttribute("userProfile")
+                                         @Valid UserProfileDto userProfileDto,
+				                             BindingResult userProfileBindingResult, Model model) {
         User registered = new User();
-        if (!result.hasErrors()) {
-            registered = userService.createUserAccount(accountDto);
+        if (!userBindingResult.hasErrors() &&
+				        !userProfileBindingResult.hasErrors()) {
+            userDto.setUserProfileDto(userProfileDto);
+            registered = userService.createUserAccount(userDto);
         }
 
         if (registered == null) {
@@ -83,8 +92,13 @@ public class UserController {
             return modelAndView;
         }
 
-        if (result.hasErrors()) {
-            return new ModelAndView("registration", "user", accountDto);
+        if (userBindingResult.hasErrors() || userProfileBindingResult.hasErrors()) {
+	          ModelAndView modelAndView = new ModelAndView();
+
+	          modelAndView.addObject("user", userDto);
+	          modelAndView.addObject("userProfile", userProfileDto);
+	          modelAndView.setViewName("registration");
+            return modelAndView;
         } else {
             return new ModelAndView("loginPage", "successRegistration",
                     "You've been created account successfully.");
@@ -94,7 +108,26 @@ public class UserController {
 
     @RequestMapping(value = "/user/profile", method = RequestMethod.GET)
     public ModelAndView getUserProfile() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserProfile userProfile = userService.getUserProfileInfo(auth.getName());
 
-        return new ModelAndView("profile", "userProfile", new UserProfileDto());
+        return new ModelAndView("profile", "userProfile", userProfile);
+    }
+
+    @RequestMapping(value = "/user/profile", method = RequestMethod.POST)
+    public ModelAndView saveUserProfile(@ModelAttribute("userProfile")
+                                            @Valid UserProfileDto userProfileDto,
+                                        BindingResult userProfileBindingResult) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        userProfileDto.setUsername(auth.getName());
+        if (!userProfileBindingResult.hasErrors()) {
+            userService.saveUserProfileInfo(userProfileDto);
+
+            return new ModelAndView("profile", "successProfileChange",
+                                    "You've been changed profile successfully.");
+        }
+
+        return new ModelAndView("profile", "userProfile", userProfileDto);
+
     }
 }

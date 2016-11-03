@@ -25,17 +25,6 @@ public class UserDto {
     @Size(min = 8, max = 15)
     private String confirmPassword;
 
-    @NotEmpty
-    @ValidEmail
-    private String email;
-
-    @NotEmpty
-    private String firstName;
-
-    @NotEmpty
-    private String secondName;
-
-    @NotEmpty
-    private String thirdName;
+    private UserProfileDto userProfileDto;
 
 }

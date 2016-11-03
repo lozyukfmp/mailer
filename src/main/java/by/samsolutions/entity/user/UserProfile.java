@@ -16,16 +16,9 @@ import java.io.Serializable;
 @Table(name = "user_profile")
 public class UserProfile implements Serializable{
 
-    @GenericGenerator(name = "generator", strategy = "foreign",
-            parameters = @Parameter(name = "property", value = "user"))
     @Id
-    @GeneratedValue(generator = "generator")
-    @Column(name = "user_id", unique = true, nullable = false)
-    private int id;
-
-    @OneToOne(fetch = FetchType.LAZY)
-    @PrimaryKeyJoinColumn
-    private User user;
+    @Column(name = "username", unique = true, nullable = false)
+    private String username;
 
     @Column(name = "firstname")
     private String firstName;
