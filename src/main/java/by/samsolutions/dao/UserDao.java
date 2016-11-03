@@ -7,9 +7,9 @@ public interface UserDao {
 
     User findByUsername(String username);
 
-    UserProfile addUserInfo(UserProfile userInfo);
-
     User saveUser(User user);
 
-    User getUserDetails(String username);
+    UserProfile getUserProfile (String username);
+
+    void saveUserProfile(UserProfile userProfile);
 }

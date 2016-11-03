@@ -2,12 +2,12 @@ package by.samsolutions.service.impl;
 
 import by.samsolutions.dao.UserDao;
 import by.samsolutions.dto.UserDto;
+import by.samsolutions.dto.UserProfileDto;
 import by.samsolutions.entity.user.User;
 import by.samsolutions.entity.user.UserProfile;
 import by.samsolutions.entity.user.UserRole;
 import by.samsolutions.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -51,7 +51,7 @@ public class UserServiceImpl implements UserService {
         userProfile.setFirstName(accountDto.getUserProfileDto().getFirstName());
         userProfile.setSecondName(accountDto.getUserProfileDto().getSecondName());
         userProfile.setThirdName(accountDto.getUserProfileDto().getThirdName());
-        userProfile.setUser(user);
+        //userProfile.setUser(user);
 
         user.setUsername(accountDto.getUsername());
         user.setPassword(passwordEncoder.encode(accountDto.getPassword()));
@@ -64,7 +64,20 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public User getUserProfileInfo(String username) {
-        return null;
+    public UserProfile getUserProfileInfo(String username) {
+        return userDao.getUserProfile(username);
+    }
+
+    @Override
+    @Transactional
+    public void saveUserProfileInfo(UserProfileDto userProfileDto) {
+        UserProfile userProfile = new UserProfile();
+        userProfile.setUsername(userProfileDto.getUsername());
+        userProfile.setEmail(userProfileDto.getEmail());
+        userProfile.setFirstName(userProfileDto.getFirstName());
+        userProfile.setSecondName(userProfileDto.getSecondName());
+        userProfile.setThirdName(userProfileDto.getThirdName());
+
+        userDao.saveUserProfile(userProfile);
     }
 }

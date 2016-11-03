@@ -45,6 +45,8 @@
     <spring:message code="message.user.welcome" var="welcome"/>
     <spring:message code="message.profile" var="profile"/>
     <spring:message code="message.go_to_main" var="home"/>
+    <spring:message code="message.change" var="change"/>
+    <spring:message code="message.successProfileChange" var="profileChange"/>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -59,6 +61,12 @@
     <div class="col-md-4 col-md-offset-4">
         <div class="loginmodal-container">
             <h1>${profile}</h1><br>
+            <c:if test="${not empty successProfileChange}">
+                <div class="alert alert-info">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <strong>${profileChange}</strong>
+                </div>
+            </c:if>
             <form:form action="${profileUrl}" modelAttribute="userProfile" method="POST" enctype="utf8">
                 <form:errors path="email" element="div" cssClass="error-div"/>
                 <form:input type="text" path="email" placeholder="${email}"/>
@@ -68,6 +76,7 @@
                 <form:input type="text" path="secondName" placeholder="${secondname}"/>
                 <form:errors path="thirdName" element="div" cssClass="error-div"/>
                 <form:input type="text" path="thirdName" placeholder="${thirdname}"/>
+                <input type="submit" class="login loginmodal-submit" value="${change}"/>
                 <a href="/user"> ${main} |</a>
                 <div class="form-dropdown dropdown">
                     <a class="btn btn-link dropdown-toggle" type="button" data-toggle="dropdown">

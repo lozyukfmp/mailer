@@ -14,16 +14,15 @@ import java.util.Set;
 public class User implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-
     @Column(name = "username", nullable = false, length = 45, unique = true)
     private String username;
 
     @Column(name = "password", nullable = false, length = 60)
     private String password;
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL)
+    //@OneToOne(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
     private UserProfile profile;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")

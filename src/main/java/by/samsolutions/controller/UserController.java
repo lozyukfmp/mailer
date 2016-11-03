@@ -3,6 +3,7 @@ package by.samsolutions.controller;
 import by.samsolutions.dto.UserProfileDto;
 import by.samsolutions.dto.UserDto;
 import by.samsolutions.entity.user.User;
+import by.samsolutions.entity.user.UserProfile;
 import by.samsolutions.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -26,7 +27,7 @@ import javax.validation.Valid;
 public class UserController {
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @RequestMapping(value = "/loginPage")
     public ModelAndView login(
@@ -107,7 +108,26 @@ public class UserController {
 
     @RequestMapping(value = "/user/profile", method = RequestMethod.GET)
     public ModelAndView getUserProfile() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserProfile userProfile = userService.getUserProfileInfo(auth.getName());
 
-        return new ModelAndView("profile", "userProfile", new UserProfileDto());
+        return new ModelAndView("profile", "userProfile", userProfile);
+    }
+
+    @RequestMapping(value = "/user/profile", method = RequestMethod.POST)
+    public ModelAndView saveUserProfile(@ModelAttribute("userProfile")
+                                            @Valid UserProfileDto userProfileDto,
+                                        BindingResult userProfileBindingResult) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        userProfileDto.setUsername(auth.getName());
+        if (!userProfileBindingResult.hasErrors()) {
+            userService.saveUserProfileInfo(userProfileDto);
+
+            return new ModelAndView("profile", "successProfileChange",
+                                    "You've been changed profile successfully.");
+        }
+
+        return new ModelAndView("profile", "userProfile", userProfileDto);
+
     }
 }
