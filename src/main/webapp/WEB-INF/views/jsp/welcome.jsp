@@ -15,6 +15,7 @@
     <spring:url value="/static/core/css/login.css" var="loginCss" />
     <spring:url value="/static/core/css/container.css" var="customContainerCss" />
     <spring:url value="/static/core/css/welcome.css" var="welcomeCss" />
+    <spring:url value="/static/core/css/language_dropdown.css" var="languageDropdown" />
     <spring:url value="/static/core/js/bootstrap.min.js" var="bootstrapJs" />
 
     <!-- localization -->
@@ -31,6 +32,7 @@
     <link href="${bootstrapCss}" rel="stylesheet" />
     <link href="${loginCss}" rel="stylesheet" />
     <link href="${customContainerCss}" rel="stylesheet" />
+    <link href="${languageDropdown}" rel="stylesheet" />
     <link href="${welcomeCss}" rel="stylesheet" />
 
     <!--[if lt IE 9]>
@@ -42,7 +44,7 @@
 <div class="container">
     <div class="jumbotron">
         <div class="container">
-            <div class="dropdown">
+            <div class="welcome-dropdown dropdown">
                 <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
                     ${language}
                     <span class="caret"></span></button>
@@ -70,8 +72,8 @@
             <h1>${modalLogin}</h1><br>
             <c:url value="/login" var="loginUrl" />
             <form:form action="${loginUrl}" method="post">
-                <input type="text" name="username" placeholder="${username}">
-                <input type="password" name="password" placeholder="${password}">
+                <input type="text" name="username" placeholder="${username}" required>
+                <input type="password" name="password" placeholder="${password}" required>
                 <input type="submit" name="login" class="login loginmodal-submit" value="${login}">
                 <a href="/registration">${register}</a>
             </form:form>

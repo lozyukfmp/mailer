@@ -28,7 +28,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         User user = userDao.findByUsername(username);
 
         if (user == null) {
-            throw new UsernameNotFoundException("Username not found");
+            throw new UsernameNotFoundException("User not found!");
         }
 
         List<GrantedAuthority> authorities = buildUserAuthority(user.getUserRole());
@@ -42,7 +42,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 .map(role -> new SimpleGrantedAuthority(role.getRole()))
                 .collect(Collectors.toList());
     }
-
 
     private org.springframework.security.core.userdetails.User
     buildUserForAuthentication(User user, List<GrantedAuthority> authorities) {
