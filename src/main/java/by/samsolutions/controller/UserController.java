@@ -11,6 +11,7 @@ import org.springframework.security.web.authentication.logout.SecurityContextLog
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -59,15 +60,27 @@ public class UserController {
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public ModelAndView showRegistrationForm() {
-        return new ModelAndView("registration", "user", new UserDto());
+        ModelAndView modelAndView = new ModelAndView();
+
+        modelAndView.addObject("user", new UserDto());
+        modelAndView.addObject("userProfile", new UserProfileDto());
+        modelAndView.setViewName("registration");
+
+        return modelAndView;
     }
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
-    public ModelAndView registerUser(@ModelAttribute("user") @Valid UserDto accountDto,
-                                     BindingResult result, Model model) {
+    public ModelAndView registerUser(@ModelAttribute("user")
+                                         @Valid UserDto userDto,
+                                     BindingResult userBindingResult,
+                                     @ModelAttribute("userProfile")
+                                         @Valid UserProfileDto userProfileDto,
+				                             BindingResult userProfileBindingResult, Model model) {
         User registered = new User();
-        if (!result.hasErrors()) {
-            registered = userService.createUserAccount(accountDto);
+        if (!userBindingResult.hasErrors() &&
+				        !userProfileBindingResult.hasErrors()) {
+            userDto.setUserProfileDto(userProfileDto);
+            registered = userService.createUserAccount(userDto);
         }
 
         if (registered == null) {
@@ -78,8 +91,13 @@ public class UserController {
             return modelAndView;
         }
 
-        if (result.hasErrors()) {
-            return new ModelAndView("registration", "user", accountDto);
+        if (userBindingResult.hasErrors() || userProfileBindingResult.hasErrors()) {
+	          ModelAndView modelAndView = new ModelAndView();
+
+	          modelAndView.addObject("user", userDto);
+	          modelAndView.addObject("userProfile", userProfileDto);
+	          modelAndView.setViewName("registration");
+            return modelAndView;
         } else {
             return new ModelAndView("loginPage", "successRegistration",
                     "You've been created account successfully.");

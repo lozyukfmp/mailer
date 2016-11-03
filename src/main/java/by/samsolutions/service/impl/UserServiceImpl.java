@@ -3,6 +3,7 @@ package by.samsolutions.service.impl;
 import by.samsolutions.dao.UserDao;
 import by.samsolutions.dto.UserDto;
 import by.samsolutions.entity.user.User;
+import by.samsolutions.entity.user.UserProfile;
 import by.samsolutions.entity.user.UserRole;
 import by.samsolutions.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,16 +40,24 @@ public class UserServiceImpl implements UserService {
 
         User user = new User();
         UserRole userRole = new UserRole();
+        UserProfile userProfile = new UserProfile();
+
         userRole.setRole("ROLE_USER");
         userRole.setUser(user);
-
         Set<UserRole> userRoleSet = new HashSet<>();
         userRoleSet.add(userRole);
+
+        userProfile.setEmail(accountDto.getUserProfileDto().getEmail());
+        userProfile.setFirstName(accountDto.getUserProfileDto().getFirstName());
+        userProfile.setSecondName(accountDto.getUserProfileDto().getSecondName());
+        userProfile.setThirdName(accountDto.getUserProfileDto().getThirdName());
+        userProfile.setUser(user);
 
         user.setUsername(accountDto.getUsername());
         user.setPassword(passwordEncoder.encode(accountDto.getPassword()));
         user.setUserRole(userRoleSet);
         user.setEnabled(true);
+        user.setProfile(userProfile);
 
         return userDao.saveUser(user);
     }

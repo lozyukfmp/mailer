@@ -57,23 +57,107 @@
                     <strong>${userExistMessage}</strong>
                 </div>
             </c:if>
-            <c:url value="/registration" var="registrationUrl" />
-            <form:form action="${registration}" modelAttribute="user" method="POST" enctype="utf8">
-                <form:errors path="username" element="div" cssClass="error-div"/>
-                <form:input type="text" path="username" placeholder="${username}"/>
-                <form:errors element="div" cssClass="error-div"/>
-                <form:errors path="password" element="div" cssClass="error-div"/>
-                <form:input type="password" path="password" placeholder="${password}" />
-                <form:errors path="confirmPassword" element="div" cssClass="error-div"/>
-                <form:input type="password" path="confirmPassword" placeholder="${confirm}"/>
-                <form:errors path="email" element="div" cssClass="error-div"/>
-                <form:input type="text" path="email" placeholder="${email}"/>
-                <form:errors path="firstName" element="div" cssClass="error-div"/>
-                <form:input type="text" path="firstName" placeholder="${firstname}"/>
-                <form:errors path="secondName" element="div" cssClass="error-div"/>
-                <form:input type="text" path="secondName" placeholder="${secondname}"/>
-                <form:errors path="thirdName" element="div" cssClass="error-div"/>
-                <form:input type="text" path="thirdName" placeholder="${thirdname}"/>
+
+            <form action="" method="POST" enctype="utf8">
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                <spring:bind path="user.username">
+                    <c:if test="${status.error}">
+                        <div class="error-div">
+                            <c:forEach items="${status.errorMessages}" var="error">
+                                <span><c:out value="${error}"/></span>
+                            </c:forEach>
+                        </div>
+                    </c:if>
+                    <input type="text"
+                           value="<c:out value="${status.value}"/>"
+                           name="<c:out value="${status.expression}"/>"
+                           placeholder="${username}">
+                </spring:bind>
+
+                <spring:bind path="user.password">
+                    <c:if test="${status.error}">
+                        <div class="error-div">
+                            <c:forEach items="${status.errorMessages}" var="error">
+                                <span><c:out value="${error}"/></span>
+                            </c:forEach>
+                        </div>
+                    </c:if>
+                    <input type="text"
+                           value="<c:out value="${status.value}"/>"
+                           name="<c:out value="${status.expression}"/>"
+                           placeholder="${password}">
+                </spring:bind>
+
+                <spring:bind path="user.confirmPassword">
+                    <c:if test="${status.error}">
+                        <div class="error-div">
+                            <c:forEach items="${status.errorMessages}" var="error">
+                                <span><c:out value="${error}"/></span>
+                            </c:forEach>
+                        </div>
+                    </c:if>
+                    <input type="text"
+                           value="<c:out value="${status.value}"/>"
+                           name="<c:out value="${status.expression}"/>"
+                           placeholder="${confirm}">
+                </spring:bind>
+
+                <spring:bind path="userProfile.email">
+                    <c:if test="${status.error}">
+                        <div class="error-div">
+                            <c:forEach items="${status.errorMessages}" var="error">
+                                <span><c:out value="${error}"/></span>
+                            </c:forEach>
+                        </div>
+                    </c:if>
+                    <input type="text"
+                           value="<c:out value="${status.value}"/>"
+                           name="<c:out value="${status.expression}"/>"
+                           placeholder="${email}">
+                </spring:bind>
+
+                <spring:bind path="userProfile.firstName">
+                    <c:if test="${status.error}">
+                        <div class="error-div">
+                            <c:forEach items="${status.errorMessages}" var="error">
+                                <span><c:out value="${error}"/></span>
+                            </c:forEach>
+                        </div>
+                    </c:if>
+                    <input type="text"
+                           value="<c:out value="${status.value}"/>"
+                           name="<c:out value="${status.expression}"/>"
+                           placeholder="${firstname}">
+                </spring:bind>
+
+                <spring:bind path="userProfile.secondName">
+                    <c:if test="${status.error}">
+                        <div class="error-div">
+                            <c:forEach items="${status.errorMessages}" var="error">
+                                <span><c:out value="${error}"/></span>
+                            </c:forEach>
+                        </div>
+                    </c:if>
+                    <input type="text"
+                           value="<c:out value="${status.value}"/>"
+                           name="<c:out value="${status.expression}"/>"
+                           placeholder="${secondname}">
+                </spring:bind>
+
+                <spring:bind path="userProfile.thirdName">
+                    <c:if test="${status.error}">
+                        <div class="error-div">
+                            <c:forEach items="${status.errorMessages}" var="error">
+                                <span><c:out value="${error}"/></span>
+                            </c:forEach>
+                        </div>
+                    </c:if>
+                    <input type="text"
+                           value="<c:out value="${status.value}"/>"
+                           name="<c:out value="${status.expression}"/>"
+                           placeholder="${thirdname}">
+                </spring:bind>
+
                 <input type="submit" class="login loginmodal-submit" value="${register}"/>
                 <a href="/welcome"> ${goToWelcome} |</a>
                 <a href="/loginPage"> ${login} |</a>
@@ -86,7 +170,7 @@
                         <li><a href="?lang=en">${english}</a></li>
                     </ul>
                 </div>
-            </form:form>
+            </form>
         </div>
     </div>
 </div>

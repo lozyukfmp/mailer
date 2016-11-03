@@ -37,7 +37,12 @@ public class UserDaoImpl implements UserDao {
     public User saveUser(User user) {
         Session session = sessionFactory.getCurrentSession();
         session.save(user);
+
+        //saving user roles
         user.getUserRole().forEach(userRole -> session.save(userRole));
+
+        //saving user profile
+        session.save(user.getProfile());
 
         return user;
     }
