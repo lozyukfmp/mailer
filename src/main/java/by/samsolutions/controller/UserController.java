@@ -2,8 +2,8 @@ package by.samsolutions.controller;
 
 import by.samsolutions.dto.UserProfileDto;
 import by.samsolutions.dto.UserDto;
-import by.samsolutions.entity.User;
-import by.samsolutions.entity.UserProfile;
+import by.samsolutions.entity.user.User;
+import by.samsolutions.entity.user.UserProfile;
 import by.samsolutions.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;

@@ -1,8 +1,8 @@
 package by.samsolutions.service.impl;
 
 import by.samsolutions.dao.UserDao;
-import by.samsolutions.entity.User;
-import by.samsolutions.entity.UserRole;
+import by.samsolutions.entity.user.User;
+import by.samsolutions.entity.user.UserRole;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

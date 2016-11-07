@@ -1,4 +1,4 @@
-package by.samsolutions.entity;
+package by.samsolutions.entity.user;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
