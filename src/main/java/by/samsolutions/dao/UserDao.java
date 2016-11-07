@@ -1,7 +1,7 @@
 package by.samsolutions.dao;
 
-import by.samsolutions.entity.user.User;
-import by.samsolutions.entity.user.UserProfile;
+import by.samsolutions.entity.User;
+import by.samsolutions.entity.UserProfile;
 
 public interface UserDao {
 

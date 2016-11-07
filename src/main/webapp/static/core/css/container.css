@@ -4,8 +4,8 @@
     }
 }
 
-.container > .navbar, .container{
-    margin-top: 50px;
+.container > .navbar{
+    margin-top: 18px;
 }
 
 .col-md-4.col-md-offset-4 {

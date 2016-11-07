@@ -1,4 +1,4 @@
-package by.samsolutions.entity.user;
+package by.samsolutions.entity;
 
 import lombok.*;
 

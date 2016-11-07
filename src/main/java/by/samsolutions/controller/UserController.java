@@ -2,10 +2,11 @@ package by.samsolutions.controller;
 
 import by.samsolutions.dto.UserProfileDto;
 import by.samsolutions.dto.UserDto;
-import by.samsolutions.entity.user.User;
-import by.samsolutions.entity.user.UserProfile;
+import by.samsolutions.entity.User;
+import by.samsolutions.entity.UserProfile;
 import by.samsolutions.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -128,5 +131,17 @@ public class UserController {
 
         return new ModelAndView("profile", "userProfile", userProfileDto);
 
+    }
+
+    @RequestMapping(value = "/user/profile/photo", method = RequestMethod.GET,
+        consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public void loadUserPhoto() {
+        System.out.println("HERE!");
+    }
+
+    @RequestMapping(value = "/user/profile/photo", method = RequestMethod.POST)
+    public @ResponseBody String saveUserPhoto(@RequestParam("input41") MultipartFile file) {
+        return "sdf";
     }
 }

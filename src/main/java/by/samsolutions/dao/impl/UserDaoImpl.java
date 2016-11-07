@@ -1,8 +1,8 @@
 package by.samsolutions.dao.impl;
 
 import by.samsolutions.dao.UserDao;
-import by.samsolutions.entity.user.User;
-import by.samsolutions.entity.user.UserProfile;
+import by.samsolutions.entity.User;
+import by.samsolutions.entity.UserProfile;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;

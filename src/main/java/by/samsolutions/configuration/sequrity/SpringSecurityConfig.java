@@ -40,8 +40,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                     .loginProcessingUrl("/login")
                     .successHandler(authSuccessHandler)
                     .usernameParameter("username").passwordParameter("password")
-                /*.and()
-                    .exceptionHandling().accessDeniedPage("/accessDenied")*/
+                .and()
+                    .exceptionHandling().accessDeniedPage("/accessDenied")
                 .and()
                     .csrf();
     }

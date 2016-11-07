@@ -8,12 +8,16 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="_csrf" content="${_csrf.token}"/>
+    <meta name="_csrf_header" content="${_csrf.headerName}"/>
     <title><spring:message code="message.title.registration"/></title>
 
     <spring:url value="/static/core/css/bootstrap.min.css" var="bootstrapCss" />
     <spring:url value="/static/core/css/login.css" var="loginCss" />
     <spring:url value="/static/core/css/container.css" var="customContainerCss" />
     <spring:url value="/static/core/css/language_dropdown.css" var="languageDropdown" />
+    <spring:url value="/static/core/css/fileinput.min.css" var="fileInputCss" />
+    <spring:url value="/static/core/js/fileinput.min.js" var="fileInputJs" />
     <spring:url value="/static/core/js/bootstrap.min.js" var="bootstrapJs" />
 
     <!-- Bootstrap -->
@@ -21,6 +25,7 @@
     <link href="${loginCss}" rel="stylesheet" />
     <link href="${customContainerCss}" rel="stylesheet" />
     <link href="${languageDropdown}" rel="stylesheet" />
+    <link href="${fileInputCss}" rel="stylesheet" />
 
     <!-- localization -->
     <spring:message code="message.login.username" var="username"/>
@@ -58,7 +63,15 @@
 <body>
 <jsp:include page="${request.contextPath}/userHeader"></jsp:include>
 <div class="container">
-    <div class="col-md-4 col-md-offset-4">
+    <div class="col-md-4">
+        <div class="loginmodal-container">
+            <h1>Photo</h1><br>
+            <form action="/user/profile/photo" enctype="multipart/form-data">
+                <input id="input-41" name="input41" type="file" class="file-loading">
+            </form>
+        </div>
+    </div>
+    <div class="col-md-4">
         <div class="loginmodal-container">
             <h1>${profile}</h1><br>
             <c:if test="${not empty successProfileChange}">
@@ -93,5 +106,48 @@
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="${bootstrapJs}"></script>
+<script src="${fileInputJs}"></script>
+<script>
+    $(document).on('ready', function() {
+        $("#input-41").fileinput({
+            uploadUrl: "/user/profile/photo",
+            showCaption: false,
+            showClose: false,
+            browseClass: "btn btn-success",
+            browseLabel: "",
+            browseIcon: "<i class=\"glyphicon glyphicon-picture\"></i> ",
+            removeClass: "btn btn-danger",
+            removeLabel: "",
+            removeIcon: "<i class=\"glyphicon glyphicon-trash\"></i> ",
+            uploadClass: "btn btn-info",
+            uploadLabel: "",
+            uploadIcon: "<i class=\"glyphicon glyphicon-upload\"></i> ",
+            autoReplace: true,
+            maxFileCount: 1,
+            previewTemplates: {
+                image: '<div class="file-preview-frame" id="{previewId}" data-fileindex="{fileindex}" data-template="{template}" style="margin-left: 2%;">\n' +
+                        '   <div class="kv-file-content">' +
+                '       <img src="{data}" class="kv-preview-data file-preview-image" title="{caption}" alt="{caption}" style="height: 220px;">\n' +
+                '   </div>\n' +
+                '</div>\n'
+            },
+            layoutTemplates: {
+                footer: "",
+                main2: "{preview}\n" +
+                "<div class=\'input-group {class}\'>\n" +
+                "   <div class=\'input-group-btn btn-group btn-group-justified\'>\n" +
+                "       {browse}\n" +
+                "       {upload}\n" +
+                "       {remove}\n" +
+                "   </div>\n" +
+                "</div>",
+                btnDefault: '<div type="{type}" tabindex="500" title="{title}" style="padding: 10px 0px;" class="{css}"{status}>{icon}{label}</div>',
+                btnLink: '<div type="{type}" tabindex="500" title="{title}" style="padding: 10px 0px;" class="{css}"{status}>{icon}{label}</div>',
+                btnBrowse: '<div type="{type}" tabindex="500" title="{title}" style="padding: 10px 0px;" class="{css}"{status}>{icon}{label}</div>'
+            },
+            allowedFileExtensions: ["jpg", "png", "gif"]
+        });
+    });
+</script>
 </body>
 </html>

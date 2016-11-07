@@ -33,8 +33,8 @@
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a href="/user/profile">${profile}</a></li>
-                    <li><a href="/user">${home}</a></li>
+                    <li><a href="${pageContext.request.contextPath}/user/profile">${profile}</a></li>
+                    <li><a href="${pageContext.request.contextPath}/user">${home}</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li class="form-dropdown dropdown" style="border-width: 0px;padding: 15px;">
