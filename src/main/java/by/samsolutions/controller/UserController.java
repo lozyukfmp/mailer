@@ -138,11 +138,11 @@ public class UserController {
         consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public void loadUserPhoto() {
-        System.out.println("HERE!");
+
     }
 
     @RequestMapping(value = "/user/profile/photo", method = RequestMethod.POST)
-    public @ResponseBody String saveUserPhoto(MultipartHttpServletRequest request) {
+    public @ResponseBody String saveUserPhoto(@RequestParam("input41") MultipartFile file) {
         return "sdf";
     }
 }
