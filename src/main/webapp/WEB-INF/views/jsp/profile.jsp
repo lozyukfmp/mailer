@@ -66,7 +66,7 @@
     <div class="col-md-4">
         <div class="loginmodal-container">
             <h1>Photo</h1><br>
-            <form action="/user/profile/photo" enctype="multipart/form-data">
+            <form enctype="multipart/form-data">
                 <input id="input-41" name="input41" type="file" class="file-loading">
             </form>
         </div>

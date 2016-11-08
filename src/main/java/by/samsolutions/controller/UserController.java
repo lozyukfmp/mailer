@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -141,7 +142,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/user/profile/photo", method = RequestMethod.POST)
-    public @ResponseBody String saveUserPhoto(@RequestParam("input41") MultipartFile file) {
+    public @ResponseBody String saveUserPhoto(MultipartHttpServletRequest request) {
         return "sdf";
     }
 }
