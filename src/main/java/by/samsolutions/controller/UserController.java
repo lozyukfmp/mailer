@@ -1,5 +1,7 @@
 package by.samsolutions.controller;
 
+import java.util.Iterator;
+
 import by.samsolutions.dto.UserProfileDto;
 import by.samsolutions.dto.UserDto;
 import by.samsolutions.entity.user.User;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -134,15 +137,9 @@ public class UserController {
 
     }
 
-    @RequestMapping(value = "/user/profile/photo", method = RequestMethod.GET,
-        consumes = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody
-    public void loadUserPhoto() {
+    @RequestMapping(value = "/user/profile/photo", method = RequestMethod.GET)
+    public void loadUserPhoto(@RequestParam("input41") MultipartFile file) {
 
     }
 
-    @RequestMapping(value = "/user/profile/photo", method = RequestMethod.POST)
-    public @ResponseBody String saveUserPhoto(@RequestParam("input41") MultipartFile file) {
-        return "sdf";
-    }
 }

@@ -1,5 +1,6 @@
 package by.samsolutions.entity.user;
 
+import by.samsolutions.entity.Post;
 import lombok.*;
 
 import javax.persistence.*;
@@ -11,7 +12,6 @@ import java.util.Set;
 @Entity
 @Table(name = "user")
 public class User implements Serializable {
-
     @Id
     @Column(name = "username", nullable = false, length = 45, unique = true)
     private String username;
@@ -25,6 +25,9 @@ public class User implements Serializable {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private Set<UserRole> userRole;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    private Set<Post> posts;
 
     @Column(name = "enabled")
     private boolean enabled;

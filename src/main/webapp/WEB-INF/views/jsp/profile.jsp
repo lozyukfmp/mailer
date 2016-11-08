@@ -17,7 +17,7 @@
     <spring:url value="/static/core/css/container.css" var="customContainerCss" />
     <spring:url value="/static/core/css/language_dropdown.css" var="languageDropdown" />
     <spring:url value="/static/core/css/fileinput.min.css" var="fileInputCss" />
-    <spring:url value="/static/core/js/fileinput.min.js" var="fileInputJs" />
+    <spring:url value="/static/core/js/fileinput.js" var="fileInputJs" />
     <spring:url value="/static/core/js/bootstrap.min.js" var="bootstrapJs" />
 
     <!-- Bootstrap -->
