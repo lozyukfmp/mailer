@@ -1,14 +1,11 @@
 package by.samsolutions.controller;
 
-import java.util.Iterator;
-
 import by.samsolutions.dto.UserProfileDto;
 import by.samsolutions.dto.UserDto;
 import by.samsolutions.entity.user.User;
 import by.samsolutions.entity.user.UserProfile;
 import by.samsolutions.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
@@ -16,13 +13,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -109,36 +103,6 @@ public class UserController {
             return new ModelAndView("loginPage", "successRegistration",
                     "You've been created account successfully.");
         }
-
-    }
-
-    @RequestMapping(value = "/user/profile", method = RequestMethod.GET)
-    public ModelAndView getUserProfile() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        UserProfile userProfile = userService.getUserProfileInfo(auth.getName());
-
-        return new ModelAndView("profile", "userProfile", userProfile);
-    }
-
-    @RequestMapping(value = "/user/profile", method = RequestMethod.POST)
-    public ModelAndView saveUserProfile(@ModelAttribute("userProfile")
-                                            @Valid final UserProfileDto userProfileDto,
-                                        final BindingResult userProfileBindingResult) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        userProfileDto.setUsername(auth.getName());
-        if (!userProfileBindingResult.hasErrors()) {
-            userService.saveUserProfileInfo(userProfileDto);
-
-            return new ModelAndView("profile", "successProfileChange",
-                                    "You've been changed profile successfully.");
-        }
-
-        return new ModelAndView("profile", "userProfile", userProfileDto);
-
-    }
-
-    @RequestMapping(value = "/user/profile/photo", method = RequestMethod.GET)
-    public void loadUserPhoto(@RequestParam("input41") MultipartFile file) {
 
     }
 

@@ -11,6 +11,11 @@ import java.util.Set;
 @NoArgsConstructor
 @Entity
 @Table(name = "user")
+@NamedQueries({
+        @NamedQuery(name="User.findAll", query = "select u from User u"),
+        @NamedQuery(name="User.findByUsername", query = "select u from User u where u.username = :username"),
+        @NamedQuery(name="User.deleteByUsername", query = "delete from User u where u.username = :username")
+})
 public class User implements Serializable {
     @Id
     @Column(name = "username", nullable = false, length = 45, unique = true)

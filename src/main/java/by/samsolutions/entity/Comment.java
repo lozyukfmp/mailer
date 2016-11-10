@@ -1,6 +1,6 @@
 package by.samsolutions.entity;
 
-import java.sql.Timestamp;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,9 +10,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.UniqueConstraint;
 
 import by.samsolutions.entity.user.User;
 import lombok.Data;
@@ -22,6 +25,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Table(name = "comments")
+@NamedQueries({
+				@NamedQuery(name="Comment.findAll", query = "select c from Comment c"),
+})
 public class Comment
 {
 	@Id
@@ -31,10 +37,10 @@ public class Comment
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "comment_date")
-	private Timestamp commentDate;
+	private Date date;
 
 	@Column(name = "comment_text")
-	private String commentText;
+	private String text;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "username", nullable = false)

@@ -5,17 +5,16 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 import by.samsolutions.dao.GenericDao;
 
 public class GenericDaoImpl<T, PK extends Serializable> implements GenericDao<T, PK>
 {
 
-	@Autowired
-	private SessionFactory sessionFactory;
+	@PersistenceContext
+	protected EntityManager entityManager;
 
 	private Class<T> type;
 
@@ -25,33 +24,29 @@ public class GenericDaoImpl<T, PK extends Serializable> implements GenericDao<T,
 		type = (Class) pt.getActualTypeArguments()[0];
 	}
 
-	protected Session getSession() {
-		return sessionFactory.getCurrentSession();
-	}
-
 	@Override
 	public T create(final T t)
 	{
-		return (T) getSession().save(t);
+		entityManager.persist(t);
+		return t;
 	}
 
 	@Override
 	public void delete(final PK id)
 	{
-		getSession().delete(id);
+		entityManager.remove(entityManager.getReference(type, id));
 	}
 
 	@Override
 	public T find(final PK id)
 	{
-		return (T) getSession().get(type, id);
+		return (T) entityManager.find(type, id);
 	}
 
 	@Override
 	public T update(final T t)
 	{
-		getSession().saveOrUpdate(t);
-		return t;
+		return entityManager.merge(t);
 	}
 
 	@Override
