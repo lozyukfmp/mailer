@@ -11,9 +11,9 @@
     <title><spring:message code="message.title.login"/></title>
 
     <spring:url value="/static/core/css/bootstrap.min.css" var="bootstrapCss" />
-    <spring:url value="/static/core/css/login.css" var="loginCss" />
-    <spring:url value="/static/core/css/container.css" var="customContainerCss" />
+    <spring:url value="/static/core/css/custom.container.css" var="customContainerCss" />
     <spring:url value="/static/core/css/language_dropdown.css" var="languageDropdown" />
+
     <spring:url value="/static/core/js/bootstrap.min.js" var="bootstrapJs" />
 
     <!-- localization -->
@@ -46,7 +46,7 @@
 <body>
 <div class="container">
     <div class="col-md-4 col-md-offset-4">
-        <div class="loginmodal-container">
+        <div class="custom-container login-container">
             <c:if test="${not empty error}">
                 <div class="alert alert-danger">
                     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
@@ -66,13 +66,13 @@
                 </div>
             </c:if>
             <h1>${modalLogin}</h1><br>
-            <c:url value="/login" var="loginUrl" />
+            <c:url value="${pageContext.request.contextPath}/login" var="loginUrl" />
             <form:form action="${loginUrl}" method="post">
                 <input type="text" name="username" placeholder="${username}" required>
                 <input type="password" name="password" placeholder="${password}" required/>
-                <input type="submit" name="login" class="login loginmodal-submit" value="${login}">
-                <a href="/welcome">${goToWelcome} |</a>
-                <a href="/registration"> ${register} |</a>
+                <input type="submit" name="login" class="login-submit" value="${login}">
+                <a href="${pageContext.request.contextPath}/welcome">${goToWelcome} |</a>
+                <a href="${pageContext.request.contextPath}/registration"> ${register} |</a>
                 <div class="form-dropdown dropdown">
                     <a class="btn btn-link dropdown-toggle" type="button" data-toggle="dropdown">
                             ${language}

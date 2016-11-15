@@ -29,6 +29,8 @@ import lombok.NoArgsConstructor;
 @Table(name = "comments")
 @NamedQueries({
 				@NamedQuery(name="Comment.findAll", query = "select c from Comment c"),
+				@NamedQuery(name="Comment.findAllByPostId", query = "select c from Comment c where c.post_id = :id"),
+				@NamedQuery(name="Comment.findAllByUsername", query = "select c from Comment c where c.username = :username"),
 })
 public class Comment
 {

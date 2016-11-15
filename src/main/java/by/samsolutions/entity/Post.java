@@ -31,7 +31,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "posts")
 @NamedQueries({
-				@NamedQuery(name="Post.findAll", query = "select p from Post p"),
+				@NamedQuery(name="Post.findAll", query = "select p from Post p order by p.date desc"),
 				@NamedQuery(name="Post.findWithComments", query = "select p from Post p left join fetch p.comments c where p.id = :id"),
 })
 public class Post

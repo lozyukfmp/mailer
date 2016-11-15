@@ -11,9 +11,9 @@
     <title><spring:message code="message.title.registration"/></title>
 
     <spring:url value="/static/core/css/bootstrap.min.css" var="bootstrapCss" />
-    <spring:url value="/static/core/css/login.css" var="loginCss" />
-    <spring:url value="/static/core/css/container.css" var="customContainerCss" />
+    <spring:url value="/static/core/css/custom.container.css" var="customContainerCss" />
     <spring:url value="/static/core/css/language_dropdown.css" var="languageDropdown" />
+
     <spring:url value="/static/core/js/bootstrap.min.js" var="bootstrapJs" />
 
     <!-- Bootstrap -->
@@ -49,7 +49,7 @@
 <body>
 <div class="container">
     <div class="col-md-4 col-md-offset-4">
-        <div class="loginmodal-container">
+        <div class="custom-container login-container">
             <h1>${register}</h1><br>
             <c:if test="${not empty usernameExist}">
                 <div class="alert alert-danger">
@@ -158,9 +158,9 @@
                            placeholder="${thirdname}">
                 </spring:bind>
 
-                <input type="submit" class="login loginmodal-submit" value="${register}"/>
-                <a href="/welcome"> ${goToWelcome} |</a>
-                <a href="/loginPage"> ${login} |</a>
+                <input type="submit" class="login-submit" value="${register}"/>
+                <a href="${pageContext.request.contextPath}/welcome"> ${goToWelcome} |</a>
+                <a href="${pageContext.request.contextPath}/loginPage"> ${login} |</a>
                 <div class="form-dropdown dropdown">
                     <a class="btn btn-link dropdown-toggle" type="button" data-toggle="dropdown">
                             ${language}

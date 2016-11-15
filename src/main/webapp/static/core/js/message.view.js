@@ -1,7 +1,9 @@
 $(document).ready(function () {
 
     var messageContainer = $("#message-container");
+
     var messageModal = $("#send-message-modal");
+    var commentModal = $("#write-comment-modal");
 
     var sendMessageButton = $("#send-message-button");
     var showMessageModalButton = $("#show-message-modal");
@@ -61,6 +63,42 @@ $(document).ready(function () {
         }
     }
 
+    function initCommentModal(message) {
+        message = message || {};
+        isEdit = isEdit || false;
+
+        $("#post-image").fileinput('clear');
+
+        message.imageUrl && $("#post-image").fileinput('refresh', {
+            initialPreviewAsData: true,
+            initialPreview: [
+                message.imageUrl
+            ],
+        });
+
+        $("#message-text").val(message.text);
+
+        sendMessageButton.off();
+
+        if(isEdit) {
+            sendMessageButton.on('click', function () {
+                messageAjax.updateMessage(getMessageData(message), function () {
+                    showMessageList();
+                });
+
+                messageModal.modal("hide");
+            });
+        } else {
+            sendMessageButton.on('click', function () {
+                messageAjax.createMessage(getMessageData(), function () {
+                    showMessageList();
+                });
+
+                messageModal.modal("hide");
+            });
+        }
+    }
+
     showMessageModalButton.click(function () {
         initMessageModal();
         messageModal.modal('show');
@@ -78,5 +116,14 @@ $(document).ready(function () {
             messageModal.modal('show');
         });
     });
+
+    messageContainer.on('click', '.comment-message-button', function () {
+        messageAjax.getMessage($(this).attr('data-id'), function (message) {
+            initCommentModal(message);
+            commentModal.modal('show');
+        });
+    });
+    
+    showMessageList();
     
 });

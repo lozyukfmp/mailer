@@ -8,22 +8,24 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title><spring:message code="message.title.registration"/></title>
+    <title><spring:message code="message.profile"/></title>
 
+    <!--Styles-->
     <spring:url value="/static/core/css/bootstrap.min.css" var="bootstrapCss" />
-    <spring:url value="/static/core/css/login.css" var="loginCss" />
-    <spring:url value="/static/core/css/container.css" var="customContainerCss" />
-    <spring:url value="/static/core/css/language_dropdown.css" var="languageDropdown" />
     <spring:url value="/static/core/css/fileinput.min.css" var="fileInputCss" />
-    <spring:url value="/static/core/js/fileinput.min.js" var="fileInputJs" />
+    <spring:url value="/static/core/css/custom.container.css" var="customContainerCss" />
+    <spring:url value="/static/core/css/language_dropdown.css" var="languageDropdown" />
+
+    <!--Javascript-->
     <spring:url value="/static/core/js/bootstrap.min.js" var="bootstrapJs" />
+    <spring:url value="/static/core/js/fileinput.min.js" var="fileInputJs" />
+    <spring:url value="/static/core/js/fileinput.custom.js" var="fileInputCustomJs" />
 
     <!-- Bootstrap -->
     <link href="${bootstrapCss}" rel="stylesheet" />
-    <link href="${loginCss}" rel="stylesheet" />
+    <link href="${fileInputCss}" rel="stylesheet" />
     <link href="${customContainerCss}" rel="stylesheet" />
     <link href="${languageDropdown}" rel="stylesheet" />
-    <link href="${fileInputCss}" rel="stylesheet" />
 
     <!-- localization -->
     <spring:message code="message.login.username" var="username"/>
@@ -62,15 +64,15 @@
 <jsp:include page="${request.contextPath}/userHeader"></jsp:include>
 <div class="container">
     <div class="col-md-4">
-        <div class="loginmodal-container">
+        <div class="custom-container">
             <h1>Photo</h1><br>
             <form enctype="multipart/form-data">
-                <input id="input-41" name="input41" type="file" class="file-loading">
+                <input id="user-image" name="userImage" type="file" class="file-loading">
             </form>
         </div>
     </div>
     <div class="col-md-4">
-        <div class="loginmodal-container">
+        <div class="custom-container">
             <h1>${profile}</h1><br>
             <c:if test="${not empty successProfileChange}">
                 <div class="alert alert-info">
@@ -87,17 +89,7 @@
                 <form:input type="text" path="secondName" placeholder="${secondname}"/>
                 <form:errors path="thirdName" element="div" cssClass="error-div"/>
                 <form:input type="text" path="thirdName" placeholder="${thirdname}"/>
-                <input type="submit" class="login loginmodal-submit" value="${change}"/>
-                <a href="/user"> ${main} |</a>
-                <div class="form-dropdown dropdown">
-                    <a class="btn btn-link dropdown-toggle" type="button" data-toggle="dropdown">
-                            ${language}
-                        <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="?lang=ru_RU">${russian}</a></li>
-                        <li><a href="?lang=en">${english}</a></li>
-                    </ul>
-                </div>
+                <input type="submit" class="login-submit" value="${change}"/>
             </form:form>
         </div>
     </div>
@@ -105,47 +97,6 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="${bootstrapJs}"></script>
 <script src="${fileInputJs}"></script>
-<script>
-    $(document).on('ready', function() {
-        $("#input-41").fileinput({
-            uploadUrl: "/user/profile/photo",
-            showCaption: false,
-            showClose: false,
-            browseClass: "btn btn-success",
-            browseLabel: "",
-            browseIcon: "<i class=\"glyphicon glyphicon-picture\"></i> ",
-            removeClass: "btn btn-danger",
-            removeLabel: "",
-            removeIcon: "<i class=\"glyphicon glyphicon-trash\"></i> ",
-            uploadClass: "btn btn-info",
-            uploadLabel: "",
-            uploadIcon: "<i class=\"glyphicon glyphicon-upload\"></i> ",
-            autoReplace: true,
-            maxFileCount: 1,
-            previewTemplates: {
-                image: '<div class="file-preview-frame" id="{previewId}" data-fileindex="{fileindex}" data-template="{template}" style="margin-left: 2%;">\n' +
-                        '   <div class="kv-file-content">' +
-                '       <img src="{data}" class="kv-preview-data file-preview-image" title="{caption}" alt="{caption}" style="height: 220px;">\n' +
-                '   </div>\n' +
-                '</div>\n'
-            },
-            layoutTemplates: {
-                footer: "",
-                main2: "{preview}\n" +
-                "<div class=\'input-group {class}\'>\n" +
-                "   <div class=\'input-group-btn btn-group btn-group-justified\'>\n" +
-                "       {browse}\n" +
-                "       {upload}\n" +
-                "       {remove}\n" +
-                "   </div>\n" +
-                "</div>",
-                btnDefault: '<div type="{type}" tabindex="500" title="{title}" style="padding: 10px 0px;" class="{css}"{status}>{icon}{label}</div>',
-                btnLink: '<div type="{type}" tabindex="500" title="{title}" style="padding: 10px 0px;" class="{css}"{status}>{icon}{label}</div>',
-                btnBrowse: '<div type="{type}" tabindex="500" title="{title}" style="padding: 10px 0px;" class="{css}"{status}>{icon}{label}</div>'
-            },
-            allowedFileExtensions: ["jpg", "png", "gif"]
-        });
-    });
-</script>
+<script src="${fileInputCustomJs}"></script>
 </body>
 </html>

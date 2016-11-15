@@ -12,10 +12,10 @@
 
     <!-- .css and .js -->
     <spring:url value="/static/core/css/bootstrap.min.css" var="bootstrapCss" />
-    <spring:url value="/static/core/css/login.css" var="loginCss" />
-    <spring:url value="/static/core/css/container.css" var="customContainerCss" />
+    <spring:url value="/static/core/css/custom.container.css" var="customContainerCss" />
     <spring:url value="/static/core/css/welcome.css" var="welcomeCss" />
     <spring:url value="/static/core/css/language_dropdown.css" var="languageDropdown" />
+
     <spring:url value="/static/core/js/bootstrap.min.js" var="bootstrapJs" />
 
     <!-- localization -->
@@ -58,7 +58,7 @@
                 <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#login-modal">
                     ${login}
                 </button>
-                <a href="/registration" class="btn btn-primary btn-lg">
+                <a href="${pageContext.request.contextPath}/registration" class="btn btn-primary btn-lg">
                     ${register}
                 </a>
             </div>
@@ -67,15 +67,15 @@
 </div>
 
 <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-    <div class="modal-dialog">
-        <div class="loginmodal-container">
+    <div class="modal-dialog" style="width: 400px;">
+        <div class="custom-container login-container">
             <h1>${modalLogin}</h1><br>
             <c:url value="/login" var="loginUrl" />
             <form:form action="${loginUrl}" method="post">
                 <input type="text" name="username" placeholder="${username}" required>
                 <input type="password" name="password" placeholder="${password}" required>
-                <input type="submit" name="login" class="login loginmodal-submit" value="${login}">
-                <a href="/registration">${register}</a>
+                <input type="submit" name="login" class="login-submit" value="${login}">
+                <a href="${pageContext.request.contextPath}/registration">${register}</a>
             </form:form>
         </div>
     </div>

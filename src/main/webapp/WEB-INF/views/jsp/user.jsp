@@ -12,10 +12,9 @@
 
     <!-- Styles -->
     <spring:url value="/static/core/css/bootstrap.min.css" var="bootstrapCss" />
-    <spring:url value="/static/core/css/container.css" var="customContainerStyle" />
+    <spring:url value="/static/core/css/fileinput.min.css" var="fileInputCss" />
     <spring:url value="/static/core/css/language_dropdown.css" var="languageDropdown" />
     <spring:url value="/static/core/css/custom.container.css" var="customContainer" />
-    <spring:url value="/static/core/css/fileinput.min.css" var="fileInputCss" />
     <spring:url value="/static/core/css/message.container.css" var="messageContainerCss" />
 
     <!-- Javascript -->
@@ -28,10 +27,9 @@
 
     <!-- Bootstrap -->
     <link href="${bootstrapCss}" rel="stylesheet" />
-    <link href="${customContainerStyle}" rel="stylesheet" />
+    <link href="${fileInputCss}" rel="stylesheet" />
     <link href="${languageDropdown}" rel="stylesheet" />
     <link href="${customContainer}" rel="stylesheet" />
-    <link href="${fileInputCss}" rel="stylesheet" />
     <link href="${messageContainerCss}" rel="stylesheet" />
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -74,11 +72,32 @@
                     <input id="post-image" name="postImage" type="file" class="file-loading">
                 </div>
                 <div class="form-group">
-                    <label for="comment">Message:</label>
-                    <textarea id="message-text" class="form-control" rows="5" id="comment"></textarea>
+                    <label for="post">Message:</label>
+                    <textarea id="message-text" class="form-control" rows="5" id="post"></textarea>
                 </div>
                 <div class="form-group">
-                    <a href="#" id="send-message-button" class="btn btn-lg btn-info">
+                    <a href="#" id="send-message-button" class="btn btn-lg btn-info send">
+                        <span class="glyphicon glyphicon-send" aria-hidden="true"></span>
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="write-comment-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog" style="width: 800px;">
+        <div class="custom-container">
+            <form enctype="multipart/form-data" name="message-form">
+                <div class="form-group">
+                    <label>Image:</label>
+                    <input id="comment-post-image" name="postImage" type="file" class="file-loading">
+                </div>
+                <div class="form-group">
+                    <label for="comment">Message:</label>
+                    <textarea id="comment-message-text" class="form-control" rows="5" id="comment"></textarea>
+                </div>
+                <div class="form-group">
+                    <a href="#" id="comment-send-message-button" class="btn btn-lg btn-info send">
                         <span class="glyphicon glyphicon-send" aria-hidden="true"></span>
                     </a>
                 </div>

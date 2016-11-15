@@ -97,7 +97,7 @@ public class PostController
 
 			String orgName = file.getOriginalFilename();
 			String filePath = pathToUploads + orgName;
-			imageUrl = uploadsDir + orgName;
+			imageUrl = request.getContextPath() + uploadsDir + orgName;
 			File dest = new File(filePath);
 			file.transferTo(dest);
 		}
