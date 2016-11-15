@@ -1,0 +1,20 @@
+.well-message {
+	padding-bottom: 5px;
+}
+.message-text,
+.message-header,
+.message-link-group {
+	padding: 3px;
+}
+.message-text {
+	margin-top: 5px;
+}
+.message-link-group {
+	text-align: center;
+}
+.message-link-group > a {
+	color: #5bc0de;
+}
+.message-link-group > a:hover {
+	color: #337ab7;
+}

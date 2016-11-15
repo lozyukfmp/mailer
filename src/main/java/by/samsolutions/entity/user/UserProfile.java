@@ -16,20 +16,20 @@ import java.io.Serializable;
 @Table(name = "user_profile")
 public class UserProfile implements Serializable{
 
-    @Id
-    @Column(name = "username", unique = true, nullable = false)
-    private String username;
+	@Id
+	@Column(name = "username", unique = true, nullable = false)
+	private String username;
 
-    @Column(name = "firstname")
-    private String firstName;
+	@Column(name = "firstname")
+	private String firstName;
 
-    @Column(name = "secondname")
-    private String secondName;
+	@Column(name = "secondname")
+	private String secondName;
 
-    @Column(name = "thirdname")
-    private String thirdName;
+	@Column(name = "thirdname")
+	private String thirdName;
 
-    @Column(name = "email")
-    private String email;
+	@Column(name = "email")
+	private String email;
 
 }

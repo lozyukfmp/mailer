@@ -5,7 +5,14 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
+
+import org.hibernate.annotations.LazyToOne;
+import org.hibernate.annotations.LazyToOneOption;
+import org.springframework.context.annotation.Lazy;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Data
 @NoArgsConstructor
@@ -14,6 +21,8 @@ import java.util.Set;
 @NamedQueries({
         @NamedQuery(name="User.findAll", query = "select u from User u"),
         @NamedQuery(name="User.findByUsername", query = "select u from User u where u.username = :username"),
+        @NamedQuery(name="User.findWithProfile", query = "select u from User u left join fetch u.profile where u.username = :username"),
+        @NamedQuery(name="User.findWithRoles", query = "select u from User u left join fetch u.userRole where u.username = :username"),
         @NamedQuery(name="User.deleteByUsername", query = "delete from User u where u.username = :username")
 })
 public class User implements Serializable {
@@ -24,14 +33,16 @@ public class User implements Serializable {
     @Column(name = "password", nullable = false, length = 60)
     private String password;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @PrimaryKeyJoinColumn
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "username")
     private UserProfile profile;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "username")
     private Set<UserRole> userRole;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true)
+    @JoinColumn(name = "username")
     private Set<Post> posts;
 
     @Column(name = "enabled")

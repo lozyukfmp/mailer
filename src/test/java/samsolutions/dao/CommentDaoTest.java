@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.List;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +19,7 @@ import by.samsolutions.dao.UserDao;
 import by.samsolutions.entity.Comment;
 import by.samsolutions.entity.Post;
 import by.samsolutions.entity.user.User;
-import samsolutions.configuration.hibernate.HibernateTestConfiguration;
+import samsolutions.configuration.HibernateTestConfiguration;
 
 @DirtiesContext
 @ContextConfiguration(classes = HibernateTestConfiguration.class)
@@ -51,15 +50,15 @@ public class CommentDaoTest
 		Post post = new Post();
 		post.setText("Some post text");
 		post.setDate(new Date());
-		post.setUser(user);
+		post.setUsername(user.getUsername());
 
-		postDao.create(post);
+		post = postDao.create(post);
 
 		Comment comment = new Comment();
 		comment.setText("Some comment text");
 		comment.setDate(new Date());
-		comment.setUser(user);
-		comment.setPost(post);
+		comment.setUsername(user.getUsername());
+		comment.setPost_id(post.getId());
 
 		commentDao.create(comment);
 
@@ -67,7 +66,7 @@ public class CommentDaoTest
 
 		Assert.assertEquals(comments.size(), 1);
 		Assert.assertEquals(comment.getText(), comments.get(0).getText());
-		Assert.assertEquals(comment.getUser().getUsername(), comments.get(0).getUser().getUsername());
+		Assert.assertEquals(comment.getUsername(), comments.get(0).getUsername());
 
 	}
 
@@ -85,15 +84,15 @@ public class CommentDaoTest
 		Post post = new Post();
 		post.setText("Some post text");
 		post.setDate(new Date());
-		post.setUser(user);
+		post.setUsername(user.getUsername());
 
 		postDao.create(post);
 
 		Comment comment = new Comment();
 		comment.setText("Some comment text");
 		comment.setDate(new Date());
-		comment.setUser(user);
-		comment.setPost(post);
+		comment.setUsername(user.getUsername());
+		comment.setPost_id(post.getId());
 
 		commentDao.create(comment);
 
@@ -121,15 +120,15 @@ public class CommentDaoTest
 		Post post = new Post();
 		post.setText("Some post text");
 		post.setDate(new Date());
-		post.setUser(user);
+		post.setUsername(user.getUsername());
 
 		post = postDao.create(post);
 
 		Comment comment = new Comment();
 		comment.setText("Some comment text");
 		comment.setDate(new Date());
-		comment.setUser(user);
-		comment.setPost(post);
+		comment.setUsername(user.getUsername());
+		comment.setPost_id(post.getId());
 
 		comment = commentDao.create(comment);
 
@@ -154,21 +153,21 @@ public class CommentDaoTest
 		Post post = new Post();
 		post.setText("Some post text");
 		post.setDate(new Date());
-		post.setUser(user);
+		post.setUsername(user.getUsername());
 
 		postDao.create(post);
 
 		Comment firstComment = new Comment();
 		firstComment.setText("Some comment text");
 		firstComment.setDate(new Date());
-		firstComment.setUser(user);
-		firstComment.setPost(post);
+		firstComment.setUsername(user.getUsername());
+		firstComment.setPost_id(post.getId());
 
 		Comment secondComment = new Comment();
 		secondComment.setText("Some comment text");
 		secondComment.setDate(new Date());
-		secondComment.setUser(user);
-		secondComment.setPost(post);
+		secondComment.setUsername(user.getUsername());
+		secondComment.setPost_id(post.getId());
 
 		commentDao.create(firstComment);
 		commentDao.create(secondComment);

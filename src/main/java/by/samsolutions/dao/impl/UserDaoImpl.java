@@ -17,4 +17,24 @@ public class UserDaoImpl extends GenericDaoImpl<User, String> implements UserDao
 		return entityManager.createNamedQuery("User.findAll").getResultList();
 	}
 
+	@Override
+	public User findByUsername(final String username)
+	{
+		return (User) entityManager.createNamedQuery("User.findByUsername")
+		                           .setParameter("username", username).getSingleResult();
+	}
+
+	@Override
+	public User findWithProfile(final String username)
+	{
+		return (User) entityManager.createNamedQuery("User.findWithProfile")
+		                           .setParameter("username", username).getSingleResult();
+	}
+
+	@Override
+	public User findWithRoles(final String username)
+	{
+		return (User) entityManager.createNamedQuery("User.findWithRoles")
+		                           .setParameter("username", username).getSingleResult();
+	}
 }

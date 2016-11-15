@@ -29,12 +29,11 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .passwordEncoder(passwordEncoder());
     }
 
-    @Override
     protected void configure(final HttpSecurity http) throws Exception {
 
         http.authorizeRequests()
-                .antMatchers("/user/**").access("hasRole('ROLE_USER')")
-                .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
+                .antMatchers("/user*").access("hasRole('ROLE_USER')")
+                .antMatchers("/admin*").access("hasRole('ROLE_ADMIN')")
                 .and()
                     .formLogin().loginPage("/loginPage")
                     .loginProcessingUrl("/login")
@@ -43,12 +42,11 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                     .exceptionHandling().accessDeniedPage("/accessDenied")
                 .and()
-                    .csrf();
+                    .csrf().disable();
     }
 
     @Bean
     public PasswordEncoder passwordEncoder(){
-        PasswordEncoder encoder = new BCryptPasswordEncoder();
-        return encoder;
+        return new BCryptPasswordEncoder();
     }
 }

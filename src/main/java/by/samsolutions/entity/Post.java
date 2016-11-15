@@ -1,11 +1,13 @@
 package by.samsolutions.entity;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,6 +20,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import by.samsolutions.entity.user.User;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -28,6 +32,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "posts")
 @NamedQueries({
 				@NamedQuery(name="Post.findAll", query = "select p from Post p"),
+				@NamedQuery(name="Post.findWithComments", query = "select p from Post p left join fetch p.comments c where p.id = :id"),
 })
 public class Post
 {
@@ -36,6 +41,9 @@ public class Post
 	@Column(name = "post_id")
 	private int id;
 
+	@Column(name = "username")
+	private String username;
+
 	@Column(name = "post_text")
 	private String text;
 
@@ -43,14 +51,11 @@ public class Post
 	@Column(name = "post_date")
 	private Date date;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "username", nullable = false)
-	private User user;
+	@Column(name = "image_url")
+	private String imageUrl;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "post")
-	private Set<Like> likes;
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "post")
-	private Set<Comment> comments;
+	@OneToMany(fetch = FetchType.LAZY, orphanRemoval = true)
+	@JoinColumn(name = "post_id")
+	private Set<Comment> comments = new HashSet<>();
 
 }

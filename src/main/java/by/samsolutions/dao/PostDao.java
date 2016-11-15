@@ -4,4 +4,5 @@ import by.samsolutions.entity.Post;
 
 public interface PostDao extends GenericDao<Post, Integer>
 {
+	Post findWithComments(Integer postId);
 }

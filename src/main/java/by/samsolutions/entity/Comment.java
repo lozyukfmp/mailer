@@ -17,6 +17,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import by.samsolutions.entity.user.User;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -33,7 +35,13 @@ public class Comment
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "comment_id")
-	private int id;
+	private Integer id;
+
+	@Column(name = "post_id")
+	private Integer post_id;
+
+	@Column(name = "username")
+	private String username;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "comment_date")
@@ -41,13 +49,5 @@ public class Comment
 
 	@Column(name = "comment_text")
 	private String text;
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "username", nullable = false)
-	private User user;
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "post_id", nullable = false)
-	private Post post;
 
 }

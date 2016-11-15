@@ -17,7 +17,7 @@ import by.samsolutions.dao.PostDao;
 import by.samsolutions.dao.UserDao;
 import by.samsolutions.entity.Post;
 import by.samsolutions.entity.user.User;
-import samsolutions.configuration.hibernate.HibernateTestConfiguration;
+import samsolutions.configuration.HibernateTestConfiguration;
 
 
 @DirtiesContext
@@ -45,7 +45,7 @@ public class PostDaoTest
 		Post post = new Post();
 		post.setText("Some post text");
 		post.setDate(new Date());
-		post.setUser(user);
+		post.setUsername(user.getUsername());
 
 		postDao.create(post);
 
@@ -53,7 +53,7 @@ public class PostDaoTest
 
 		Assert.assertEquals(posts.size(), 1);
 		Assert.assertEquals(post.getText(), posts.get(0).getText());
-		Assert.assertEquals(post.getUser().getUsername(), posts.get(0).getUser().getUsername());
+		Assert.assertEquals(post.getUsername(), posts.get(0).getUsername());
 	}
 
 	@Test
@@ -70,7 +70,7 @@ public class PostDaoTest
 		Post post = new Post();
 		post.setText("Some post text");
 		post.setDate(new Date());
-		post.setUser(user);
+		post.setUsername(user.getUsername());
 
 		postDao.create(post);
 
@@ -82,7 +82,7 @@ public class PostDaoTest
 
 		Assert.assertEquals(posts.size(), 1);
 		Assert.assertEquals(post.getText(), posts.get(0).getText());
-		Assert.assertEquals(post.getUser().getUsername(), posts.get(0).getUser().getUsername());
+		Assert.assertEquals(post.getUsername(), posts.get(0).getUsername());
 	}
 
 	@Test
@@ -99,7 +99,7 @@ public class PostDaoTest
 		Post post = new Post();
 		post.setText("Some post text");
 		post.setDate(new Date());
-		post.setUser(user);
+		post.setUsername(user.getUsername());
 
 		post = postDao.create(post);
 
@@ -124,12 +124,12 @@ public class PostDaoTest
 		Post firstPost = new Post();
 		firstPost.setText("First post text");
 		firstPost.setDate(new Date());
-		firstPost.setUser(user);
+		firstPost.setUsername(user.getUsername());
 
 		Post secondPost = new Post();
 		secondPost.setText("Second post text");
 		secondPost.setDate(new Date());
-		secondPost.setUser(user);
+		secondPost.setUsername(user.getUsername());
 
 		postDao.create(firstPost);
 		postDao.create(secondPost);

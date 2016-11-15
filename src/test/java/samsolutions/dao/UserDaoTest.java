@@ -18,9 +18,8 @@ import by.samsolutions.dao.UserDao;
 import by.samsolutions.entity.user.User;
 import by.samsolutions.entity.user.UserProfile;
 import by.samsolutions.entity.user.UserRole;
-import samsolutions.configuration.hibernate.HibernateTestConfiguration;
+import samsolutions.configuration.HibernateTestConfiguration;
 
-@DirtiesContext
 @ContextConfiguration(classes = HibernateTestConfiguration.class)
 @RunWith(SpringJUnit4ClassRunner.class)
 public class UserDaoTest
@@ -46,14 +45,16 @@ public class UserDaoTest
 
 		UserRole userRole = new UserRole();
 		userRole.setRole("ROLE_USER");
-		userRole.setUser(user);
+		//userRole.setUser(user);
 		Set<UserRole> userRoleSet = new HashSet<>();
 		userRoleSet.add(userRole);
 
 		user.setProfile(userProfile);
+		userProfile.setUsername(user.getUsername());
 		user.setUserRole(userRoleSet);
 
 		userDao.create(user);
+
 
 		List<User> users = userDao.all();
 
@@ -80,6 +81,7 @@ public class UserDaoTest
 		userProfile.setUsername(user.getUsername());
 
 		user.setProfile(userProfile);
+		userProfile.setUsername(user.getUsername());
 
 		userDao.create(user);
 
@@ -111,6 +113,7 @@ public class UserDaoTest
 		userProfile.setUsername(user.getUsername());
 
 		user.setProfile(userProfile);
+		userProfile.setUsername(user.getUsername());
 
 		user = userDao.create(user);
 
