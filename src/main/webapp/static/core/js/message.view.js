@@ -1,8 +1,9 @@
 $(document).ready(function () {
 
-    var sendMessageButton = $("#send-message-button");
-    var sendMessageModal = $("#send-message-modal");
     var messageContainer = $("#message-container");
+    var sendMessageModal = $("#send-message-modal");
+
+    var sendMessageButton = $("#send-message-button");
 
     function getMessageData() {
         
@@ -20,13 +21,21 @@ $(document).ready(function () {
         return formData;
     }
 
-    
+    function showMessageList() {
+        messageAjax.getMessageList(function (messageList) {
+            messageContainer.html(messageList);
+        });
+    }
+
+    messageContainer.on('click', '.remove-message-button', function () {
+        messageAjax.deleteMessage($(this).attr('data-id'), function () {
+            showMessageList();
+        });
+    });
 
     sendMessageButton.click(function () {
         messageAjax.createMessage(getMessageData(), function () {
-            messageAjax.getMessageList(function (messageList) {
-                messageContainer.html(messageList);
-            })
+            showMessageList();
         });
 
         sendMessageModal.modal("hide");

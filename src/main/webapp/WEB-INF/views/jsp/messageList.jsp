@@ -15,13 +15,13 @@
                 ${message.text}
         </div>
         <div class="message-link-group">
-            <a class="btn btn-lg btn-link" href='#'>
+            <a class="btn btn-lg btn-link comment-message-button" href='#' data-id="${message.id}">
                 <span class='glyphicon glyphicon-comment' aria-hidden='true'></span>
             </a>
-            <a class="btn btn-lg btn-link" href='#'>
+            <a class="btn btn-lg btn-link edit-message-button" href='#' data-id="${message.id}">
                 <span class='glyphicon glyphicon-pencil' aria-hidden='true'></span>
             </a>
-            <a class="btn btn-lg btn-link" href="#">
+            <a class="btn btn-lg btn-link remove-message-button" href="#" data-id="${message.id}">
                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
             </a>
         </div>
