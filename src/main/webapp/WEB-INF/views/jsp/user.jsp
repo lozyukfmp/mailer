@@ -59,10 +59,9 @@
     </div>
     <div class="col-md-3">
         <div class="custom-container">
-            <button class="btn btn-lg btn-info" data-toggle="modal" data-target="#send-message-modal">
+            <button id="show-message-modal" class="btn btn-lg btn-info">
                 <span class="glyphicon glyphicon-send" aria-hidden="true"></span>
             </button>
-            <button class="btn btn-lg btn-primary">Second button</button>
         </div>
     </div>
 </div>

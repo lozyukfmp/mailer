@@ -1,22 +1,20 @@
 $(document).ready(function () {
 
     var messageContainer = $("#message-container");
-    var sendMessageModal = $("#send-message-modal");
+    var messageModal = $("#send-message-modal");
 
     var sendMessageButton = $("#send-message-button");
+    var showMessageModalButton = $("#show-message-modal");
 
-    function getMessageData() {
-        
+    function getMessageData(message) {
+        message = message || {};
+
         var formData = new FormData();
-        var image = $("#post-image")[0].files[0] || null;
+        var image = $("#post-image")[0].files[0];
+        message.text = $("#message-text").val();
         
         formData.append("postImage", image);
-        formData.append("postMessage", JSON.stringify({
-            username: undefined,
-            text: $("#message-text").val(),
-            date: undefined,
-            imageUrl: undefined
-        }));
+        formData.append("postMessage", JSON.stringify(message));
         
         return formData;
     }
@@ -27,18 +25,58 @@ $(document).ready(function () {
         });
     }
 
+    function initMessageModal(message, isEdit) {
+        message = message || {};
+        isEdit = isEdit || false;
+
+        $("#post-image").fileinput('clear');
+        
+        message.imageUrl && $("#post-image").fileinput('refresh', {
+            initialPreviewAsData: true,
+            initialPreview: [
+                message.imageUrl
+            ],
+        });
+
+        $("#message-text").val(message.text);
+
+        sendMessageButton.off();
+
+        if(isEdit) {
+            sendMessageButton.on('click', function () {
+                messageAjax.updateMessage(getMessageData(message), function () {
+                    showMessageList();
+                });
+
+                messageModal.modal("hide");
+            });
+        } else {
+            sendMessageButton.on('click', function () {
+                messageAjax.createMessage(getMessageData(), function () {
+                    showMessageList();
+                });
+
+                messageModal.modal("hide");
+            });
+        }
+    }
+
+    showMessageModalButton.click(function () {
+        initMessageModal();
+        messageModal.modal('show');
+    });
+
     messageContainer.on('click', '.remove-message-button', function () {
         messageAjax.deleteMessage($(this).attr('data-id'), function () {
             showMessageList();
         });
     });
 
-    sendMessageButton.click(function () {
-        messageAjax.createMessage(getMessageData(), function () {
-            showMessageList();
+    messageContainer.on('click', '.edit-message-button', function () {
+        messageAjax.getMessage($(this).attr('data-id'), function (message) {
+            initMessageModal(message, true);
+            messageModal.modal('show');
         });
-
-        sendMessageModal.modal("hide");
     });
-
+    
 });
