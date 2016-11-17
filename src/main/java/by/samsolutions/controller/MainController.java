@@ -8,9 +8,6 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 @Controller
 public class MainController {
 
-    @Autowired
-    CommonsMultipartResolver multipartResolver;
-
     @RequestMapping(value = {"/", "/welcome"})
     public String welcome() {
         return "welcome";

@@ -39,6 +39,13 @@ public class CommentServiceImpl implements CommentService
 
 	@Override
 	@Transactional
+	public Comment createComment(final Comment comment)
+	{
+		return commentDao.create(comment);
+	}
+
+	@Override
+	@Transactional
 	public Comment updateComment(final Comment comment)
 	{
 		return commentDao.update(comment);

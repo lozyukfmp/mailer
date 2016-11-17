@@ -21,7 +21,6 @@ public class PostServiceImpl implements PostService
 	@Transactional
 	public Post createPost(final Post post)
 	{
-		post.setUsername("Artem");
 		post.setDate(new Date());
 		Post result = postDao.create(post);
 

@@ -13,6 +13,11 @@ $(document).ready(function () {
 
         var formData = new FormData();
         var image = $("#post-image")[0].files[0];
+
+        if(!image) {
+            message.imageUrl = null;
+        }
+
         message.text = $("#message-text").val();
         
         formData.append("postImage", image);
