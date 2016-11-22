@@ -66,7 +66,7 @@
                 </div>
             </c:if>
             <h1>${modalLogin}</h1><br>
-            <c:url value="${pageContext.request.contextPath}/login" var="loginUrl" />
+            <c:url value="/login" var="loginUrl" />
             <form:form action="${loginUrl}" method="post">
                 <input type="text" name="username" placeholder="${username}" required>
                 <input type="password" name="password" placeholder="${password}" required/>

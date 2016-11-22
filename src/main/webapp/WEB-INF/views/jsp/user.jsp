@@ -24,6 +24,8 @@
     <spring:url value="/static/core/js/fileinput.custom.js" var="fileInputCustomJs"/>
     <spring:url value="/static/core/js/message.view.js" var="messageViewJs"/>
     <spring:url value="/static/core/js/message.ajax.js" var="messageAjaxJs"/>
+    <spring:url value="/static/core/js/comment.ajax.js" var="commentAjaxJs"/>
+    <spring:url value="/static/core/js/comment.view.js" var="commentViewJs"/>
 
     <!-- Bootstrap -->
     <link href="${bootstrapCss}" rel="stylesheet" />
@@ -57,13 +59,14 @@
     </div>
     <div class="col-md-3">
         <div class="custom-container">
-            <button id="show-message-modal" class="btn btn-lg btn-info">
+            <button id="view-create-message-modal-button" class="btn btn-lg btn-info">
                 <span class="glyphicon glyphicon-send" aria-hidden="true"></span>
             </button>
         </div>
     </div>
 </div>
-<div class="modal fade" id="send-message-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+<div class="modal fade" id="create-message-modal" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
     <div class="modal-dialog" style="width: 400px;">
         <div class="custom-container">
             <form enctype="multipart/form-data" name="message-form">
@@ -76,7 +79,7 @@
                     <textarea id="message-text" class="form-control" rows="5" id="post"></textarea>
                 </div>
                 <div class="form-group">
-                    <a href="#" id="send-message-button" class="btn btn-lg btn-info send">
+                    <a href="#" id="create-message-button" class="btn btn-lg btn-info send">
                         <span class="glyphicon glyphicon-send" aria-hidden="true"></span>
                     </a>
                 </div>
@@ -84,24 +87,23 @@
         </div>
     </div>
 </div>
-<div class="modal fade" id="write-comment-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+<div class="modal fade" id="view-message-modal" tabindex="-1"
+     role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
     <div class="modal-dialog" style="width: 800px;">
-        <div class="custom-container">
-            <form enctype="multipart/form-data" name="message-form">
-                <div class="form-group">
-                    <label>Image:</label>
-                    <input id="comment-post-image" name="postImage" type="file" class="file-loading">
-                </div>
-                <div class="form-group">
-                    <label for="comment">Message:</label>
-                    <textarea id="comment-message-text" class="form-control" rows="5" id="comment"></textarea>
-                </div>
-                <div class="form-group">
-                    <a href="#" id="comment-send-message-button" class="btn btn-lg btn-info send">
-                        <span class="glyphicon glyphicon-send" aria-hidden="true"></span>
-                    </a>
-                </div>
-            </form>
+        <div class="custom-container" style="height: 600px;">
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="create-comment-modal" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog" style="margin-top: 150px;width: 300px;">
+        <div class="custom-container" style="height: 240px;">
+            <label>Comment:</label>
+            <textarea id="create-comment-text" class="form-control" rows="5"></textarea>
+            <br>
+            <button id="create-comment-button" class="btn btn-lg btn-info">
+                <span class='glyphicon glyphicon-comment' aria-hidden='true'></span>
+            </button>
         </div>
     </div>
 </div>
@@ -111,5 +113,7 @@
 <script src="${fileInputCustomJs}"></script>
 <script src="${messageViewJs}"></script>
 <script src="${messageAjaxJs}"></script>
+<script src="${commentViewJs}"></script>
+<script src="${commentAjaxJs}"></script>
 </body>
 </html>

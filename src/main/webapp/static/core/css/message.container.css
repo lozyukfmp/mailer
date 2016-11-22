@@ -1,20 +1,38 @@
 .well-message {
 	padding-bottom: 5px;
 }
+
 .message-text,
 .message-header,
 .message-link-group {
 	padding: 3px;
 }
+
 .message-text {
 	margin-top: 5px;
 }
-.message-link-group {
+
+.message-link-group,
+.comment-link-group {
 	text-align: center;
 }
-.message-link-group > a {
+
+.message-link-group > a,
+.comment-link-group > a {
 	color: #5bc0de;
 }
-.message-link-group > a:hover {
+
+.message-link-group > a:hover,
+.comment-link-group > a:hover {
 	color: #337ab7;
+}
+
+.comment-header {
+	border-bottom: 1px solid grey;
+}
+
+.comment-container {
+	padding: 10px;
+	height: 500px;
+	overflow-y: auto;
 }

@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -53,40 +55,59 @@ public class PostController
 		return postService.getPost(id);
 	}
 
+	@GetMapping("/view/{id}")
+	public ModelAndView getPostView(@PathVariable Integer id)
+	{
+		Post post = postService.getPost(id);
+
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.addObject("message", post);
+		modelAndView.setViewName("message");
+
+		return modelAndView;
+	}
+
 	@PostMapping("/create")
-	public @ResponseBody ResponseEntity<Post> createPost(@RequestParam(value = "postImage", required = false) MultipartFile file,
-	                                                     @RequestParam("postMessage") String postMessage) throws IOException
+	public @ResponseBody ResponseEntity<Post> createPost
+					(@RequestParam(value = "postImage", required = false) MultipartFile file,
+					 @RequestParam("postMessage") String postMessage) throws IOException
 	{
 		Post post = new ObjectMapper().readValue(postMessage, Post.class);
-		post.setImageUrl(saveImageToDisk(file));
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+		post.setUsername(auth.getName());
+		post.setImageUrl(saveImageToDisk(file, post.getImageUrl()));
 		post = postService.createPost(post);
 
 		return new ResponseEntity<>(post, HttpStatus.OK);
 	}
 
 	@PostMapping("/update")
-	public @ResponseBody ResponseEntity<Post> updatePost(@RequestParam(value = "postImage", required = false) MultipartFile file,
-	                                                      @RequestParam("postMessage") String postMessage) throws IOException
+	public @ResponseBody ResponseEntity<Post> updatePost
+					(@RequestParam(value = "postImage", required = false) MultipartFile file,
+					 @RequestParam("postMessage") String postMessage) throws IOException
 	{
 		Post post = new ObjectMapper().readValue(postMessage, Post.class);
-		post.setImageUrl(saveImageToDisk(file));
+		post.setImageUrl(saveImageToDisk(file, post.getImageUrl()));
 		post = postService.updatePost(post);
 
 		return new ResponseEntity<>(post, HttpStatus.OK);
 	}
 
 	@PostMapping("/delete/{id}")
-	public @ResponseBody ResponseEntity<Post> deletePost(@PathVariable Integer id)
+	public @ResponseBody ResponseEntity<Post> deletePost
+					(@PathVariable Integer id)
 	{
 		postService.deletePost(id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
-	private String saveImageToDisk(MultipartFile file) throws IOException{
-		String imageUrl = null;
+	private String saveImageToDisk(MultipartFile file, String postImageUrl) throws IOException{
 
 		if (file != null && !file.isEmpty())
 		{
+			String imageUrl;
+
 			String uploadsDir = "/static/core/pictures/";
 			String pathToUploads = request.getServletContext().getRealPath(uploadsDir);
 
@@ -100,9 +121,14 @@ public class PostController
 			imageUrl = request.getContextPath() + uploadsDir + orgName;
 			File dest = new File(filePath);
 			file.transferTo(dest);
+
+			return imageUrl;
+		}
+		else
+		{
+			return postImageUrl;
 		}
 
-		return imageUrl;
 	}
 
 }

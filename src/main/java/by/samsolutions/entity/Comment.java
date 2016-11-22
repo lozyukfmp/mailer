@@ -29,7 +29,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "comments")
 @NamedQueries({
 				@NamedQuery(name="Comment.findAll", query = "select c from Comment c"),
-				@NamedQuery(name="Comment.findAllByPostId", query = "select c from Comment c where c.post_id = :id"),
+				@NamedQuery(name="Comment.findAllByPostId", query = "select c from Comment c where c.postId = :id"),
 				@NamedQuery(name="Comment.findAllByUsername", query = "select c from Comment c where c.username = :username"),
 })
 public class Comment
@@ -40,7 +40,7 @@ public class Comment
 	private Integer id;
 
 	@Column(name = "post_id")
-	private Integer post_id;
+	private Integer postId;
 
 	@Column(name = "username")
 	private String username;

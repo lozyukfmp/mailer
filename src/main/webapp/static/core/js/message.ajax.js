@@ -37,6 +37,13 @@ var messageAjax = (function () {
 				success: callback
 			});
 		},
+		getMessageView: function(id, callback) {
+			$.ajax({
+				type: "GET",
+				url: "post/view/" + id,
+				success: callback
+			});
+		},
 		getMessageList: function (callback) {
 			$.ajax({
 				type: "GET",
