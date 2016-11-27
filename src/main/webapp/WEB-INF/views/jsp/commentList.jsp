@@ -3,11 +3,11 @@
 <c:forEach items="${commentList}" var="comment">
     <div class='well well-comment'>
         <span class= "comment-header">
-            By <strong>${comment.username}</strong>
-            on <strong>${comment.date}</strong>
+            <strong>${comment.username} | </strong>
+            <strong>${comment.date}</strong>
         </span>
         <div class="comment-text">
-                ${comment.text}
+            <p>${comment.text}</p>
         </div>
         <div class="comment-link-group">
             <a class="btn btn-lg btn-link edit-comment-button" href='#' data-id="${comment.id}">

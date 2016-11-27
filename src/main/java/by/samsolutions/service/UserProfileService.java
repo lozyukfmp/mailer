@@ -8,4 +8,6 @@ public interface UserProfileService
 	UserProfile getUserProfile(String username);
 
 	UserProfile updateUserProfile(UserProfileDto userProfile);
+
+	UserProfile uploadUserPhoto(String username, String photoUrl);
 }

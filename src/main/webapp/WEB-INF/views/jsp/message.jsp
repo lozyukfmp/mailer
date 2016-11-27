@@ -4,10 +4,12 @@
     <div class="col-md-6">
         <div class="message" data-id="${message.id}">
             <div class='message-image'>
-                <img src="${message.imageUrl}" width='100%' height='300' class='img-thumbnail'/>
+                <c:if test="${message.imageUrl ne null}">
+                    <img src="${message.imageUrl}" width='100%' height='300' class='img-thumbnail'/>
+                </c:if>
             </div>
             <div class="message-text">
-                ${message.text}
+                <p>${message.text}</p>
                 <button id="view-create-comment-modal-button" class="btn btn-lg btn-info" href='#'>
                     Comment <span class='glyphicon glyphicon-comment' aria-hidden='true'></span>
                 </button>
