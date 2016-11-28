@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page pageEncoding="UTF-8" contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
@@ -22,8 +22,12 @@
     <spring:url value="/static/core/js/jquery-3.1.1.min.js" var="jqueryJs"/>
     <spring:url value="/static/core/js/fileinput.min.js" var="fileInputJs"/>
     <spring:url value="/static/core/js/fileinput.custom.js" var="fileInputCustomJs"/>
+    <spring:url value="/static/core/js/user.view.js" var="userViewJs"/>
+    <spring:url value="/static/core/js/user.ajax.js" var="userAjaxJs"/>
     <spring:url value="/static/core/js/message.view.js" var="messageViewJs"/>
     <spring:url value="/static/core/js/message.ajax.js" var="messageAjaxJs"/>
+    <spring:url value="/static/core/js/comment.ajax.js" var="commentAjaxJs"/>
+    <spring:url value="/static/core/js/comment.view.js" var="commentViewJs"/>
 
     <!-- Bootstrap -->
     <link href="${bootstrapCss}" rel="stylesheet" />
@@ -44,9 +48,11 @@
 <div class="container">
     <div class="col-md-4">
         <div class="custom-container">
-            <form enctype="multipart/form-data">
+            <%--<form enctype="multipart/form-data">
                 <input id="user-image" name="user-image" type="file" class="file-loading">
-            </form>
+            </form>--%>
+            <div class='user-image'>
+            </div>
         </div>
     </div>
     <div class="col-md-5">
@@ -57,13 +63,14 @@
     </div>
     <div class="col-md-3">
         <div class="custom-container">
-            <button id="show-message-modal" class="btn btn-lg btn-info">
+            <button id="view-create-message-modal-button" class="btn btn-lg btn-info">
                 <span class="glyphicon glyphicon-send" aria-hidden="true"></span>
             </button>
         </div>
     </div>
 </div>
-<div class="modal fade" id="send-message-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+<div class="modal fade" id="create-message-modal" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
     <div class="modal-dialog" style="width: 400px;">
         <div class="custom-container">
             <form enctype="multipart/form-data" name="message-form">
@@ -76,7 +83,7 @@
                     <textarea id="message-text" class="form-control" rows="5" id="post"></textarea>
                 </div>
                 <div class="form-group">
-                    <a href="#" id="send-message-button" class="btn btn-lg btn-info send">
+                    <a href="#" id="create-message-button" class="btn btn-lg btn-info send">
                         <span class="glyphicon glyphicon-send" aria-hidden="true"></span>
                     </a>
                 </div>
@@ -84,24 +91,23 @@
         </div>
     </div>
 </div>
-<div class="modal fade" id="write-comment-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+<div class="modal fade" id="view-message-modal" tabindex="-1"
+     role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
     <div class="modal-dialog" style="width: 800px;">
-        <div class="custom-container">
-            <form enctype="multipart/form-data" name="message-form">
-                <div class="form-group">
-                    <label>Image:</label>
-                    <input id="comment-post-image" name="postImage" type="file" class="file-loading">
-                </div>
-                <div class="form-group">
-                    <label for="comment">Message:</label>
-                    <textarea id="comment-message-text" class="form-control" rows="5" id="comment"></textarea>
-                </div>
-                <div class="form-group">
-                    <a href="#" id="comment-send-message-button" class="btn btn-lg btn-info send">
-                        <span class="glyphicon glyphicon-send" aria-hidden="true"></span>
-                    </a>
-                </div>
-            </form>
+        <div class="custom-container" style="height: 600px;">
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="create-comment-modal" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog" style="margin-top: 150px;width: 300px;">
+        <div class="custom-container" style="height: 240px;">
+            <label>Comment:</label>
+            <textarea id="create-comment-text" class="form-control" rows="5"></textarea>
+            <br>
+            <button id="create-comment-button" class="btn btn-lg btn-info">
+                <span class='glyphicon glyphicon-comment' aria-hidden='true'></span>
+            </button>
         </div>
     </div>
 </div>
@@ -109,7 +115,11 @@
 <script src="${bootstrapJs}"></script>
 <script src="${fileInputJs}"></script>
 <script src="${fileInputCustomJs}"></script>
+<script src="${userAjaxJs}"></script>
+<script src="${userViewJs}"></script>
 <script src="${messageViewJs}"></script>
 <script src="${messageAjaxJs}"></script>
+<script src="${commentViewJs}"></script>
+<script src="${commentAjaxJs}"></script>
 </body>
 </html>

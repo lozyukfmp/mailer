@@ -2,22 +2,18 @@ $(document).ready(function () {
 
     var messageContainer = $("#message-container");
 
-    var messageModal = $("#send-message-modal");
-    var commentModal = $("#write-comment-modal");
+    var createMessageModal = $("#create-message-modal");
+    var viewMessageModal = $("#view-message-modal");
 
-    var sendMessageButton = $("#send-message-button");
-    var showMessageModalButton = $("#show-message-modal");
+    var viewCreateMessageModalButton = $("#view-create-message-modal-button");
+    var createMessageButton = $("#create-message-button");
 
     function getMessageData(message) {
         message = message || {};
 
         var formData = new FormData();
         var image = $("#post-image")[0].files[0];
-
-        if(!image) {
-            message.imageUrl = null;
-        }
-
+        message.imageUrl = createMessageModal.find("img").attr('src');
         message.text = $("#message-text").val();
         
         formData.append("postImage", image);
@@ -32,7 +28,7 @@ $(document).ready(function () {
         });
     }
 
-    function initMessageModal(message, isEdit) {
+    function initCreateMessageModal(message, isEdit) {
         message = message || {};
         isEdit = isEdit || false;
 
@@ -47,66 +43,30 @@ $(document).ready(function () {
 
         $("#message-text").val(message.text);
 
-        sendMessageButton.off();
+        createMessageButton.off();
 
         if(isEdit) {
-            sendMessageButton.on('click', function () {
+            createMessageButton.on('click', function () {
                 messageAjax.updateMessage(getMessageData(message), function () {
                     showMessageList();
                 });
 
-                messageModal.modal("hide");
+                createMessageModal.modal("hide");
             });
         } else {
-            sendMessageButton.on('click', function () {
+            createMessageButton.on('click', function () {
                 messageAjax.createMessage(getMessageData(), function () {
                     showMessageList();
                 });
 
-                messageModal.modal("hide");
+                createMessageModal.modal("hide");
             });
         }
     }
 
-    function initCommentModal(message) {
-        message = message || {};
-        isEdit = isEdit || false;
-
-        $("#post-image").fileinput('clear');
-
-        message.imageUrl && $("#post-image").fileinput('refresh', {
-            initialPreviewAsData: true,
-            initialPreview: [
-                message.imageUrl
-            ],
-        });
-
-        $("#message-text").val(message.text);
-
-        sendMessageButton.off();
-
-        if(isEdit) {
-            sendMessageButton.on('click', function () {
-                messageAjax.updateMessage(getMessageData(message), function () {
-                    showMessageList();
-                });
-
-                messageModal.modal("hide");
-            });
-        } else {
-            sendMessageButton.on('click', function () {
-                messageAjax.createMessage(getMessageData(), function () {
-                    showMessageList();
-                });
-
-                messageModal.modal("hide");
-            });
-        }
-    }
-
-    showMessageModalButton.click(function () {
-        initMessageModal();
-        messageModal.modal('show');
+    viewCreateMessageModalButton.click(function () {
+        initCreateMessageModal();
+        createMessageModal.modal('show');
     });
 
     messageContainer.on('click', '.remove-message-button', function () {
@@ -117,15 +77,15 @@ $(document).ready(function () {
 
     messageContainer.on('click', '.edit-message-button', function () {
         messageAjax.getMessage($(this).attr('data-id'), function (message) {
-            initMessageModal(message, true);
-            messageModal.modal('show');
+            initCreateMessageModal(message, true);
+            createMessageModal.modal('show');
         });
     });
 
     messageContainer.on('click', '.comment-message-button', function () {
-        messageAjax.getMessage($(this).attr('data-id'), function (message) {
-            initCommentModal(message);
-            commentModal.modal('show');
+        messageAjax.getMessageView($(this).attr('data-id'), function (messageView) {
+            viewMessageModal.find(".custom-container").html(messageView);
+            viewMessageModal.modal('show');
         });
     });
     

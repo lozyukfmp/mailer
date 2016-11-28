@@ -1,8 +1,8 @@
 $(document).ready(function() {
     $("#user-image").fileinput({
-        uploadUrl: "/user/profile/photo",
+        uploadUrl: "/user/profile/photo/upload",
         showCaption: false,
-        showClose: false,
+        showClose: true,
         browseClass: "btn btn-success",
         browseLabel: "",
         browseIcon: "<i class=\"glyphicon glyphicon-picture\"></i> ",
@@ -38,6 +38,7 @@ $(document).ready(function() {
         },
         allowedFileExtensions: ["jpg", "png", "gif"]
     });
+
     $("#post-image").fileinput({
         uploadUrl: " ",
         showCaption: false,

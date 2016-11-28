@@ -32,4 +32,6 @@ public class UserProfile implements Serializable{
 	@Column(name = "email")
 	private String email;
 
+	@Column(name = "image_url")
+	private String imageUrl;
 }

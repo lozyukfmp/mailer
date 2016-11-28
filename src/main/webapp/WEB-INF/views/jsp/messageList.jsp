@@ -3,8 +3,8 @@
 <c:forEach items="${messageList}" var="message">
     <div class='well well-message'>
         <span class= "message-header">
-            By <strong>${message.username}</strong>
-            on <strong>${message.date}</strong>
+            <strong>${message.username} | </strong>
+            <strong>${message.date}</strong>
         </span>
         <c:if test="${message.imageUrl ne null}">
             <div class='message-image'>
@@ -12,7 +12,7 @@
             </div>
         </c:if>
         <div class="message-text">
-                ${message.text}
+            <p>${message.text}</p>
         </div>
         <div class="message-link-group">
             <a class="btn btn-lg btn-link comment-message-button" href='#' data-id="${message.id}">

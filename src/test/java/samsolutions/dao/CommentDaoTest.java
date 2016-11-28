@@ -58,7 +58,7 @@ public class CommentDaoTest
 		comment.setText("Some comment text");
 		comment.setDate(new Date());
 		comment.setUsername(user.getUsername());
-		comment.setPost_id(post.getId());
+		comment.setPostId(post.getId());
 
 		commentDao.create(comment);
 
@@ -92,7 +92,7 @@ public class CommentDaoTest
 		comment.setText("Some comment text");
 		comment.setDate(new Date());
 		comment.setUsername(user.getUsername());
-		comment.setPost_id(post.getId());
+		comment.setPostId(post.getId());
 
 		commentDao.create(comment);
 
@@ -128,7 +128,7 @@ public class CommentDaoTest
 		comment.setText("Some comment text");
 		comment.setDate(new Date());
 		comment.setUsername(user.getUsername());
-		comment.setPost_id(post.getId());
+		comment.setPostId(post.getId());
 
 		comment = commentDao.create(comment);
 
@@ -161,13 +161,13 @@ public class CommentDaoTest
 		firstComment.setText("Some comment text");
 		firstComment.setDate(new Date());
 		firstComment.setUsername(user.getUsername());
-		firstComment.setPost_id(post.getId());
+		firstComment.setPostId(post.getId());
 
 		Comment secondComment = new Comment();
 		secondComment.setText("Some comment text");
 		secondComment.setDate(new Date());
 		secondComment.setUsername(user.getUsername());
-		secondComment.setPost_id(post.getId());
+		secondComment.setPostId(post.getId());
 
 		commentDao.create(firstComment);
 		commentDao.create(secondComment);

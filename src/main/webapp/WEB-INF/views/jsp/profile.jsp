@@ -20,6 +20,8 @@
     <spring:url value="/static/core/js/bootstrap.min.js" var="bootstrapJs" />
     <spring:url value="/static/core/js/fileinput.min.js" var="fileInputJs" />
     <spring:url value="/static/core/js/fileinput.custom.js" var="fileInputCustomJs" />
+    <spring:url value="/static/core/js/userProfile.ajax.js" var="userProfileAjaxJs" />
+    <spring:url value="/static/core/js/userProfile.view.js" var="userProfileViewJs" />
 
     <!-- Bootstrap -->
     <link href="${bootstrapCss}" rel="stylesheet" />
@@ -52,6 +54,7 @@
     <spring:message code="message.go_to_main" var="home"/>
     <spring:message code="message.change" var="change"/>
     <spring:message code="message.successProfileChange" var="profileChange"/>
+    <spring:message code="message.title.photo" var="photo"/>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -65,7 +68,7 @@
 <div class="container">
     <div class="col-md-4">
         <div class="custom-container">
-            <h1>Photo</h1><br>
+            <h1>${photo}</h1><br>
             <form enctype="multipart/form-data">
                 <input id="user-image" name="userImage" type="file" class="file-loading">
             </form>
@@ -98,5 +101,7 @@
 <script src="${bootstrapJs}"></script>
 <script src="${fileInputJs}"></script>
 <script src="${fileInputCustomJs}"></script>
+<script src="${userProfileAjaxJs}"></script>
+<script src="${userProfileViewJs}"></script>
 </body>
 </html>
