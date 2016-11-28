@@ -37,10 +37,10 @@ public class Comment
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "comment_id")
-	private Integer id;
+	private int id;
 
 	@Column(name = "post_id", updatable = false)
-	private Integer postId;
+	private int postId;
 
 	@Column(name = "username")
 	private String username;
