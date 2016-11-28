@@ -36,6 +36,14 @@
                     <li><a href="${pageContext.request.contextPath}/user/profile">${profile}</a></li>
                     <li><a href="${pageContext.request.contextPath}/user">${home}</a></li>
                 </ul>
+                <form class="navbar-form navbar-left">
+                    <div class="form-group">
+                        <input type="text" class="username-field form-control" placeholder="Search">
+                    </div>
+                    <button type="submit" class="btn btn-default btn-search">
+                        <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                    </button>
+                </form>
                 <ul class="nav navbar-nav navbar-right">
                     <li class="form-dropdown dropdown" style="border-width: 0px;padding: 15px;">
                         <a class="btn btn-link dropdown-toggle" type="button" data-toggle="dropdown">
@@ -54,8 +62,8 @@
                         </a>
                     </li>
                 </ul>
-            </div><!--/.nav-collapse -->
-        </div><!--/.container-fluid -->
+            </div>
+        </div>
     </nav>
 </div>
 </body>

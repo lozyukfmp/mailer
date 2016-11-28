@@ -16,6 +16,7 @@
     <spring:url value="/static/core/css/language_dropdown.css" var="languageDropdown" />
     <spring:url value="/static/core/css/custom.container.css" var="customContainer" />
     <spring:url value="/static/core/css/message.container.css" var="messageContainerCss" />
+    <spring:url value="/static/core/css/search.css" var="searchCss" />
 
     <!-- Javascript -->
     <spring:url value="/static/core/js/bootstrap.min.js" var="bootstrapJs"/>
@@ -35,6 +36,7 @@
     <link href="${languageDropdown}" rel="stylesheet" />
     <link href="${customContainer}" rel="stylesheet" />
     <link href="${messageContainerCss}" rel="stylesheet" />
+    <link href="${searchCss}" rel="stylesheet" />
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->

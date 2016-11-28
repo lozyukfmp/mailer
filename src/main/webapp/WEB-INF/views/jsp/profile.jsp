@@ -15,6 +15,7 @@
     <spring:url value="/static/core/css/fileinput.min.css" var="fileInputCss" />
     <spring:url value="/static/core/css/custom.container.css" var="customContainerCss" />
     <spring:url value="/static/core/css/language_dropdown.css" var="languageDropdown" />
+    <spring:url value="/static/core/css/search.css" var="searchCss" />
 
     <!--Javascript-->
     <spring:url value="/static/core/js/bootstrap.min.js" var="bootstrapJs" />
@@ -23,11 +24,12 @@
     <spring:url value="/static/core/js/userProfile.ajax.js" var="userProfileAjaxJs" />
     <spring:url value="/static/core/js/userProfile.view.js" var="userProfileViewJs" />
 
-    <!-- Bootstrap -->
+    <!-- Styles -->
     <link href="${bootstrapCss}" rel="stylesheet" />
     <link href="${fileInputCss}" rel="stylesheet" />
     <link href="${customContainerCss}" rel="stylesheet" />
     <link href="${languageDropdown}" rel="stylesheet" />
+    <link href="${searchCss}" rel="stylesheet" />
 
     <!-- localization -->
     <spring:message code="message.login.username" var="username"/>
