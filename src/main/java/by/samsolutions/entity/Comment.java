@@ -39,7 +39,7 @@ public class Comment
 	@Column(name = "comment_id")
 	private Integer id;
 
-	@Column(name = "post_id")
+	@Column(name = "post_id", updatable = false)
 	private Integer postId;
 
 	@Column(name = "username")

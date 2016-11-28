@@ -26,6 +26,7 @@ CREATE TABLE `user_profile` (
   `secondname` varchar(45) NOT NULL,
   `thirdname` varchar(45) NOT NULL,
   `email` varchar(45) NOT NULL,
+  `image_url` varchar(100),
   PRIMARY KEY (`username`),
   UNIQUE KEY `user_profile_username_uindex` (`username`),
   CONSTRAINT `user_profile_user_username_fk` FOREIGN KEY (`username`) REFERENCES `user` (`username`)

@@ -74,6 +74,15 @@
                            placeholder="${username}">
                 </spring:bind>
 
+                <spring:bind path="user">
+                    <c:if test="${status.error}">
+                        <div class="error-div">
+                            <c:forEach items="${status.errorMessages}" var="error">
+                                <span><c:out value="${error}"/></span>
+                            </c:forEach>
+                        </div>
+                    </c:if>
+                </spring:bind>
                 <spring:bind path="user.password">
                     <c:if test="${status.error}">
                         <div class="error-div">
