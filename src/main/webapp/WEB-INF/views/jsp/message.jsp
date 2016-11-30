@@ -39,5 +39,13 @@
                 </div>
             </c:forEach>
         </div>
+        <div id="paging-comment-container" class= "paging-container" data-paging="2">
+            <a class="more-paging paging-comment" href="#">
+                <span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span> More
+            </a>
+            <a class="turn-paging paging-comment" href="#">
+                <span class="glyphicon glyphicon-triangle-top" aria-hidden="true"></span> Turn
+            </a>
+        </div>
     </div>
 </div>

@@ -1,6 +1,8 @@
 package samsolutions.service;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -16,6 +18,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.util.ReflectionTestUtils;
 
+import by.samsolutions.dao.CommentDao;
 import by.samsolutions.dao.PostDao;
 import by.samsolutions.dao.UserDao;
 import by.samsolutions.entity.Post;
@@ -42,6 +45,12 @@ public class PostServiceTest
 		}
 
 		@Bean
+		public CommentDao commentDao()
+		{
+			return Mockito.mock(CommentDao.class);
+		}
+
+		@Bean
 		public UserDao userDao()
 		{
 			return Mockito.mock(UserDao.class);
@@ -50,6 +59,9 @@ public class PostServiceTest
 
 	@Autowired
 	private PostDao postDao;
+
+	@Autowired
+	private CommentDao commentDao;
 
 	@Autowired
 	private UserDao userDao;
@@ -79,9 +91,11 @@ public class PostServiceTest
 		postList.add(secondPost);
 
 		Mockito.when(userDao.find("Artem")).thenReturn(user);
-		Mockito.when(postDao.all()).thenReturn(postList);
-		Mockito.when(postDao.findWithComments(1)).thenReturn(firstPost);
-		Mockito.when(postDao.findWithComments(2)).thenReturn(secondPost);
+		Mockito.when(postDao.all(2)).thenReturn(postList);
+		Mockito.when(postDao.find(1)).thenReturn(firstPost);
+		Mockito.when(postDao.find(2)).thenReturn(secondPost);
+		Mockito.when(commentDao.findAllByPostId(1, 0)).thenReturn(Collections.EMPTY_LIST);
+		Mockito.when(commentDao.findAllByPostId(2, 0)).thenReturn(Collections.EMPTY_LIST);
 
 		Mockito.doAnswer(invocationOnMock -> {
 			postList.remove(firstPost);
@@ -94,6 +108,7 @@ public class PostServiceTest
 		}).when(postDao).delete(2);
 
 		ReflectionTestUtils.setField(postService, "postDao", postDao);
+		ReflectionTestUtils.setField(postService, "commentDao", commentDao);
 	}
 
 	@Test
@@ -110,7 +125,7 @@ public class PostServiceTest
 
 		Post resultPost = postService.createPost(post);
 
-		List<Post> posts = postService.getAll();
+		List<Post> posts = postService.getAll(2);
 
 		Assert.assertNotNull(resultPost);
 		Assert.assertEquals(posts.size(), 3);
@@ -138,7 +153,7 @@ public class PostServiceTest
 
 		final Post resultPost = postService.updatePost(post);
 
-		final List<Post> posts = postService.getAll();
+		final List<Post> posts = postService.getAll(2);
 
 		Assert.assertNotNull(resultPost);
 		Assert.assertEquals(posts.size(), 2);
@@ -165,7 +180,7 @@ public class PostServiceTest
 	{
 		postService.deletePost(1);
 
-		final List<Post> posts = postService.getAll();
+		final List<Post> posts = postService.getAll(2);
 
 		Assert.assertEquals(posts.size(), 1);
 		Assert.assertEquals(posts.get(0).getId(), 2);
@@ -175,7 +190,7 @@ public class PostServiceTest
 	@Test
 	public void testGetAllPost()
 	{
-		final List<Post> posts = postService.getAll();
+		final List<Post> posts = postService.getAll(2);
 
 		Assert.assertEquals(posts.size(), 2);
 	}

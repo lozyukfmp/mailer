@@ -14,6 +14,6 @@ public interface PostService
 
 	Post getPost(Integer postId);
 
-	List<Post> getAll();
+	List<Post> getAll(Integer messageCount);
 
 }

@@ -22,15 +22,17 @@ public class CommentDaoImpl extends GenericDaoImpl<Comment, Integer>
 	public List<Comment> findAllByUsername(final String username)
 	{
 		return entityManager.createNamedQuery("Comment.findAllByUsername", Comment.class)
-		                    .setParameter("username", username)
+		                    .setParameter("username", username) 
 		                    .getResultList();
 	}
 
 	@Override
-	public List<Comment> findAllByPostId(final Integer postId)
+	public List<Comment> findAllByPostId(final Integer postId, final Integer commentCount)
 	{
 		return entityManager.createNamedQuery("Comment.findAllByPostId", Comment.class)
 		                    .setParameter("id", postId)
+		                    .setFirstResult(0)
+		                    .setMaxResults(commentCount)
 		                    .getResultList();
 	}
 }

@@ -26,10 +26,11 @@ public class CommentController
 	@Autowired
 	private CommentService commentService;
 
-	@GetMapping("/all/{postId}")
-	public ModelAndView getCommentListByPostId(@PathVariable Integer postId)
+	@GetMapping("/all/{postId}/{commentIndex}")
+	public ModelAndView getCommentListByPostId(@PathVariable Integer postId,
+	                                           @PathVariable Integer commentIndex)
 	{
-		List<Comment> commentList = commentService.getCommentListByPostId(postId);
+		List<Comment> commentList = commentService.getCommentListByPostId(postId, commentIndex);
 
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.addObject("commentList", commentList);

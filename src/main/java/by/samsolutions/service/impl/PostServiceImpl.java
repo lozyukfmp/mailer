@@ -1,15 +1,16 @@
 package by.samsolutions.service.impl;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import by.samsolutions.dao.CommentDao;
 import by.samsolutions.dao.PostDao;
+import by.samsolutions.entity.Comment;
 import by.samsolutions.entity.Post;
 import by.samsolutions.service.PostService;
 
@@ -18,6 +19,9 @@ public class PostServiceImpl implements PostService
 {
 	@Autowired
 	private PostDao postDao;
+
+	@Autowired
+	private CommentDao commentDao;
 
 	@Override
 	@Transactional
@@ -46,13 +50,21 @@ public class PostServiceImpl implements PostService
 	@Transactional(readOnly = true)
 	public Post getPost(final Integer postId)
 	{
-		return postDao.findWithComments(postId);
+		Post post = postDao.find(postId);
+
+		if (post != null)
+		{
+			Collection<Comment> comments = commentDao.findAllByPostId(postId, 2);
+			post.setComments(comments);
+		}
+
+		return post;
 	}
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<Post> getAll()
+	public List<Post> getAll(Integer messageCount)
 	{
-		return postDao.all();
+		return postDao.all(messageCount);
 	}
 }

@@ -40,10 +40,10 @@ var commentAjax = (function () {
                 success: callback
             });
         },
-        getCommentListByPostId: function (postId, callback) {
+        getCommentListByPostId: function (postId, lastCommentIndex, callback) {
             $.ajax({
                 type: "GET",
-                url: "comment/all/" + postId,
+                url: "comment/all/" + postId + "/" + lastCommentIndex,
                 success: function(response) {
                     callback(response);
                 }

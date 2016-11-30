@@ -1,4 +1,4 @@
-var commentView = (function () {
+;(function () {
 
     var viewMessageModal = $("#view-message-modal"),
         createCommentButton = $("#create-comment-button"),
@@ -13,10 +13,12 @@ var commentView = (function () {
         return comment;
     }
 
-    function showCommentList() {
-        commentAjax.getCommentListByPostId(viewMessageModal.find(".message").attr('data-id'),
+    function showCommentList(commentCount) {
+        commentAjax.getCommentListByPostId(
+            viewMessageModal.find(".message").attr('data-id'), commentCount,
             function (commentList) {
                 $(".comment-container").html(commentList);
+                $("#paging-comment-container").attr("data-paging", commentCount);
         });
     }
 
@@ -31,7 +33,7 @@ var commentView = (function () {
         if(isEdit) {
             createCommentButton.on('click', function () {
                 commentAjax.updateComment(getCommentData(comment), function () {
-                    showCommentList();
+                    showCommentList($("#paging-comment-container").attr("data-paging"));
                 });
 
                 createCommentModal.modal("hide");
@@ -39,7 +41,7 @@ var commentView = (function () {
         } else {
             createCommentButton.on('click', function () {
                 commentAjax.createComment(getCommentData(), function () {
-                    showCommentList();
+                    showCommentList($("#paging-comment-container").attr("data-paging"));
                 });
 
                 createCommentModal.modal("hide");
@@ -54,7 +56,7 @@ var commentView = (function () {
 
     viewMessageModal.on('click', '.remove-comment-button', function () {
         commentAjax.deleteComment($(this).attr('data-id'), function () {
-            showCommentList();
+            showCommentList($("#paging-comment-container").attr("data-paging"));
         });
     });
 
@@ -63,6 +65,16 @@ var commentView = (function () {
             initCreateCommentModal(comment, true);
             createCommentModal.modal('show');
         });
+    });
+
+    viewMessageModal.on('click', '.more-paging.paging-comment', function () {
+        var index = $("#paging-comment-container").attr("data-paging");
+        showCommentList( + index + 2);
+        
+    });
+
+    viewMessageModal.on('click', '.turn-paging.paging-comment', function () {
+        showCommentList(2);
     });
     
 })();

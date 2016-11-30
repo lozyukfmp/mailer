@@ -1,0 +1,12 @@
+.paging-container {
+	margin-top: 15px;
+	text-align: center;
+}
+
+.paging-container > a{
+	color: #5bc0de;
+}
+
+.paging-container > .turn-paging {
+	margin-left: 15px;
+}

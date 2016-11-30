@@ -1,6 +1,7 @@
 $(document).ready(function () {
 
     var messageContainer = $("#message-container");
+    var messagePagingContainer = $("#paging-message-container");
 
     var createMessageModal = $("#create-message-modal");
     var viewMessageModal = $("#view-message-modal");
@@ -22,9 +23,10 @@ $(document).ready(function () {
         return formData;
     }
 
-    function showMessageList() {
-        messageAjax.getMessageList(function (messageList) {
+    function showMessageList(messageCount) {
+        messageAjax.getMessageList(messageCount, function (messageList) {
             messageContainer.html(messageList);
+            $("#paging-message-container").attr("data-paging", messageCount);
         });
     }
 
@@ -48,7 +50,7 @@ $(document).ready(function () {
         if(isEdit) {
             createMessageButton.on('click', function () {
                 messageAjax.updateMessage(getMessageData(message), function () {
-                    showMessageList();
+                    showMessageList($("#paging-message-container").attr("data-paging"));
                 });
 
                 createMessageModal.modal("hide");
@@ -56,7 +58,7 @@ $(document).ready(function () {
         } else {
             createMessageButton.on('click', function () {
                 messageAjax.createMessage(getMessageData(), function () {
-                    showMessageList();
+                    showMessageList($("#paging-message-container").attr("data-paging"));
                 });
 
                 createMessageModal.modal("hide");
@@ -71,7 +73,7 @@ $(document).ready(function () {
 
     messageContainer.on('click', '.remove-message-button', function () {
         messageAjax.deleteMessage($(this).attr('data-id'), function () {
-            showMessageList();
+            showMessageList($("#paging-message-container").attr("data-paging"));
         });
     });
 
@@ -88,7 +90,16 @@ $(document).ready(function () {
             viewMessageModal.modal('show');
         });
     });
+
+    messagePagingContainer.on('click', '.more-paging.paging-message', function () {
+        var index = $("#paging-message-container").attr("data-paging");
+        showMessageList(+ index + 2);
+    });
+
+    messagePagingContainer.on('click', '.turn-paging.paging-message', function () {
+        showMessageList(2);
+    });
     
-    showMessageList();
+    showMessageList(2);
     
 });

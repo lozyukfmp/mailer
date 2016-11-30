@@ -5,14 +5,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
-
-import org.hibernate.annotations.LazyToOne;
-import org.hibernate.annotations.LazyToOneOption;
-import org.springframework.context.annotation.Lazy;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.Collection;
 
 @Data
 @NoArgsConstructor
@@ -39,11 +32,11 @@ public class User implements Serializable {
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "username")
-    private Set<UserRole> userRole;
+    private Collection<UserRole> userRole;
 
     @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true)
     @JoinColumn(name = "username")
-    private Set<Post> posts;
+    private Collection<Post> posts;
 
     @Column(name = "enabled")
     private boolean enabled;

@@ -35,9 +35,9 @@ public class CommentServiceImpl implements CommentService
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<Comment> getCommentListByPostId(final Integer postId)
+	public List<Comment> getCommentListByPostId(final Integer postId, final Integer commentIndex)
 	{
-		return commentDao.findAllByPostId(postId);
+		return commentDao.findAllByPostId(postId, commentIndex);
 	}
 
 	@Override

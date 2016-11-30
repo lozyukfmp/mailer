@@ -16,5 +16,5 @@ public interface CommentService
 
 	List<Comment> getCommentListByUsername(String username);
 
-	List<Comment> getCommentListByPostId(Integer postId);
+	List<Comment> getCommentListByPostId(Integer postId, Integer commentIndex);
 }

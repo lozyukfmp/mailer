@@ -12,8 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service("customUserDetailsService")
@@ -36,7 +36,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         return buildUserForAuthentication(user, authorities);
     }
 
-    private List<GrantedAuthority> buildUserAuthority(final Set<UserRole> userRoles) {
+    private List<GrantedAuthority> buildUserAuthority(final Collection<UserRole> userRoles) {
 
         return userRoles.stream()
                 .map(role -> new SimpleGrantedAuthority(role.getRole()))

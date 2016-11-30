@@ -2,6 +2,7 @@ package by.samsolutions.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -37,10 +38,10 @@ public class PostController
 	@Autowired
 	private PostService postService;
 
-	@GetMapping("/all")
-	public ModelAndView getPostList()
+	@GetMapping("/all/{messageCount}")
+	public ModelAndView getPostList(@PathVariable Integer messageCount)
 	{
-		List<Post> messageList = postService.getAll();
+		Collection<Post> messageList = postService.getAll(messageCount);
 
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.addObject("messageList", messageList);

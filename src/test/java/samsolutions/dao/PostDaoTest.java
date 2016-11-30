@@ -1,4 +1,4 @@
-package samsolutions.dao;
+	package samsolutions.dao;
 
 import java.util.Date;
 import java.util.List;
@@ -49,7 +49,7 @@ public class PostDaoTest
 
 		postDao.create(post);
 
-		List<Post> posts = postDao.all();
+		List<Post> posts = postDao.all(1);
 
 		Assert.assertEquals(posts.size(), 1);
 		Assert.assertEquals(post.getText(), posts.get(0).getText());
@@ -78,7 +78,7 @@ public class PostDaoTest
 
 		postDao.update(post);
 
-		List<Post> posts = postDao.all();
+		List<Post> posts = postDao.all(1);
 
 		Assert.assertEquals(posts.size(), 1);
 		Assert.assertEquals(post.getText(), posts.get(0).getText());
@@ -105,7 +105,7 @@ public class PostDaoTest
 
 		postDao.delete(post.getId());
 
-		List<Post> posts = postDao.all();
+		List<Post> posts = postDao.all(1);
 
 		Assert.assertEquals(posts.size(), 0);
 	}
@@ -134,7 +134,7 @@ public class PostDaoTest
 		postDao.create(firstPost);
 		postDao.create(secondPost);
 
-		List<Post> posts = postDao.all();
+		List<Post> posts = postDao.all(2);
 
 		Assert.assertEquals(posts.size(), 2);
 	}

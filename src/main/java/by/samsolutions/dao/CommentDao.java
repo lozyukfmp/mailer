@@ -6,7 +6,7 @@ import by.samsolutions.entity.Comment;
 
 public interface CommentDao extends GenericDao<Comment, Integer>
 {
-	List<Comment> findAllByPostId(Integer postId);
+	List<Comment> findAllByPostId(Integer postId, Integer commentIndex);
 
 	List<Comment> findAllByUsername(String username);
 }

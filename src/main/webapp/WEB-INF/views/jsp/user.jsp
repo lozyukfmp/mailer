@@ -16,6 +16,7 @@
     <spring:url value="/static/core/css/language_dropdown.css" var="languageDropdown" />
     <spring:url value="/static/core/css/custom.container.css" var="customContainer" />
     <spring:url value="/static/core/css/message.container.css" var="messageContainerCss" />
+    <spring:url value="/static/core/css/paging.css" var="paging" />
 
     <!-- Javascript -->
     <spring:url value="/static/core/js/bootstrap.min.js" var="bootstrapJs"/>
@@ -29,12 +30,13 @@
     <spring:url value="/static/core/js/comment.ajax.js" var="commentAjaxJs"/>
     <spring:url value="/static/core/js/comment.view.js" var="commentViewJs"/>
 
-    <!-- Bootstrap -->
+    <!-- Styles -->
     <link href="${bootstrapCss}" rel="stylesheet" />
     <link href="${fileInputCss}" rel="stylesheet" />
     <link href="${languageDropdown}" rel="stylesheet" />
     <link href="${customContainer}" rel="stylesheet" />
     <link href="${messageContainerCss}" rel="stylesheet" />
+    <link href="${paging}" rel="stylesheet" />
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -48,9 +50,6 @@
 <div class="container">
     <div class="col-md-4">
         <div class="custom-container">
-            <%--<form enctype="multipart/form-data">
-                <input id="user-image" name="user-image" type="file" class="file-loading">
-            </form>--%>
             <div class='user-image'>
             </div>
         </div>
@@ -58,6 +57,14 @@
     <div class="col-md-5">
         <div class="custom-container">
             <div id="message-container">
+            </div>
+            <div id="paging-message-container" class= "paging-container" data-paging="2">
+                <a class="more-paging paging-message" href="#">
+                    <span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span> More
+                </a>
+                <a class="turn-paging paging-message" href="#">
+                    <span class="glyphicon glyphicon-triangle-top" aria-hidden="true"></span> Turn
+                </a>
             </div>
         </div>
     </div>
