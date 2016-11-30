@@ -27,6 +27,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+
     @RequestMapping(value = "/loginPage")
     public ModelAndView login(
             @RequestParam(value = "error", required = false) final String error,

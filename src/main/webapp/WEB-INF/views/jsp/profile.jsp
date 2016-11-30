@@ -23,7 +23,7 @@
     <spring:url value="/static/core/js/userProfile.ajax.js" var="userProfileAjaxJs" />
     <spring:url value="/static/core/js/userProfile.view.js" var="userProfileViewJs" />
 
-    <!-- Bootstrap -->
+    <!-- Styles -->
     <link href="${bootstrapCss}" rel="stylesheet" />
     <link href="${fileInputCss}" rel="stylesheet" />
     <link href="${customContainerCss}" rel="stylesheet" />

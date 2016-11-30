@@ -5,11 +5,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <spring:url value="/static/core/css/bootstrap.min.css" var="bootstrapCss" />
-    <spring:url value="/static/core/css/container.css" var="customContainerStyle" />
-    <spring:url value="/static/core/css/language_dropdown.css" var="languageDropdown" />
-    <spring:url value="/static/core/js/bootstrap.min.js" var="bootstrapJs" />
 
+    <spring:url value="/static/core/css/search.css" var="searchCss" />
     <!-- localization -->
     <spring:message code="message.language" var="language"/>
     <spring:message code="message.russian" var="russian"/>
@@ -18,6 +15,11 @@
     <spring:message code="message.user.welcome" var="welcome"/>
     <spring:message code="message.profile" var="profile"/>
     <spring:message code="message.go_to_main" var="home"/>
+    <spring:message code="message.title.search" var="search"/>
+
+    <!-- Styles -->
+    <link href="${searchCss}" rel="stylesheet" />
+
 </head>
 <body>
 <div class="container">
@@ -36,6 +38,15 @@
                     <li><a href="${pageContext.request.contextPath}/user/profile">${profile}</a></li>
                     <li><a href="${pageContext.request.contextPath}/user">${home}</a></li>
                 </ul>
+                <form class="navbar-form navbar-left">
+                    <div class="form-group">
+
+                        <input type="text" class="username-field form-control" placeholder="${search}">
+                    </div>
+                    <button type="submit" class="btn btn-default btn-search">
+                        <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                    </button>
+                </form>
                 <ul class="nav navbar-nav navbar-right">
                     <li class="form-dropdown dropdown" style="border-width: 0px;padding: 15px;">
                         <a class="btn btn-link dropdown-toggle" type="button" data-toggle="dropdown">
@@ -54,8 +65,8 @@
                         </a>
                     </li>
                 </ul>
-            </div><!--/.nav-collapse -->
-        </div><!--/.container-fluid -->
+            </div>
+        </div>
     </nav>
 </div>
 </body>
