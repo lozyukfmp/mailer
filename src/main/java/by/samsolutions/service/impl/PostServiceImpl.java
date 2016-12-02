@@ -63,8 +63,8 @@ public class PostServiceImpl implements PostService
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<Post> getAll(Integer messageCount)
+	public List<Post> getAll(final String username, final Integer messageCount)
 	{
-		return postDao.all(messageCount);
+		return postDao.all(username, messageCount);
 	}
 }

@@ -38,12 +38,11 @@
                     <li><a href="${pageContext.request.contextPath}/user/profile">${profile}</a></li>
                     <li><a href="${pageContext.request.contextPath}/user">${home}</a></li>
                 </ul>
-                <form class="navbar-form navbar-left">
+                <form action="/user" class="navbar-form navbar-left">
                     <div class="form-group">
-
-                        <input type="text" class="username-field form-control" placeholder="${search}">
+                        <input type="text" class="username-field form-control" name="username" placeholder="${search}">
                     </div>
-                    <button type="submit" class="btn btn-default btn-search">
+                    <button id="search-by-username" type="submit" class="btn btn-default btn-search">
                         <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                     </button>
                 </form>

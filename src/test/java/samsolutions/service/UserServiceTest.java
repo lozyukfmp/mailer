@@ -38,11 +38,6 @@ public class UserServiceTest
 		}
 
 		@Bean
-		public UserRoleDao userRoleDao() {
-			return Mockito.mock(UserRoleDao.class);
-		}
-
-		@Bean
 		public PasswordEncoder passwordEncoder(){
 			return new BCryptPasswordEncoder();
 		}

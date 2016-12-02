@@ -1,14 +1,14 @@
 package by.samsolutions.entity.user;
 
+import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.*;
-import org.hibernate.annotations.Parameter;
-
-import javax.persistence.*;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import java.io.Serializable;
 
 @Data
 @NoArgsConstructor

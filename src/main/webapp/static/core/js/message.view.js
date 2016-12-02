@@ -1,4 +1,4 @@
-$(document).ready(function () {
+var messageView = (function () {
 
     var messageContainer = $("#message-container");
     var messagePagingContainer = $("#paging-message-container");
@@ -8,6 +8,8 @@ $(document).ready(function () {
 
     var viewCreateMessageModalButton = $("#view-create-message-modal-button");
     var createMessageButton = $("#create-message-button");
+
+    var selfUsername = $(".user-image").attr("data-username");
 
     function getMessageData(message) {
         message = message || {};
@@ -23,11 +25,11 @@ $(document).ready(function () {
         return formData;
     }
 
-    function showMessageList(messageCount) {
-        messageAjax.getMessageList(messageCount, function (messageList) {
+    function showMessageList(messageCount, username) {
+        messageAjax.getMessageList(function (messageList) {
             messageContainer.html(messageList);
             $("#paging-message-container").attr("data-paging", messageCount);
-        });
+        }, messageCount, username);
     }
 
     function initCreateMessageModal(message, isEdit) {
@@ -50,7 +52,7 @@ $(document).ready(function () {
         if(isEdit) {
             createMessageButton.on('click', function () {
                 messageAjax.updateMessage(getMessageData(message), function () {
-                    showMessageList($("#paging-message-container").attr("data-paging"));
+                    showMessageList($("#paging-message-container").attr("data-paging"), selfUsername);
                 });
 
                 createMessageModal.modal("hide");
@@ -58,7 +60,7 @@ $(document).ready(function () {
         } else {
             createMessageButton.on('click', function () {
                 messageAjax.createMessage(getMessageData(), function () {
-                    showMessageList($("#paging-message-container").attr("data-paging"));
+                    showMessageList($("#paging-message-container").attr("data-paging"), selfUsername);
                 });
 
                 createMessageModal.modal("hide");
@@ -73,7 +75,7 @@ $(document).ready(function () {
 
     messageContainer.on('click', '.remove-message-button', function () {
         messageAjax.deleteMessage($(this).attr('data-id'), function () {
-            showMessageList($("#paging-message-container").attr("data-paging"));
+            showMessageList($("#paging-message-container").attr("data-paging"), selfUsername);
         });
     });
 
@@ -93,13 +95,16 @@ $(document).ready(function () {
 
     messagePagingContainer.on('click', '.more-paging.paging-message', function () {
         var index = $("#paging-message-container").attr("data-paging");
-        showMessageList(+ index + 2);
+        showMessageList(+ index + 2, selfUsername);
     });
 
     messagePagingContainer.on('click', '.turn-paging.paging-message', function () {
-        showMessageList(2);
+        showMessageList(2, selfUsername);
     });
     
-    showMessageList(2);
-    
-});
+    return {
+        showMessageList: function(index, username) {
+            showMessageList(index, username);
+        }
+    };
+})();

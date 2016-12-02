@@ -29,6 +29,7 @@
     <spring:url value="/static/core/js/message.ajax.js" var="messageAjaxJs"/>
     <spring:url value="/static/core/js/comment.ajax.js" var="commentAjaxJs"/>
     <spring:url value="/static/core/js/comment.view.js" var="commentViewJs"/>
+    <spring:url value="/static/core/js/app.js" var="appJs"/>
 
     <!-- Styles -->
     <link href="${bootstrapCss}" rel="stylesheet" />
@@ -50,13 +51,43 @@
 <div class="container">
     <div class="col-md-4">
         <div class="custom-container">
-            <div class='user-image'>
+            <div class='user-image' data-username="${profile.username}">
+                <img src="${profile.imageUrl}" class="img-thumbnail" width="100%" height="300"/>
             </div>
         </div>
     </div>
     <div class="col-md-5">
         <div class="custom-container">
             <div id="message-container">
+                <c:forEach items="${messageList}" var="message">
+                    <div class='well well-message'>
+                        <span class= "message-header">
+                            <strong>${message.username} | </strong>
+                            <strong>${message.date}</strong>
+                        </span>
+                        <c:if test="${message.imageUrl ne null}">
+                            <div class='message-image'>
+                                <img src="${message.imageUrl}" width='100%' height='300' class='img-thumbnail'/>
+                            </div>
+                        </c:if>
+                        <div class="message-text">
+                            <p>${message.text}</p>
+                        </div>
+                        <div class="message-link-group">
+                            <a class="btn btn-lg btn-link comment-message-button" href='#' data-id="${message.id}">
+                                <span class='glyphicon glyphicon-comment' aria-hidden='true'></span>
+                            </a>
+                            <c:if test="${message.username == pageContext.request.userPrincipal.name}">
+                                <a class="btn btn-lg btn-link edit-message-button" href='#' data-id="${message.id}">
+                                    <span class='glyphicon glyphicon-pencil' aria-hidden='true'></span>
+                                </a>
+                                <a class="btn btn-lg btn-link remove-message-button" href="#" data-id="${message.id}">
+                                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                </a>
+                            </c:if>
+                        </div>
+                    </div>
+                </c:forEach>
             </div>
             <div id="paging-message-container" class= "paging-container" data-paging="2">
                 <a class="more-paging paging-message" href="#">
@@ -68,13 +99,15 @@
             </div>
         </div>
     </div>
-    <div class="col-md-3">
-        <div class="custom-container">
-            <button id="view-create-message-modal-button" class="btn btn-lg btn-info">
-                <span class="glyphicon glyphicon-send" aria-hidden="true"></span>
-            </button>
+    <c:if test="${profile.username == pageContext.request.userPrincipal.name}">
+        <div class="col-md-3">
+            <div class="custom-container">
+                <button id="view-create-message-modal-button" class="btn btn-lg btn-info">
+                    <span class="glyphicon glyphicon-send" aria-hidden="true"></span>
+                </button>
+            </div>
         </div>
-    </div>
+    </c:if>
 </div>
 <div class="modal fade" id="create-message-modal" tabindex="-1" role="dialog"
      aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
@@ -128,5 +161,6 @@
 <script src="${messageAjaxJs}"></script>
 <script src="${commentViewJs}"></script>
 <script src="${commentAjaxJs}"></script>
+<script src="${appJs}"></script>
 </body>
 </html>

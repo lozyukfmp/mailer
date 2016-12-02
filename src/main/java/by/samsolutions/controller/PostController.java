@@ -38,10 +38,12 @@ public class PostController
 	@Autowired
 	private PostService postService;
 
-	@GetMapping("/all/{messageCount}")
-	public ModelAndView getPostList(@PathVariable Integer messageCount)
+	@GetMapping("/all/{username}/{messageCount}")
+	public ModelAndView getPostList(@PathVariable String username,
+	                                @PathVariable Integer messageCount)
 	{
-		Collection<Post> messageList = postService.getAll(messageCount);
+
+		Collection<Post> messageList = postService.getAll(username, messageCount);
 
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.addObject("messageList", messageList);

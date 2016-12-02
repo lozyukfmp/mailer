@@ -91,7 +91,7 @@ public class PostServiceTest
 		postList.add(secondPost);
 
 		Mockito.when(userDao.find("Artem")).thenReturn(user);
-		Mockito.when(postDao.all(2)).thenReturn(postList);
+		Mockito.when(postDao.all(user.getUsername(), 2)).thenReturn(postList);
 		Mockito.when(postDao.find(1)).thenReturn(firstPost);
 		Mockito.when(postDao.find(2)).thenReturn(secondPost);
 		Mockito.when(commentDao.findAllByPostId(1, 0)).thenReturn(Collections.EMPTY_LIST);
@@ -125,7 +125,7 @@ public class PostServiceTest
 
 		Post resultPost = postService.createPost(post);
 
-		List<Post> posts = postService.getAll(2);
+		List<Post> posts = postService.getAll("Artem", 2);
 
 		Assert.assertNotNull(resultPost);
 		Assert.assertEquals(posts.size(), 3);
@@ -153,7 +153,7 @@ public class PostServiceTest
 
 		final Post resultPost = postService.updatePost(post);
 
-		final List<Post> posts = postService.getAll(2);
+		final List<Post> posts = postService.getAll("Artem", 2);
 
 		Assert.assertNotNull(resultPost);
 		Assert.assertEquals(posts.size(), 2);
@@ -180,7 +180,7 @@ public class PostServiceTest
 	{
 		postService.deletePost(1);
 
-		final List<Post> posts = postService.getAll(2);
+		final List<Post> posts = postService.getAll("Artem", 2);
 
 		Assert.assertEquals(posts.size(), 1);
 		Assert.assertEquals(posts.get(0).getId(), 2);
@@ -190,7 +190,7 @@ public class PostServiceTest
 	@Test
 	public void testGetAllPost()
 	{
-		final List<Post> posts = postService.getAll(2);
+		final List<Post> posts = postService.getAll("Artem", 2);
 
 		Assert.assertEquals(posts.size(), 2);
 	}

@@ -93,7 +93,7 @@ public class CommentServiceTest
 		Mockito.when(commentDao.all()).thenReturn(commentList);
 		Mockito.when(commentDao.find(1)).thenReturn(firstComment);
 		Mockito.when(commentDao.find(2)).thenReturn(secondComment);
-		Mockito.when(commentDao.findAllByPostId(1)).thenReturn(commentList);
+		Mockito.when(commentDao.findAllByPostId(1, 2)).thenReturn(commentList);
 		Mockito.when(commentDao.findAllByUsername("Artem")).thenReturn(commentList);
 
 		Mockito.doAnswer(invocationOnMock -> {
@@ -123,7 +123,7 @@ public class CommentServiceTest
 
 		Comment resultComment = commentService.createComment(comment);
 
-		List<Comment> posts = commentService.getCommentListByPostId(post.getId());
+		List<Comment> posts = commentService.getCommentListByPostId(post.getId(), 2);
 
 		Assert.assertNotNull(resultComment);
 		Assert.assertEquals(posts.size(), 3);
@@ -151,7 +151,7 @@ public class CommentServiceTest
 
 		final Comment resultComment = commentService.updateComment(comment);
 
-		final List<Comment> comments = commentService.getCommentListByPostId(1);
+		final List<Comment> comments = commentService.getCommentListByPostId(1, 2);
 
 		Assert.assertNotNull(resultComment);
 		Assert.assertEquals(commentList.size(), 2);
@@ -178,7 +178,7 @@ public class CommentServiceTest
 	{
 		commentService.deleteComment(1);
 
-		final List<Comment> comments = commentService.getCommentListByPostId(1);
+		final List<Comment> comments = commentService.getCommentListByPostId(1, 2);
 
 		Assert.assertEquals(comments.size(), 1);
 		Assert.assertEquals(comments.get(0).getId(), 2);
@@ -197,7 +197,7 @@ public class CommentServiceTest
 	@Test
 	public void testGetAllCommentsByPostId()
 	{
-		final List<Comment> comments = commentService.getCommentListByPostId(1);
+		final List<Comment> comments = commentService.getCommentListByPostId(1, 2);
 
 		Assert.assertEquals(comments.size(), 2);
 	}

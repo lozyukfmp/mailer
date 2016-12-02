@@ -6,6 +6,6 @@ import by.samsolutions.entity.Post;
 
 public interface PostDao extends GenericDao<Post, Integer>
 {
-	List<Post> all(Integer messageCount);
+	List<Post> all(String username, Integer messageCount);
 	Post findWithComments(Integer postId);
 }

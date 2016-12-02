@@ -1,6 +1,5 @@
 package by.samsolutions.dao.impl;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -15,9 +14,10 @@ public class PostDaoImpl extends GenericDaoImpl<Post, Integer>
 {
 
 	@Override
-	public List<Post> all(final Integer messageCount)
+	public List<Post> all(final String username, final Integer messageCount)
 	{
 		List<Post> postList = entityManager.createNamedQuery("Post.findAll", Post.class)
+		                                   .setParameter("username", username)
 		                                   .setFirstResult(0)
 		                                   .setMaxResults(messageCount)
 		                                   .getResultList();

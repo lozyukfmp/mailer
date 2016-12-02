@@ -1,30 +1,25 @@
 package by.samsolutions.service.impl;
 
-import by.samsolutions.dao.UserDao;
-import by.samsolutions.dao.UserProfileDao;
-import by.samsolutions.dao.UserRoleDao;
-import by.samsolutions.dto.UserDto;
-import by.samsolutions.dto.UserProfileDto;
-import by.samsolutions.entity.user.User;
-import by.samsolutions.entity.user.UserProfile;
-import by.samsolutions.entity.user.UserRole;
-import by.samsolutions.service.UserService;
+import java.util.HashSet;
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashSet;
-import java.util.Set;
+import by.samsolutions.dao.UserDao;
+import by.samsolutions.dto.UserDto;
+import by.samsolutions.entity.user.User;
+import by.samsolutions.entity.user.UserProfile;
+import by.samsolutions.entity.user.UserRole;
+import by.samsolutions.service.UserService;
 
 @Service
 public class UserServiceImpl implements UserService
 {
 	@Autowired
 	private UserDao userDao;
-
-	@Autowired
-	private UserRoleDao userRoleDao;
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
@@ -45,7 +40,6 @@ public class UserServiceImpl implements UserService
 		//userRole.set(user);
 		Set<UserRole> userRoleSet = new HashSet<>();
 		userRoleSet.add(userRole);
-
 
 		UserProfile userProfile = new UserProfile();
 		userProfile.setUsername(accountDto.getUsername());

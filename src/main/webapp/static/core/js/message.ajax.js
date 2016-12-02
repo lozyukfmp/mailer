@@ -44,10 +44,10 @@ var messageAjax = (function () {
 				success: callback
 			});
 		},
-		getMessageList: function (messageCount, callback) {
+		getMessageList: function (callback, messageCount, username) {
 			$.ajax({
 				type: "GET",
-				url: "post/all/" + messageCount,
+				url: "post/all/" + username + "/" + messageCount,
 				success: function(response) {
 					callback(response);
 				}

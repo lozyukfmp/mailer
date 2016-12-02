@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -45,11 +46,10 @@ public class UserProfileController
 		return new ModelAndView("profile", "userProfile", userProfile);
 	}
 
-	@GetMapping("/profile/info")
-	public @ResponseBody ResponseEntity<UserProfile> getUserProfile()
+	@GetMapping("/profile/info/{username}")
+	public @ResponseBody ResponseEntity<UserProfile> getUserProfile(@PathVariable String username)
 	{
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		return new ResponseEntity<>(userProfileService.getUserProfile(auth.getName()),
+		return new ResponseEntity<>(userProfileService.getUserProfile(username),
 		                                       HttpStatus.OK);
 	}
 

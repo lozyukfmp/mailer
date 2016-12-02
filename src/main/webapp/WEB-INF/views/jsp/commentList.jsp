@@ -9,13 +9,15 @@
         <div class="comment-text">
             <p>${comment.text}</p>
         </div>
-        <div class="comment-link-group">
-            <a class="btn btn-lg btn-link edit-comment-button" href='#' data-id="${comment.id}">
-                <span class='glyphicon glyphicon-pencil' aria-hidden='true'></span>
-            </a>
-            <a class="btn btn-lg btn-link remove-comment-button" href="#" data-id="${comment.id}">
-                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-            </a>
-        </div>
+        <c:if test="${comment.username == pageContext.request.userPrincipal.name}">
+            <div class="comment-link-group">
+                <a class="btn btn-lg btn-link edit-comment-button" href="#" data-id="${comment.id}">
+                    <span class='glyphicon glyphicon-pencil' aria-hidden='true'></span>
+                </a>
+                <a class="btn btn-lg btn-link remove-comment-button" href="#" data-id="${comment.id}">
+                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                </a>
+            </div>
+        </c:if>
     </div>
 </c:forEach>

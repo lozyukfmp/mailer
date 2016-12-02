@@ -25,7 +25,7 @@ public class UserProfileServiceImpl implements UserProfileService
 	{
 		UserProfile userProfile = userProfileDao.find(username);
 
-		if (userProfile.getImageUrl() == null)
+		if (userProfile != null && userProfile.getImageUrl() == null)
 		{
 			userProfile.setImageUrl(NO_AVATAR_IMAGE_URL);
 		}
