@@ -17,7 +17,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import by.samsolutions.dao.CommentDao;
-import by.samsolutions.dao.UserDao;
+import by.samsolutions.dao.GenericDao;
 import by.samsolutions.entity.Comment;
 import by.samsolutions.entity.Post;
 import by.samsolutions.entity.user.User;
@@ -43,14 +43,14 @@ public class CommentServiceTest
 		}
 
 		@Bean
-		public UserDao userDao()
+		public GenericDao<User, String> userDao()
 		{
-			return Mockito.mock(UserDao.class);
+			return Mockito.mock(GenericDao.class);
 		}
 	}
 
 	@Autowired
-	private UserDao userDao;
+	private GenericDao<User, String> userDao;
 
 	@Autowired
 	private CommentDao commentDao;
@@ -93,8 +93,7 @@ public class CommentServiceTest
 		Mockito.when(commentDao.all()).thenReturn(commentList);
 		Mockito.when(commentDao.find(1)).thenReturn(firstComment);
 		Mockito.when(commentDao.find(2)).thenReturn(secondComment);
-		Mockito.when(commentDao.findAllByPostId(1, 2)).thenReturn(commentList);
-		Mockito.when(commentDao.findAllByUsername("Artem")).thenReturn(commentList);
+		Mockito.when(commentDao.findAllByPostId(post.getId(), 2)).thenReturn(commentList);
 
 		Mockito.doAnswer(invocationOnMock -> {
 			commentList.remove(firstComment);
@@ -184,15 +183,6 @@ public class CommentServiceTest
 		Assert.assertEquals(comments.get(0).getId(), 2);
 		Assert.assertEquals(comments.get(0).getText(), "Some secondComment text");
 	}
-
-	@Test
-	public void testGetAllCommentsByUsername()
-	{
-		final List<Comment> comments = commentService.getCommentListByUsername("Artem");
-
-		Assert.assertEquals(comments.size(), 2);
-	}
-
 
 	@Test
 	public void testGetAllCommentsByPostId()

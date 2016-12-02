@@ -8,12 +8,12 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import by.samsolutions.dao.GenericDao;
 import by.samsolutions.dao.UserDao;
 import by.samsolutions.entity.user.User;
 import by.samsolutions.entity.user.UserProfile;
@@ -45,7 +45,6 @@ public class UserDaoTest
 
 		UserRole userRole = new UserRole();
 		userRole.setRole("ROLE_USER");
-		//userRole.setUser(user);
 		Set<UserRole> userRoleSet = new HashSet<>();
 		userRoleSet.add(userRole);
 

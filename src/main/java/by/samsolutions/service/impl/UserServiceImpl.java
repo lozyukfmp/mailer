@@ -37,7 +37,6 @@ public class UserServiceImpl implements UserService
 
 		UserRole userRole = new UserRole();
 		userRole.setRole("ROLE_USER");
-		//userRole.set(user);
 		Set<UserRole> userRoleSet = new HashSet<>();
 		userRoleSet.add(userRole);
 
@@ -55,7 +54,6 @@ public class UserServiceImpl implements UserService
 		user.setProfile(userProfile);
 
 		userDao.create(user);
-		//userRoleDao.create(userRole);
 
 		return user;
 	}

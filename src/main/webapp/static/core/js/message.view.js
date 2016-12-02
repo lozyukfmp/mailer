@@ -1,4 +1,4 @@
-var messageView = (function () {
+;(function () {
 
     var messageContainer = $("#message-container");
     var messagePagingContainer = $("#paging-message-container");

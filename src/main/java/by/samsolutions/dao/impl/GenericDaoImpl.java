@@ -1,8 +1,6 @@
 package by.samsolutions.dao.impl;
 
 import java.io.Serializable;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -18,10 +16,13 @@ public class GenericDaoImpl<T, PK extends Serializable> implements GenericDao<T,
 
 	private Class<T> type;
 
-	public GenericDaoImpl() {
-		Type t = getClass().getGenericSuperclass();
-		ParameterizedType pt = (ParameterizedType) t;
-		type = (Class) pt.getActualTypeArguments()[0];
+	public GenericDaoImpl()
+	{
+
+	}
+
+	public GenericDaoImpl(Class<T> type) {
+		this.type = type;
 	}
 
 	@Override

@@ -1,26 +1,27 @@
 package by.samsolutions.service.impl;
 
-import by.samsolutions.dao.UserDao;
-import by.samsolutions.entity.user.User;
-import by.samsolutions.entity.user.UserRole;
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.stream.Collectors;
+import by.samsolutions.dao.UserDao;
+import by.samsolutions.entity.user.User;
+import by.samsolutions.entity.user.UserRole;
 
 @Service("customUserDetailsService")
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
-    UserDao userDao;
+    private UserDao userDao;
 
     @Transactional(readOnly = true)
     @Override

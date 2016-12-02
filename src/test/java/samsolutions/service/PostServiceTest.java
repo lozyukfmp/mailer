@@ -1,7 +1,6 @@
 package samsolutions.service;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -19,8 +18,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import by.samsolutions.dao.CommentDao;
+import by.samsolutions.dao.GenericDao;
 import by.samsolutions.dao.PostDao;
-import by.samsolutions.dao.UserDao;
 import by.samsolutions.entity.Post;
 import by.samsolutions.entity.user.User;
 import by.samsolutions.service.PostService;
@@ -51,9 +50,9 @@ public class PostServiceTest
 		}
 
 		@Bean
-		public UserDao userDao()
+		public GenericDao<User, String> userDao()
 		{
-			return Mockito.mock(UserDao.class);
+			return Mockito.mock(GenericDao.class);
 		}
 	}
 
@@ -64,7 +63,7 @@ public class PostServiceTest
 	private CommentDao commentDao;
 
 	@Autowired
-	private UserDao userDao;
+	private GenericDao<User, String> userDao;
 
 	@Autowired
 	private PostService postService;

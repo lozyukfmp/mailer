@@ -13,6 +13,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import by.samsolutions.dao.GenericDao;
 import by.samsolutions.dao.PostDao;
 import by.samsolutions.dao.UserDao;
 import by.samsolutions.entity.Post;

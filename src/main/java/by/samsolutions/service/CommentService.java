@@ -14,7 +14,5 @@ public interface CommentService
 
 	void deleteComment(Integer commentId);
 
-	List<Comment> getCommentListByUsername(String username);
-
 	List<Comment> getCommentListByPostId(Integer postId, Integer commentIndex);
 }

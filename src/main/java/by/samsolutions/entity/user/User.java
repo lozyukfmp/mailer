@@ -24,13 +24,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "user")
 @NamedQueries({
-        @NamedQuery(name="User.findAll", query = "select u from User u"),
-        @NamedQuery(name="User.findByUsername", query = "select u from User u where u.username = :username"),
-        @NamedQuery(name="User.findWithProfile", query = "select u from User u left join fetch u.profile where u.username = :username"),
-        @NamedQuery(name="User.findWithRoles", query = "select u from User u left join fetch u.userRole where u.username = :username"),
-        @NamedQuery(name="User.deleteByUsername", query = "delete from User u where u.username = :username"),
-        @NamedQuery(name="User.findWithProfileAndPosts",
-                query = "select u from User u left join fetch u.profile left join fetch u.posts where u.username = :username")
+				@NamedQuery(name="User.findAll", query = "select u from User u")
 })
 public class User implements Serializable {
     @Id

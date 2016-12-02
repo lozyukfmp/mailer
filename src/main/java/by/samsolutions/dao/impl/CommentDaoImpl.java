@@ -11,19 +11,10 @@ import by.samsolutions.entity.Comment;
 public class CommentDaoImpl extends GenericDaoImpl<Comment, Integer>
 				implements CommentDao
 {
-	@Override
-	public List<Comment> all() {
 
-		return entityManager.createNamedQuery("Comment.findAll", Comment.class)
-		                    .getResultList();
-	}
-
-	@Override
-	public List<Comment> findAllByUsername(final String username)
+	public CommentDaoImpl()
 	{
-		return entityManager.createNamedQuery("Comment.findAllByUsername", Comment.class)
-		                    .setParameter("username", username) 
-		                    .getResultList();
+		super(Comment.class);
 	}
 
 	@Override

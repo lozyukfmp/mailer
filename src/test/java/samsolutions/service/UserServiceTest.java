@@ -14,7 +14,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import by.samsolutions.dao.UserDao;
-import by.samsolutions.dao.UserRoleDao;
 import by.samsolutions.dto.UserDto;
 import by.samsolutions.dto.UserProfileDto;
 import by.samsolutions.entity.user.User;

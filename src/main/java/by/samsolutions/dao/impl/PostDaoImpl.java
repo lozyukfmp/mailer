@@ -13,10 +13,15 @@ public class PostDaoImpl extends GenericDaoImpl<Post, Integer>
 				implements PostDao
 {
 
+	public PostDaoImpl()
+	{
+		super(Post.class);
+	}
+
 	@Override
 	public List<Post> all(final String username, final Integer messageCount)
 	{
-		List<Post> postList = entityManager.createNamedQuery("Post.findAll", Post.class)
+		List<Post> postList = entityManager.createNamedQuery("Post.findAllByUsername", Post.class)
 		                                   .setParameter("username", username)
 		                                   .setFirstResult(0)
 		                                   .setMaxResults(messageCount)
@@ -30,7 +35,7 @@ public class PostDaoImpl extends GenericDaoImpl<Post, Integer>
 	@Override
 	public Post findWithComments(final Integer postId)
 	{
-		return entityManager.createNamedQuery("Post.findWithComments", Post.class)
+		return entityManager.createNamedQuery("Post.findByIdWithComments", Post.class)
 		                    .setParameter("id", postId)
 		                    .getSingleResult();
 	}

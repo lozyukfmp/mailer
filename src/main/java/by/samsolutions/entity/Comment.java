@@ -21,9 +21,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "comments")
 @NamedQueries({
-				@NamedQuery(name="Comment.findAll", query = "select c from Comment c"),
-				@NamedQuery(name="Comment.findAllByPostId", query = "select c from Comment c where c.postId = :id order by c.date desc"),
-				@NamedQuery(name="Comment.findAllByUsername", query = "select c from Comment c where c.username = :username order by c.date desc"),
+				@NamedQuery(name="Comment.findAllByPostId", query = "select c from Comment c where c.postId = :id order by c.date desc")
 })
 public class Comment
 {

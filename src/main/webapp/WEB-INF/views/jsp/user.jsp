@@ -23,13 +23,10 @@
     <spring:url value="/static/core/js/jquery-3.1.1.min.js" var="jqueryJs"/>
     <spring:url value="/static/core/js/fileinput.min.js" var="fileInputJs"/>
     <spring:url value="/static/core/js/fileinput.custom.js" var="fileInputCustomJs"/>
-    <spring:url value="/static/core/js/user.view.js" var="userViewJs"/>
-    <spring:url value="/static/core/js/user.ajax.js" var="userAjaxJs"/>
     <spring:url value="/static/core/js/message.view.js" var="messageViewJs"/>
     <spring:url value="/static/core/js/message.ajax.js" var="messageAjaxJs"/>
     <spring:url value="/static/core/js/comment.ajax.js" var="commentAjaxJs"/>
     <spring:url value="/static/core/js/comment.view.js" var="commentViewJs"/>
-    <spring:url value="/static/core/js/app.js" var="appJs"/>
 
     <!-- Styles -->
     <link href="${bootstrapCss}" rel="stylesheet" />
@@ -155,12 +152,9 @@
 <script src="${bootstrapJs}"></script>
 <script src="${fileInputJs}"></script>
 <script src="${fileInputCustomJs}"></script>
-<script src="${userAjaxJs}"></script>
-<script src="${userViewJs}"></script>
 <script src="${messageViewJs}"></script>
 <script src="${messageAjaxJs}"></script>
 <script src="${commentViewJs}"></script>
 <script src="${commentAjaxJs}"></script>
-<script src="${appJs}"></script>
 </body>
 </html>

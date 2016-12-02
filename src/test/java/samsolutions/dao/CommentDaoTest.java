@@ -14,6 +14,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import by.samsolutions.dao.CommentDao;
+import by.samsolutions.dao.GenericDao;
 import by.samsolutions.dao.PostDao;
 import by.samsolutions.dao.UserDao;
 import by.samsolutions.entity.Comment;
@@ -62,7 +63,7 @@ public class CommentDaoTest
 
 		commentDao.create(comment);
 
-		List<Comment> comments = commentDao.all();
+		List<Comment> comments = commentDao.findAllByPostId(post.getId(), 2);
 
 		Assert.assertEquals(comments.size(), 1);
 		Assert.assertEquals(comment.getText(), comments.get(0).getText());
@@ -100,7 +101,7 @@ public class CommentDaoTest
 
 		commentDao.update(comment);
 
-		List<Comment> comments = commentDao.all();
+		List<Comment> comments = commentDao.findAllByPostId(post.getId(), 2);
 
 		Assert.assertEquals(comments.size(), 1);
 		Assert.assertEquals(comment.getText(), comments.get(0).getText());
@@ -134,7 +135,7 @@ public class CommentDaoTest
 
 		commentDao.delete(comment.getId());
 
-		List<Comment> posts = commentDao.all();
+		List<Comment> posts = commentDao.findAllByPostId(post.getId(), 2);
 
 		Assert.assertEquals(posts.size(), 0);
 	}
@@ -172,7 +173,7 @@ public class CommentDaoTest
 		commentDao.create(firstComment);
 		commentDao.create(secondComment);
 
-		List<Comment> comments = commentDao.all();
+		List<Comment> comments = commentDao.findAllByPostId(post.getId(), 2);
 
 		Assert.assertEquals(comments.size(), 2);
 	}

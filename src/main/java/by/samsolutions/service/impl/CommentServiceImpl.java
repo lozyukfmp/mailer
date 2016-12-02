@@ -4,8 +4,6 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,13 +22,6 @@ public class CommentServiceImpl implements CommentService
 	public Comment getComment(final Integer commentId)
 	{
 		return commentDao.find(commentId);
-	}
-
-	@Override
-	@Transactional(readOnly = true)
-	public List<Comment> getCommentListByUsername(final String username)
-	{
-		return commentDao.findAllByUsername(username);
 	}
 
 	@Override
