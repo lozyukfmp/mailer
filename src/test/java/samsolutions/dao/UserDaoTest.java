@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import by.samsolutions.dao.GenericDao;
 import by.samsolutions.dao.UserDao;
 import by.samsolutions.entity.user.User;
 import by.samsolutions.entity.user.UserProfile;
@@ -27,12 +27,12 @@ public class UserDaoTest
 	@Autowired
 	private UserDao userDao;
 
-	@Test
-	@Transactional
-	@Rollback
-	public void testCreateUser()
+	private User user;
+
+	@Before
+	public void init()
 	{
-		User user = new User();
+		user = new User();
 		user.setUsername("username");
 		user.setPassword("password");
 
@@ -51,9 +51,14 @@ public class UserDaoTest
 		user.setProfile(userProfile);
 		userProfile.setUsername(user.getUsername());
 		user.setUserRole(userRoleSet);
+	}
 
+	@Test
+	@Transactional
+	@Rollback
+	public void testCreateUser()
+	{
 		userDao.create(user);
-
 
 		List<User> users = userDao.all();
 
@@ -68,23 +73,9 @@ public class UserDaoTest
 	@Rollback
 	public void testUpdateUserProfile()
 	{
-		User user = new User();
-		user.setUsername("username");
-		user.setPassword("password");
-
-		UserProfile userProfile = new UserProfile();
-		userProfile.setEmail("lozyuk-artem@mail.ru");
-		userProfile.setFirstName("Ivan");
-		userProfile.setSecondName("Ivanov");
-		userProfile.setThirdName("Ivanovich");
-		userProfile.setUsername(user.getUsername());
-
-		user.setProfile(userProfile);
-		userProfile.setUsername(user.getUsername());
-
 		userDao.create(user);
 
-		userProfile.setEmail("artemlozyuk@gmail.com");
+		user.getProfile().setEmail("artemlozyuk@gmail.com");
 
 		userDao.update(user);
 
@@ -100,20 +91,6 @@ public class UserDaoTest
 	@Rollback
 	public void testDeleteUser()
 	{
-		User user = new User();
-		user.setUsername("username");
-		user.setPassword("password");
-
-		UserProfile userProfile = new UserProfile();
-		userProfile.setEmail("lozyuk-artem@mail.ru");
-		userProfile.setFirstName("Ivan");
-		userProfile.setSecondName("Ivanov");
-		userProfile.setThirdName("Ivanovich");
-		userProfile.setUsername(user.getUsername());
-
-		user.setProfile(userProfile);
-		userProfile.setUsername(user.getUsername());
-
 		user = userDao.create(user);
 
 		userDao.delete(user.getUsername());
@@ -128,19 +105,10 @@ public class UserDaoTest
 	@Rollback
 	public void testGetAllUsers()
 	{
-		User firstUser = new User();
-		firstUser.setUsername("username");
-		firstUser.setPassword("password");
-
-		User secondUser = new User();
-		secondUser.setUsername("username1");
-		secondUser.setPassword("password");
-
-		userDao.create(firstUser);
-		userDao.create(secondUser);
+		userDao.create(user);
 
 		List<User> users = userDao.all();
 
-		Assert.assertEquals(users.size(), 2);
+		Assert.assertEquals(users.size(), 1);
 	}
 }

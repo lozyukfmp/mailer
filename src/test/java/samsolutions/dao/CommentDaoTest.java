@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import by.samsolutions.dao.CommentDao;
-import by.samsolutions.dao.GenericDao;
 import by.samsolutions.dao.PostDao;
 import by.samsolutions.dao.UserDao;
 import by.samsolutions.entity.Comment;
@@ -37,23 +37,31 @@ public class CommentDaoTest
 	@Autowired
 	private CommentDao commentDao;
 
-	@Test
-	@Transactional
-	@Rollback
-	public void testCreateComment()
+	private User user;
+	private Post post;
+
+	@Before
+	public void init()
 	{
-		User user = new User();
+		user = new User();
 		user.setUsername("username");
 		user.setPassword("password");
 
 		userDao.create(user);
 
-		Post post = new Post();
-		post.setText("Some post text");
-		post.setDate(new Date());
-		post.setUsername(user.getUsername());
+		Post testPost = new Post();
+		testPost.setText("Some post text");
+		testPost.setDate(new Date());
+		testPost.setUsername(user.getUsername());
 
-		post = postDao.create(post);
+		post = postDao.create(testPost);
+	}
+
+	@Test
+	@Transactional
+	@Rollback
+	public void testCreateComment()
+	{
 
 		Comment comment = new Comment();
 		comment.setText("Some comment text");
@@ -76,18 +84,6 @@ public class CommentDaoTest
 	@Rollback
 	public void testUpdateComment()
 	{
-		User user = new User();
-		user.setUsername("username");
-		user.setPassword("password");
-
-		userDao.create(user);
-
-		Post post = new Post();
-		post.setText("Some post text");
-		post.setDate(new Date());
-		post.setUsername(user.getUsername());
-
-		postDao.create(post);
 
 		Comment comment = new Comment();
 		comment.setText("Some comment text");
@@ -112,19 +108,6 @@ public class CommentDaoTest
 	@Rollback
 	public void testDeleteComment()
 	{
-		User user = new User();
-		user.setUsername("username");
-		user.setPassword("password");
-
-		userDao.create(user);
-
-		Post post = new Post();
-		post.setText("Some post text");
-		post.setDate(new Date());
-		post.setUsername(user.getUsername());
-
-		post = postDao.create(post);
-
 		Comment comment = new Comment();
 		comment.setText("Some comment text");
 		comment.setDate(new Date());
@@ -145,18 +128,6 @@ public class CommentDaoTest
 	@Rollback
 	public void testGetAllComments()
 	{
-		User user = new User();
-		user.setUsername("username");
-		user.setPassword("password");
-
-		userDao.create(user);
-
-		Post post = new Post();
-		post.setText("Some post text");
-		post.setDate(new Date());
-		post.setUsername(user.getUsername());
-
-		postDao.create(post);
 
 		Comment firstComment = new Comment();
 		firstComment.setText("Some comment text");

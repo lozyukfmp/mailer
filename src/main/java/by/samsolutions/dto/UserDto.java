@@ -1,29 +1,28 @@
 package by.samsolutions.dto;
 
-import by.samsolutions.validation.PasswordMatches;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.NotEmpty;
 
-import javax.validation.constraints.Size;
+import by.samsolutions.validation.PasswordMatches;
+import by.samsolutions.validation.ValidPassword;
+import by.samsolutions.validation.ValidUsername;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
 @PasswordMatches
-public class UserDto {
+public class UserDto
+{
+	@ValidUsername
+	@NotEmpty
+	private String username;
 
-    @NotEmpty
-    @Size(min = 5, max = 25)
-    private String username;
+	@ValidPassword
+	@NotEmpty
+	private String password;
 
-    @NotEmpty
-    @Size(min = 8, max = 15)
-    private String password;
+	@NotEmpty
+	private String confirmPassword;
 
-    @NotEmpty
-    @Size(min = 8, max = 15)
-    private String confirmPassword;
-
-    private UserProfileDto userProfileDto;
-
+	private UserProfileDto userProfileDto;
 }
