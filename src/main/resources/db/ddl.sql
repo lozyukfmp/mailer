@@ -59,7 +59,6 @@ CREATE TABLE `comments` (
   `comment_text` varchar(500) NOT NULL,
   `username` varchar(45) NOT NULL,
   PRIMARY KEY (`comment_id`),
-  UNIQUE KEY `comments_username_uindex` (`username`),
   KEY `post_id_idx` (`post_id`),
   CONSTRAINT `comment_post_id` FOREIGN KEY (`post_id`) REFERENCES `posts` (`post_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `comments_user_username_fk` FOREIGN KEY (`username`) REFERENCES `user` (`username`) ON DELETE CASCADE ON UPDATE CASCADE

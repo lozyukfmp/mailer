@@ -29,6 +29,12 @@
         messageAjax.getMessageList(function (messageList) {
             messageContainer.html(messageList);
             $("#paging-message-container").attr("data-paging", messageCount);
+            $(".message-image").off();
+            $(".message-image").hover(function(){
+                $(this).find(".tool-panel").fadeIn(150);
+            }, function(){
+                $(this).find(".tool-panel").fadeOut(100);
+            });
         }, messageCount, username);
     }
 
@@ -88,9 +94,26 @@
 
     messageContainer.on('click', '.comment-message-button', function () {
         messageAjax.getMessageView($(this).attr('data-id'), function (messageView) {
-            viewMessageModal.find(".custom-container").html(messageView);
+            viewMessageModal.find(".modal-body").html(messageView);
+            $(".panel-comment > .panel-body").hover(function(){
+                $(this).find(".tool-panel").fadeIn(150);
+            }, function(){
+                $(this).find(".tool-panel").fadeOut(100);
+            });
             viewMessageModal.modal('show');
         });
+    });
+
+    $(".message-image").hover(function(){
+        $(this).find(".tool-panel").fadeIn(150);
+    }, function(){
+        $(this).find(".tool-panel").fadeOut(100);
+    });
+    
+    $(".panel-image").hover(function(){
+        $(this).find(".tool-panel").fadeIn(150);
+    }, function(){
+        $(this).find(".tool-panel").fadeOut(100);
     });
 
     messagePagingContainer.on('click', '.more-paging.paging-message', function () {

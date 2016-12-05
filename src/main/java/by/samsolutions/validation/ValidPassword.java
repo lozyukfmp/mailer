@@ -16,8 +16,11 @@ import static java.lang.annotation.ElementType.TYPE;
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = PasswordValidator.class)
 @Documented
-public @interface ValidPassword {
+public @interface ValidPassword
+{
 	String message() default "Invalid password";
+
 	Class<?>[] groups() default {};
+
 	Class<? extends Payload>[] payload() default {};
 }

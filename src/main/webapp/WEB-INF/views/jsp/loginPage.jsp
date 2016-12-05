@@ -32,7 +32,6 @@
 
     <!-- Bootstrap -->
     <link href="${bootstrapCss}" rel="stylesheet" />
-    <link href="${loginCss}" rel="stylesheet" />
     <link href="${customContainerCss}" rel="stylesheet" />
     <link href="${languageDropdown}" rel="stylesheet" />
 
@@ -72,7 +71,7 @@
                 <input type="password" name="password" placeholder="${password}" required/>
                 <input type="submit" name="login" class="login-submit" value="${login}">
                 <a href="${pageContext.request.contextPath}/welcome">${goToWelcome} |</a>
-                <a href="${pageContext.request.contextPath}/registration"> ${register} |</a>
+                <a href="${pageContext.request.contextPath}/registration-page"> ${register} |</a>
                 <div class="form-dropdown dropdown">
                     <a class="btn btn-link dropdown-toggle" type="button" data-toggle="dropdown">
                             ${language}

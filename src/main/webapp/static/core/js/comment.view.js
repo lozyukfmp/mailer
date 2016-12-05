@@ -7,7 +7,7 @@
     function getCommentData(comment) {
         comment = comment || {};
         
-        comment.postId = viewMessageModal.find(".message").attr('data-id');
+        comment.postId = viewMessageModal.find(".panel-message").attr('data-id');
         comment.text = $("#create-comment-text").val();
 
         return comment;
@@ -15,9 +15,15 @@
 
     function showCommentList(commentCount) {
         commentAjax.getCommentListByPostId(
-            viewMessageModal.find(".message").attr('data-id'), commentCount,
+            viewMessageModal.find(".panel-message").attr('data-id'), commentCount,
             function (commentList) {
                 $(".comment-container").html(commentList);
+                $(".panel-comment > .panel-body").off();
+                $(".panel-comment > .panel-body").hover(function(){
+                    $(this).find(".tool-panel").fadeIn(150);
+                }, function(){
+                    $(this).find(".tool-panel").fadeOut(100);
+                });
                 $("#paging-comment-container").attr("data-paging", commentCount);
         });
     }

@@ -13,8 +13,7 @@
     <!--Styles-->
     <spring:url value="/static/core/css/bootstrap.min.css" var="bootstrapCss" />
     <spring:url value="/static/core/css/fileinput.min.css" var="fileInputCss" />
-    <spring:url value="/static/core/css/custom.container.css" var="customContainerCss" />
-    <spring:url value="/static/core/css/language_dropdown.css" var="languageDropdown" />
+    <spring:url value="/static/core/css/panel.custom.css" var="customPanelCss" />
 
     <!--Javascript-->
     <spring:url value="/static/core/js/bootstrap.min.js" var="bootstrapJs" />
@@ -26,8 +25,7 @@
     <!-- Styles -->
     <link href="${bootstrapCss}" rel="stylesheet" />
     <link href="${fileInputCss}" rel="stylesheet" />
-    <link href="${customContainerCss}" rel="stylesheet" />
-    <link href="${languageDropdown}" rel="stylesheet" />
+    <link href="${customPanelCss}" rel="stylesheet" />
 
     <!-- localization -->
     <spring:message code="message.login.username" var="username"/>
@@ -65,7 +63,7 @@
 </head>
 <body>
 <jsp:include page="${request.contextPath}/userHeader"></jsp:include>
-<div class="container">
+<div class="row" style="margin: 80px 10px;">
     <div class="col-md-4">
         <div class="custom-container">
             <h1>${photo}</h1><br>

@@ -58,7 +58,7 @@
                 <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#login-modal">
                     ${login}
                 </button>
-                <a href="${pageContext.request.contextPath}/registration" class="btn btn-primary btn-lg">
+                <a href="${pageContext.request.contextPath}/registration-page" class="btn btn-primary btn-lg">
                     ${register}
                 </a>
             </div>
@@ -75,7 +75,7 @@
                 <input type="text" name="username" placeholder="${username}" required>
                 <input type="password" name="password" placeholder="${password}" required>
                 <input type="submit" name="login" class="login-submit" value="${login}">
-                <a href="${pageContext.request.contextPath}/registration">${register}</a>
+                <a href="${pageContext.request.contextPath}/registration-page">${register}</a>
             </form:form>
         </div>
     </div>

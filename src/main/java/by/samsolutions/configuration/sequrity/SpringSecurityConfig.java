@@ -14,39 +14,48 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @EnableWebSecurity
 @Configuration
-public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
+public class SpringSecurityConfig extends WebSecurityConfigurerAdapter
+{
 
-    @Autowired
-    private AuthSuccessHandler authSuccessHandler;
+	@Autowired
+	private AuthSuccessHandler authSuccessHandler;
 
-    @Autowired
-    @Qualifier("customUserDetailsService")
-    UserDetailsService userDetailsService;
+	@Autowired
+	@Qualifier("customUserDetailsService")
+	UserDetailsService userDetailsService;
 
-    @Autowired
-    public void configureGlobal(final AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService)
-                .passwordEncoder(passwordEncoder());
-    }
+	@Autowired
+	public void configureGlobal(final AuthenticationManagerBuilder auth) throws Exception
+	{
+		auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+	}
 
-    protected void configure(final HttpSecurity http) throws Exception {
+	protected void configure(final HttpSecurity http) throws Exception
+	{
 
-        http.authorizeRequests()
-                .antMatchers("/user*").access("hasRole('ROLE_USER')")
-                .antMatchers("/admin*").access("hasRole('ROLE_ADMIN')")
-                .and()
-                    .formLogin().loginPage("/loginPage")
-                    .loginProcessingUrl("/login")
-                    .successHandler(authSuccessHandler)
-                    .usernameParameter("username").passwordParameter("password")
-                .and()
-                    .exceptionHandling().accessDeniedPage("/accessDenied")
-                .and()
-                    .csrf().disable();
-    }
+		http.authorizeRequests()
+		    .antMatchers("/user*")
+		    .access("hasRole('ROLE_USER')")
+		    .antMatchers("/admin*")
+		    .access("hasRole('ROLE_ADMIN')")
+		    .and()
+		    .formLogin()
+		    .loginPage("/login-page")
+		    .loginProcessingUrl("/login")
+		    .successHandler(authSuccessHandler)
+		    .usernameParameter("username")
+		    .passwordParameter("password")
+		    .and()
+		    .exceptionHandling()
+		    .accessDeniedPage("/accessDenied")
+		    .and()
+		    .csrf()
+		    .disable();
+	}
 
-    @Bean
-    public PasswordEncoder passwordEncoder(){
-        return new BCryptPasswordEncoder();
-    }
+	@Bean
+	public PasswordEncoder passwordEncoder()
+	{
+		return new BCryptPasswordEncoder();
+	}
 }

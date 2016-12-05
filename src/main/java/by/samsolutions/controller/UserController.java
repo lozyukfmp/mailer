@@ -42,7 +42,7 @@ public class UserController
 	@Autowired
 	private PostService postService;
 
-	@RequestMapping(value = "/loginPage")
+	@GetMapping(value = "/login-page")
 	public ModelAndView login(@RequestParam(value = "error", required = false) final String error,
 	                          @RequestParam(value = "logout", required = false) final String logout)
 	{
@@ -86,7 +86,7 @@ public class UserController
 			return modelAndView;
 		}
 
-		modelAndView.setViewName("user");
+		modelAndView.setViewName("user_view");
 		modelAndView.addObject("profile", userProfile);
 		modelAndView.addObject("messageList", posts);
 
@@ -102,10 +102,10 @@ public class UserController
 			new SecurityContextLogoutHandler().logout(request, response, auth);
 		}
 
-		return "redirect:/loginPage?logout";
+		return "redirect:/login-page?logout";
 	}
 
-	@RequestMapping(value = "/registration", method = RequestMethod.GET)
+	@RequestMapping(value = "/registration-page", method = RequestMethod.GET)
 	public ModelAndView showRegistrationForm()
 	{
 		ModelAndView modelAndView = new ModelAndView();
@@ -117,7 +117,7 @@ public class UserController
 		return modelAndView;
 	}
 
-	@RequestMapping(value = "/registration", method = RequestMethod.POST)
+	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public ModelAndView registerUser(@ModelAttribute("user") @Valid final UserDto userDto, final BindingResult userBindingResult,
 	                                 @ModelAttribute("userProfile") @Valid final UserProfileDto userProfileDto,
 	                                 final BindingResult userProfileBindingResult, final Model model)

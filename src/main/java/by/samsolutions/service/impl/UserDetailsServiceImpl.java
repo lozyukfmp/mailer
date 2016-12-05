@@ -18,37 +18,39 @@ import by.samsolutions.entity.user.User;
 import by.samsolutions.entity.user.UserRole;
 
 @Service("customUserDetailsService")
-public class UserDetailsServiceImpl implements UserDetailsService {
+public class UserDetailsServiceImpl implements UserDetailsService
+{
 
-    @Autowired
-    private UserDao userDao;
+	@Autowired
+	private UserDao userDao;
 
-    @Transactional(readOnly = true)
-    @Override
-    public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
-        User user = userDao.find(username);
+	@Transactional(readOnly = true)
+	@Override
+	public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException
+	{
+		User user = userDao.find(username);
 
-        if (user == null) {
-            throw new UsernameNotFoundException("User not found!");
-        }
+		if (user == null)
+		{
+			throw new UsernameNotFoundException("User not found!");
+		}
 
-        List<GrantedAuthority> authorities = buildUserAuthority(user.getUserRole());
+		List<GrantedAuthority> authorities = buildUserAuthority(user.getUserRole());
 
-        return buildUserForAuthentication(user, authorities);
-    }
+		return buildUserForAuthentication(user, authorities);
+	}
 
-    private List<GrantedAuthority> buildUserAuthority(final Collection<UserRole> userRoles) {
+	private List<GrantedAuthority> buildUserAuthority(final Collection<UserRole> userRoles)
+	{
 
-        return userRoles.stream()
-                .map(role -> new SimpleGrantedAuthority(role.getRole()))
-                .collect(Collectors.toList());
-    }
+		return userRoles.stream().map(role -> new SimpleGrantedAuthority(role.getRole())).collect(Collectors.toList());
+	}
 
-    private org.springframework.security.core.userdetails.User
-    buildUserForAuthentication(final User user, final List<GrantedAuthority> authorities) {
-        return new org.springframework.security.core.userdetails.
-                User(user.getUsername(), user.getPassword(),
-                user.isEnabled(), true, true, true, authorities);
-    }
+	private org.springframework.security.core.userdetails.User buildUserForAuthentication(final User user,
+	                                                                                      final List<GrantedAuthority> authorities)
+	{
+		return new org.springframework.security.core.userdetails.
+						User(user.getUsername(), user.getPassword(), user.isEnabled(), true, true, true, authorities);
+	}
 
 }

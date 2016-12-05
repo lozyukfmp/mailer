@@ -78,6 +78,10 @@
     border-radius: 0;
 }
 
+.login-container {
+    margin-top: 100px;
+}
+
 .login-container a {
     text-decoration: none;
     color: #666;
@@ -111,7 +115,7 @@
 }
 
 .container > .navbar{
-    margin: 15px;
+    margin: 28px 15px;
 }
 
 .col-md-4.col-md-offset-4 {

@@ -18,7 +18,6 @@
 
     <!-- Bootstrap -->
     <link href="${bootstrapCss}" rel="stylesheet" />
-    <link href="${loginCss}" rel="stylesheet" />
     <link href="${customContainerCss}" rel="stylesheet" />
     <link href="${languageDropdown}" rel="stylesheet" />
 
@@ -58,7 +57,7 @@
                 </div>
             </c:if>
 
-            <form action="" method="POST" enctype="utf8">
+            <form action="/register" method="POST" enctype="utf-8">
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                 <spring:bind path="user.username">
                     <c:if test="${status.error}">
@@ -169,7 +168,7 @@
 
                 <input type="submit" class="login-submit" value="${register}"/>
                 <a href="${pageContext.request.contextPath}/welcome"> ${goToWelcome} |</a>
-                <a href="${pageContext.request.contextPath}/loginPage"> ${login} |</a>
+                <a href="${pageContext.request.contextPath}/login-page"> ${login} |</a>
                 <div class="form-dropdown dropdown">
                     <a class="btn btn-link dropdown-toggle" type="button" data-toggle="dropdown">
                             ${language}

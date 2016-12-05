@@ -1,5 +1,7 @@
 package by.samsolutions.entity.user;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -12,19 +14,24 @@ import java.io.Serializable;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode(exclude = "user")
+@Builder
 @Entity
 @Table(name = "user_role")
-public class UserRole implements Serializable {
+public class UserRole implements Serializable
+{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_role_id", unique = true, nullable = false)
-    private int id;
+	private final static Long serialVersionUID = 3L;
 
-    @Column(name = "username")
-    private String username;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "user_role_id", unique = true, nullable = false)
+	private int id;
 
-    @Column(name = "role", nullable = false, length = 45)
-    private String role;
+	@Column(name = "username")
+	private String username;
+
+	@Column(name = "role", nullable = false, length = 45)
+	private String role;
 }

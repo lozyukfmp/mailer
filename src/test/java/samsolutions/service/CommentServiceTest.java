@@ -150,8 +150,6 @@ public class CommentServiceTest
 
 		final Comment resultComment = commentService.updateComment(comment);
 
-		final List<Comment> comments = commentService.getCommentListByPostId(1, 2);
-
 		Assert.assertNotNull(resultComment);
 		Assert.assertEquals(commentList.size(), 2);
 		Assert.assertEquals(comment.getText(), resultComment.getText());

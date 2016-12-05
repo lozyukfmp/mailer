@@ -1,5 +1,6 @@
 package by.samsolutions.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -13,18 +14,26 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
+@Builder
 @Table(name = "comments")
 @NamedQueries({
-				@NamedQuery(name="Comment.findAllByPostId", query = "select c from Comment c where c.postId = :id order by c.date desc")
+				@NamedQuery(name = "Comment.findAllByPostId", query = "select c from Comment c " +
+								"where c.postId = :id order by c.date desc")
 })
-public class Comment
+public class Comment implements Serializable
 {
+
+	private final static Long serialVersionUID = 4L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "comment_id")

@@ -19,6 +19,8 @@ import static java.lang.annotation.ElementType.TYPE;
 public @interface ValidUsername
 {
 	String message() default "Invalid username";
+
 	Class<?>[] groups() default {};
+
 	Class<? extends Payload>[] payload() default {};
 }

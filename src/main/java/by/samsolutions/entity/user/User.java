@@ -16,37 +16,45 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import by.samsolutions.entity.Post;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
+@Builder
 @Table(name = "user")
 @NamedQueries({
-				@NamedQuery(name="User.findAll", query = "select u from User u")
+				@NamedQuery(name = "User.findAll", query = "select u from User u")
 })
-public class User implements Serializable {
-    @Id
-    @Column(name = "username", nullable = false, length = 45, unique = true)
-    private String username;
+public class User implements Serializable
+{
 
-    @Column(name = "password", nullable = false, length = 60)
-    private String password;
+	private final static Long serialVersionUID = 1L;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "username")
-    private UserProfile profile;
+	@Id
+	@Column(name = "username", nullable = false, length = 45, unique = true)
+	private String username;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "username")
-    private Collection<UserRole> userRole;
+	@Column(name = "password", nullable = false, length = 60)
+	private String password;
 
-    @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true)
-    @JoinColumn(name = "username")
-    private Collection<Post> posts;
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	@JoinColumn(name = "username")
+	private UserProfile profile;
 
-    @Column(name = "enabled")
-    private boolean enabled;
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	@JoinColumn(name = "username")
+	private Collection<UserRole> userRole;
+
+	@OneToMany(fetch = FetchType.LAZY, orphanRemoval = true)
+	@JoinColumn(name = "username")
+	private Collection<Post> posts;
+
+	@Column(name = "enabled")
+	private boolean enabled;
 
 }

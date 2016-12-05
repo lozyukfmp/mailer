@@ -27,8 +27,7 @@ public class CommentController
 	private CommentService commentService;
 
 	@GetMapping("/all/{postId}/{commentIndex}")
-	public ModelAndView getCommentListByPostId(@PathVariable Integer postId,
-	                                           @PathVariable Integer commentIndex)
+	public ModelAndView getCommentListByPostId(@PathVariable Integer postId, @PathVariable Integer commentIndex)
 	{
 		List<Comment> commentList = commentService.getCommentListByPostId(postId, commentIndex);
 
@@ -42,31 +41,32 @@ public class CommentController
 	@GetMapping("/{id}")
 	public ResponseEntity<Comment> getComment(@PathVariable Integer id)
 	{
-		return new ResponseEntity<>(commentService.getComment(id),
-		                            HttpStatus.OK);
+		return new ResponseEntity<>(commentService.getComment(id), HttpStatus.OK);
 	}
 
 	@PostMapping("/create")
-	public @ResponseBody ResponseEntity<Comment>
-	createComment(@RequestBody Comment comment)
+	public
+	@ResponseBody
+	ResponseEntity<Comment> createComment(@RequestBody Comment comment)
 	{
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		comment.setUsername(auth.getName());
 
-		return new ResponseEntity<>(commentService.createComment(comment),
-		                            HttpStatus.OK);
+		return new ResponseEntity<>(commentService.createComment(comment), HttpStatus.OK);
 	}
 
 	@PostMapping("/update")
-	public @ResponseBody ResponseEntity<Comment>
-	updateComment(@RequestBody Comment comment)
+	public
+	@ResponseBody
+	ResponseEntity<Comment> updateComment(@RequestBody Comment comment)
 	{
-		return new ResponseEntity<>(commentService.updateComment(comment),
-		                            HttpStatus.OK);
+		return new ResponseEntity<>(commentService.updateComment(comment), HttpStatus.OK);
 	}
 
 	@PostMapping("/delete/{id}")
-	public @ResponseBody ResponseEntity<Comment> deleteComment(@PathVariable Integer id)
+	public
+	@ResponseBody
+	ResponseEntity<Comment> deleteComment(@PathVariable Integer id)
 	{
 		commentService.deleteComment(id);
 		return new ResponseEntity<>(HttpStatus.OK);

@@ -5,11 +5,15 @@ import org.hibernate.validator.constraints.NotEmpty;
 import by.samsolutions.validation.PasswordMatches;
 import by.samsolutions.validation.ValidPassword;
 import by.samsolutions.validation.ValidUsername;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @PasswordMatches
 public class UserDto
 {
@@ -25,4 +29,6 @@ public class UserDto
 	private String confirmPassword;
 
 	private UserProfileDto userProfileDto;
+
+
 }
