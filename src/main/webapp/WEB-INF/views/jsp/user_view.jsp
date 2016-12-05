@@ -10,6 +10,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>User page</title>
 
+    <spring:message code="message.title.comments" var="comments"/>
+    <spring:message code="message.title.posts" var="posts"/>
+    <spring:message code="message.title.photo" var="photo"/>
+    <spring:message code="message.title.personal" var="personal"/>
+    <spring:message code="message.title.control" var="control"/>
+    <spring:message code="message.title.message" var="messageTitle"/>
+    <spring:message code="message.title.comment" var="comment"/>
+    <spring:message code="message.title.search" var="search"/>
+    <spring:message code="message.registration.email" var="email"/>
+    <spring:message code="message.registration.firstname" var="firstname"/>
+    <spring:message code="message.registration.secondname" var="secondname"/>
+    <spring:message code="message.registration.thirdname" var="thirdname"/>
+
     <!-- Styles -->
     <spring:url value="/static/core/css/bootstrap.min.css" var="bootstrapCss" />
     <spring:url value="/static/core/css/fileinput.min.css" var="fileInputCss" />
@@ -51,7 +64,7 @@
     <div class="col-md-4">
         <div class="panel panel-primary panel-image">
             <div class="panel-heading">
-                <h3 class="panel-title">Photo</h3>
+                <h3 class="panel-title">${photo}</h3>
             </div>
             <div class="panel-body user-image" data-username="${profile.username}">
                 <img src="${profile.imageUrl}" class="img-thumbnail" width="100%" height="300"/>
@@ -70,7 +83,7 @@
                 <div class="panel-heading">
                     <h4 class="panel-title">
                         <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">
-                            Personal information</a>
+                            ${personal}</a>
                     </h4>
                 </div>
                 <div id="collapse1" class="panel-collapse collapse">
@@ -78,20 +91,20 @@
                         <table class="table table-striped table-hover ">
                             <tbody>
                             <tr>
-                                <td>Firstname: </td>
-                                <td>Artem</td>
+                                <td>${firstname}: </td>
+                                <td>${profile.firstName}</td>
                             </tr>
                             <tr>
-                                <td>Secondname: </td>
-                                <td>Lozyuk</td>
+                                <td>${secondname}: </td>
+                                <td>${profile.secondName}</td>
                             </tr>
                             <tr>
-                                <td>Thirdname: </td>
-                                <td>Nicolaevich</td>
+                                <td>${thirdname}: </td>
+                                <td>${profile.thirdName}</td>
                             </tr>
                             <tr>
-                                <td>Email: </td>
-                                <td>lozyuk-artem@mail.ru</td>
+                                <td>${email}: </td>
+                                <td>${profile.email}</td>
                             </tr>
                             </tbody>
                         </table>
@@ -102,7 +115,7 @@
                 <div class="panel-heading">
                     <h4 class="panel-title">
                         <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">
-                            Control panel</a>
+                            ${control}</a>
                     </h4>
                 </div>
                 <div id="collapse2" class="panel-collapse collapse">
@@ -127,7 +140,7 @@
     <div class="col-md-8">
         <div class="panel panel-primary">
             <div class="panel-heading">
-                <h3 class="panel-title">Posts</h3>
+                <h3 class="panel-title">${posts}</h3>
             </div>
             <div id="message-container" class="panel-body">
                 <c:forEach items="${messageList}" var="message">
@@ -198,11 +211,11 @@
             <div class="modal-body">
                 <form enctype="multipart/form-data" name="message-form">
                     <div class="form-group">
-                        <label>Image:</label>
+                        <label>${photo}:</label>
                         <input id="post-image" name="postImage" type="file" class="file-loading">
                     </div>
                     <div class="form-group">
-                        <label for="post">Message:</label>
+                        <label for="post">${messageTitle}:</label>
                         <textarea id="message-text" class="form-control" rows="5" id="post"></textarea>
                     </div>
                     <div class="form-group">
@@ -229,7 +242,7 @@
     <div class="modal-dialog" style="margin-top: 150px;width: 300px;">
         <div class="modal-content">
             <div class="modal-body">
-                <label>Comment:</label>
+                <label>${comment}:</label>
                 <textarea id="create-comment-text" class="form-control" rows="5"></textarea>
                 <br>
                 <button id="create-comment-button" class="btn btn-block btn-info">
