@@ -72,7 +72,7 @@
                     <a href="#">
                         <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
                     </a>
-                    <a href="#">
+                    <a href="${pageContext.request.contextPath}/user/profile">
                         <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                     </a>
                 </div>
@@ -118,11 +118,13 @@
                             ${control}</a>
                     </h4>
                 </div>
-                <div id="collapse2" class="panel-collapse collapse">
+                <div id="collapse2" class="panel-collapse collapse in">
                     <div class="panel-body" style="padding-top: 5px;">
-                        <button id="view-create-message-modal-button" class="btn btn-block btn-info">
-                            <span class="glyphicon glyphicon-send" aria-hidden="true"></span>
-                        </button>
+                        <c:if test="${profile.username == pageContext.request.userPrincipal.name}">
+                            <button id="view-create-message-modal-button" class="btn btn-block btn-info">
+                                <span class="glyphicon glyphicon-send" aria-hidden="true"></span>
+                            </button>
+                        </c:if>
                         <button class="btn btn-block btn-warning">
                             <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                         </button>

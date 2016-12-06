@@ -65,33 +65,141 @@
 <jsp:include page="${request.contextPath}/userHeader"></jsp:include>
 <div class="row" style="margin: 80px 10px;">
     <div class="col-md-4">
-        <div class="custom-container">
-            <h1>${photo}</h1><br>
-            <form enctype="multipart/form-data">
-                <input id="user-image" name="userImage" type="file" class="file-loading">
-            </form>
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">${photo}</h3>
+            </div>
+            <div class="panel-body">
+                <form enctype="multipart/form-data">
+                    <input id="user-image" name="userImage" type="file" class="file-loading">
+                </form>
+            </div>
         </div>
     </div>
     <div class="col-md-4">
-        <div class="custom-container">
-            <h1>${profile}</h1><br>
-            <c:if test="${not empty successProfileChange}">
-                <div class="alert alert-info">
-                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                    <strong>${profileChange}</strong>
-                </div>
-            </c:if>
-            <form:form action="${profileUrl}" modelAttribute="userProfile" method="POST" enctype="utf8">
-                <form:errors path="email" element="div" cssClass="error-div"/>
-                <form:input type="text" path="email" placeholder="${email}"/>
-                <form:errors path="firstName" element="div" cssClass="error-div"/>
-                <form:input type="text" path="firstName" placeholder="${firstname}"/>
-                <form:errors path="secondName" element="div" cssClass="error-div"/>
-                <form:input type="text" path="secondName" placeholder="${secondname}"/>
-                <form:errors path="thirdName" element="div" cssClass="error-div"/>
-                <form:input type="text" path="thirdName" placeholder="${thirdname}"/>
-                <input type="submit" class="login-submit" value="${change}"/>
-            </form:form>
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">${profile}</h3>
+            </div>
+            <div class="panel-body">
+                <c:if test="${not empty successProfileChange}">
+                    <div class="alert alert-info">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <strong>${profileChange}</strong>
+                    </div>
+                </c:if>
+                <form:form action="${profileUrl}" modelAttribute="userProfile" method="POST" enctype="utf8">
+
+                    <spring:bind path="userProfile.email">
+                        <c:choose>
+                            <c:when test="${status.error}">
+                                <c:forEach items="${status.errorMessages}" var="error">
+                                    <p class="text-danger"><c:out value="${error}"/></p>
+                                </c:forEach>
+                                <div class="form-group has-error">
+                                    <input type="text"
+                                           class="form-control"
+                                           value="<c:out value="${status.value}"/>"
+                                           name="<c:out value="${status.expression}"/>"
+                                           placeholder="${email}">
+                                </div>
+                            </c:when>
+                            <c:otherwise>
+                                <div class="form-group">
+                                    <input type="text"
+                                           class="form-control"
+                                           value="<c:out value="${status.value}"/>"
+                                           name="<c:out value="${status.expression}"/>"
+                                           placeholder="${email}">
+                                </div>
+                            </c:otherwise>
+                        </c:choose>
+                    </spring:bind>
+
+                    <spring:bind path="userProfile.firstName">
+                        <c:choose>
+                            <c:when test="${status.error}">
+                                <c:forEach items="${status.errorMessages}" var="error">
+                                    <p class="text-danger"><c:out value="${error}"/></p>
+                                </c:forEach>
+                                <div class="form-group has-error">
+                                    <input type="text"
+                                           class="form-control"
+                                           value="<c:out value="${status.value}"/>"
+                                           name="<c:out value="${status.expression}"/>"
+                                           placeholder="${firstname}">
+                                </div>
+                            </c:when>
+                            <c:otherwise>
+                                <div class="form-group">
+                                    <input type="text"
+                                           class="form-control"
+                                           value="<c:out value="${status.value}"/>"
+                                           name="<c:out value="${status.expression}"/>"
+                                           placeholder="${firstname}">
+                                </div>
+                            </c:otherwise>
+                        </c:choose>
+                    </spring:bind>
+
+                    <spring:bind path="userProfile.secondName">
+                        <c:choose>
+                            <c:when test="${status.error}">
+                                <c:forEach items="${status.errorMessages}" var="error">
+                                    <p class="text-danger"><c:out value="${error}"/></p>
+                                </c:forEach>
+                                <div class="form-group has-error">
+                                    <input type="text"
+                                           class="form-control"
+                                           value="<c:out value="${status.value}"/>"
+                                           name="<c:out value="${status.expression}"/>"
+                                           placeholder="${secondname}">
+                                </div>
+                            </c:when>
+                            <c:otherwise>
+                                <div class="form-group">
+                                    <input type="text"
+                                           class="form-control"
+                                           value="<c:out value="${status.value}"/>"
+                                           name="<c:out value="${status.expression}"/>"
+                                           placeholder="${secondname}">
+                                </div>
+                            </c:otherwise>
+                        </c:choose>
+                    </spring:bind>
+
+                    <spring:bind path="userProfile.thirdName">
+                        <c:choose>
+                            <c:when test="${status.error}">
+                                <c:forEach items="${status.errorMessages}" var="error">
+                                    <p class="text-danger"><c:out value="${error}"/></p>
+                                </c:forEach>
+                                <div class="form-group has-error">
+                                    <input type="text"
+                                           class="form-control"
+                                           value="<c:out value="${status.value}"/>"
+                                           name="<c:out value="${status.expression}"/>"
+                                           placeholder="${thirdname}">
+                                </div>
+                            </c:when>
+                            <c:otherwise>
+                                <div class="form-group">
+                                    <input type="text"
+                                           class="form-control"
+                                           value="<c:out value="${status.value}"/>"
+                                           name="<c:out value="${status.expression}"/>"
+                                           placeholder="${thirdname}">
+                                </div>
+                            </c:otherwise>
+                        </c:choose>
+                    </spring:bind>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-block btn-primary">
+                            <h3 class="panel-title" style="font-weight: bolder;">${change}</h3>
+                        </button>
+                    </div>
+                </form:form>
+            </div>
         </div>
     </div>
 </div>

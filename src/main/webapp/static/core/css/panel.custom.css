@@ -79,7 +79,7 @@
 	font-size: 25px;
 }
 .panel-paging > a {
-	margin-left: 60px;
+	margin: 5%;
 }
 .panel-paging > a {
 	text-decoration: none;
@@ -88,9 +88,56 @@
 	background-color: transparent;
 	border-top: none;
 }
-
 @media (min-width: 768px) and  (max-width: 837px) {
 	.navbar-form .form-control {
     	width: 142px;
 	}
+}
+
+form .col-sm-6 {
+	padding-left: 0;
+	padding-right: 0;
+}
+
+form .col-sm-6:first-of-type {
+	padding-right: 15px;
+}
+
+form .col-sm-6 .btn-block {
+	padding: 10px 5px;
+}
+
+.btn-group-justified {
+	text-align: center;
+	margin-top: 15px;
+}
+
+.btn-group-justified .col-sm-4 {
+	text-align: center;
+	margin-bottom: 15px;
+}
+
+@media (max-width: 767px) {
+	.col-sm-6,
+	form .col-sm-6:first-of-type {
+		padding: 0;
+	}
+}
+
+@media (min-width: 768px) and  (max-width: 837px) {
+	.navbar-form .form-control {
+		width: 142px;
+	}
+}
+
+.panel-group .panel-heading+.panel-collapse>.panel-body {
+     border: none;
+ }
+.close,
+.close:hover {
+	color: rgba(59, 58, 59, 0.6);
+}
+.file-preview,
+.file-drop-zone {
+	border-radius: 0;
 }
