@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).ready(function () {
     $("#user-image").fileinput({
         uploadUrl: "/user/profile/photo/upload",
         showCaption: false,

@@ -13,16 +13,16 @@ var userProfileAjax = (function () {
                 success: callback
             });
         },
-        getProfile: function(callback) {
+        getProfile: function (callback) {
             $.ajax({
                 type: "GET",
                 url: "profile/info",
-                success: function(profile) {
+                success: function (profile) {
                     callback(profile);
                 }
             });
         },
-        deleteProfilePhoto: function() {
+        deleteProfilePhoto: function () {
             $.ajax({
                 type: "POST",
                 url: "/user/profile/photo/delete",

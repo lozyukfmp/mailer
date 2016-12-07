@@ -30,9 +30,9 @@ import lombok.NoArgsConstructor;
 @Builder
 @Table(name = "posts")
 @NamedQueries({
-				@NamedQuery(name="Post.findAllByUsername", query = "select p from Post p " +
+				@NamedQuery(name = "Post.findAllByUsername", query = "select p from Post p " +
 								"where p.username = :username order by p.date desc"),
-				@NamedQuery(name="Post.findByIdWithComments", query = "select p from Post p " +
+				@NamedQuery(name = "Post.findByIdWithComments", query = "select p from Post p " +
 								"left join fetch p.comments c where p.id = :id"),
 })
 public class Post implements Serializable

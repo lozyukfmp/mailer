@@ -12,9 +12,8 @@ import by.samsolutions.validation.PasswordMatchesValidator;
 
 public class PasswordMatchesValidatorTest
 {
-	private static PasswordMatchesValidator passwordMatchesValidator;
+	private static PasswordMatchesValidator   passwordMatchesValidator;
 	private static ConstraintValidatorContext context;
-
 
 	@BeforeClass
 	public static void initData()

@@ -28,27 +28,7 @@ import by.samsolutions.service.impl.CommentServiceImpl;
 @ContextConfiguration
 public class CommentServiceTest
 {
-	@Configuration
-	static class CommentServiceConfiguration {
-		@Bean
-		public CommentService commentService()
-		{
-			return new CommentServiceImpl();
-		}
-
-		@Bean
-		public CommentDao commentDao()
-		{
-			return Mockito.mock(CommentDao.class);
-		}
-
-		@Bean
-		public GenericDao<User, String> userDao()
-		{
-			return Mockito.mock(GenericDao.class);
-		}
-	}
-
+	private final List<Comment> commentList = new ArrayList<>();
 	@Autowired
 	private GenericDao<User, String> userDao;
 
@@ -59,7 +39,6 @@ public class CommentServiceTest
 	private CommentService commentService;
 
 	private Post post;
-	private final List<Comment> commentList = new ArrayList<>();
 
 	@Before
 	public void initPostList()
@@ -95,15 +74,17 @@ public class CommentServiceTest
 		Mockito.when(commentDao.find(2)).thenReturn(secondComment);
 		Mockito.when(commentDao.findAllByPostId(post.getId(), 2)).thenReturn(commentList);
 
-		Mockito.doAnswer(invocationOnMock -> {
-			commentList.remove(firstComment);
-			return null;
-		}).when(commentDao).delete(1);
+		Mockito.doAnswer(invocationOnMock ->
+		                 {
+			                 commentList.remove(firstComment);
+			                 return null;
+		                 }).when(commentDao).delete(1);
 
-		Mockito.doAnswer(invocationOnMock -> {
-			commentList.remove(secondComment);
-			return null;
-		}).when(commentDao).delete(2);
+		Mockito.doAnswer(invocationOnMock ->
+		                 {
+			                 commentList.remove(secondComment);
+			                 return null;
+		                 }).when(commentDao).delete(2);
 
 		ReflectionTestUtils.setField(commentService, "commentDao", commentDao);
 	}
@@ -115,10 +96,11 @@ public class CommentServiceTest
 		comment.setText("Some comment text");
 		comment.setDate(new Date());
 
-		Mockito.when(commentDao.create(comment)).then(invocationOnMock -> {
-			commentList.add(comment);
-			return comment;
-		});
+		Mockito.when(commentDao.create(comment)).then(invocationOnMock ->
+		                                              {
+			                                              commentList.add(comment);
+			                                              return comment;
+		                                              });
 
 		Comment resultComment = commentService.createComment(comment);
 
@@ -138,15 +120,17 @@ public class CommentServiceTest
 		comment.setText("Some updated comment text");
 		comment.setDate(new Date());
 
-		Mockito.when(commentDao.update(comment)).then(invocationOnMock -> {
+		Mockito.when(commentDao.update(comment)).then(invocationOnMock ->
+		                                              {
 
-			commentList.stream()
-			        .filter(commentValue -> commentValue.getId() == comment.getId())
-			        .findFirst()
-			        .ifPresent(commentValue -> commentValue.setText(comment.getText()));
+			                                              commentList.stream()
+			                                                         .filter(commentValue -> commentValue.getId() == comment.getId())
+			                                                         .findFirst()
+			                                                         .ifPresent(commentValue -> commentValue.setText(comment.getText
+							                                                         ()));
 
-			return comment;
-		});
+			                                              return comment;
+		                                              });
 
 		final Comment resultComment = commentService.updateComment(comment);
 
@@ -188,5 +172,27 @@ public class CommentServiceTest
 		final List<Comment> comments = commentService.getCommentListByPostId(1, 2);
 
 		Assert.assertEquals(comments.size(), 2);
+	}
+
+	@Configuration
+	static class CommentServiceConfiguration
+	{
+		@Bean
+		public CommentService commentService()
+		{
+			return new CommentServiceImpl();
+		}
+
+		@Bean
+		public CommentDao commentDao()
+		{
+			return Mockito.mock(CommentDao.class);
+		}
+
+		@Bean
+		public GenericDao<User, String> userDao()
+		{
+			return Mockito.mock(GenericDao.class);
+		}
 	}
 }

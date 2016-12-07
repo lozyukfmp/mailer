@@ -1,9 +1,9 @@
 package by.samsolutions.validation;
 
-import by.samsolutions.dto.UserDto;
-
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
+
+import by.samsolutions.dto.UserDto;
 
 public class PasswordMatchesValidator implements ConstraintValidator<PasswordMatches, Object>
 {

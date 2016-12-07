@@ -24,30 +24,10 @@ import by.samsolutions.service.impl.UserServiceImpl;
 @ContextConfiguration
 public class UserServiceTest
 {
-	@Configuration
-	static class UserServiceConfiguration {
-		@Bean
-		public UserService userService() {
-			return new UserServiceImpl();
-		}
-
-		@Bean
-		public UserDao userDao() {
-			return Mockito.mock(UserDao.class);
-		}
-
-		@Bean
-		public PasswordEncoder passwordEncoder(){
-			return new BCryptPasswordEncoder();
-		}
-	}
-
 	@Autowired
-	private UserService userService;
-
+	private UserService     userService;
 	@Autowired
-	private UserDao userDao;
-
+	private UserDao         userDao;
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
@@ -90,8 +70,28 @@ public class UserServiceTest
 
 		Assert.assertNotNull(resultUser);
 		Assert.assertEquals(resultUser.getUsername(), userDto.getUsername());
-		Assert.assertTrue(passwordEncoder.matches(
-						userDto.getPassword(),
-						resultUser.getPassword()));
+		Assert.assertTrue(passwordEncoder.matches(userDto.getPassword(), resultUser.getPassword()));
+	}
+
+	@Configuration
+	static class UserServiceConfiguration
+	{
+		@Bean
+		public UserService userService()
+		{
+			return new UserServiceImpl();
+		}
+
+		@Bean
+		public UserDao userDao()
+		{
+			return Mockito.mock(UserDao.class);
+		}
+
+		@Bean
+		public PasswordEncoder passwordEncoder()
+		{
+			return new BCryptPasswordEncoder();
+		}
 	}
 }

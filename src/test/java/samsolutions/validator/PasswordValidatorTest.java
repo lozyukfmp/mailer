@@ -11,7 +11,7 @@ import by.samsolutions.validation.PasswordValidator;
 
 public class PasswordValidatorTest
 {
-	private static PasswordValidator passwordValidator;
+	private static PasswordValidator          passwordValidator;
 	private static ConstraintValidatorContext context;
 
 	private String[] validPasswords   = {"arTem234", "blablA2", "ArTeM1"};

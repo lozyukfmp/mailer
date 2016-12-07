@@ -1,153 +1,176 @@
 .panel-primary {
-	border: none;
-	box-shadow: none;
-	background-color: transparent;
+    border: none;
+    box-shadow: none;
+    background-color: transparent;
 }
+
 .panel-primary .panel-body {
-	padding: 0;
+    padding: 0;
 }
+
 .panel-primary > .panel-heading {
-	border-top: 5px solid #ff7518;
-	margin-bottom: 10px;
+    border-top: 5px solid #ff7518;
+    margin-bottom: 10px;
 }
-.panel-primary > .panel-heading > .panel-title{
-	color: white;
-	font-weight: bolder;
+
+.panel-primary > .panel-heading > .panel-title {
+    color: white;
+    font-weight: bolder;
 }
+
 .img-thumbnail {
-	padding: 0;
-	border: none;
+    padding: 0;
+    border: none;
 }
-.panel-group > .panel-primary table{
-	margin-bottom: 0px;
+
+.panel-group > .panel-primary table {
+    margin-bottom: 0px;
 }
+
 .panel-image > .panel-body,
 .panel-comment > .panel-body,
 .message-image {
-	position: relative;
+    position: relative;
 }
-.tool-panel {
-	display: none;
-	position: absolute;
-	right: 0;
-	bottom: 0;
-	height: 40px;
-	width: 120px;
 
-	background-color: rgba(39,128,227,0.7);
+.tool-panel {
+    display: none;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    height: 40px;
+    width: 120px;
+
+    background-color: rgba(39, 128, 227, 0.7);
 }
+
 .tool-panel > a {
-	display: inline-block;
+    display: inline-block;
     color: white;
     margin-top: 11px;
     margin-left: 30px;
 }
+
 .tool-panel > a:hover {
-	font-size: 19px;
-	margin-top: 7px;
+    font-size: 19px;
+    margin-top: 7px;
     margin-left: 26px;
 }
-.message-image > .tool-panel > a{
-	margin-top: 12px;
-	margin-left: 18px;
+
+.message-image > .tool-panel > a {
+    margin-top: 12px;
+    margin-left: 18px;
 }
-.message-image > .tool-panel > a:hover{
-	margin-top: 8px;
-	margin-bottom: 14px;
-	margin-right: -4px;
+
+.message-image > .tool-panel > a:hover {
+    margin-top: 8px;
+    margin-bottom: 14px;
+    margin-right: -4px;
 }
+
 .navbar {
-	font-weight: bolder;
+    font-weight: bolder;
 }
+
 .navbar-form {
-	margin-top: 6.5px;
-	margin-bottom: 2.5px;
+    margin-top: 6.5px;
+    margin-bottom: 2.5px;
 }
+
 .navbar-form input[type=text] {
-	height: 37px;
-	border-color: #ff7518;
+    height: 37px;
+    border-color: #ff7518;
 }
+
 .navbar-form .btn-search {
-	padding: 7px 18px;
+    padding: 7px 18px;
 }
+
 .message-view {
-	max-height: 500px;
-	overflow-y: auto;
+    max-height: 500px;
+    overflow-y: auto;
 }
+
 .panel-paging {
-	text-align: center;
-	font-size: 25px;
+    text-align: center;
+    font-size: 25px;
 }
+
 .panel-paging > a {
-	margin: 5%;
+    margin: 5%;
 }
+
 .panel-paging > a {
-	text-decoration: none;
+    text-decoration: none;
 }
+
 .panel-footer {
-	background-color: transparent;
-	border-top: none;
+    background-color: transparent;
+    border-top: none;
 }
+
 @media (min-width: 768px) and  (max-width: 837px) {
-	.navbar-form .form-control {
-    	width: 142px;
-	}
+    .navbar-form .form-control {
+        width: 142px;
+    }
 }
 
 form .col-sm-6 {
-	padding-left: 0;
-	padding-right: 0;
+    padding-left: 0;
+    padding-right: 0;
 }
 
 form .col-sm-6:first-of-type {
-	padding-right: 15px;
+    padding-right: 15px;
 }
 
 form .col-sm-6 .btn-block {
-	padding: 10px 5px;
+    padding: 10px 5px;
 }
 
 .btn-group-justified {
-	text-align: center;
-	margin-top: 15px;
+    text-align: center;
+    margin-top: 15px;
 }
 
 .btn-group-justified .col-sm-4 {
-	text-align: center;
-	margin-bottom: 15px;
+    text-align: center;
+    margin-bottom: 15px;
 }
 
 .col-sm-4 > .btn-group {
-	vertical-align: top;
-	margin-left: 32px;
+    vertical-align: top;
+    margin-left: 32px;
 }
 
 .panel-footer,
 .panel-footer .col-sm-4 {
-	padding: 0;
+    padding: 0;
 }
 
 @media (max-width: 767px) {
-	.col-sm-6,
-	form .col-sm-6:first-of-type {
-		padding: 0;
-	}
+    .col-sm-6,
+    form .col-sm-6:first-of-type {
+        padding: 0;
+    }
 }
 
 @media (min-width: 768px) and  (max-width: 837px) {
-	.navbar-form .form-control {
-		width: 142px;
-	}
+    .navbar-form .form-control {
+        width: 142px;
+    }
 }
 
-.panel-group .panel-heading+.panel-collapse>.panel-body {
-     border: none;
- }
+.panel-group .panel-heading + .panel-collapse > .panel-body {
+    border: none;
+}
+
 .close,
 .close:hover {
-	color: rgba(59, 58, 59, 0.6);
+    color: rgba(59, 58, 59, 0.6);
 }
+
 .file-preview,
 .file-drop-zone {
-	border-radius: 0;
+    border-radius: 0;
 }

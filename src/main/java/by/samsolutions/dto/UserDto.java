@@ -30,5 +30,4 @@ public class UserDto
 
 	private UserProfileDto userProfileDto;
 
-
 }

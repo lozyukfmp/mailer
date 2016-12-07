@@ -1,8 +1,8 @@
 package by.samsolutions.configuration.web;
 
-import by.samsolutions.configuration.root.SpringRootConfiguration;
-
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
+
+import by.samsolutions.configuration.root.SpringRootConfiguration;
 
 public class WebInitializer extends AbstractAnnotationConfigDispatcherServletInitializer
 {

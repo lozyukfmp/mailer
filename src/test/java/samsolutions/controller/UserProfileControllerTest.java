@@ -23,7 +23,10 @@ import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {WebTestConfiguration.class, SpringWebConfig.class})
@@ -102,7 +105,7 @@ public class UserProfileControllerTest
 	}
 
 	@Test
-	@WithMockUser(username="ArtemLozyuk")
+	@WithMockUser(username = "ArtemLozyuk")
 	public void testGetUserProfileJson() throws Exception
 	{
 		mockMvc.perform(get("/user/profile/info"))

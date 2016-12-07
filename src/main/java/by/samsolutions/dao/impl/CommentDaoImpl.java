@@ -8,8 +8,7 @@ import by.samsolutions.dao.CommentDao;
 import by.samsolutions.entity.Comment;
 
 @Repository
-public class CommentDaoImpl extends GenericDaoImpl<Comment, Integer>
-				implements CommentDao
+public class CommentDaoImpl extends GenericDaoImpl<Comment, Integer> implements CommentDao
 {
 
 	public CommentDaoImpl()

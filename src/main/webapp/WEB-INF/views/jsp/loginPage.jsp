@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
@@ -10,12 +10,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><spring:message code="message.title.login"/></title>
 
-    <spring:url value="/static/core/css/bootstrap.min.css" var="bootstrapCss" />
+    <spring:url value="/static/core/css/bootstrap.min.css" var="bootstrapCss"/>
     <%--<spring:url value="/static/core/css/custom.container.css" var="customContainerCss" />
     <spring:url value="/static/core/css/language_dropdown.css" var="languageDropdown" />--%>
-    <spring:url value="/static/core/css/panel.custom.css" var="customPanelCss" />
+    <spring:url value="/static/core/css/panel.custom.css" var="customPanelCss"/>
 
-    <spring:url value="/static/core/js/bootstrap.min.js" var="bootstrapJs" />
+    <spring:url value="/static/core/js/bootstrap.min.js" var="bootstrapJs"/>
 
     <!-- localization -->
     <spring:message code="message.login.username" var="username"/>
@@ -32,10 +32,10 @@
     <spring:message code="message.logout" var="logoutMessage"/>
 
     <!-- Bootstrap -->
-    <link href="${bootstrapCss}" rel="stylesheet" />
-    <link href="${customPanelCss}" rel="stylesheet" />
-   <%-- <link href="${customContainerCss}" rel="stylesheet" />
-    <link href="${languageDropdown}" rel="stylesheet" />--%>
+    <link href="${bootstrapCss}" rel="stylesheet"/>
+    <link href="${customPanelCss}" rel="stylesheet"/>
+    <%-- <link href="${customContainerCss}" rel="stylesheet" />
+     <link href="${languageDropdown}" rel="stylesheet" />--%>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -70,7 +70,7 @@
                         <strong>${successMessage}</strong>
                     </div>
                 </c:if>
-                <c:url value="/login" var="loginUrl" />
+                <c:url value="/login" var="loginUrl"/>
                 <form:form action="${loginUrl}" method="post">
                     <div class="form-group">
                         <input type="text" class="form-control" name="username" placeholder="${username}" required>

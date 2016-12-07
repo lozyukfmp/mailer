@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
@@ -10,11 +10,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>User page</title>
 
-    <spring:url value="/static/core/css/bootstrap.min.css" var="bootstrapCss" />
-    <spring:url value="/static/core/js/bootstrap.min.js" var="bootstrapJs" />
+    <spring:url value="/static/core/css/bootstrap.min.css" var="bootstrapCss"/>
+    <spring:url value="/static/core/js/bootstrap.min.js" var="bootstrapJs"/>
 
     <!-- Bootstrap -->
-    <link href="${bootstrapCss}" rel="stylesheet" />
+    <link href="${bootstrapCss}" rel="stylesheet"/>
 
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -26,17 +26,17 @@
 </head>
 <body>
 <h2>Access denied page</h2>
-<c:url value="/admin" var="adminPage" />
-<c:url value="/user" var="userPage" />
-    <security:authorize access="hasRole('ROLE_ADMIN')">
-        <a href="${adminPage}">Back</a>
-    </security:authorize>
-    <security:authorize access="hasRole('ROLE_USER')">
-        <a href="${userPage}">Back</a>
-    </security:authorize>
+<c:url value="/admin" var="adminPage"/>
+<c:url value="/user" var="userPage"/>
+<security:authorize access="hasRole('ROLE_ADMIN')">
+    <a href="${adminPage}">Back</a>
+</security:authorize>
+<security:authorize access="hasRole('ROLE_USER')">
+    <a href="${userPage}">Back</a>
+</security:authorize>
 
 Failed URL: ${url}
-Exception:  ${exception.message}
+Exception: ${exception.message}
 <c:forEach items="${exception.stackTrace}" var="ste">    ${ste}
 </c:forEach>
 <script src="${bootstrapJs}"></script>

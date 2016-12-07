@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <spring:message code="message.language" var="language"/>
@@ -48,7 +48,7 @@
                     </ul>
                 </li>
                 <li>
-                    <c:url value="/logout" var="logoutUrl" />
+                    <c:url value="/logout" var="logoutUrl"/>
                     <a href="${logoutUrl}">
                         <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
                         ${logout}

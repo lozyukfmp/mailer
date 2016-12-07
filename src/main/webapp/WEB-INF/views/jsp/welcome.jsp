@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
@@ -11,12 +11,12 @@
     <title><spring:message code="message.title.welcome"/></title>
 
     <!-- .css and .js -->
-    <spring:url value="/static/core/css/bootstrap.min.css" var="bootstrapCss" />
+    <spring:url value="/static/core/css/bootstrap.min.css" var="bootstrapCss"/>
     <%--<spring:url value="/static/core/css/custom.container.css" var="customContainerCss" />
     <spring:url value="/static/core/css/welcome.css" var="welcomeCss" />
     <spring:url value="/static/core/css/language_dropdown.css" var="languageDropdown" />--%>
 
-    <spring:url value="/static/core/js/bootstrap.min.js" var="bootstrapJs" />
+    <spring:url value="/static/core/js/bootstrap.min.js" var="bootstrapJs"/>
 
     <!-- localization -->
     <spring:message code="message.welcome" var="welcome"/>
@@ -29,11 +29,11 @@
     <spring:message code="message.russian" var="russian"/>
     <spring:message code="message.english" var="english"/>
 
-    <link href="${bootstrapCss}" rel="stylesheet" />
-    <link href="${loginCss}" rel="stylesheet" />
-    <link href="${customContainerCss}" rel="stylesheet" />
-    <link href="${languageDropdown}" rel="stylesheet" />
-    <link href="${welcomeCss}" rel="stylesheet" />
+    <link href="${bootstrapCss}" rel="stylesheet"/>
+    <link href="${loginCss}" rel="stylesheet"/>
+    <link href="${customContainerCss}" rel="stylesheet"/>
+    <link href="${languageDropdown}" rel="stylesheet"/>
+    <link href="${welcomeCss}" rel="stylesheet"/>
 
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>

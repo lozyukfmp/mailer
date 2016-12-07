@@ -1,4 +1,4 @@
-package by.samsolutions.configuration.sequrity;
+package by.samsolutions.configuration.seсurity;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -18,11 +18,10 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter
 {
 
 	@Autowired
-	private AuthSuccessHandler authSuccessHandler;
-
-	@Autowired
 	@Qualifier("customUserDetailsService")
 	UserDetailsService userDetailsService;
+	@Autowired
+	private AuthSuccessHandler authSuccessHandler;
 
 	@Autowired
 	public void configureGlobal(final AuthenticationManagerBuilder auth) throws Exception

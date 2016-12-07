@@ -9,10 +9,9 @@ import org.mockito.Mockito;
 
 import by.samsolutions.validation.EmailValidator;
 
-
 public class EmailValidatorTest
 {
-	private static EmailValidator emailValidator;
+	private static EmailValidator             emailValidator;
 	private static ConstraintValidatorContext context;
 
 	private String[] validEmails   = {"arTem234@mail.com", "blablA2@mail.ru", "ArTeM1@gmail.com"};

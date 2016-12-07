@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
@@ -10,16 +10,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><spring:message code="message.title.registration"/></title>
 
-    <spring:url value="/static/core/css/bootstrap.min.css" var="bootstrapCss" />
-    <spring:url value="/static/core/css/panel.custom.css" var="customPanelCss" />
+    <spring:url value="/static/core/css/bootstrap.min.css" var="bootstrapCss"/>
+    <spring:url value="/static/core/css/panel.custom.css" var="customPanelCss"/>
     <%--<spring:url value="/static/core/css/custom.container.css" var="customContainerCss" />--%>
-   <%-- <spring:url value="/static/core/css/language_dropdown.css" var="languageDropdown" />--%>
+    <%-- <spring:url value="/static/core/css/language_dropdown.css" var="languageDropdown" />--%>
 
-    <spring:url value="/static/core/js/bootstrap.min.js" var="bootstrapJs" />
+    <spring:url value="/static/core/js/bootstrap.min.js" var="bootstrapJs"/>
 
     <!-- Bootstrap -->
-    <link href="${bootstrapCss}" rel="stylesheet" />
-    <link href="${customPanelCss}" rel="stylesheet" />
+    <link href="${bootstrapCss}" rel="stylesheet"/>
+    <link href="${customPanelCss}" rel="stylesheet"/>
 
     <%--<link href="${customContainerCss}" rel="stylesheet" />--%>
     <%--<link href="${languageDropdown}" rel="stylesheet" />--%>
@@ -58,7 +58,7 @@
             </div>
             <div class="panel-body">
                 <form action="/register" method="POST" enctype="utf-8">
-                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                     <div class="col-sm-6">
                         <c:if test="${not empty usernameExist}">
                             <div class="alert alert-danger">

@@ -16,8 +16,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import by.samsolutions.configuration.web.SpringWebConfig;
 import by.samsolutions.controller.UserController;
-import by.samsolutions.dto.UserDto;
-import by.samsolutions.dto.UserProfileDto;
 import by.samsolutions.entity.Post;
 import by.samsolutions.entity.user.User;
 import by.samsolutions.entity.user.UserProfile;
@@ -26,12 +24,18 @@ import by.samsolutions.service.UserProfileService;
 import by.samsolutions.service.UserService;
 import samsolutions.configuration.WebTestConfiguration;
 
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.hasProperty;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {WebTestConfiguration.class, SpringWebConfig.class})

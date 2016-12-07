@@ -1,5 +1,5 @@
 <%@ page pageEncoding="UTF-8" contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <!DOCTYPE html>
@@ -15,16 +15,16 @@
 
     <title>${userPage}</title>
     <!-- Styles -->
-    <spring:url value="/static/core/css/bootstrap.min.css" var="bootstrapCss" />
-    <spring:url value="/static/core/css/panel.custom.css" var="customPanelCss" />
+    <spring:url value="/static/core/css/bootstrap.min.css" var="bootstrapCss"/>
+    <spring:url value="/static/core/css/panel.custom.css" var="customPanelCss"/>
 
     <!-- Javascript -->
     <spring:url value="/static/core/js/bootstrap.min.js" var="bootstrapJs"/>
     <spring:url value="/static/core/js/jquery-3.1.1.min.js" var="jqueryJs"/>
 
     <!-- Styles -->
-    <link href="${bootstrapCss}" rel="stylesheet" />
-    <link href="${customPanelCss}" rel="stylesheet" />
+    <link href="${bootstrapCss}" rel="stylesheet"/>
+    <link href="${customPanelCss}" rel="stylesheet"/>
 
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>

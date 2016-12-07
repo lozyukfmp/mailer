@@ -11,11 +11,11 @@ import by.samsolutions.validation.UsernameValidator;
 
 public class UsernameValidatorTest
 {
-	private static UsernameValidator usernameValidator;
+	private static UsernameValidator          usernameValidator;
 	private static ConstraintValidatorContext context;
 
 	private String[] validUsernameList   = {"arTem234", "bla_blA2", "ArTeM1"};
-	private String[] invalidUsernameList= {"arT2", "sd@fb1", "AAA12$"};
+	private String[] invalidUsernameList = {"arT2", "sd@fb1", "AAA12$"};
 
 	@BeforeClass
 	public static void initData()

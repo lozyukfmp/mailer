@@ -1,4 +1,13 @@
-package by.samsolutions.configuration.sequrity;
+package by.samsolutions.configuration.seсurity;
+
+import java.io.IOException;
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -7,16 +16,6 @@ import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
-import javax.servlet.ServletException;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import java.io.IOException;
-import java.util.Collection;
-import java.util.List;
-import java.util.stream.Collectors;
-
 @Component
 public class AuthSuccessHandler extends SimpleUrlAuthenticationSuccessHandler
 {
@@ -24,7 +23,8 @@ public class AuthSuccessHandler extends SimpleUrlAuthenticationSuccessHandler
 	private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 
 	@Override
-	protected void handle(final HttpServletRequest request, final HttpServletResponse response, final Authentication authentication)
+	protected void handle(final HttpServletRequest request, final HttpServletResponse response, final Authentication
+					authentication)
 					throws IOException, ServletException
 	{
 		String targetUrl = determineTargetUrl(authentication);
@@ -71,13 +71,13 @@ public class AuthSuccessHandler extends SimpleUrlAuthenticationSuccessHandler
 		return roles.contains("ROLE_USER");
 	}
 
-	public void setRedirectStrategy(final RedirectStrategy redirectStrategy)
-	{
-		this.redirectStrategy = redirectStrategy;
-	}
-
 	protected RedirectStrategy getRedirectStrategy()
 	{
 		return redirectStrategy;
+	}
+
+	public void setRedirectStrategy(final RedirectStrategy redirectStrategy)
+	{
+		this.redirectStrategy = redirectStrategy;
 	}
 }

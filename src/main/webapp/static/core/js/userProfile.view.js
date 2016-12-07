@@ -15,11 +15,12 @@
             });
 
             $(".file-preview").on('click', '.fileinput-remove', function () {
-                
+
                 userProfileAjax.deleteProfilePhoto();
             });
         });
     }
 
-    initProfilePhoto();;
+    initProfilePhoto();
+    ;
 })();

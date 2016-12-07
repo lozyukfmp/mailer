@@ -9,8 +9,7 @@ import by.samsolutions.dao.PostDao;
 import by.samsolutions.entity.Post;
 
 @Repository
-public class PostDaoImpl extends GenericDaoImpl<Post, Integer>
-				implements PostDao
+public class PostDaoImpl extends GenericDaoImpl<Post, Integer> implements PostDao
 {
 
 	public PostDaoImpl()
@@ -35,9 +34,7 @@ public class PostDaoImpl extends GenericDaoImpl<Post, Integer>
 	@Override
 	public Post findWithComments(final Integer postId)
 	{
-		return entityManager.createNamedQuery("Post.findByIdWithComments", Post.class)
-		                    .setParameter("id", postId)
-		                    .getSingleResult();
+		return entityManager.createNamedQuery("Post.findByIdWithComments", Post.class).setParameter("id", postId).getSingleResult();
 	}
 
 }

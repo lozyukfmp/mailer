@@ -1,4 +1,4 @@
-package by.samsolutions.configuration.sequrity;
+package by.samsolutions.configuration.seсurity;
 
 import org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer;
 

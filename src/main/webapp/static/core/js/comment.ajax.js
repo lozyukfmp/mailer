@@ -5,7 +5,7 @@ var commentAjax = (function () {
                 type: "POST",
                 url: "comment/create",
                 dataType: 'json',
-                beforeSend: function(xhr) {
+                beforeSend: function (xhr) {
                     xhr.setRequestHeader("Accept", "application/json");
                     xhr.setRequestHeader("Content-Type", "application/json");
                 },
@@ -18,7 +18,7 @@ var commentAjax = (function () {
                 type: "POST",
                 url: "comment/update",
                 dataType: 'json',
-                beforeSend: function(xhr) {
+                beforeSend: function (xhr) {
                     xhr.setRequestHeader("Accept", "application/json");
                     xhr.setRequestHeader("Content-Type", "application/json");
                 },
@@ -44,7 +44,7 @@ var commentAjax = (function () {
             $.ajax({
                 type: "GET",
                 url: "comment/all/" + postId + "/" + lastCommentIndex,
-                success: function(response) {
+                success: function (response) {
                     callback(response);
                 }
             });

@@ -6,7 +6,7 @@
 
     function getCommentData(comment) {
         comment = comment || {};
-        
+
         comment.postId = viewMessageModal.find(".panel-message").attr('data-id');
         comment.text = $("#create-comment-text").val();
 
@@ -19,13 +19,13 @@
             function (commentList) {
                 $(".comment-container").html(commentList);
                 $(".panel-comment > .panel-body").off();
-                $(".panel-comment > .panel-body").hover(function(){
+                $(".panel-comment > .panel-body").hover(function () {
                     $(this).find(".tool-panel").fadeIn(150);
-                }, function(){
+                }, function () {
                     $(this).find(".tool-panel").fadeOut(100);
                 });
                 $("#paging-comment-container").attr("data-paging", commentCount);
-        });
+            });
     }
 
     function initCreateCommentModal(comment, isEdit) {
@@ -36,7 +36,7 @@
 
         createCommentButton.off();
 
-        if(isEdit) {
+        if (isEdit) {
             createCommentButton.on('click', function () {
                 commentAjax.updateComment(getCommentData(comment), function () {
                     showCommentList($("#paging-comment-container").attr("data-paging"));
@@ -75,12 +75,12 @@
 
     viewMessageModal.on('click', '.more-paging.paging-comment', function () {
         var index = $("#paging-comment-container").attr("data-paging");
-        showCommentList( + index + 2);
-        
+        showCommentList(+index + 2);
+
     });
 
     viewMessageModal.on('click', '.turn-paging.paging-comment', function () {
         showCommentList(2);
     });
-    
+
 })();

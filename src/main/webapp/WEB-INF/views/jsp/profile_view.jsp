@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
@@ -11,21 +11,21 @@
     <title><spring:message code="message.profile"/></title>
 
     <!--Styles-->
-    <spring:url value="/static/core/css/bootstrap.min.css" var="bootstrapCss" />
-    <spring:url value="/static/core/css/fileinput.min.css" var="fileInputCss" />
-    <spring:url value="/static/core/css/panel.custom.css" var="customPanelCss" />
+    <spring:url value="/static/core/css/bootstrap.min.css" var="bootstrapCss"/>
+    <spring:url value="/static/core/css/fileinput.min.css" var="fileInputCss"/>
+    <spring:url value="/static/core/css/panel.custom.css" var="customPanelCss"/>
 
     <!--Javascript-->
-    <spring:url value="/static/core/js/bootstrap.min.js" var="bootstrapJs" />
-    <spring:url value="/static/core/js/fileinput.min.js" var="fileInputJs" />
-    <spring:url value="/static/core/js/fileinput.custom.js" var="fileInputCustomJs" />
-    <spring:url value="/static/core/js/userProfile.ajax.js" var="userProfileAjaxJs" />
-    <spring:url value="/static/core/js/userProfile.view.js" var="userProfileViewJs" />
+    <spring:url value="/static/core/js/bootstrap.min.js" var="bootstrapJs"/>
+    <spring:url value="/static/core/js/fileinput.min.js" var="fileInputJs"/>
+    <spring:url value="/static/core/js/fileinput.custom.js" var="fileInputCustomJs"/>
+    <spring:url value="/static/core/js/userProfile.ajax.js" var="userProfileAjaxJs"/>
+    <spring:url value="/static/core/js/userProfile.view.js" var="userProfileViewJs"/>
 
     <!-- Styles -->
-    <link href="${bootstrapCss}" rel="stylesheet" />
-    <link href="${fileInputCss}" rel="stylesheet" />
-    <link href="${customPanelCss}" rel="stylesheet" />
+    <link href="${bootstrapCss}" rel="stylesheet"/>
+    <link href="${fileInputCss}" rel="stylesheet"/>
+    <link href="${customPanelCss}" rel="stylesheet"/>
 
     <!-- localization -->
     <spring:message code="message.login.username" var="username"/>

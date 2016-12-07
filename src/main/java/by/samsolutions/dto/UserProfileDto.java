@@ -1,12 +1,12 @@
 package by.samsolutions.dto;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 import by.samsolutions.validation.ValidEmail;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import org.hibernate.validator.constraints.NotEmpty;
 
 @Data
 @NoArgsConstructor

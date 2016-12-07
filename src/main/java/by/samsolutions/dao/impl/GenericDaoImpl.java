@@ -21,7 +21,8 @@ public class GenericDaoImpl<T, PK extends Serializable> implements GenericDao<T,
 
 	}
 
-	public GenericDaoImpl(Class<T> type) {
+	public GenericDaoImpl(Class<T> type)
+	{
 		this.type = type;
 	}
 

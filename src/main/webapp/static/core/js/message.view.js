@@ -18,10 +18,10 @@
         var image = $("#post-image")[0].files[0];
         message.imageUrl = createMessageModal.find("img").attr('src');
         message.text = $("#message-text").val();
-        
+
         formData.append("postImage", image);
         formData.append("postMessage", JSON.stringify(message));
-        
+
         return formData;
     }
 
@@ -30,9 +30,9 @@
             messageContainer.html(messageList);
             $("#paging-message-container").attr("data-paging", messageCount);
             $(".message-image").off();
-            $(".message-image").hover(function(){
+            $(".message-image").hover(function () {
                 $(this).find(".tool-panel").fadeIn(150);
-            }, function(){
+            }, function () {
                 $(this).find(".tool-panel").fadeOut(100);
             });
         }, messageCount, username);
@@ -43,7 +43,7 @@
         isEdit = isEdit || false;
 
         $("#post-image").fileinput('clear');
-        
+
         message.imageUrl && $("#post-image").fileinput('refresh', {
             initialPreviewAsData: true,
             initialPreview: [
@@ -55,7 +55,7 @@
 
         createMessageButton.off();
 
-        if(isEdit) {
+        if (isEdit) {
             createMessageButton.on('click', function () {
                 messageAjax.updateMessage(getMessageData(message), function () {
                     showMessageList($("#paging-message-container").attr("data-paging"), selfUsername);
@@ -95,38 +95,38 @@
     messageContainer.on('click', '.comment-message-button', function () {
         messageAjax.getMessageView($(this).attr('data-id'), function (messageView) {
             viewMessageModal.find(".modal-body").html(messageView);
-            $(".panel-comment > .panel-body").hover(function(){
+            $(".panel-comment > .panel-body").hover(function () {
                 $(this).find(".tool-panel").fadeIn(150);
-            }, function(){
+            }, function () {
                 $(this).find(".tool-panel").fadeOut(100);
             });
             viewMessageModal.modal('show');
         });
     });
 
-    $(".message-image").hover(function(){
+    $(".message-image").hover(function () {
         $(this).find(".tool-panel").fadeIn(150);
-    }, function(){
+    }, function () {
         $(this).find(".tool-panel").fadeOut(100);
     });
-    
-    $(".panel-image").hover(function(){
+
+    $(".panel-image").hover(function () {
         $(this).find(".tool-panel").fadeIn(150);
-    }, function(){
+    }, function () {
         $(this).find(".tool-panel").fadeOut(100);
     });
 
     messagePagingContainer.on('click', '.more-paging.paging-message', function () {
         var index = $("#paging-message-container").attr("data-paging");
-        showMessageList(+ index + 2, selfUsername);
+        showMessageList(+index + 2, selfUsername);
     });
 
     messagePagingContainer.on('click', '.turn-paging.paging-message', function () {
         showMessageList(2, selfUsername);
     });
-    
+
     return {
-        showMessageList: function(index, username) {
+        showMessageList: function (index, username) {
             showMessageList(index, username);
         }
     };

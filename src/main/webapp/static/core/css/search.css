@@ -2,6 +2,7 @@
     border-radius: 0;
     height: 33px;
 }
+
 .btn-search,
 .btn-search:hover,
 .btn-search:active,
@@ -11,10 +12,12 @@
     color: white;
     border-color: transparent;
 }
+
 .btn-search,
 .btn-search:focus {
     background-color: #ffd67d;
 }
+
 .btn-search:hover,
 .btn-search:active,
 .btn-search:active:focus,

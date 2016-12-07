@@ -29,33 +29,7 @@ import by.samsolutions.service.impl.PostServiceImpl;
 @ContextConfiguration
 public class PostServiceTest
 {
-	@Configuration
-	static class PostServiceConfiguration {
-		@Bean
-		public PostService postService()
-		{
-			return new PostServiceImpl();
-		}
-
-		@Bean
-		public PostDao postDao()
-		{
-			return Mockito.mock(PostDao.class);
-		}
-
-		@Bean
-		public CommentDao commentDao()
-		{
-			return Mockito.mock(CommentDao.class);
-		}
-
-		@Bean
-		public GenericDao<User, String> userDao()
-		{
-			return Mockito.mock(GenericDao.class);
-		}
-	}
-
+	private final List<Post> postList = new ArrayList<>();
 	@Autowired
 	private PostDao postDao;
 
@@ -67,8 +41,6 @@ public class PostServiceTest
 
 	@Autowired
 	private PostService postService;
-
-	private final List<Post> postList = new ArrayList<>();
 
 	@Before
 	public void initPostList()
@@ -96,15 +68,17 @@ public class PostServiceTest
 		Mockito.when(commentDao.findAllByPostId(1, 0)).thenReturn(Collections.EMPTY_LIST);
 		Mockito.when(commentDao.findAllByPostId(2, 0)).thenReturn(Collections.EMPTY_LIST);
 
-		Mockito.doAnswer(invocationOnMock -> {
-			postList.remove(firstPost);
-			return null;
-		}).when(postDao).delete(1);
+		Mockito.doAnswer(invocationOnMock ->
+		                 {
+			                 postList.remove(firstPost);
+			                 return null;
+		                 }).when(postDao).delete(1);
 
-		Mockito.doAnswer(invocationOnMock -> {
-			postList.remove(secondPost);
-			return null;
-		}).when(postDao).delete(2);
+		Mockito.doAnswer(invocationOnMock ->
+		                 {
+			                 postList.remove(secondPost);
+			                 return null;
+		                 }).when(postDao).delete(2);
 
 		ReflectionTestUtils.setField(postService, "postDao", postDao);
 		ReflectionTestUtils.setField(postService, "commentDao", commentDao);
@@ -117,10 +91,11 @@ public class PostServiceTest
 		post.setText("Some post text");
 		post.setDate(new Date());
 
-		Mockito.when(postDao.create(post)).then(invocationOnMock -> {
-			postList.add(post);
-			return post;
-		});
+		Mockito.when(postDao.create(post)).then(invocationOnMock ->
+		                                        {
+			                                        postList.add(post);
+			                                        return post;
+		                                        });
 
 		Post resultPost = postService.createPost(post);
 
@@ -140,15 +115,16 @@ public class PostServiceTest
 		post.setDate(new Date());
 		post.setId(1);
 
-		Mockito.when(postDao.update(post)).then(invocationOnMock -> {
+		Mockito.when(postDao.update(post)).then(invocationOnMock ->
+		                                        {
 
-			postList.stream()
-			        .filter(postValue -> postValue.getId() == post.getId())
-			        .findFirst()
-			        .ifPresent(postValue -> postValue.setText(post.getText()));
+			                                        postList.stream()
+			                                                .filter(postValue -> postValue.getId() == post.getId())
+			                                                .findFirst()
+			                                                .ifPresent(postValue -> postValue.setText(post.getText()));
 
-			return post;
-		});
+			                                        return post;
+		                                        });
 
 		final Post resultPost = postService.updatePost(post);
 
@@ -192,5 +168,33 @@ public class PostServiceTest
 		final List<Post> posts = postService.getAll("Artem", 2);
 
 		Assert.assertEquals(posts.size(), 2);
+	}
+
+	@Configuration
+	static class PostServiceConfiguration
+	{
+		@Bean
+		public PostService postService()
+		{
+			return new PostServiceImpl();
+		}
+
+		@Bean
+		public PostDao postDao()
+		{
+			return Mockito.mock(PostDao.class);
+		}
+
+		@Bean
+		public CommentDao commentDao()
+		{
+			return Mockito.mock(CommentDao.class);
+		}
+
+		@Bean
+		public GenericDao<User, String> userDao()
+		{
+			return Mockito.mock(GenericDao.class);
+		}
 	}
 }

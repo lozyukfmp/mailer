@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <spring:message code="message.title.comment" var="comment"/>
 <spring:message code="message.title.comments" var="comments"/>
@@ -17,7 +17,7 @@
         <div class="panel-footer">${message.text}</div>
     </div>
     <button id="view-create-comment-modal-button" class="btn btn-block btn-info" href='#' style="margin-bottom: 15px;">
-        ${comment}     <span class='glyphicon glyphicon-comment' aria-hidden='true'></span>
+        ${comment} <span class='glyphicon glyphicon-comment' aria-hidden='true'></span>
     </button>
     <div class="panel panel-default">
         <div class="panel-heading">
@@ -49,7 +49,7 @@
             </div>
         </div>
         <div class="panel-footer">
-            <div id="paging-comment-container" class= "panel-paging" data-paging="2">
+            <div id="paging-comment-container" class="panel-paging" data-paging="2">
                 <a class="more-paging paging-comment" href="#">
                     <span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
                 </a>

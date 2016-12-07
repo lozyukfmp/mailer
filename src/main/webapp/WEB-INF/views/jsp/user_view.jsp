@@ -1,5 +1,5 @@
 <%@ page pageEncoding="UTF-8" contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <!DOCTYPE html>
@@ -26,9 +26,9 @@
     <title>${userPage}</title>
 
     <!-- Styles -->
-    <spring:url value="/static/core/css/bootstrap.min.css" var="bootstrapCss" />
-    <spring:url value="/static/core/css/fileinput.min.css" var="fileInputCss" />
-    <spring:url value="/static/core/css/panel.custom.css" var="customPanelCss" />
+    <spring:url value="/static/core/css/bootstrap.min.css" var="bootstrapCss"/>
+    <spring:url value="/static/core/css/fileinput.min.css" var="fileInputCss"/>
+    <spring:url value="/static/core/css/panel.custom.css" var="customPanelCss"/>
 
     <!-- Javascript -->
     <spring:url value="/static/core/js/bootstrap.min.js" var="bootstrapJs"/>
@@ -41,9 +41,9 @@
     <spring:url value="/static/core/js/comment.view.js" var="commentViewJs"/>
 
     <!-- Styles -->
-    <link href="${bootstrapCss}" rel="stylesheet" />
-    <link href="${fileInputCss}" rel="stylesheet" />
-    <link href="${customPanelCss}" rel="stylesheet" />
+    <link href="${bootstrapCss}" rel="stylesheet"/>
+    <link href="${fileInputCss}" rel="stylesheet"/>
+    <link href="${customPanelCss}" rel="stylesheet"/>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -87,19 +87,19 @@
                         <table class="table table-striped table-hover ">
                             <tbody>
                             <tr>
-                                <td>${firstname}: </td>
+                                <td>${firstname}:</td>
                                 <td>${profile.firstName}</td>
                             </tr>
                             <tr>
-                                <td>${secondname}: </td>
+                                <td>${secondname}:</td>
                                 <td>${profile.secondName}</td>
                             </tr>
                             <tr>
-                                <td>${thirdname}: </td>
+                                <td>${thirdname}:</td>
                                 <td>${profile.thirdName}</td>
                             </tr>
                             <tr>
-                                <td>${email}: </td>
+                                <td>${email}:</td>
                                 <td>${profile.email}</td>
                             </tr>
                             </tbody>
@@ -190,7 +190,7 @@
                 </c:forEach>
             </div>
             <div class="panel-footer">
-                <div id="paging-message-container" class= "panel-paging" data-paging="2">
+                <div id="paging-message-container" class="panel-paging" data-paging="2">
                     <a class="more-paging paging-message" href="#">
                         <span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
                     </a>
