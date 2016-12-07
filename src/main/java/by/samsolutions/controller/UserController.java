@@ -4,6 +4,7 @@ import java.util.Collection;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.View;
 
 import by.samsolutions.dto.UserDto;
 import by.samsolutions.dto.UserProfileDto;
@@ -30,6 +33,7 @@ import by.samsolutions.service.UserProfileService;
 import by.samsolutions.service.UserService;
 
 @Controller
+@SessionAttributes({"user", "userProfile"})
 public class UserController
 {
 
@@ -44,7 +48,8 @@ public class UserController
 
 	@GetMapping(value = "/login-page")
 	public ModelAndView login(@RequestParam(value = "error", required = false) final String error,
-	                          @RequestParam(value = "logout", required = false) final String logout)
+	                          @RequestParam(value = "logout", required = false) final String logout,
+	                          @RequestParam(value = "success", required = false) final String success)
 	{
 
 		ModelAndView modelAndView = new ModelAndView();
@@ -57,6 +62,11 @@ public class UserController
 		if (logout != null)
 		{
 			modelAndView.addObject("logout", "You've been logged out successfully.");
+		}
+
+		if (success != null)
+		{
+			modelAndView.addObject("success", "You've been created account successfully.");
 		}
 
 		modelAndView.setViewName("loginPage");
@@ -106,21 +116,28 @@ public class UserController
 	}
 
 	@RequestMapping(value = "/registration-page", method = RequestMethod.GET)
-	public ModelAndView showRegistrationForm()
+	public String showRegistrationForm(Model model, HttpSession session)
 	{
-		ModelAndView modelAndView = new ModelAndView();
 
-		modelAndView.addObject("user", new UserDto());
-		modelAndView.addObject("userProfile", new UserProfileDto());
-		modelAndView.setViewName("registration");
+		Model sessionModel = (Model) session.getAttribute("model");
+		if (sessionModel != null)
+		{
+			model.addAllAttributes(sessionModel.asMap());
+			session.removeAttribute("model");
+		}
+		else
+		{
+			model.addAttribute("user", new UserDto());
+			model.addAttribute("userProfile", new UserProfileDto());
+		}
 
-		return modelAndView;
+		return "registration";
 	}
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public ModelAndView registerUser(@ModelAttribute("user") @Valid final UserDto userDto, final BindingResult userBindingResult,
-	                                 @ModelAttribute("userProfile") @Valid final UserProfileDto userProfileDto,
-	                                 final BindingResult userProfileBindingResult, final Model model)
+	public String registerUser(@ModelAttribute("user") @Valid final UserDto userDto, final BindingResult userBindingResult,
+	                           @ModelAttribute("userProfile") @Valid final UserProfileDto userProfileDto,
+	                           final BindingResult userProfileBindingResult, final Model model, final HttpSession session)
 	{
 		User registered = new User();
 		if (!userBindingResult.hasErrors() && !userProfileBindingResult.hasErrors())
@@ -131,25 +148,21 @@ public class UserController
 
 		if (registered == null)
 		{
-			ModelAndView modelAndView = new ModelAndView();
-			modelAndView.setViewName("registration");
-			modelAndView.addObject("usernameExist", "User with the same username already exists");
+			model.addAttribute("usernameExist", "User with the same username already exists");
+			session.setAttribute("model", model);
 
-			return modelAndView;
+			return "redirect:/registration-page";
 		}
 
 		if (userBindingResult.hasErrors() || userProfileBindingResult.hasErrors())
 		{
-			ModelAndView modelAndView = new ModelAndView();
+			session.setAttribute("model", model);
 
-			modelAndView.addObject("user", userDto);
-			modelAndView.addObject("userProfile", userProfileDto);
-			modelAndView.setViewName("registration");
-			return modelAndView;
+			return "redirect:/registration-page";
 		}
 		else
 		{
-			return new ModelAndView("loginPage", "successRegistration", "You've been created account successfully.");
+			return "redirect:/login-page?success";
 		}
 
 	}

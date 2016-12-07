@@ -16,8 +16,8 @@
         </c:if>
         <div class="panel-footer">${message.text}</div>
     </div>
-    <button id="view-create-comment-modal-button" class="btn btn-block btn-info" href='#'>
-        ${comment} <span class='glyphicon glyphicon-comment' aria-hidden='true'></span>
+    <button id="view-create-comment-modal-button" class="btn btn-block btn-info" href='#' style="margin-bottom: 15px;">
+        ${comment}     <span class='glyphicon glyphicon-comment' aria-hidden='true'></span>
     </button>
     <div class="panel panel-default">
         <div class="panel-heading">
@@ -33,16 +33,16 @@
                         </div>
                         <div class="panel-body">
                                 ${comment.text}
-                            <div class="tool-panel">
-                                <c:if test="${comment.username == pageContext.request.userPrincipal.name}">
+                            <c:if test="${comment.username == pageContext.request.userPrincipal.name}">
+                                <div class="tool-panel">
                                     <a class="edit-comment-button" href='#' data-id="${comment.id}">
                                         <span class='glyphicon glyphicon-pencil' aria-hidden='true'></span>
                                     </a>
                                     <a class="remove-comment-button" href="#" data-id="${comment.id}">
                                         <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                                     </a>
-                                </c:if>
-                            </div>
+                                </div>
+                            </c:if>
                         </div>
                     </div>
                 </c:forEach>

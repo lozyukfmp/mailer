@@ -40,6 +40,7 @@
     <spring:message code="message.english" var="english"/>
     <spring:message code="message.go_to_welcome" var="goToWelcome"/>
     <spring:message code="message.user_exist" var="userExistMessage"/>
+    <spring:message code="message.registration" var="registration"/>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -53,7 +54,7 @@
     <div class="col-sm-6 col-sm-offset-3">
         <div class="panel panel-primary">
             <div class="panel-heading">
-                <h3 class="panel-title">Registration</h3>
+                <h3 class="panel-title">${registration}</h3>
             </div>
             <div class="panel-body">
                 <form action="/register" method="POST" enctype="utf-8">
@@ -104,7 +105,7 @@
                                         <p class="text-danger"><c:out value="${error}"/></p>
                                     </c:forEach>
                                     <div class="form-group has-error">
-                                        <input type="text"
+                                        <input type="password"
                                                class="form-control"
                                                value="<c:out value="${status.value}"/>"
                                                name="<c:out value="${status.expression}"/>"
@@ -113,7 +114,7 @@
                                 </c:when>
                                 <c:otherwise>
                                     <div class="form-group">
-                                        <input type="text"
+                                        <input type="password"
                                                class="form-control"
                                                value="<c:out value="${status.value}"/>"
                                                name="<c:out value="${status.expression}"/>"
@@ -129,7 +130,7 @@
                                         <p class="text-danger"><c:out value="${error}"/></p>
                                     </c:forEach>
                                     <div class="form-group has-error">
-                                        <input type="text"
+                                        <input type="password"
                                                class="form-control"
                                                value="<c:out value="${status.value}"/>"
                                                name="<c:out value="${status.expression}"/>"
@@ -138,7 +139,7 @@
                                 </c:when>
                                 <c:otherwise>
                                     <div class="form-group">
-                                        <input type="text"
+                                        <input type="password"
                                                class="form-control"
                                                value="<c:out value="${status.value}"/>"
                                                name="<c:out value="${status.expression}"/>"

@@ -8,7 +8,6 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>User page</title>
 
     <spring:message code="message.title.comments" var="comments"/>
     <spring:message code="message.title.posts" var="posts"/>
@@ -18,18 +17,17 @@
     <spring:message code="message.title.message" var="messageTitle"/>
     <spring:message code="message.title.comment" var="comment"/>
     <spring:message code="message.title.search" var="search"/>
+    <spring:message code="message.title.user" var="userPage"/>
     <spring:message code="message.registration.email" var="email"/>
     <spring:message code="message.registration.firstname" var="firstname"/>
     <spring:message code="message.registration.secondname" var="secondname"/>
     <spring:message code="message.registration.thirdname" var="thirdname"/>
 
+    <title>${userPage}</title>
+
     <!-- Styles -->
     <spring:url value="/static/core/css/bootstrap.min.css" var="bootstrapCss" />
     <spring:url value="/static/core/css/fileinput.min.css" var="fileInputCss" />
-   <%-- <spring:url value="/static/core/css/language_dropdown.css" var="languageDropdown" />
-    <spring:url value="/static/core/css/custom.container.css" var="customContainer" />
-    <spring:url value="/static/core/css/message.container.css" var="messageContainerCss" />
-    <spring:url value="/static/core/css/paging.css" var="paging" />--%>
     <spring:url value="/static/core/css/panel.custom.css" var="customPanelCss" />
 
     <!-- Javascript -->
@@ -45,10 +43,6 @@
     <!-- Styles -->
     <link href="${bootstrapCss}" rel="stylesheet" />
     <link href="${fileInputCss}" rel="stylesheet" />
-    <%--<link href="${languageDropdown}" rel="stylesheet" />
-    <link href="${customContainer}" rel="stylesheet" />
-    <link href="${messageContainerCss}" rel="stylesheet" />
-    <link href="${paging}" rel="stylesheet" />--%>
     <link href="${customPanelCss}" rel="stylesheet" />
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -68,14 +62,16 @@
             </div>
             <div class="panel-body user-image" data-username="${profile.username}">
                 <img src="${profile.imageUrl}" class="img-thumbnail" width="100%" height="300"/>
-                <div class="tool-panel">
-                    <a href="#">
-                        <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
-                    </a>
-                    <a href="${pageContext.request.contextPath}/user/profile">
-                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                    </a>
-                </div>
+                <c:if test="${profile.username == pageContext.request.userPrincipal.name}">
+                    <div class="tool-panel">
+                        <a href="#">
+                            <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+                        </a>
+                        <a href="${pageContext.request.contextPath}/user/profile">
+                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                        </a>
+                    </div>
+                </c:if>
             </div>
         </div>
         <div class="panel-group" id="accordion">
@@ -125,15 +121,12 @@
                                 <span class="glyphicon glyphicon-send" aria-hidden="true"></span>
                             </button>
                         </c:if>
-                        <button class="btn btn-block btn-warning">
-                            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-                        </button>
-                        <button class="btn btn-block btn-success">
+                        <a href="${pageContext.request.contextPath}/user" class="btn btn-block btn-success">
                             <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
-                        </button>
-                        <button class="btn btn-block btn-primary">
+                        </a>
+                        <a href="${pageContext.request.contextPath}/logout" class="btn btn-block btn-primary">
                             <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
-                        </button>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -155,7 +148,10 @@
                             <c:when test="${message.imageUrl ne null}">
                                 <div class="panel-body message-image">
                                     <img src="${message.imageUrl}" width='100%' height='300' class='img-thumbnail'/>
-                                    <div class="tool-panel">
+                                    <div class="tool-panel"
+                                            <c:if test="${message.username ne pageContext.request.userPrincipal.name}">
+                                                style="width: 48px;"
+                                            </c:if>>
                                         <a class="comment-message-button" href='#' data-id="${message.id}">
                                             <span class='glyphicon glyphicon-comment' aria-hidden='true'></span>
                                         </a>

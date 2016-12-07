@@ -11,8 +11,9 @@
     <title><spring:message code="message.title.login"/></title>
 
     <spring:url value="/static/core/css/bootstrap.min.css" var="bootstrapCss" />
-    <spring:url value="/static/core/css/custom.container.css" var="customContainerCss" />
-    <spring:url value="/static/core/css/language_dropdown.css" var="languageDropdown" />
+    <%--<spring:url value="/static/core/css/custom.container.css" var="customContainerCss" />
+    <spring:url value="/static/core/css/language_dropdown.css" var="languageDropdown" />--%>
+    <spring:url value="/static/core/css/panel.custom.css" var="customPanelCss" />
 
     <spring:url value="/static/core/js/bootstrap.min.js" var="bootstrapJs" />
 
@@ -32,8 +33,9 @@
 
     <!-- Bootstrap -->
     <link href="${bootstrapCss}" rel="stylesheet" />
-    <link href="${customContainerCss}" rel="stylesheet" />
-    <link href="${languageDropdown}" rel="stylesheet" />
+    <link href="${customPanelCss}" rel="stylesheet" />
+   <%-- <link href="${customContainerCss}" rel="stylesheet" />
+    <link href="${languageDropdown}" rel="stylesheet" />--%>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -43,45 +45,72 @@
     <![endif]-->
 </head>
 <body>
-<div class="container">
+<div class="container" style="margin-top: 80px;">
     <div class="col-md-4 col-md-offset-4">
-        <div class="custom-container login-container">
-            <c:if test="${not empty error}">
-                <div class="alert alert-danger">
-                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                    <strong>${errorMessage}</strong>
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">${modalLogin}</h3>
+            </div>
+            <div class="panel-body">
+                <c:if test="${not empty error}">
+                    <div class="alert alert-danger">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <strong>${errorMessage}</strong>
+                    </div>
+                </c:if>
+                <c:if test="${not empty logout}">
+                    <div class="alert alert-info">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <strong>${logoutMessage}</strong>
+                    </div>
+                </c:if>
+                <c:if test="${not empty success}">
+                    <div class="alert alert-success">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <strong>${successMessage}</strong>
+                    </div>
+                </c:if>
+                <c:url value="/login" var="loginUrl" />
+                <form:form action="${loginUrl}" method="post">
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="username" placeholder="${username}" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control" name="password" placeholder="${password}" required/>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" name="login" class="btn btn-block btn-primary">
+                            <h3 class="panel-title" style="font-weight: bolder;">${login}</h3>
+                        </button>
+                    </div>
+                </form:form>
+            </div>
+            <div class="panel-footer">
+                <div class="btn-group btn-group-justified">
+                    <div class="col-sm-4">
+                        <a href="${pageContext.request.contextPath}/welcome">
+                            ${goToWelcome}
+                        </a>
+                    </div>
+                    <div class="col-sm-4">
+                        <a href="${pageContext.request.contextPath}/registration-page">
+                            ${register}
+                        </a>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="btn-group">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                ${language}
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="${pageContext.request.contextPath}?lang=ru_RU">${russian}</a></li>
+                                <li><a href="${pageContext.request.contextPath}?lang=en">${english}</a></li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
-            </c:if>
-            <c:if test="${not empty logout}">
-                <div class="alert alert-info">
-                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                    <strong>${logoutMessage}</strong>
-                </div>
-            </c:if>
-            <c:if test="${not empty successRegistration}">
-                <div class="alert alert-success">
-                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                    <strong>${successMessage}</strong>
-                </div>
-            </c:if>
-            <h1>${modalLogin}</h1><br>
-            <c:url value="/login" var="loginUrl" />
-            <form:form action="${loginUrl}" method="post">
-                <input type="text" name="username" placeholder="${username}" required>
-                <input type="password" name="password" placeholder="${password}" required/>
-                <input type="submit" name="login" class="login-submit" value="${login}">
-                <a href="${pageContext.request.contextPath}/welcome">${goToWelcome} |</a>
-                <a href="${pageContext.request.contextPath}/registration-page"> ${register} |</a>
-                <div class="form-dropdown dropdown">
-                    <a class="btn btn-link dropdown-toggle" type="button" data-toggle="dropdown">
-                            ${language}
-                        <span class="caret"></span></a>
-                    <ul class="dropdown-menu" style="top: 90%;">
-                        <li><a href="?lang=ru_RU">${russian}</a></li>
-                        <li><a href="?lang=en">${english}</a></li>
-                    </ul>
-                </div>
-            </form:form>
+            </div>
         </div>
     </div>
 </div>

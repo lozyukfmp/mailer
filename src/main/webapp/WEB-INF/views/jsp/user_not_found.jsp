@@ -8,15 +8,15 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>User page</title>
 
     <spring:message code="message.title.userNotFound" var="userNotFoundTitle"/>
     <spring:message code="message.userNotFound" var="userNotFoundMessage"/>
+    <spring:message code="message.title.user" var="userPage"/>
 
+    <title>${userPage}</title>
     <!-- Styles -->
     <spring:url value="/static/core/css/bootstrap.min.css" var="bootstrapCss" />
-    <spring:url value="/static/core/css/language_dropdown.css" var="languageDropdown" />
-    <spring:url value="/static/core/css/custom.container.css" var="customContainer" />
+    <spring:url value="/static/core/css/panel.custom.css" var="customPanelCss" />
 
     <!-- Javascript -->
     <spring:url value="/static/core/js/bootstrap.min.js" var="bootstrapJs"/>
@@ -24,19 +24,18 @@
 
     <!-- Styles -->
     <link href="${bootstrapCss}" rel="stylesheet" />
-    <link href="${languageDropdown}" rel="stylesheet" />
-    <link href="${customContainer}" rel="stylesheet" />
+    <link href="${customPanelCss}" rel="stylesheet" />
 
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 </head>
 <body>
 <jsp:include page="${request.contextPath}/userHeader"></jsp:include>
-<div class="container">
+<div class="container" style="margin: 80px 10px;">
     <div class="jumbotron" style="margin-left: 15px; margin-right: 15px;">
         <h1>${userNotFoundTitle}</h1>
         <p>${userNotFoundMessage} : ${username}</p>

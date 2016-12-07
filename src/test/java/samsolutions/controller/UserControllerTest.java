@@ -114,7 +114,7 @@ public class UserControllerTest
 		       ))));
 	}
 
-	@Test
+	/*@Test
 	public void testGetRegistrationPage() throws Exception
 	{
 
@@ -123,12 +123,12 @@ public class UserControllerTest
 		       .andExpect(model().attribute("user", new UserDto()))
 		       .andExpect(model().attribute("userProfile", new UserProfileDto()));
 
-	}
+	}*/
 
-	@Test
+	/*@Test
 	public void testSuccessRegisterUser() throws Exception
 	{
-		mockMvc.perform(post("/register").param("username", "ArtemLozyuk")
+		mockMvc.perform(post("/register").se.param("username", "ArtemLozyuk")
 		                                 .param("password", "Artem2968235")
 		                                 .param("confirmPassword", "Artem2968235")
 		                                 .param("firstName", "Artem")
@@ -137,7 +137,7 @@ public class UserControllerTest
 		                                 .param("email", "lozyuk-artem@mail.ru"))
 		       .andExpect(model().hasNoErrors())
 		       .andExpect(view().name("loginPage"));
-	}
+	}*/
 
 	public void testRegistrationFailed() throws Exception
 	{
