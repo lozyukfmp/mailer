@@ -32,7 +32,7 @@ public class FileUtil
 			}
 
 			String orgName = file.getOriginalFilename();
-			String filePath = pathToUploads + orgName;
+			String filePath = pathToUploads + File.separator + orgName;
 			imageUrl = request.getContextPath() + uploadsDir + orgName;
 			File dest = new File(filePath);
 			file.transferTo(dest);
