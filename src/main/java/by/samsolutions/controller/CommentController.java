@@ -1,6 +1,6 @@
 package by.samsolutions.controller;
 
-import java.util.List;
+import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,8 +16,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import by.samsolutions.entity.Comment;
+import by.samsolutions.controller.exception.ControllerException;
+import by.samsolutions.converter.impl.CommentConverter;
+import by.samsolutions.dto.CommentDto;
 import by.samsolutions.service.CommentService;
+import by.samsolutions.service.exception.ServiceException;
 
 @RestController
 @RequestMapping("/comment")
@@ -27,48 +30,95 @@ public class CommentController
 	private CommentService commentService;
 
 	@GetMapping("/all/{postId}/{commentIndex}")
-	public ModelAndView getCommentListByPostId(@PathVariable Integer postId, @PathVariable Integer commentIndex)
+	public ModelAndView getCommentListByPostId(@PathVariable final Integer postId, @PathVariable final Integer commentIndex)
+					throws ControllerException
 	{
-		List<Comment> commentList = commentService.getCommentListByPostId(postId, commentIndex);
+		try
+		{
+			Collection<CommentDto> commentDtoCollection = commentService.getCommentListByPostId(postId, commentIndex);
 
-		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.addObject("commentList", commentList);
-		modelAndView.setViewName("commentList");
+			ModelAndView modelAndView = new ModelAndView();
+			modelAndView.setViewName("commentList");
+			modelAndView.addObject("commentList", commentDtoCollection);
 
-		return modelAndView;
+			return modelAndView;
+		}
+		catch (ServiceException e)
+		{
+			throw new ControllerException(e);
+		}
+
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<Comment> getComment(@PathVariable Integer id)
+	public
+	@ResponseBody
+	ResponseEntity<CommentDto> getComment(@PathVariable final Integer id) throws ControllerException
 	{
-		return new ResponseEntity<>(commentService.getComment(id), HttpStatus.OK);
+		try
+		{
+			CommentDto commentDto = commentService.find(id);
+
+			return new ResponseEntity<>(commentDto, HttpStatus.OK);
+		}
+		catch (ServiceException e)
+		{
+			throw new ControllerException(e);
+		}
 	}
 
 	@PostMapping("/create")
 	public
 	@ResponseBody
-	ResponseEntity<Comment> createComment(@RequestBody Comment comment)
+	ResponseEntity<CommentDto> createComment(@RequestBody final CommentDto comment) throws ControllerException
 	{
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		comment.setUsername(auth.getName());
 
-		return new ResponseEntity<>(commentService.createComment(comment), HttpStatus.OK);
+		try
+		{
+			CommentDto resultDto = commentService.create(comment);
+
+			return new ResponseEntity<>(resultDto, HttpStatus.OK);
+		}
+		catch (ServiceException e)
+		{
+			throw new ControllerException(e);
+		}
+
 	}
 
 	@PostMapping("/update")
 	public
 	@ResponseBody
-	ResponseEntity<Comment> updateComment(@RequestBody Comment comment)
+	ResponseEntity<CommentDto> updateComment(@RequestBody CommentDto comment) throws ControllerException
 	{
-		return new ResponseEntity<>(commentService.updateComment(comment), HttpStatus.OK);
+		try
+		{
+			CommentDto resultDto = commentService.update(comment);
+
+			return new ResponseEntity<>(resultDto, HttpStatus.OK);
+		}
+		catch (ServiceException e)
+		{
+			throw new ControllerException(e);
+		}
 	}
 
 	@PostMapping("/delete/{id}")
 	public
 	@ResponseBody
-	ResponseEntity<Comment> deleteComment(@PathVariable Integer id)
+	ResponseEntity<CommentDto> deleteComment(@PathVariable Integer id) throws ControllerException
 	{
-		commentService.deleteComment(id);
-		return new ResponseEntity<>(HttpStatus.OK);
+		try
+		{
+			commentService.delete(id);
+			return new ResponseEntity(HttpStatus.OK);
+		}
+		catch (ServiceException e)
+		{
+			throw new ControllerException(e);
+		}
+
 	}
 }

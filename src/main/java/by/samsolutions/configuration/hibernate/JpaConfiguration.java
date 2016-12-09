@@ -21,7 +21,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import by.samsolutions.dao.GenericDao;
 import by.samsolutions.dao.impl.GenericDaoImpl;
-import by.samsolutions.entity.user.UserProfile;
+import by.samsolutions.entity.user.UserProfileEntity;
 
 @Configuration
 @EnableTransactionManagement
@@ -76,8 +76,8 @@ public class JpaConfiguration
 	}
 
 	@Bean
-	public GenericDao<UserProfile, String> userProfileDao()
+	public GenericDao<UserProfileEntity, String> userProfileDao()
 	{
-		return new GenericDaoImpl<>(UserProfile.class);
+		return new GenericDaoImpl<>(UserProfileEntity.class);
 	}
 }

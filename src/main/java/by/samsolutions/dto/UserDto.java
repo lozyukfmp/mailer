@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 @PasswordMatches
-public class UserDto
+public class UserDto implements BaseDto
 {
 	@ValidUsername
 	@NotEmpty
@@ -29,6 +29,5 @@ public class UserDto
 	private String confirmPassword;
 
 	private UserProfileDto userProfileDto;
-
 
 }

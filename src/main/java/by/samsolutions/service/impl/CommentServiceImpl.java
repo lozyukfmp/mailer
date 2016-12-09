@@ -1,56 +1,53 @@
 package by.samsolutions.service.impl;
 
-import java.util.Date;
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import by.samsolutions.converter.exception.ConverterException;
+import by.samsolutions.converter.impl.CommentConverter;
 import by.samsolutions.dao.CommentDao;
-import by.samsolutions.entity.Comment;
+import by.samsolutions.dto.CommentDto;
+import by.samsolutions.entity.CommentEntity;
 import by.samsolutions.service.CommentService;
+import by.samsolutions.service.exception.ServiceException;
 
 @Service
-public class CommentServiceImpl implements CommentService
+public class CommentServiceImpl extends GenericServiceImpl<CommentDto, CommentEntity, Integer> implements CommentService
 {
-	@Autowired
 	private CommentDao commentDao;
+	private CommentConverter commentConverter;
 
-	@Override
-	@Transactional(readOnly = true)
-	public Comment getComment(final Integer commentId)
+	public CommentServiceImpl()
 	{
-		return commentDao.find(commentId);
+
+	}
+
+	@Autowired
+	public CommentServiceImpl(@Autowired CommentDao commentDao, @Autowired CommentConverter commentConverter)
+	{
+		super(commentDao, commentConverter);
+		this.commentDao = commentDao;
+		this.commentConverter = commentConverter;
 	}
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<Comment> getCommentListByPostId(final Integer postId, final Integer commentIndex)
+	public Collection<CommentDto> getCommentListByPostId(final Integer postId, final Integer commentIndex) throws ServiceException
 	{
-		return commentDao.findAllByPostId(postId, commentIndex);
+		try
+		{
+			Collection<CommentEntity> commentEntityCollection = commentDao.findAllByPostId(postId, commentIndex);
+			Collection<CommentDto> commentDtoCollection = commentConverter.toDtoCollection(commentEntityCollection);
+			return commentDtoCollection;
+		}
+		catch (ConverterException e)
+		{
+			throw new ServiceException(e);
+		}
 	}
 
-	@Override
-	@Transactional
-	public Comment createComment(final Comment comment)
-	{
-		comment.setDate(new Date());
-
-		return commentDao.create(comment);
-	}
-
-	@Override
-	@Transactional
-	public Comment updateComment(final Comment comment)
-	{
-		return commentDao.update(comment);
-	}
-
-	@Override
-	@Transactional
-	public void deleteComment(final Integer commentId)
-	{
-		commentDao.delete(commentId);
-	}
 }

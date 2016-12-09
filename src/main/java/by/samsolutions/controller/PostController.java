@@ -22,9 +22,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import by.samsolutions.controller.exception.ControllerException;
 import by.samsolutions.controller.util.FileUtil;
-import by.samsolutions.entity.Post;
+import by.samsolutions.dto.PostDto;
 import by.samsolutions.service.PostService;
+import by.samsolutions.service.exception.ServiceException;
 
 @RestController
 @RequestMapping("/post")
@@ -38,71 +40,119 @@ public class PostController
 	private PostService postService;
 
 	@GetMapping("/all/{username}/{messageCount}")
-	public ModelAndView getPostList(@PathVariable String username, @PathVariable Integer messageCount)
+	public ModelAndView getPostList(@PathVariable String username, @PathVariable Integer messageCount) throws ControllerException
 	{
+		try
+		{
+			Collection<PostDto> postDtoCollection = postService.getAll(username, messageCount);
 
-		Collection<Post> messageList = postService.getAll(username, messageCount);
+			ModelAndView modelAndView = new ModelAndView();
+			modelAndView.addObject("messageList", postDtoCollection);
+			modelAndView.setViewName("messageList");
 
-		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.addObject("messageList", messageList);
-		modelAndView.setViewName("messageList");
-
-		return modelAndView;
+			return modelAndView;
+		}
+		catch (ServiceException e)
+		{
+			throw new ControllerException(e);
+		}
 	}
 
 	@GetMapping("/{id}")
-	public Post getPost(@PathVariable Integer id)
+	public ResponseEntity<PostDto> getPost(@PathVariable Integer id) throws ControllerException
 	{
-		return postService.getPost(id);
+		try
+		{
+			PostDto postDto = postService.find(id);
+
+			return new ResponseEntity<>(postDto, HttpStatus.OK);
+		}
+		catch (ServiceException e)
+		{
+			throw new ControllerException(e);
+		}
 	}
 
 	@GetMapping("/view/{id}")
-	public ModelAndView getPostView(@PathVariable Integer id)
+	public ModelAndView getPostView(@PathVariable Integer id) throws ControllerException
 	{
-		Post post = postService.getPost(id);
+		try
+		{
+			PostDto postDto = postService.find(id);
 
-		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.addObject("message", post);
-		modelAndView.setViewName("message");
+			ModelAndView modelAndView = new ModelAndView();
+			modelAndView.addObject("message", postDto);
+			modelAndView.setViewName("message");
 
-		return modelAndView;
+			return modelAndView;
+		}
+		catch (ServiceException e)
+		{
+			throw new ControllerException(e);
+		}
 	}
 
 	@PostMapping("/create")
 	public
 	@ResponseBody
-	ResponseEntity<Post> createPost(@RequestParam(value = "postImage", required = false) MultipartFile file,
-	                                @RequestParam("postMessage") String postMessage) throws IOException
+	ResponseEntity<PostDto> createPost(@RequestParam(value = "postImage", required = false) MultipartFile file,
+	                                   @RequestParam("postMessage") String postMessage) throws ControllerException
 	{
-		Post post = new ObjectMapper().readValue(postMessage, Post.class);
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		try
+		{
+			PostDto post = new ObjectMapper().readValue(postMessage, PostDto.class);
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			post.setUsername(auth.getName());
+			post.setImageUrl(FileUtil.saveImageToDisk(request, file, post.getImageUrl()));
 
-		post.setUsername(auth.getName());
-		post.setImageUrl(FileUtil.saveImageToDisk(request, file, post.getImageUrl()));
-		post = postService.createPost(post);
+			PostDto resultDto = postService.create(post);
 
-		return new ResponseEntity<>(post, HttpStatus.OK);
+			return new ResponseEntity<>(resultDto, HttpStatus.OK);
+		}
+		catch (ServiceException | IOException e)
+		{
+			throw new ControllerException(e);
+		}
+
 	}
 
 	@PostMapping("/update")
 	public
 	@ResponseBody
-	ResponseEntity<Post> updatePost(@RequestParam(value = "postImage", required = false) MultipartFile file,
-	                                @RequestParam("postMessage") String postMessage) throws IOException
+	ResponseEntity<PostDto> updatePost(@RequestParam(value = "postImage", required = false) MultipartFile file,
+	                                   @RequestParam("postMessage") String postMessage) throws ControllerException
 	{
-		Post post = new ObjectMapper().readValue(postMessage, Post.class);
-		post.setImageUrl(FileUtil.saveImageToDisk(request, file, post.getImageUrl()));
-		post = postService.updatePost(post);
+		try
+		{
+			PostDto post = new ObjectMapper().readValue(postMessage, PostDto.class);
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			post.setUsername(auth.getName());
+			post.setImageUrl(FileUtil.saveImageToDisk(request, file, post.getImageUrl()));
 
-		return new ResponseEntity<>(post, HttpStatus.OK);
+			PostDto resultDto = postService.update(post);
+
+			return new ResponseEntity<>(resultDto, HttpStatus.OK);
+		}
+		catch (ServiceException | IOException e)
+		{
+			throw new ControllerException(e);
+		}
+
 	}
 
 	@PostMapping("/delete/{id}")
 	public
 	@ResponseBody
-	ResponseEntity<Post> deletePost(@PathVariable Integer id)
+	ResponseEntity<PostDto> deletePost(@PathVariable Integer id) throws ControllerException
 	{
-		postService.deletePost(id);
-		return new ResponseEntity<>(HttpStatus.OK);
+		try
+		{
+			postService.delete(id);
+			return new ResponseEntity<>(HttpStatus.OK);
+		}
+		catch (ServiceException e)
+		{
+			throw new ControllerException(e);
+		}
 	}
 }

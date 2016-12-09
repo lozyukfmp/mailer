@@ -6,26 +6,26 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import by.samsolutions.dao.PostDao;
-import by.samsolutions.entity.Post;
+import by.samsolutions.entity.PostEntity;
 
 @Repository
-public class PostDaoImpl extends GenericDaoImpl<Post, Integer>
+public class PostDaoImpl extends GenericDaoImpl<PostEntity, Integer>
 				implements PostDao
 {
 
 	public PostDaoImpl()
 	{
-		super(Post.class);
+		super(PostEntity.class);
 	}
 
 	@Override
-	public List<Post> all(final String username, final Integer messageCount)
+	public List<PostEntity> all(final String username, final Integer messageCount)
 	{
-		List<Post> postList = entityManager.createNamedQuery("Post.findAllByUsername", Post.class)
-		                                   .setParameter("username", username)
-		                                   .setFirstResult(0)
-		                                   .setMaxResults(messageCount)
-		                                   .getResultList();
+		List<PostEntity> postList = entityManager.createNamedQuery("Post.findAllByUsername", PostEntity.class)
+		                                         .setParameter("username", username)
+		                                         .setFirstResult(0)
+		                                         .setMaxResults(messageCount)
+		                                         .getResultList();
 
 		postList.forEach(post -> post.setComments(Collections.EMPTY_SET));
 
@@ -33,9 +33,9 @@ public class PostDaoImpl extends GenericDaoImpl<Post, Integer>
 	}
 
 	@Override
-	public Post findWithComments(final Integer postId)
+	public PostEntity findWithComments(final Integer postId)
 	{
-		return entityManager.createNamedQuery("Post.findByIdWithComments", Post.class)
+		return entityManager.createNamedQuery("Post.findByIdWithComments", PostEntity.class)
 		                    .setParameter("id", postId)
 		                    .getSingleResult();
 	}

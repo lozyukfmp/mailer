@@ -1,13 +1,13 @@
 package by.samsolutions.service;
 
+import org.springframework.stereotype.Service;
+
 import by.samsolutions.dto.UserProfileDto;
-import by.samsolutions.entity.user.UserProfile;
+import by.samsolutions.entity.user.UserProfileEntity;
+import by.samsolutions.service.exception.ServiceException;
 
-public interface UserProfileService
+@Service
+public interface UserProfileService extends GenericService<UserProfileDto, UserProfileEntity, String>
 {
-	UserProfile getUserProfile(String username);
-
-	UserProfile updateUserProfile(UserProfileDto userProfile);
-
-	UserProfile uploadUserPhoto(String username, String photoUrl);
+	UserProfileDto uploadUserPhoto(String username, String photoUrl) throws ServiceException;
 }

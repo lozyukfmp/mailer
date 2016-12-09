@@ -2,9 +2,9 @@ package by.samsolutions.dao;
 
 import java.util.List;
 
-import by.samsolutions.entity.Comment;
+import by.samsolutions.entity.CommentEntity;
 
-public interface CommentDao extends GenericDao<Comment, Integer>
+public interface CommentDao extends GenericDao<CommentEntity, Integer>
 {
-	List<Comment> findAllByPostId(Integer postId, Integer commentIndex);
+	List<CommentEntity> findAllByPostId(Integer postId, Integer commentIndex);
 }

@@ -15,10 +15,6 @@ import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 import java.util.Properties;
 
-import by.samsolutions.dao.GenericDao;
-import by.samsolutions.dao.impl.GenericDaoImpl;
-import by.samsolutions.entity.user.User;
-
 @Configuration
 @EnableTransactionManagement
 @ComponentScan("by.samsolutions.dao")

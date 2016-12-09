@@ -17,9 +17,9 @@ import org.springframework.transaction.annotation.Transactional;
 import by.samsolutions.dao.CommentDao;
 import by.samsolutions.dao.PostDao;
 import by.samsolutions.dao.UserDao;
-import by.samsolutions.entity.Comment;
-import by.samsolutions.entity.Post;
-import by.samsolutions.entity.user.User;
+import by.samsolutions.entity.CommentEntity;
+import by.samsolutions.entity.PostEntity;
+import by.samsolutions.entity.user.UserEntity;
 import samsolutions.configuration.HibernateTestConfiguration;
 
 @DirtiesContext
@@ -37,19 +37,19 @@ public class CommentDaoTest
 	@Autowired
 	private CommentDao commentDao;
 
-	private User user;
-	private Post post;
+	private UserEntity user;
+	private PostEntity post;
 
 	@Before
 	public void init()
 	{
-		user = new User();
+		user = new UserEntity();
 		user.setUsername("username");
 		user.setPassword("password");
 
 		userDao.create(user);
 
-		Post testPost = new Post();
+		PostEntity testPost = new PostEntity();
 		testPost.setText("Some post text");
 		testPost.setDate(new Date());
 		testPost.setUsername(user.getUsername());
@@ -63,7 +63,7 @@ public class CommentDaoTest
 	public void testCreateComment()
 	{
 
-		Comment comment = new Comment();
+		CommentEntity comment = new CommentEntity();
 		comment.setText("Some comment text");
 		comment.setDate(new Date());
 		comment.setUsername(user.getUsername());
@@ -71,7 +71,7 @@ public class CommentDaoTest
 
 		commentDao.create(comment);
 
-		List<Comment> comments = commentDao.findAllByPostId(post.getId(), 2);
+		List<CommentEntity> comments = commentDao.findAllByPostId(post.getId(), 2);
 
 		Assert.assertEquals(comments.size(), 1);
 		Assert.assertEquals(comment.getText(), comments.get(0).getText());
@@ -85,7 +85,7 @@ public class CommentDaoTest
 	public void testUpdateComment()
 	{
 
-		Comment comment = new Comment();
+		CommentEntity comment = new CommentEntity();
 		comment.setText("Some comment text");
 		comment.setDate(new Date());
 		comment.setUsername(user.getUsername());
@@ -97,7 +97,7 @@ public class CommentDaoTest
 
 		commentDao.update(comment);
 
-		List<Comment> comments = commentDao.findAllByPostId(post.getId(), 2);
+		List<CommentEntity> comments = commentDao.findAllByPostId(post.getId(), 2);
 
 		Assert.assertEquals(comments.size(), 1);
 		Assert.assertEquals(comment.getText(), comments.get(0).getText());
@@ -108,7 +108,7 @@ public class CommentDaoTest
 	@Rollback
 	public void testDeleteComment()
 	{
-		Comment comment = new Comment();
+		CommentEntity comment = new CommentEntity();
 		comment.setText("Some comment text");
 		comment.setDate(new Date());
 		comment.setUsername(user.getUsername());
@@ -118,7 +118,7 @@ public class CommentDaoTest
 
 		commentDao.delete(comment.getId());
 
-		List<Comment> posts = commentDao.findAllByPostId(post.getId(), 2);
+		List<CommentEntity> posts = commentDao.findAllByPostId(post.getId(), 2);
 
 		Assert.assertEquals(posts.size(), 0);
 	}
@@ -129,13 +129,13 @@ public class CommentDaoTest
 	public void testGetAllComments()
 	{
 
-		Comment firstComment = new Comment();
+		CommentEntity firstComment = new CommentEntity();
 		firstComment.setText("Some comment text");
 		firstComment.setDate(new Date());
 		firstComment.setUsername(user.getUsername());
 		firstComment.setPostId(post.getId());
 
-		Comment secondComment = new Comment();
+		CommentEntity secondComment = new CommentEntity();
 		secondComment.setText("Some comment text");
 		secondComment.setDate(new Date());
 		secondComment.setUsername(user.getUsername());
@@ -144,7 +144,7 @@ public class CommentDaoTest
 		commentDao.create(firstComment);
 		commentDao.create(secondComment);
 
-		List<Comment> comments = commentDao.findAllByPostId(post.getId(), 2);
+		List<CommentEntity> comments = commentDao.findAllByPostId(post.getId(), 2);
 
 		Assert.assertEquals(comments.size(), 2);
 	}

@@ -14,8 +14,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import by.samsolutions.dao.UserDao;
-import by.samsolutions.entity.user.User;
-import by.samsolutions.entity.user.UserRole;
+import by.samsolutions.entity.user.UserEntity;
+import by.samsolutions.entity.user.UserRoleEntity;
 
 @Service("customUserDetailsService")
 public class UserDetailsServiceImpl implements UserDetailsService
@@ -28,11 +28,11 @@ public class UserDetailsServiceImpl implements UserDetailsService
 	@Override
 	public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException
 	{
-		User user = userDao.find(username);
+		UserEntity user = userDao.find(username);
 
 		if (user == null)
 		{
-			throw new UsernameNotFoundException("User not found!");
+			throw new UsernameNotFoundException("UserEntity not found!");
 		}
 
 		List<GrantedAuthority> authorities = buildUserAuthority(user.getUserRole());
@@ -40,13 +40,13 @@ public class UserDetailsServiceImpl implements UserDetailsService
 		return buildUserForAuthentication(user, authorities);
 	}
 
-	private List<GrantedAuthority> buildUserAuthority(final Collection<UserRole> userRoles)
+	private List<GrantedAuthority> buildUserAuthority(final Collection<UserRoleEntity> userRoles)
 	{
 
 		return userRoles.stream().map(role -> new SimpleGrantedAuthority(role.getRole())).collect(Collectors.toList());
 	}
 
-	private org.springframework.security.core.userdetails.User buildUserForAuthentication(final User user,
+	private org.springframework.security.core.userdetails.User buildUserForAuthentication(final UserEntity user,
 	                                                                                      final List<GrantedAuthority> authorities)
 	{
 		return new org.springframework.security.core.userdetails.

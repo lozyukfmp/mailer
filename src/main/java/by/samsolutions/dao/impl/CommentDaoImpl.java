@@ -5,22 +5,22 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import by.samsolutions.dao.CommentDao;
-import by.samsolutions.entity.Comment;
+import by.samsolutions.entity.CommentEntity;
 
 @Repository
-public class CommentDaoImpl extends GenericDaoImpl<Comment, Integer>
+public class CommentDaoImpl extends GenericDaoImpl<CommentEntity, Integer>
 				implements CommentDao
 {
 
 	public CommentDaoImpl()
 	{
-		super(Comment.class);
+		super(CommentEntity.class);
 	}
 
 	@Override
-	public List<Comment> findAllByPostId(final Integer postId, final Integer commentCount)
+	public List<CommentEntity> findAllByPostId(final Integer postId, final Integer commentCount)
 	{
-		return entityManager.createNamedQuery("Comment.findAllByPostId", Comment.class)
+		return entityManager.createNamedQuery("Comment.findAllByPostId", CommentEntity.class)
 		                    .setParameter("id", postId)
 		                    .setFirstResult(0)
 		                    .setMaxResults(commentCount)

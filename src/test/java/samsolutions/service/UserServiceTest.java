@@ -1,6 +1,7 @@
 package samsolutions.service;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -13,11 +14,15 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.util.ReflectionTestUtils;
 
+import by.samsolutions.converter.impl.UserConverter;
+import by.samsolutions.converter.impl.UserProfileConverter;
 import by.samsolutions.dao.UserDao;
 import by.samsolutions.dto.UserDto;
 import by.samsolutions.dto.UserProfileDto;
-import by.samsolutions.entity.user.User;
+import by.samsolutions.entity.user.UserEntity;
+import by.samsolutions.entity.user.UserProfileEntity;
 import by.samsolutions.service.UserService;
+import by.samsolutions.service.exception.ServiceException;
 import by.samsolutions.service.impl.UserServiceImpl;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -26,14 +31,20 @@ public class UserServiceTest
 {
 	@Configuration
 	static class UserServiceConfiguration {
-		@Bean
-		public UserService userService() {
-			return new UserServiceImpl();
-		}
 
 		@Bean
 		public UserDao userDao() {
 			return Mockito.mock(UserDao.class);
+		}
+
+		@Bean
+		public UserConverter userConverter() {
+			return new UserConverter();
+		}
+
+		@Bean
+		public UserProfileConverter userProfileConverter() {
+			return new UserProfileConverter();
 		}
 
 		@Bean
@@ -42,56 +53,59 @@ public class UserServiceTest
 		}
 	}
 
-	@Autowired
 	private UserService userService;
+	private UserEntity  user;
+	private UserDto     userDto;
+	private UserEntity  sucessUser;
 
 	@Autowired
 	private UserDao userDao;
 
 	@Autowired
+	private UserConverter userConverter;
+
+	@Autowired
+	private UserProfileConverter userProfileConverter;
+
+	@Autowired
 	private PasswordEncoder passwordEncoder;
 
-	@Test
-	public void testCreateUserFailure()
+	@Before
+	public void init()
 	{
+		user = UserEntity.builder().password("password").username("username").build();
 
-		User user = new User();
-		user.setPassword("password");
-		user.setUsername("username");
+		userDto = UserDto.builder().password("password").username("username").userProfileDto(new UserProfileDto()).build();
 
-		UserDto userDto = new UserDto();
-		userDto.setUsername("username");
-		userDto.setPassword("password");
+		sucessUser = UserEntity.builder().password("password").username("username1").profile(new UserProfileEntity()).build();
 
 		Mockito.when(userDao.find("username")).thenReturn(user);
-		ReflectionTestUtils.setField(userService, "userDao", userDao);
+		Mockito.when(userDao.find("username1")).thenReturn(null);
 
-		User resultUser = userService.createUserAccount(userDto);
+		ReflectionTestUtils.setField(userConverter, "userProfileConverter", userProfileConverter);
+		userService = new UserServiceImpl(userDao, userConverter);
+		ReflectionTestUtils.setField(userService, "passwordEncoder", passwordEncoder);
+
+	}
+
+	@Test
+	public void testCreateUserFailure() throws ServiceException
+	{
+		UserDto resultUser = userService.create(userDto);
 
 		Assert.assertEquals(resultUser, null);
 	}
 
-	@Test
+	/*@Test
 	public void testCreateUserSuccess()
 	{
-		User user = new User();
-		user.setPassword("password");
-		user.setUsername("username");
 
-		UserDto userDto = new UserDto();
-		userDto.setUsername("username");
-		userDto.setPassword("password");
-		userDto.setUserProfileDto(new UserProfileDto());
-
-		Mockito.when(userDao.find("username")).thenReturn(null);
-		ReflectionTestUtils.setField(userService, "userDao", userDao);
-
-		User resultUser = userService.createUserAccount(userDto);
+		UserEntity resultUser = userService.create(sucessUser);
 
 		Assert.assertNotNull(resultUser);
-		Assert.assertEquals(resultUser.getUsername(), userDto.getUsername());
+		Assert.assertEquals(resultUser.getUsername(), user.getUsername());
 		Assert.assertTrue(passwordEncoder.matches(
-						userDto.getPassword(),
+						user.getPassword(),
 						resultUser.getPassword()));
-	}
+	}*/
 }

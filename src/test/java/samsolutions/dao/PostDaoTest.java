@@ -16,8 +16,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import by.samsolutions.dao.PostDao;
 import by.samsolutions.dao.UserDao;
-import by.samsolutions.entity.Post;
-import by.samsolutions.entity.user.User;
+import by.samsolutions.entity.PostEntity;
+import by.samsolutions.entity.user.UserEntity;
 import samsolutions.configuration.HibernateTestConfiguration;
 
 @DirtiesContext
@@ -31,12 +31,12 @@ public class PostDaoTest
 	@Autowired
 	private UserDao userDao;
 
-	private User user;
+	private UserEntity user;
 
 	@Before
 	public void init()
 	{
-		user = new User();
+		user = new UserEntity();
 		user.setUsername("username");
 		user.setPassword("password");
 
@@ -48,14 +48,14 @@ public class PostDaoTest
 	@Rollback
 	public void testCreatePost()
 	{
-		Post post = new Post();
+		PostEntity post = new PostEntity();
 		post.setText("Some post text");
 		post.setDate(new Date());
 		post.setUsername(user.getUsername());
 
 		postDao.create(post);
 
-		List<Post> posts = postDao.all(user.getUsername(), 1);
+		List<PostEntity> posts = postDao.all(user.getUsername(), 1);
 
 		Assert.assertEquals(posts.size(), 1);
 		Assert.assertEquals(post.getText(), posts.get(0).getText());
@@ -67,7 +67,7 @@ public class PostDaoTest
 	@Rollback
 	public void testUpdatePost()
 	{
-		Post post = new Post();
+		PostEntity post = new PostEntity();
 		post.setText("Some post text");
 		post.setDate(new Date());
 		post.setUsername(user.getUsername());
@@ -78,7 +78,7 @@ public class PostDaoTest
 
 		postDao.update(post);
 
-		List<Post> posts = postDao.all(user.getUsername(), 1);
+		List<PostEntity> posts = postDao.all(user.getUsername(), 1);
 
 		Assert.assertEquals(posts.size(), 1);
 		Assert.assertEquals(post.getText(), posts.get(0).getText());
@@ -90,7 +90,7 @@ public class PostDaoTest
 	@Rollback
 	public void testDeletePost()
 	{
-		Post post = new Post();
+		PostEntity post = new PostEntity();
 		post.setText("Some post text");
 		post.setDate(new Date());
 		post.setUsername(user.getUsername());
@@ -99,7 +99,7 @@ public class PostDaoTest
 
 		postDao.delete(post.getId());
 
-		List<Post> posts = postDao.all(user.getUsername(), 1);
+		List<PostEntity> posts = postDao.all(user.getUsername(), 1);
 
 		Assert.assertEquals(posts.size(), 0);
 	}
@@ -109,12 +109,12 @@ public class PostDaoTest
 	@Rollback
 	public void testGetAllPosts()
 	{
-		Post firstPost = new Post();
+		PostEntity firstPost = new PostEntity();
 		firstPost.setText("First post text");
 		firstPost.setDate(new Date());
 		firstPost.setUsername(user.getUsername());
 
-		Post secondPost = new Post();
+		PostEntity secondPost = new PostEntity();
 		secondPost.setText("Second post text");
 		secondPost.setDate(new Date());
 		secondPost.setUsername(user.getUsername());
@@ -122,7 +122,7 @@ public class PostDaoTest
 		postDao.create(firstPost);
 		postDao.create(secondPost);
 
-		List<Post> posts = postDao.all(user.getUsername(), 2);
+		List<PostEntity> posts = postDao.all(user.getUsername(), 2);
 
 		Assert.assertEquals(posts.size(), 2);
 	}

@@ -21,16 +21,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.View;
 
+import by.samsolutions.controller.exception.ControllerException;
+import by.samsolutions.dto.PostDto;
 import by.samsolutions.dto.UserDto;
 import by.samsolutions.dto.UserProfileDto;
-import by.samsolutions.entity.Post;
-import by.samsolutions.entity.user.User;
-import by.samsolutions.entity.user.UserProfile;
 import by.samsolutions.service.PostService;
 import by.samsolutions.service.UserProfileService;
 import by.samsolutions.service.UserService;
+import by.samsolutions.service.exception.ServiceException;
 
 @Controller
 @SessionAttributes({"user", "userProfile"})
@@ -45,6 +44,7 @@ public class UserController
 
 	@Autowired
 	private PostService postService;
+
 
 	@GetMapping(value = "/login-page")
 	public ModelAndView login(@RequestParam(value = "error", required = false) final String error,
@@ -75,7 +75,7 @@ public class UserController
 	}
 
 	@GetMapping("/user")
-	public ModelAndView getUserPage(@RequestParam(required = false) String username)
+	public ModelAndView getUserPage(@RequestParam(required = false) String username) throws ControllerException
 	{
 
 		if (username == null)
@@ -86,21 +86,31 @@ public class UserController
 
 		ModelAndView modelAndView = new ModelAndView();
 
-		UserProfile userProfile = userProfileService.getUserProfile(username);
-		Collection<Post> posts = postService.getAll(username, 2);
-
-		if (userProfile == null)
+		try
 		{
-			modelAndView.setViewName("user_not_found");
-			modelAndView.addObject("username", username);
+			UserProfileDto userProfileDto = userProfileService.find(username);
+
+			if (userProfileDto == null)
+			{
+				modelAndView.setViewName("user_not_found");
+				modelAndView.addObject("username", username);
+
+				return modelAndView;
+			}
+
+			Collection<PostDto> postDtoCollection =postService.getAll(username, 2);
+
+			modelAndView.setViewName("user_view");
+			modelAndView.addObject("profile", userProfileDto);
+			modelAndView.addObject("messageList", postDtoCollection);
+
 			return modelAndView;
+
 		}
-
-		modelAndView.setViewName("user_view");
-		modelAndView.addObject("profile", userProfile);
-		modelAndView.addObject("messageList", posts);
-
-		return modelAndView;
+		catch (ServiceException e)
+		{
+			throw new ControllerException(e);
+		}
 	}
 
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
@@ -138,33 +148,43 @@ public class UserController
 	public String registerUser(@ModelAttribute("user") @Valid final UserDto userDto, final BindingResult userBindingResult,
 	                           @ModelAttribute("userProfile") @Valid final UserProfileDto userProfileDto,
 	                           final BindingResult userProfileBindingResult, final Model model, final HttpSession session)
+					throws ControllerException
 	{
-		User registered = new User();
-		if (!userBindingResult.hasErrors() && !userProfileBindingResult.hasErrors())
+		try
 		{
-			userDto.setUserProfileDto(userProfileDto);
-			registered = userService.createUserAccount(userDto);
-		}
+			UserDto registered = new UserDto();
 
-		if (registered == null)
+			if (!userBindingResult.hasErrors() && !userProfileBindingResult.hasErrors())
+			{
+				userDto.setUserProfileDto(userProfileDto);
+
+				registered = userService.create(userDto);
+			}
+
+			if (registered == null)
+			{
+				model.addAttribute("usernameExist", "UserEntity with the same username already exists");
+				session.setAttribute("model", model);
+
+				return "redirect:/registration-page";
+			}
+
+			if (userBindingResult.hasErrors() || userProfileBindingResult.hasErrors())
+			{
+				session.setAttribute("model", model);
+
+				return "redirect:/registration-page";
+			}
+			else
+			{
+				return "redirect:/login-page?success";
+			}
+
+		}
+		catch (ServiceException e)
 		{
-			model.addAttribute("usernameExist", "User with the same username already exists");
-			session.setAttribute("model", model);
-
-			return "redirect:/registration-page";
+			throw new ControllerException(e);
 		}
-
-		if (userBindingResult.hasErrors() || userProfileBindingResult.hasErrors())
-		{
-			session.setAttribute("model", model);
-
-			return "redirect:/registration-page";
-		}
-		else
-		{
-			return "redirect:/login-page?success";
-		}
-
 	}
 
 }

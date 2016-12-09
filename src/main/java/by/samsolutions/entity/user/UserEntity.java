@@ -15,7 +15,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import by.samsolutions.entity.Post;
+import by.samsolutions.entity.BaseEntity;
+import by.samsolutions.entity.PostEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -28,9 +29,9 @@ import lombok.NoArgsConstructor;
 @Builder
 @Table(name = "user")
 @NamedQueries({
-				@NamedQuery(name = "User.findAll", query = "select u from User u")
+				@NamedQuery(name = "User.findAll", query = "select u from UserEntity u")
 })
-public class User implements Serializable
+public class UserEntity implements BaseEntity
 {
 
 	private final static Long serialVersionUID = 1L;
@@ -44,15 +45,15 @@ public class User implements Serializable
 
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name = "username")
-	private UserProfile profile;
+	private UserProfileEntity profile;
 
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name = "username")
-	private Collection<UserRole> userRole;
+	private Collection<UserRoleEntity> userRole;
 
 	@OneToMany(fetch = FetchType.LAZY, orphanRemoval = true)
 	@JoinColumn(name = "username")
-	private Collection<Post> posts;
+	private Collection<PostEntity> posts;
 
 	@Column(name = "enabled")
 	private boolean enabled;

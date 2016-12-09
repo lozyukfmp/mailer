@@ -29,7 +29,7 @@ CREATE TABLE `user_profile` (
   `image_url` varchar(100),
   PRIMARY KEY (`username`),
   UNIQUE KEY `user_profile_username_uindex` (`username`),
-  CONSTRAINT `user_profile_user_username_fk` FOREIGN KEY (`username`) REFERENCES `user` (`username`)
+  CONSTRAINT `user_profile_user_username_fk` FOREIGN KEY (`username`) REFERENCES `user` (`username`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `user_role` (
@@ -60,6 +60,6 @@ CREATE TABLE `comments` (
   `username` varchar(45) NOT NULL,
   PRIMARY KEY (`comment_id`),
   KEY `post_id_idx` (`post_id`),
-  CONSTRAINT `comment_post_id` FOREIGN KEY (`post_id`) REFERENCES `posts` (`post_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `comment_post_id` FOREIGN KEY (`post_id`) REFERENCES `posts` (`post_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `comments_user_username_fk` FOREIGN KEY (`username`) REFERENCES `user` (`username`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

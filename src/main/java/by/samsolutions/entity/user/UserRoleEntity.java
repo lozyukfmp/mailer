@@ -1,5 +1,6 @@
 package by.samsolutions.entity.user;
 
+import by.samsolutions.entity.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,7 +20,7 @@ import java.io.Serializable;
 @Builder
 @Entity
 @Table(name = "user_role")
-public class UserRole implements Serializable
+public class UserRoleEntity implements BaseEntity
 {
 
 	private final static Long serialVersionUID = 3L;

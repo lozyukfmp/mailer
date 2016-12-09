@@ -18,6 +18,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -30,12 +32,12 @@ import lombok.NoArgsConstructor;
 @Builder
 @Table(name = "posts")
 @NamedQueries({
-				@NamedQuery(name="Post.findAllByUsername", query = "select p from Post p " +
+				@NamedQuery(name = "Post.findAllByUsername", query = "select p from PostEntity p " +
 								"where p.username = :username order by p.date desc"),
-				@NamedQuery(name="Post.findByIdWithComments", query = "select p from Post p " +
+				@NamedQuery(name = "Post.findByIdWithComments", query = "select p from PostEntity p " +
 								"left join fetch p.comments c where p.id = :id"),
 })
-public class Post implements Serializable
+public class PostEntity implements BaseEntity
 {
 	private final static Long serialVersionUID = 5L;
 
@@ -57,8 +59,8 @@ public class Post implements Serializable
 	@Column(name = "image_url")
 	private String imageUrl;
 
-	@OneToMany(fetch = FetchType.LAZY, orphanRemoval = true)
+	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name = "post_id", updatable = false)
-	private Collection<Comment> comments;
+	private Collection<CommentEntity> comments;
 
 }

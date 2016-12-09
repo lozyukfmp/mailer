@@ -16,14 +16,16 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import by.samsolutions.configuration.web.SpringWebConfig;
 import by.samsolutions.controller.UserController;
+import by.samsolutions.dto.PostDto;
 import by.samsolutions.dto.UserDto;
 import by.samsolutions.dto.UserProfileDto;
-import by.samsolutions.entity.Post;
-import by.samsolutions.entity.user.User;
-import by.samsolutions.entity.user.UserProfile;
+import by.samsolutions.entity.PostEntity;
+import by.samsolutions.entity.user.UserEntity;
+import by.samsolutions.entity.user.UserProfileEntity;
 import by.samsolutions.service.PostService;
 import by.samsolutions.service.UserProfileService;
 import by.samsolutions.service.UserService;
+import by.samsolutions.service.exception.ServiceException;
 import samsolutions.configuration.WebTestConfiguration;
 
 import static org.hamcrest.Matchers.*;
@@ -54,21 +56,21 @@ public class UserControllerTest
 	private MockMvc mockMvc;
 
 	@Before
-	public void init()
+	public void init() throws ServiceException
 	{
-		UserProfile userProfile = UserProfile.builder()
-		                                     .username("ArtemLozyuk")
-		                                     .firstName("Artem")
-		                                     .secondName("Lozyuk")
-		                                     .thirdName("Nicolaevich")
-		                                     .email("lozyuk-artem@mail.ru")
-		                                     .build();
+		UserProfileDto userProfile = UserProfileDto.builder()
+		                                              .username("ArtemLozyuk")
+		                                              .firstName("Artem")
+		                                              .secondName("Lozyuk")
+		                                              .thirdName("Nicolaevich")
+		                                              .email("lozyuk-artem@mail.ru")
+		                                              .build();
 
-		Post firstPost = Post.builder().id(1).date(new Date()).text("Some firstPost text").username("ArtemLozyuk").build();
-		Post secondPost = Post.builder().id(2).date(new Date()).text("Some secondPost text").username("ArtemLozyuk").build();
+		PostDto firstPost = PostDto.builder().id("1").text("Some firstPost text").username("ArtemLozyuk").build();
+		PostDto secondPost = PostDto.builder().id("2").text("Some secondPost text").username("ArtemLozyuk").build();
 
-		when(userProfileService.getUserProfile(userProfile.getUsername())).thenReturn(userProfile);
-		when(userService.createUserAccount(any())).thenReturn(new User());
+		when(userProfileService.find(userProfile.getUsername())).thenReturn(userProfile);
+		when(userService.create(any())).thenReturn(new UserDto());
 		when(postService.getAll(userProfile.getUsername(), 2)).thenReturn(Arrays.asList(firstPost, secondPost));
 
 		ReflectionTestUtils.setField(userController, "userService", userService);
@@ -103,12 +105,12 @@ public class UserControllerTest
 		       .andExpect(model().attribute("profile", hasProperty("email", is("lozyuk-artem@mail.ru"))))
 		       .andExpect(model().attribute("messageList", hasSize(2)))
 		       .andExpect(model().attribute("messageList", hasItem(allOf(
-						       hasProperty("id", is(1)),
+						       hasProperty("id", is("1")),
 						       hasProperty("username", is("ArtemLozyuk")),
 						       hasProperty("text", is("Some firstPost text"))
 		       ))))
 		       .andExpect(model().attribute("messageList", hasItem(allOf(
-						       hasProperty("id", is(2)),
+						       hasProperty("id", is("2")),
 						       hasProperty("username", is("ArtemLozyuk")),
 						       hasProperty("text", is("Some secondPost text"))
 		       ))));

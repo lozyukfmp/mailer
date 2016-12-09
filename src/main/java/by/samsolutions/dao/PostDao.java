@@ -2,10 +2,10 @@ package by.samsolutions.dao;
 
 import java.util.List;
 
-import by.samsolutions.entity.Post;
+import by.samsolutions.entity.PostEntity;
 
-public interface PostDao extends GenericDao<Post, Integer>
+public interface PostDao extends GenericDao<PostEntity, Integer>
 {
-	List<Post> all(String username, Integer messageCount);
-	Post findWithComments(Integer postId);
+	List<PostEntity> all(String username, Integer messageCount);
+	PostEntity findWithComments(Integer postId);
 }
