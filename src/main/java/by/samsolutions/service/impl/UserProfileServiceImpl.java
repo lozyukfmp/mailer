@@ -1,29 +1,72 @@
 package by.samsolutions.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import by.samsolutions.converter.exception.ConverterException;
+import by.samsolutions.converter.impl.UserProfileConverter;
 import by.samsolutions.dao.GenericDao;
 import by.samsolutions.dto.UserProfileDto;
-import by.samsolutions.entity.user.UserProfile;
+import by.samsolutions.entity.user.UserProfileEntity;
 import by.samsolutions.service.UserProfileService;
+import by.samsolutions.service.exception.ServiceException;
+import by.samsolutions.service.exception.UserNotFoundException;
 
 @Service
-public class UserProfileServiceImpl implements UserProfileService
+public class UserProfileServiceImpl extends GenericServiceImpl<UserProfileDto, UserProfileEntity, String>
+				implements UserProfileService
 {
-	private static final String NO_AVATAR_IMAGE_URL = "/static/core/pictures/no_avatar.jpg";
+
+	private GenericDao<UserProfileEntity, String> userProfileDao;
+	private UserProfileConverter                  userProfileConverter;
+
+	public UserProfileServiceImpl()
+	{
+
+	}
 
 	@Autowired
-	private GenericDao<UserProfile, String> userProfileDao;
+	public UserProfileServiceImpl(@Autowired GenericDao<UserProfileEntity, String> userProfileDao,
+	                              @Autowired UserProfileConverter userProfileConverter)
+	{
+		super(userProfileDao, userProfileConverter);
+		this.userProfileDao = userProfileDao;
+		this.userProfileConverter = userProfileConverter;
+	}
 
 	@Override
-	@Transactional(readOnly = true)
-	public UserProfile getUserProfile(final String username)
+	@Transactional
+	public UserProfileDto find(final String id) throws ServiceException
 	{
-		UserProfile userProfile = userProfileDao.find(username);
+		try
+		{
+			UserProfileEntity userProfileEntity = userProfileDao.find(id);
+
+			if (userProfileEntity == null)
+			{
+				throw new UserNotFoundException();
+			}
+
+			UserProfileDto userProfileDto = userProfileConverter.toDto(userProfileEntity);
+
+			return userProfileDto;
+		}
+		catch (ConverterException e)
+		{
+			throw new ServiceException(e);
+		}
+	}
+
+	/*@Autowired
+	private GenericDao<UserProfileEntity, String> userProfileDao;*/
+
+/*
+	@Override
+	@Transactional(readOnly = true)
+	public UserProfileEntity getUserProfile(final String username)
+	{
+		UserProfileEntity userProfile = userProfileDao.find(username);
 
 		if (userProfile != null && userProfile.getImageUrl() == null)
 		{
@@ -35,12 +78,12 @@ public class UserProfileServiceImpl implements UserProfileService
 
 	@Override
 	@Transactional
-	public UserProfile updateUserProfile(final UserProfileDto userProfileDto)
+	public UserProfileEntity updateUserProfile(final UserProfileDto userProfileDto)
 	{
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		userProfileDto.setUsername(auth.getName());
 
-		UserProfile retrievedProfile = userProfileDao.find(userProfileDto.getUsername());
+		UserProfileEntity retrievedProfile = userProfileDao.find(userProfileDto.getUsername());
 
 		retrievedProfile.setUsername(userProfileDto.getUsername());
 		retrievedProfile.setEmail(userProfileDto.getEmail());
@@ -51,16 +94,24 @@ public class UserProfileServiceImpl implements UserProfileService
 
 		return userProfileDao.update(retrievedProfile);
 	}
+*/
 
 	@Override
 	@Transactional
-	public UserProfile uploadUserPhoto(final String username, final String photoUrl)
+	public UserProfileDto uploadUserPhoto(final String username, final String photoUrl) throws ServiceException
 	{
-		UserProfile userProfile = userProfileDao.find(username);
+		try
+		{
+			UserProfileEntity userProfile = userProfileDao.find(username);
+			userProfile.setImageUrl(photoUrl);
+			UserProfileEntity updatedProfile = userProfileDao.update(userProfile);
+			UserProfileDto resultDto = userProfileConverter.toDto(updatedProfile);
 
-		userProfile.setImageUrl(photoUrl);
-		userProfileDao.update(userProfile);
-
-		return userProfile;
+			return resultDto;
+		}
+		catch (ConverterException e)
+		{
+			throw new ServiceException(e);
+		}
 	}
 }

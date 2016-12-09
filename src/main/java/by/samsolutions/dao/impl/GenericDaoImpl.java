@@ -1,14 +1,16 @@
 package by.samsolutions.dao.impl;
 
 import java.io.Serializable;
+import java.util.Base64;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import by.samsolutions.dao.GenericDao;
+import by.samsolutions.entity.BaseEntity;
 
-public class GenericDaoImpl<T, PK extends Serializable> implements GenericDao<T, PK>
+public class GenericDaoImpl<T extends BaseEntity, PK extends Serializable> implements GenericDao<T, PK>
 {
 
 	@PersistenceContext

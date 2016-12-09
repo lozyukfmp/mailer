@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import by.samsolutions.entity.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,7 +19,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Builder
 @Table(name = "user_profile")
-public class UserProfile implements Serializable
+public class UserProfileEntity implements BaseEntity
 {
 
 	private final static Long serialVersionUID = 2L;

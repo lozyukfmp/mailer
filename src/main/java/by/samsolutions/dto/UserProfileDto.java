@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UserProfileDto
+public class UserProfileDto implements BaseDto
 {
 
 	@NotEmpty
@@ -27,6 +27,8 @@ public class UserProfileDto
 
 	@NotEmpty
 	private String thirdName;
+
+	private String imageUrl;
 
 	private String username;
 

@@ -3,6 +3,7 @@ package samsolutions.controller;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Matchers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ContextConfiguration;
@@ -14,8 +15,9 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import by.samsolutions.configuration.web.SpringWebConfig;
 import by.samsolutions.controller.UserProfileController;
-import by.samsolutions.entity.user.UserProfile;
+import by.samsolutions.dto.UserProfileDto;
 import by.samsolutions.service.UserProfileService;
+import by.samsolutions.service.exception.ServiceException;
 import samsolutions.configuration.WebTestConfiguration;
 
 import static org.hamcrest.Matchers.hasProperty;
@@ -43,17 +45,18 @@ public class UserProfileControllerTest
 	private MockMvc mockMvc;
 
 	@Before
-	public void init()
+	public void init() throws ServiceException
 	{
-		UserProfile userProfile = UserProfile.builder()
-		                                     .username("ArtemLozyuk")
-		                                     .firstName("Artem")
-		                                     .secondName("Lozyuk")
-		                                     .thirdName("Nicolaevich")
-		                                     .email("lozyuk-artem@mail.ru")
-		                                     .build();
+		UserProfileDto userProfile = UserProfileDto.builder()
+		                                           .username("ArtemLozyuk")
+		                                           .firstName("Artem")
+		                                           .secondName("Lozyuk")
+		                                           .thirdName("Nicolaevich")
+		                                           .email("lozyuk-artem@mail.ru")
+		                                           .build();
 
-		when(userProfileService.getUserProfile(userProfile.getUsername())).thenReturn(userProfile);
+		when(userProfileService.find(userProfile.getUsername())).thenReturn(userProfile);
+		when(userProfileService.update(Matchers.any())).thenReturn(userProfile);
 
 		ReflectionTestUtils.setField(userProfileController, "userProfileService", userProfileService);
 
@@ -79,6 +82,7 @@ public class UserProfileControllerTest
 		mockMvc.perform(post("/user/profile").param("firstName", "Artem")
 		                                     .param("secondName", "Lozyuk")
 		                                     .param("thirdName", "Nicolaevich")
+		                                     .param("username", "ArtemLozyuk")
 		                                     .param("email", "lozyuk-artem@mail.ru"))
 		       .andExpect(view().name("profile_view"))
 		       .andExpect(model().hasNoErrors())
@@ -95,6 +99,7 @@ public class UserProfileControllerTest
 		mockMvc.perform(post("/user/profile").param("firstName", "Artem")
 		                                     .param("secondName", "Lozyuk")
 		                                     .param("thirdName", "Nicolaevich")
+		                                     .param("username", "ArtemLozyuk")
 		                                     .param("email", "lozyuk-mail.ru"))
 		       .andExpect(view().name("profile_view"))
 		       .andExpect(model().hasErrors())

@@ -1,18 +1,15 @@
 package by.samsolutions.service;
 
-import java.util.List;
+import java.util.Collection;
 
-import by.samsolutions.entity.Comment;
+import org.springframework.stereotype.Service;
 
-public interface CommentService
+import by.samsolutions.dto.CommentDto;
+import by.samsolutions.entity.CommentEntity;
+import by.samsolutions.service.exception.ServiceException;
+
+@Service
+public interface CommentService extends GenericService<CommentDto, CommentEntity, Integer>
 {
-	Comment getComment(Integer commentId);
-
-	Comment createComment(Comment comment);
-
-	Comment updateComment(Comment comment);
-
-	void deleteComment(Integer commentId);
-
-	List<Comment> getCommentListByPostId(Integer postId, Integer commentIndex);
+	Collection<CommentDto> getCommentListByPostId(Integer postId, Integer commentIndex) throws ServiceException;
 }

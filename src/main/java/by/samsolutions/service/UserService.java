@@ -1,9 +1,13 @@
 package by.samsolutions.service;
 
-import by.samsolutions.dto.UserDto;
-import by.samsolutions.entity.user.User;
+import org.springframework.stereotype.Service;
 
-public interface UserService
+import by.samsolutions.dto.UserDto;
+import by.samsolutions.entity.user.UserEntity;
+
+@Service
+public interface UserService extends GenericService<UserDto, UserEntity, String>
 {
-	User createUserAccount(UserDto accountDto);
+
+	/*UserEntity create(UserDto accountDto);*/
 }

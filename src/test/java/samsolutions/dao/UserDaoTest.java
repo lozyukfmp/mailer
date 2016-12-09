@@ -15,9 +15,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import by.samsolutions.dao.UserDao;
-import by.samsolutions.entity.user.User;
-import by.samsolutions.entity.user.UserProfile;
-import by.samsolutions.entity.user.UserRole;
+import by.samsolutions.entity.user.UserEntity;
+import by.samsolutions.entity.user.UserProfileEntity;
+import by.samsolutions.entity.user.UserRoleEntity;
 import samsolutions.configuration.HibernateTestConfiguration;
 
 @ContextConfiguration(classes = HibernateTestConfiguration.class)
@@ -27,25 +27,25 @@ public class UserDaoTest
 	@Autowired
 	private UserDao userDao;
 
-	private User user;
+	private UserEntity user;
 
 	@Before
 	public void init()
 	{
-		user = new User();
+		user = new UserEntity();
 		user.setUsername("username");
 		user.setPassword("password");
 
-		UserProfile userProfile = new UserProfile();
+		UserProfileEntity userProfile = new UserProfileEntity();
 		userProfile.setEmail("lozyuk-artem@mail.ru");
 		userProfile.setFirstName("Ivan");
 		userProfile.setSecondName("Ivanov");
 		userProfile.setThirdName("Ivanovich");
 		userProfile.setUsername(user.getUsername());
 
-		UserRole userRole = new UserRole();
+		UserRoleEntity userRole = new UserRoleEntity();
 		userRole.setRole("ROLE_USER");
-		Set<UserRole> userRoleSet = new HashSet<>();
+		Set<UserRoleEntity> userRoleSet = new HashSet<>();
 		userRoleSet.add(userRole);
 
 		user.setProfile(userProfile);
@@ -60,7 +60,7 @@ public class UserDaoTest
 	{
 		userDao.create(user);
 
-		List<User> users = userDao.all();
+		List<UserEntity> users = userDao.all();
 
 		Assert.assertEquals(user.getUsername(), users.get(0).getUsername());
 		Assert.assertEquals(user.getProfile().getEmail(), users.get(0).getProfile().getEmail());
@@ -79,7 +79,7 @@ public class UserDaoTest
 
 		userDao.update(user);
 
-		List<User> users = userDao.all();
+		List<UserEntity> users = userDao.all();
 
 		Assert.assertEquals(user.getUsername(), users.get(0).getUsername());
 		Assert.assertEquals(user.getProfile().getEmail(), users.get(0).getProfile().getEmail());
@@ -95,7 +95,7 @@ public class UserDaoTest
 
 		userDao.delete(user.getUsername());
 
-		List<User> users = userDao.all();
+		List<UserEntity> users = userDao.all();
 
 		Assert.assertEquals(users.size(), 0);
 	}
@@ -107,7 +107,7 @@ public class UserDaoTest
 	{
 		userDao.create(user);
 
-		List<User> users = userDao.all();
+		List<UserEntity> users = userDao.all();
 
 		Assert.assertEquals(users.size(), 1);
 	}

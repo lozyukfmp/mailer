@@ -21,10 +21,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import by.samsolutions.controller.exception.ControllerException;
 import by.samsolutions.controller.util.FileUtil;
+import by.samsolutions.converter.exception.ConverterException;
+import by.samsolutions.converter.impl.UserProfileConverter;
 import by.samsolutions.dto.UserProfileDto;
-import by.samsolutions.entity.user.UserProfile;
+import by.samsolutions.entity.user.UserProfileEntity;
 import by.samsolutions.service.UserProfileService;
+import by.samsolutions.service.exception.ServiceException;
 
 @Controller
 @RequestMapping("/user")
@@ -38,61 +42,101 @@ public class UserProfileController
 	private UserProfileService userProfileService;
 
 	@GetMapping("/profile")
-	public ModelAndView getUserProfileView()
+	public ModelAndView getUserProfileView() throws ControllerException
 	{
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		UserProfile userProfile = userProfileService.getUserProfile(auth.getName());
+		try
+		{
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
-		return new ModelAndView("profile_view", "userProfile", userProfile);
+			UserProfileDto userProfileDto = userProfileService.find(auth.getName());
+
+			return new ModelAndView("profile_view", "userProfile", userProfileDto);
+		}
+		catch (ServiceException e)
+		{
+			throw new ControllerException(e);
+		}
+
 	}
 
 	@GetMapping("/profile/info")
 	public
 	@ResponseBody
-	ResponseEntity<UserProfile> getUserProfile()
+	ResponseEntity<UserProfileDto> getUserProfile() throws ControllerException
 	{
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		return new ResponseEntity<>(userProfileService.getUserProfile(auth.getName()), HttpStatus.OK);
+		try
+		{
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+			UserProfileDto userProfileDto = userProfileService.find(auth.getName());
+
+			return new ResponseEntity<>(userProfileDto, HttpStatus.OK);
+
+		}
+		catch (ServiceException e)
+		{
+			throw new ControllerException(e);
+		}
 	}
 
 	@PostMapping("/profile")
 	public ModelAndView saveUserProfile(@ModelAttribute("userProfile") @Valid final UserProfileDto userProfileDto,
-	                                    final BindingResult userProfileBindingResult)
+	                                    final BindingResult userProfileBindingResult) throws ControllerException
 	{
-
-		if (!userProfileBindingResult.hasErrors())
+		try
 		{
-			userProfileService.updateUserProfile(userProfileDto);
+			if (!userProfileBindingResult.hasErrors())
+			{
+				UserProfileDto resultDto = userProfileService.update(userProfileDto);
 
-			return new ModelAndView("profile_view", "successProfileChange", "You've been changed profile successfully.");
+				return new ModelAndView("profile_view", "successProfileChange", "You've been changed profile successfully.");
+			}
+
+			return new ModelAndView("profile_view", "userProfile", userProfileDto);
 		}
-
-		return new ModelAndView("profile_view", "userProfile", userProfileDto);
+		catch (ServiceException e)
+		{
+			throw new ControllerException(e);
+		}
 
 	}
 
 	@PostMapping(value = "/profile/photo/upload")
 	public
 	@ResponseBody
-	ResponseEntity<UserProfile> loadUserPhoto(@RequestParam("userImage") MultipartFile file) throws IOException
+	ResponseEntity<UserProfileDto> loadUserPhoto(@RequestParam("userImage") MultipartFile file) throws ControllerException
 	{
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		String photoUrl = FileUtil.saveImageToDisk(request, file, null);
+		try
+		{
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			String photoUrl = FileUtil.saveImageToDisk(request, file, null);
 
-		UserProfile userProfile = userProfileService.uploadUserPhoto(auth.getName(), photoUrl);
+			UserProfileDto userProfileDto = userProfileService.uploadUserPhoto(auth.getName(), photoUrl);
 
-		return new ResponseEntity<>(userProfile, HttpStatus.OK);
+			return new ResponseEntity<>(userProfileDto, HttpStatus.OK);
+		}
+		catch (ServiceException | IOException e)
+		{
+			throw new ControllerException(e);
+		}
 	}
 
 	@PostMapping(value = "/profile/photo/delete")
 	public
 	@ResponseBody
-	ResponseEntity<UserProfile> deleteUserPhoto() throws IOException
+	ResponseEntity<UserProfileDto> deleteUserPhoto() throws ControllerException
 	{
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		try
+		{
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			UserProfileDto userProfileDto = userProfileService.uploadUserPhoto(auth.getName(), null);
 
-		UserProfile userProfile = userProfileService.uploadUserPhoto(auth.getName(), null);
+			return new ResponseEntity<>(userProfileDto, HttpStatus.OK);
 
-		return new ResponseEntity<>(userProfile, HttpStatus.OK);
+		}
+		catch (ServiceException e)
+		{
+			throw new ControllerException(e);
+		}
 	}
 }

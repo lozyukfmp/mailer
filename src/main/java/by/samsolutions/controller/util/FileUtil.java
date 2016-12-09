@@ -25,6 +25,7 @@ public class FileUtil
 
 			String uploadsDir = "/static/core/pictures/";
 			String pathToUploads = request.getServletContext().getRealPath(uploadsDir);
+			//String pathToUploads = "D:/temp/pictures/";
 
 			if (!new File(pathToUploads).exists())
 			{
@@ -34,6 +35,7 @@ public class FileUtil
 			String orgName = file.getOriginalFilename();
 			String filePath = pathToUploads + File.separator + orgName;
 			imageUrl = request.getContextPath() + uploadsDir + orgName;
+			//imageUrl = filePath;
 			File dest = new File(filePath);
 			file.transferTo(dest);
 

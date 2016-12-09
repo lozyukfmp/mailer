@@ -1,7 +1,6 @@
 package samsolutions.controller;
 
 import java.util.Arrays;
-import java.util.Date;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -18,8 +17,9 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import by.samsolutions.configuration.web.SpringWebConfig;
 import by.samsolutions.controller.CommentController;
-import by.samsolutions.entity.Comment;
+import by.samsolutions.dto.CommentDto;
 import by.samsolutions.service.CommentService;
+import by.samsolutions.service.exception.ServiceException;
 import samsolutions.configuration.WebTestConfiguration;
 
 import static org.hamcrest.Matchers.allOf;
@@ -51,37 +51,37 @@ public class CommentControllerTest
 	private MockMvc mockMvc;
 
 	@Before
-	public void init()
+	public void init() throws ServiceException
 	{
-		Comment firstComment = Comment.builder()
-		                              .id(1)
-		                              .date(new Date())
-		                              .text("Some firstComment text")
-		                              .username("ArtemLozyuk")
-		                              .build();
-		Comment secondComment = Comment.builder()
-		                               .id(2)
-		                               .date(new Date())
-		                               .text("Some secondComment text")
-		                               .username("ArtemLozyuk")
-		                               .build();
-		Comment createComment = Comment.builder()
-		                               .id(3)
-		                               .date(new Date())
-		                               .text("Some createComment text")
-		                               .username("ArtemLozyuk")
-		                               .build();
-		Comment updateComment = Comment.builder()
-		                               .id(4)
-		                               .date(new Date())
-		                               .text("Some updateComment text")
-		                               .username("ArtemLozyuk")
-		                               .build();
+		CommentDto firstComment = CommentDto.builder()
+		                                    .id("1")
+		                                    .postId("1")
+		                                    .text("Some firstComment text")
+		                                    .username("ArtemLozyuk")
+		                                    .build();
+		CommentDto secondComment = CommentDto.builder()
+		                                     .id("2")
+		                                     .postId("1")
+		                                     .text("Some secondComment text")
+		                                     .username("ArtemLozyuk")
+		                                     .build();
+		CommentDto createComment = CommentDto.builder()
+		                                     .id("3")
+		                                     .postId("1")
+		                                     .text("Some createComment text")
+		                                     .username("ArtemLozyuk")
+		                                     .build();
+		CommentDto updateComment = CommentDto.builder()
+		                                     .id("4")
+		                                     .postId("1")
+		                                     .text("Some updateComment text")
+		                                     .username("ArtemLozyuk")
+		                                     .build();
 
 		when(commentService.getCommentListByPostId(1, 2)).thenReturn(Arrays.asList(firstComment, secondComment));
-		when(commentService.createComment(any())).thenReturn(createComment);
-		when(commentService.updateComment(any())).thenReturn(updateComment);
-		when(commentService.getComment(1)).thenReturn(firstComment);
+		when(commentService.create(any())).thenReturn(createComment);
+		when(commentService.update(any())).thenReturn(updateComment);
+		when(commentService.find(1)).thenReturn(firstComment);
 		ReflectionTestUtils.setField(commentController, "commentService", commentService);
 
 		mockMvc = MockMvcBuilders.standaloneSetup(commentController).build();
@@ -94,12 +94,12 @@ public class CommentControllerTest
 		       .andExpect(view().name("commentList"))
 		       .andExpect(model().attribute("commentList", hasSize(2)))
 		       .andExpect(model().attribute("commentList", hasItem(allOf(
-						       hasProperty("id", is(1)),
+						       hasProperty("id", is("1")),
 						       hasProperty("username", is("ArtemLozyuk")),
 						       hasProperty("text", is("Some firstComment text"))
 		       ))))
 		       .andExpect(model().attribute("commentList", hasItem(allOf(
-						       hasProperty("id", is(2)),
+						       hasProperty("id", is("2")),
 						       hasProperty("username", is("ArtemLozyuk")),
 						       hasProperty("text", is("Some secondComment text"))
 		       ))));
@@ -110,7 +110,7 @@ public class CommentControllerTest
 	{
 		mockMvc.perform(get("/comment/1"))
 		       .andExpect(status().isOk())
-		       .andExpect(jsonPath("$.id", is(1)))
+		       .andExpect(jsonPath("$.id", is("1")))
 		       .andExpect(jsonPath("$.text", is("Some firstComment text")))
 		       .andExpect(jsonPath("$.username", is("ArtemLozyuk")));
 	}
@@ -120,9 +120,9 @@ public class CommentControllerTest
 	public void createCommentTest() throws Exception
 	{
 		mockMvc.perform(post("/comment/create").contentType(MediaType.APPLICATION_JSON_UTF8)
-		                                       .content("{\"text\":\"Some createComment text\"}"))
+		                                       .content("{\"postId\":\"1\", \"text\":\"Some createComment text\"}"))
 		       .andExpect(status().isOk())
-		       .andExpect(jsonPath("$.id", is(3)))
+		       .andExpect(jsonPath("$.id", is("3")))
 		       .andExpect(jsonPath("$.text", is("Some createComment text")))
 		       .andExpect(jsonPath("$.username", is("ArtemLozyuk")));
 
@@ -132,9 +132,9 @@ public class CommentControllerTest
 	public void updateCommentTest() throws Exception
 	{
 		mockMvc.perform(post("/comment/update").contentType(MediaType.APPLICATION_JSON_UTF8)
-		                                       .content("{\"id\":\"4\",\"text\":\"Some updateComment text\"}"))
+		                                       .content("{\"id\":\"4\", \"postId\":\"1\", \"text\":\"Some updateComment text\"}"))
 		       .andExpect(status().isOk())
-		       .andExpect(jsonPath("$.id", is(4)))
+		       .andExpect(jsonPath("$.id", is("4")))
 		       .andExpect(jsonPath("$.text", is("Some updateComment text")))
 		       .andExpect(jsonPath("$.username", is("ArtemLozyuk")));
 	}

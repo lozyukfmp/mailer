@@ -1,6 +1,7 @@
 package samsolutions.service;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -17,167 +18,27 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.util.ReflectionTestUtils;
 
+import by.samsolutions.converter.impl.CommentConverter;
+import by.samsolutions.converter.impl.PostConverter;
 import by.samsolutions.dao.CommentDao;
 import by.samsolutions.dao.GenericDao;
 import by.samsolutions.dao.PostDao;
-import by.samsolutions.entity.Post;
-import by.samsolutions.entity.user.User;
+import by.samsolutions.dto.PostDto;
+import by.samsolutions.entity.PostEntity;
+import by.samsolutions.entity.user.UserEntity;
 import by.samsolutions.service.PostService;
+import by.samsolutions.service.exception.ServiceException;
 import by.samsolutions.service.impl.PostServiceImpl;
+
+import static org.mockito.Matchers.any;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration
 public class PostServiceTest
 {
-	private final List<Post> postList = new ArrayList<>();
-	@Autowired
-	private PostDao postDao;
-
-	@Autowired
-	private CommentDao commentDao;
-
-	@Autowired
-	private GenericDao<User, String> userDao;
-
-	@Autowired
-	private PostService postService;
-
-	@Before
-	public void initPostList()
-	{
-		final User user = new User();
-		user.setUsername("Artem");
-
-		final Post firstPost = new Post();
-		firstPost.setId(1);
-		firstPost.setText("Some firstPost text");
-		firstPost.setDate(new Date());
-
-		final Post secondPost = new Post();
-		secondPost.setId(2);
-		secondPost.setText("Some secondPost text");
-		secondPost.setDate(new Date());
-
-		postList.add(firstPost);
-		postList.add(secondPost);
-
-		Mockito.when(userDao.find("Artem")).thenReturn(user);
-		Mockito.when(postDao.all(user.getUsername(), 2)).thenReturn(postList);
-		Mockito.when(postDao.find(1)).thenReturn(firstPost);
-		Mockito.when(postDao.find(2)).thenReturn(secondPost);
-		Mockito.when(commentDao.findAllByPostId(1, 0)).thenReturn(Collections.EMPTY_LIST);
-		Mockito.when(commentDao.findAllByPostId(2, 0)).thenReturn(Collections.EMPTY_LIST);
-
-		Mockito.doAnswer(invocationOnMock ->
-		                 {
-			                 postList.remove(firstPost);
-			                 return null;
-		                 }).when(postDao).delete(1);
-
-		Mockito.doAnswer(invocationOnMock ->
-		                 {
-			                 postList.remove(secondPost);
-			                 return null;
-		                 }).when(postDao).delete(2);
-
-		ReflectionTestUtils.setField(postService, "postDao", postDao);
-		ReflectionTestUtils.setField(postService, "commentDao", commentDao);
-	}
-
-	@Test
-	public void testCreatePost()
-	{
-		final Post post = new Post();
-		post.setText("Some post text");
-		post.setDate(new Date());
-
-		Mockito.when(postDao.create(post)).then(invocationOnMock ->
-		                                        {
-			                                        postList.add(post);
-			                                        return post;
-		                                        });
-
-		Post resultPost = postService.createPost(post);
-
-		List<Post> posts = postService.getAll("Artem", 2);
-
-		Assert.assertNotNull(resultPost);
-		Assert.assertEquals(posts.size(), 3);
-		Assert.assertEquals(post.getText(), resultPost.getText());
-		Assert.assertEquals(post.getDate(), resultPost.getDate());
-	}
-
-	@Test
-	public void testUpdatePost()
-	{
-		final Post post = new Post();
-		post.setText("Some updated post text");
-		post.setDate(new Date());
-		post.setId(1);
-
-		Mockito.when(postDao.update(post)).then(invocationOnMock ->
-		                                        {
-
-			                                        postList.stream()
-			                                                .filter(postValue -> postValue.getId() == post.getId())
-			                                                .findFirst()
-			                                                .ifPresent(postValue -> postValue.setText(post.getText()));
-
-			                                        return post;
-		                                        });
-
-		final Post resultPost = postService.updatePost(post);
-
-		final List<Post> posts = postService.getAll("Artem", 2);
-
-		Assert.assertNotNull(resultPost);
-		Assert.assertEquals(posts.size(), 2);
-		Assert.assertEquals(post.getText(), resultPost.getText());
-		Assert.assertEquals(post.getDate(), resultPost.getDate());
-	}
-
-	@Test
-	public void testGetPost()
-	{
-		final Post firstPost = postService.getPost(1);
-		final Post secondPost = postService.getPost(2);
-		final Post thirdPost = postService.getPost(3);
-
-		Assert.assertNotNull(firstPost);
-		Assert.assertNotNull(secondPost);
-		Assert.assertNull(thirdPost);
-		Assert.assertEquals(firstPost.getText(), "Some firstPost text");
-		Assert.assertEquals(secondPost.getText(), "Some secondPost text");
-	}
-
-	@Test
-	public void testDeletePost()
-	{
-		postService.deletePost(1);
-
-		final List<Post> posts = postService.getAll("Artem", 2);
-
-		Assert.assertEquals(posts.size(), 1);
-		Assert.assertEquals(posts.get(0).getId(), 2);
-		Assert.assertEquals(posts.get(0).getText(), "Some secondPost text");
-	}
-
-	@Test
-	public void testGetAllPost()
-	{
-		final List<Post> posts = postService.getAll("Artem", 2);
-
-		Assert.assertEquals(posts.size(), 2);
-	}
-
 	@Configuration
 	static class PostServiceConfiguration
 	{
-		@Bean
-		public PostService postService()
-		{
-			return new PostServiceImpl();
-		}
 
 		@Bean
 		public PostDao postDao()
@@ -192,9 +53,163 @@ public class PostServiceTest
 		}
 
 		@Bean
-		public GenericDao<User, String> userDao()
+		public PostConverter postConverter()
+		{
+			return new PostConverter();
+		}
+
+		@Bean
+		public CommentConverter commentConverter()
+		{
+			return new CommentConverter();
+		}
+
+		@Bean
+		public GenericDao<UserEntity, String> userDao()
 		{
 			return Mockito.mock(GenericDao.class);
 		}
+	}
+
+	@Autowired
+	private PostDao postDao;
+
+	@Autowired
+	private CommentDao commentDao;
+
+	@Autowired
+	private PostConverter postConverter;
+
+	@Autowired
+	private CommentConverter commentConverter;
+
+	@Autowired
+	private GenericDao<UserEntity, String> userDao;
+
+	private PostService postService;
+
+	private final List<PostEntity> postList = new ArrayList<>();
+
+	@Before
+	public void initPostList()
+	{
+		final UserEntity user = UserEntity.builder().username("Artem").build();
+
+		final PostEntity firstPost = PostEntity.builder()
+		                                       .id(1)
+		                                       .text("Some firstPost text")
+		                                       .date(new Date())
+		                                       .comments(Collections.EMPTY_LIST)
+		                                       .build();
+
+		final PostEntity secondPost = PostEntity.builder()
+		                                        .id(2)
+		                                        .text("Some secondPost text")
+		                                        .date(new Date())
+		                                        .comments(Collections.EMPTY_LIST)
+		                                        .build();
+
+		final PostEntity createdPost = PostEntity.builder()
+		                                         .id(3)
+		                                         .text("Some createdPost text")
+		                                         .date(new Date())
+		                                         .comments(Collections.EMPTY_LIST)
+		                                         .build();
+
+		final PostEntity updatedPost = PostEntity.builder()
+		                                         .id(4)
+		                                         .text("Some updatedPost text")
+		                                         .date(new Date())
+		                                         .comments(Collections.EMPTY_LIST)
+		                                         .build();
+
+		postList.add(firstPost);
+		postList.add(secondPost);
+
+		Mockito.when(userDao.find("Artem")).thenReturn(user);
+		Mockito.when(postDao.all(user.getUsername(), 2)).thenReturn(postList);
+		Mockito.when(postDao.find(1)).thenReturn(firstPost);
+		Mockito.when(commentDao.findAllByPostId(1, 2)).thenReturn(Collections.EMPTY_LIST);
+		Mockito.when(commentDao.findAllByPostId(2, 2)).thenReturn(Collections.EMPTY_LIST);
+		Mockito.when(postDao.find(2)).thenReturn(secondPost);
+
+		Mockito.doAnswer(invocationOnMock -> {
+			postList.remove(firstPost);
+			return null;
+		}).when(postDao).delete(1);
+
+		Mockito.doAnswer(invocationOnMock -> {
+			postList.remove(secondPost);
+			return null;
+		}).when(postDao).delete(2);
+
+		Mockito.when(postDao.create(any())).then(invocationOnMock -> {
+			postList.add(createdPost);
+			return createdPost;
+		});
+
+		Mockito.when(postDao.update(any())).then(invocationOnMock -> updatedPost);
+
+		ReflectionTestUtils.setField(postConverter, "commentConverter", commentConverter);
+		postService = new PostServiceImpl(postDao, postConverter);
+		ReflectionTestUtils.setField(postService, "commentDao", commentDao);
+	}
+
+	@Test
+	public void testCreatePost() throws ServiceException
+	{
+		final PostDto postDto = PostDto.builder().text("Some createdPost text").comments(Collections.EMPTY_LIST).build();
+
+		PostDto resultPost = postService.create(postDto);
+
+		Collection<PostDto> posts = postService.getAll("Artem", 2);
+
+		Assert.assertNotNull(resultPost);
+		Assert.assertEquals(posts.size(), 3);
+		Assert.assertEquals(postDto.getText(), resultPost.getText());
+	}
+
+	@Test
+	public void testUpdatePost() throws ServiceException
+	{
+		final PostDto postDto = PostDto.builder().id("4").text("Some updatedPost text").comments(Collections.EMPTY_LIST).build();
+
+		final PostDto resultPost = postService.update(postDto);
+
+		final Collection<PostDto> posts = postService.getAll("Artem", 2);
+
+		Assert.assertNotNull(resultPost);
+		Assert.assertEquals(posts.size(), 2);
+		Assert.assertEquals(postDto.getText(), resultPost.getText());
+	}
+
+	@Test
+	public void testGetPost() throws ServiceException
+	{
+		final PostDto firstPost = postService.find(1);
+		final PostDto secondPost = postService.find(2);
+
+		Assert.assertNotNull(firstPost);
+		Assert.assertNotNull(secondPost);
+		Assert.assertEquals(firstPost.getText(), "Some firstPost text");
+		Assert.assertEquals(secondPost.getText(), "Some secondPost text");
+	}
+
+	@Test
+	public void testDeletePost() throws ServiceException
+	{
+		postService.delete(1);
+
+		final Collection<PostDto> posts = postService.getAll("Artem", 2);
+
+		Assert.assertEquals(posts.size(), 1);
+	}
+
+	@Test
+	public void testGetAllPost() throws ServiceException
+	{
+		final Collection<PostDto> posts = postService.getAll("Artem", 2);
+
+		Assert.assertEquals(posts.size(), 2);
 	}
 }

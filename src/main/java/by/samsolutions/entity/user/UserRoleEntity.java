@@ -1,19 +1,17 @@
 package by.samsolutions.entity.user;
 
-import java.io.Serializable;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
+import by.samsolutions.entity.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+import java.io.Serializable;
 
 @Data
 @NoArgsConstructor
@@ -22,7 +20,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @Entity
 @Table(name = "user_role")
-public class UserRole implements Serializable
+public class UserRoleEntity implements BaseEntity
 {
 
 	private final static Long serialVersionUID = 3L;

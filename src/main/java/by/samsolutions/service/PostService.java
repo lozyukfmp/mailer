@@ -1,19 +1,17 @@
 package by.samsolutions.service;
 
-import java.util.List;
+import java.util.Collection;
 
-import by.samsolutions.entity.Post;
+import org.springframework.stereotype.Service;
 
-public interface PostService
+import by.samsolutions.dto.PostDto;
+import by.samsolutions.entity.PostEntity;
+import by.samsolutions.service.exception.ServiceException;
+
+@Service
+public interface PostService extends GenericService<PostDto, PostEntity, Integer>
 {
-	Post createPost(Post post);
 
-	Post updatePost(Post post);
-
-	void deletePost(Integer postId);
-
-	Post getPost(Integer postId);
-
-	List<Post> getAll(String username, Integer messageCount);
+	Collection<PostDto> getAll(String username, Integer messageCount) throws ServiceException;
 
 }

@@ -5,20 +5,21 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import by.samsolutions.dao.UserDao;
-import by.samsolutions.entity.user.User;
+import by.samsolutions.entity.user.UserEntity;
 
 @Repository
-public class UserDaoImpl extends GenericDaoImpl<User, String> implements UserDao
+public class UserDaoImpl extends GenericDaoImpl<UserEntity, String> implements UserDao
 {
 
 	public UserDaoImpl()
 	{
-		super(User.class);
+		super(UserEntity.class);
 	}
 
 	@Override
-	public List<User> all()
+	public List<UserEntity> all()
 	{
-		return entityManager.createNamedQuery("User.findAll", User.class).getResultList();
+		return entityManager.createNamedQuery("User.findAll", UserEntity.class)
+		             .getResultList();
 	}
 }
