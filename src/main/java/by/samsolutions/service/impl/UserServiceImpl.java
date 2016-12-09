@@ -16,6 +16,7 @@ import by.samsolutions.entity.user.UserEntity;
 import by.samsolutions.entity.user.UserRoleEntity;
 import by.samsolutions.service.UserService;
 import by.samsolutions.service.exception.ServiceException;
+import by.samsolutions.service.exception.UserAlreadyExistsException;
 
 @Service
 public class UserServiceImpl extends GenericServiceImpl<UserDto, UserEntity, String> implements UserService
@@ -49,7 +50,7 @@ public class UserServiceImpl extends GenericServiceImpl<UserDto, UserEntity, Str
 
 			if (userDao.find(userEntity.getUsername()) != null)
 			{
-				return null;
+				throw new UserAlreadyExistsException();
 			}
 
 			UserRoleEntity userRole = UserRoleEntity.builder().username(userEntity.getUsername()).role("ROLE_USER").build();

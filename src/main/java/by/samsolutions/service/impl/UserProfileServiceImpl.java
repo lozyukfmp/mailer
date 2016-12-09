@@ -11,6 +11,7 @@ import by.samsolutions.dto.UserProfileDto;
 import by.samsolutions.entity.user.UserProfileEntity;
 import by.samsolutions.service.UserProfileService;
 import by.samsolutions.service.exception.ServiceException;
+import by.samsolutions.service.exception.UserNotFoundException;
 
 @Service
 public class UserProfileServiceImpl extends GenericServiceImpl<UserProfileDto, UserProfileEntity, String>
@@ -32,6 +33,29 @@ public class UserProfileServiceImpl extends GenericServiceImpl<UserProfileDto, U
 		super(userProfileDao, userProfileConverter);
 		this.userProfileDao = userProfileDao;
 		this.userProfileConverter = userProfileConverter;
+	}
+
+	@Override
+	@Transactional
+	public UserProfileDto find(final String id) throws ServiceException
+	{
+		try
+		{
+			UserProfileEntity userProfileEntity = userProfileDao.find(id);
+
+			if (userProfileEntity == null)
+			{
+				throw new UserNotFoundException();
+			}
+
+			UserProfileDto userProfileDto = userProfileConverter.toDto(userProfileEntity);
+
+			return userProfileDto;
+		}
+		catch (ConverterException e)
+		{
+			throw new ServiceException(e);
+		}
 	}
 
 	/*@Autowired

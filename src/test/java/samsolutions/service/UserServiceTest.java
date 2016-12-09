@@ -23,6 +23,7 @@ import by.samsolutions.entity.user.UserEntity;
 import by.samsolutions.entity.user.UserProfileEntity;
 import by.samsolutions.service.UserService;
 import by.samsolutions.service.exception.ServiceException;
+import by.samsolutions.service.exception.UserAlreadyExistsException;
 import by.samsolutions.service.impl.UserServiceImpl;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -88,12 +89,10 @@ public class UserServiceTest
 
 	}
 
-	@Test
+	@Test(expected = UserAlreadyExistsException.class)
 	public void testCreateUserFailure() throws ServiceException
 	{
-		UserDto resultUser = userService.create(userDto);
-
-		Assert.assertEquals(resultUser, null);
+		userService.create(userDto);
 	}
 
 	/*@Test

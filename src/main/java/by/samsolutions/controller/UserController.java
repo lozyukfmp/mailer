@@ -30,6 +30,8 @@ import by.samsolutions.service.PostService;
 import by.samsolutions.service.UserProfileService;
 import by.samsolutions.service.UserService;
 import by.samsolutions.service.exception.ServiceException;
+import by.samsolutions.service.exception.UserAlreadyExistsException;
+import by.samsolutions.service.exception.UserNotFoundException;
 
 @Controller
 @SessionAttributes({"user", "userProfile"})
@@ -44,7 +46,6 @@ public class UserController
 
 	@Autowired
 	private PostService postService;
-
 
 	@GetMapping(value = "/login-page")
 	public ModelAndView login(@RequestParam(value = "error", required = false) final String error,
@@ -89,16 +90,7 @@ public class UserController
 		try
 		{
 			UserProfileDto userProfileDto = userProfileService.find(username);
-
-			if (userProfileDto == null)
-			{
-				modelAndView.setViewName("user_not_found");
-				modelAndView.addObject("username", username);
-
-				return modelAndView;
-			}
-
-			Collection<PostDto> postDtoCollection =postService.getAll(username, 2);
+			Collection<PostDto> postDtoCollection = postService.getAll(username, 2);
 
 			modelAndView.setViewName("user_view");
 			modelAndView.addObject("profile", userProfileDto);
@@ -106,6 +98,13 @@ public class UserController
 
 			return modelAndView;
 
+		}
+		catch (UserNotFoundException e)
+		{
+			modelAndView.setViewName("user_not_found");
+			modelAndView.addObject("username", username);
+
+			return modelAndView;
 		}
 		catch (ServiceException e)
 		{
@@ -152,21 +151,10 @@ public class UserController
 	{
 		try
 		{
-			UserDto registered = new UserDto();
-
 			if (!userBindingResult.hasErrors() && !userProfileBindingResult.hasErrors())
 			{
 				userDto.setUserProfileDto(userProfileDto);
-
-				registered = userService.create(userDto);
-			}
-
-			if (registered == null)
-			{
-				model.addAttribute("usernameExist", "UserEntity with the same username already exists");
-				session.setAttribute("model", model);
-
-				return "redirect:/registration-page";
+				userService.create(userDto);
 			}
 
 			if (userBindingResult.hasErrors() || userProfileBindingResult.hasErrors())
@@ -180,6 +168,13 @@ public class UserController
 				return "redirect:/login-page?success";
 			}
 
+		}
+		catch (UserAlreadyExistsException e)
+		{
+			model.addAttribute("usernameExist", "User with the same username already exists");
+			session.setAttribute("model", model);
+
+			return "redirect:/registration-page";
 		}
 		catch (ServiceException e)
 		{
