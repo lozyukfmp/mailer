@@ -6,9 +6,15 @@ import java.util.regex.Pattern;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+@Component
 public class PasswordValidator implements ConstraintValidator<ValidPassword, String>
 {
-	private static final String PASSWORD_PATTERN = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{6,20})";
+
+	@Value("${validation.password}")
+	private String regexp;
 
 	@Override
 	public void initialize(final ValidPassword validPassword)
@@ -20,7 +26,7 @@ public class PasswordValidator implements ConstraintValidator<ValidPassword, Str
 	public boolean isValid(final String password, final ConstraintValidatorContext constraintValidatorContext)
 	{
 
-		Pattern pattern = Pattern.compile(PASSWORD_PATTERN);
+		Pattern pattern = Pattern.compile(regexp);
 		Matcher matcher = pattern.matcher(password);
 
 		return matcher.matches();

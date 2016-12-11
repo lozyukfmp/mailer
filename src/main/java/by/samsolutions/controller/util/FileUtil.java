@@ -5,27 +5,32 @@ import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
+import by.samsolutions.controller.exception.TooLargeFileException;
+
+@Component
 public class FileUtil
 {
 
-	private FileUtil()
-	{
+	@Value("${uploadsDir}")
+	private String uploadsDir;
 
-	}
-
-	public static String saveImageToDisk(final HttpServletRequest request, final MultipartFile file, final String requestImageUrl)
-					throws IOException
+	public String saveImageToDisk(final HttpServletRequest request, final MultipartFile file, final String requestImageUrl)
+					throws TooLargeFileException, IOException
 	{
 
 		if (file != null && !file.isEmpty())
 		{
-			String imageUrl;
+			if(file.getSize() > 50_000_000L)
+			{
+				throw new TooLargeFileException();
+			}
 
-			String uploadsDir = "/static/core/pictures/";
+			String imageUrl;
 			String pathToUploads = request.getServletContext().getRealPath(uploadsDir);
-			//String pathToUploads = "D:/temp/pictures/";
 
 			if (!new File(pathToUploads).exists())
 			{
@@ -35,7 +40,6 @@ public class FileUtil
 			String orgName = file.getOriginalFilename();
 			String filePath = pathToUploads + File.separator + orgName;
 			imageUrl = request.getContextPath() + uploadsDir + orgName;
-			//imageUrl = filePath;
 			File dest = new File(filePath);
 			file.transferTo(dest);
 

@@ -5,13 +5,26 @@ import javax.validation.ConstraintValidatorContext;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import by.samsolutions.configuration.root.ValidatorConfiguration;
 import by.samsolutions.validation.UsernameValidator;
+import samsolutions.configuration.ValidatorTestConfiguration;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = ValidatorTestConfiguration.class)
 public class UsernameValidatorTest
 {
-	private static UsernameValidator          usernameValidator;
+	@Autowired
+	private UsernameValidator          usernameValidator;
 	private static ConstraintValidatorContext context;
 
 	private String[] validUsernameList   = {"arTem234", "bla_blA2", "ArTeM1"};
@@ -20,7 +33,6 @@ public class UsernameValidatorTest
 	@BeforeClass
 	public static void initData()
 	{
-		usernameValidator = new UsernameValidator();
 		context = Mockito.mock(ConstraintValidatorContext.class);
 	}
 

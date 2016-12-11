@@ -1,6 +1,9 @@
 package by.samsolutions.controller;
 
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -8,6 +11,10 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.MessageSource;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
@@ -19,6 +26,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -37,6 +45,12 @@ import by.samsolutions.service.exception.UserNotFoundException;
 @SessionAttributes({"user", "userProfile"})
 public class UserController
 {
+
+	@Autowired
+	private MessageSource messageSource;
+
+	@Value("${validation.text}")
+	private String textRegexp;
 
 	@Autowired
 	private UserService userService;
@@ -110,6 +124,30 @@ public class UserController
 		{
 			throw new ControllerException(e);
 		}
+	}
+
+	@GetMapping("/validation")
+	public
+	@ResponseBody
+	ResponseEntity getRegexpMap(Locale locale)
+	{
+
+		String imageMessage = messageSource.getMessage("message.image.NotEmpty", null, locale);
+		String postMessage = messageSource.getMessage("message.post.NotEmpty", null, locale);
+		String longMessage = messageSource.getMessage("message.file.long", null, locale);
+
+		Map<String, Map<String, String>> validationInformation = new HashMap<>();
+		Map<String, String> textMap = new HashMap<>();
+		textMap.put("message", postMessage);
+		textMap.put("regexp", textRegexp);
+		Map<String, String> imageMap = new HashMap<>();
+		imageMap.put("message", imageMessage);
+		imageMap.put("long", longMessage);
+
+		validationInformation.put("text", textMap);
+		validationInformation.put("image", imageMap);
+
+		return new ResponseEntity(validationInformation, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)

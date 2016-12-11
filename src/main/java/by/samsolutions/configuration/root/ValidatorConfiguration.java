@@ -5,9 +5,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
 @Configuration
-@ComponentScan("by.samsolutions.*")
-@PropertySource(value = {"classpath:/common/common.properties","classpath:/validation/regexp.properties"})
-public class SpringRootConfiguration
+@PropertySource(value = "classpath:/validation/regexp.properties")
+@ComponentScan("by.samsolutions.validation.*")
+public class ValidatorConfiguration
 {
-
 }

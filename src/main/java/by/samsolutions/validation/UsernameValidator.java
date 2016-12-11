@@ -6,9 +6,15 @@ import java.util.regex.Pattern;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+@Component
 public class UsernameValidator implements ConstraintValidator<ValidUsername, String>
 {
-	private static final String PASSWORD_PATTERN = "^[a-zA-Z0-9_]{6,15}$";
+
+	@Value("${validation.username}")
+	private String regexp;
 
 	@Override
 	public void initialize(final ValidUsername validPassword)
@@ -19,7 +25,7 @@ public class UsernameValidator implements ConstraintValidator<ValidUsername, Str
 	@Override
 	public boolean isValid(final String username, final ConstraintValidatorContext constraintValidatorContext)
 	{
-		Pattern pattern = Pattern.compile(PASSWORD_PATTERN);
+		Pattern pattern = Pattern.compile(regexp);
 		Matcher matcher = pattern.matcher(username);
 
 		return matcher.matches();

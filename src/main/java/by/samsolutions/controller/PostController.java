@@ -2,14 +2,21 @@ package by.samsolutions.controller;
 
 import java.io.IOException;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,6 +30,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import by.samsolutions.controller.exception.ControllerException;
+import by.samsolutions.controller.exception.TooLargeFileException;
 import by.samsolutions.controller.util.FileUtil;
 import by.samsolutions.dto.PostDto;
 import by.samsolutions.service.PostService;
@@ -35,6 +43,12 @@ public class PostController
 
 	@Autowired
 	private HttpServletRequest request;
+
+	@Autowired
+	private MessageSource messageSource;
+
+	@Autowired
+	private FileUtil fileUtil;
 
 	@Autowired
 	private PostService postService;
@@ -92,22 +106,28 @@ public class PostController
 		}
 	}
 
-	@PostMapping("/create")
+	@PostMapping(value = "/create")
 	public
 	@ResponseBody
-	ResponseEntity<PostDto> createPost(@RequestParam(value = "postImage", required = false) MultipartFile file,
-	                                   @RequestParam("postMessage") String postMessage) throws ControllerException
+	ResponseEntity createPost(@RequestParam(value = "postImage", required = false) MultipartFile file,
+	                                   @RequestParam("postMessage") String postMessage, Locale locale) throws ControllerException
 	{
 		try
 		{
 			PostDto post = new ObjectMapper().readValue(postMessage, PostDto.class);
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 			post.setUsername(auth.getName());
-			post.setImageUrl(FileUtil.saveImageToDisk(request, file, post.getImageUrl()));
+			post.setImageUrl(fileUtil.saveImageToDisk(request, file, post.getImageUrl()));
 
 			PostDto resultDto = postService.create(post);
 
 			return new ResponseEntity<>(resultDto, HttpStatus.OK);
+		}
+		catch (TooLargeFileException e)
+		{
+			Map<String, String> response = new HashMap<>();
+			response.put("error", messageSource.getMessage("message.file.long", null, locale));
+			return new ResponseEntity(response, HttpStatus.BAD_REQUEST);
 		}
 		catch (ServiceException | IOException e)
 		{
@@ -119,19 +139,24 @@ public class PostController
 	@PostMapping("/update")
 	public
 	@ResponseBody
-	ResponseEntity<PostDto> updatePost(@RequestParam(value = "postImage", required = false) MultipartFile file,
-	                                   @RequestParam("postMessage") String postMessage) throws ControllerException
+	ResponseEntity updatePost(@RequestParam(value = "postImage", required = false) MultipartFile file,
+	                          @RequestParam("postMessage") String postMessage, Locale locale) throws ControllerException
 	{
 		try
 		{
 			PostDto post = new ObjectMapper().readValue(postMessage, PostDto.class);
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 			post.setUsername(auth.getName());
-			post.setImageUrl(FileUtil.saveImageToDisk(request, file, post.getImageUrl()));
-
+			post.setImageUrl(fileUtil.saveImageToDisk(request, file, post.getImageUrl()));
 			PostDto resultDto = postService.update(post);
 
 			return new ResponseEntity<>(resultDto, HttpStatus.OK);
+		}
+		catch (TooLargeFileException e)
+		{
+			Map<String, String> response = new HashMap<>();
+			response.put("error", messageSource.getMessage("message.file.long", null, locale));
+			return new ResponseEntity(response, HttpStatus.BAD_REQUEST);
 		}
 		catch (ServiceException | IOException e)
 		{

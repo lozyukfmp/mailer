@@ -5,7 +5,10 @@ import javax.validation.ConstraintValidatorContext;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mockito;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import by.samsolutions.dto.UserDto;
 import by.samsolutions.validation.PasswordMatchesValidator;

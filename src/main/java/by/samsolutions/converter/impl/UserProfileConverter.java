@@ -3,6 +3,7 @@ package by.samsolutions.converter.impl;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import by.samsolutions.converter.Converter;
@@ -13,12 +14,14 @@ import by.samsolutions.entity.user.UserProfileEntity;
 @Component
 public class UserProfileConverter implements Converter<UserProfileDto, UserProfileEntity>
 {
-	private static final String NO_AVATAR_IMAGE_URL = "/static/core/pictures/no_avatar.jpg";
+
+	@Value("${noAvatarUrl}")
+	private String NO_AVATAR_IMAGE_URL;
 
 	@Override
 	public UserProfileDto toDto(final UserProfileEntity userProfile) throws ConverterException
 	{
-		return UserProfileDto.builder()
+		UserProfileDto userProfileDto =  UserProfileDto.builder()
 		                     .username(userProfile.getUsername())
 		                     .email(userProfile.getEmail())
 		                     .firstName(userProfile.getFirstName())
@@ -27,6 +30,12 @@ public class UserProfileConverter implements Converter<UserProfileDto, UserProfi
 		                     .imageUrl(userProfile.getImageUrl())
 		                     .build();
 
+		if (userProfile.getImageUrl() == null)
+		{
+			userProfileDto.setImageUrl(NO_AVATAR_IMAGE_URL);
+		}
+
+		return userProfileDto;
 	}
 
 	@Override

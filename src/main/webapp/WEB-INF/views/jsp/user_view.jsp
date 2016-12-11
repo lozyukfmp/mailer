@@ -55,7 +55,7 @@
 <body>
 <jsp:include page="${request.contextPath}/userHeader"></jsp:include>
 <div class="row" style="margin: 80px 10px;">
-    <div class="col-md-4">
+    <div class="col-md-3">
         <div class="panel panel-primary panel-image">
             <div class="panel-heading">
                 <h3 class="panel-title">${photo}</h3>
@@ -82,7 +82,7 @@
                             ${personal}</a>
                     </h4>
                 </div>
-                <div id="collapse1" class="panel-collapse collapse">
+                <div id="collapse1" class="panel-collapse collapse in">
                     <div class="panel-body">
                         <table class="table table-striped table-hover ">
                             <tbody>
@@ -107,32 +107,14 @@
                     </div>
                 </div>
             </div>
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    <h4 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">
-                            ${control}</a>
-                    </h4>
-                </div>
-                <div id="collapse2" class="panel-collapse collapse in">
-                    <div class="panel-body" style="padding-top: 5px;">
-                        <c:if test="${profile.username == pageContext.request.userPrincipal.name}">
-                            <button id="view-create-message-modal-button" class="btn btn-block btn-info">
-                                <span class="glyphicon glyphicon-send" aria-hidden="true"></span>
-                            </button>
-                        </c:if>
-                        <a href="${pageContext.request.contextPath}/user" class="btn btn-block btn-success">
-                            <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
-                        </a>
-                        <a href="${pageContext.request.contextPath}/logout" class="btn btn-block btn-primary">
-                            <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
-                        </a>
-                    </div>
-                </div>
-            </div>
         </div>
+        <c:if test="${profile.username == pageContext.request.userPrincipal.name}">
+            <button style="margin-top: 10px; font-weight: bolder;" id="show-message-modal-button" class="btn btn-block btn-info">
+                    ${send} <span class="glyphicon glyphicon-send" aria-hidden="true"></span>
+            </button>
+        </c:if>
     </div>
-    <div class="col-md-8">
+    <div class="col-md-9">
         <div class="panel panel-primary">
             <div class="panel-heading">
                 <h3 class="panel-title">${posts}</h3>
@@ -209,10 +191,12 @@
             <div class="modal-body">
                 <form enctype="multipart/form-data" name="message-form">
                     <div class="form-group">
+                        <div id="image-error"></div>
                         <label>${photo}:</label>
                         <input id="post-image" name="postImage" type="file" class="file-loading">
                     </div>
                     <div class="form-group">
+                        <div id="post-error"></div>
                         <label for="post">${messageTitle}:</label>
                         <textarea id="message-text" class="form-control" rows="5" id="post"></textarea>
                     </div>

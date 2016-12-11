@@ -1,7 +1,7 @@
 var messageAjax = (function () {
 
     return {
-        createMessage: function (messageForm, callback) {
+        createMessage: function (messageForm, successCallback, errorCallback) {
             $.ajax({
                 type: "POST",
                 url: "post/create",
@@ -9,10 +9,11 @@ var messageAjax = (function () {
                 processData: false,
                 contentType: false,
                 data: messageForm,
-                success: callback
+                success: successCallback,
+                error: errorCallback
             });
         },
-        updateMessage: function (messageForm, callback) {
+        updateMessage: function (messageForm, successCallback, errorCallback) {
             $.ajax({
                 type: "POST",
                 url: "post/update",
@@ -20,7 +21,8 @@ var messageAjax = (function () {
                 processData: false,
                 contentType: false,
                 data: messageForm,
-                success: callback
+                success: successCallback,
+                error: errorCallback
             });
         },
         deleteMessage: function (id, callback) {

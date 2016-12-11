@@ -10,6 +10,7 @@
 <spring:message code="message.profile" var="profile"/>
 <spring:message code="message.go_to_main" var="home"/>
 <spring:message code="message.title.search" var="search"/>
+<spring:message code="message.post.send" var="send"/>
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -43,12 +44,12 @@
                         ${language}
                         <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
-                        <li><a href="?lang=ru_RU">${russian}</a></li>
-                        <li><a href="?lang=en">${english}</a></li>
+                        <li><a href="${pageContext.request.contextPath}?lang=ru_RU">${russian}</a></li>
+                        <li><a href="${pageContext.request.contextPath}?lang=en">${english}</a></li>
                     </ul>
                 </li>
                 <li>
-                    <c:url value="/logout" var="logoutUrl"/>
+                    <c:url value="${pageContext.request.contextPath}/logout" var="logoutUrl"/>
                     <a href="${logoutUrl}">
                         <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
                         ${logout}

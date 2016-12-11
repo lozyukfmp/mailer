@@ -39,6 +39,9 @@ public class UserProfileController
 	HttpServletRequest request;
 
 	@Autowired
+	private FileUtil fileUtil;
+
+	@Autowired
 	private UserProfileService userProfileService;
 
 	@GetMapping("/profile")
@@ -87,7 +90,9 @@ public class UserProfileController
 		{
 			if (!userProfileBindingResult.hasErrors())
 			{
-				UserProfileDto resultDto = userProfileService.update(userProfileDto);
+				Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+				userProfileDto.setUsername(auth.getName());
+				userProfileService.update(userProfileDto);
 
 				return new ModelAndView("profile_view", "successProfileChange", "You've been changed profile successfully.");
 			}
@@ -109,7 +114,7 @@ public class UserProfileController
 		try
 		{
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-			String photoUrl = FileUtil.saveImageToDisk(request, file, null);
+			String photoUrl = fileUtil.saveImageToDisk(request, file, null);
 
 			UserProfileDto userProfileDto = userProfileService.uploadUserPhoto(auth.getName(), photoUrl);
 

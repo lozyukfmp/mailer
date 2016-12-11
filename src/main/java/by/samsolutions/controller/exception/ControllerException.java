@@ -2,6 +2,10 @@ package by.samsolutions.controller.exception;
 
 public class ControllerException extends Exception
 {
+	public ControllerException()
+	{
+
+	}
 	public ControllerException(Exception e)
 	{
 		super(e);

@@ -6,10 +6,15 @@ import java.util.regex.Pattern;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+@Component
 public class EmailValidator implements ConstraintValidator<ValidEmail, String>
 {
-	private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-+]+(.[_A-Za-z0-9-]+)*@" +
-					"[A-Za-z0-9-]+(.[A-Za-z0-9]+)*(.[A-Za-z]{2,})$";
+
+	@Value("${validation.email}")
+	private String regexp;
 
 	@Override
 	public void initialize(final ValidEmail constraintAnnotation)
@@ -25,7 +30,7 @@ public class EmailValidator implements ConstraintValidator<ValidEmail, String>
 
 	private boolean validateEmail(final String email)
 	{
-		Pattern pattern = Pattern.compile(EMAIL_PATTERN);
+		Pattern pattern = Pattern.compile(regexp);
 		Matcher matcher = pattern.matcher(email);
 		return matcher.matches();
 	}

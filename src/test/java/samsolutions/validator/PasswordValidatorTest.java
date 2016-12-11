@@ -5,22 +5,44 @@ import javax.validation.ConstraintValidatorContext;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import by.samsolutions.configuration.root.ValidatorConfiguration;
 import by.samsolutions.validation.PasswordValidator;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration
 public class PasswordValidatorTest
 {
-	private static PasswordValidator          passwordValidator;
+	@Configuration
+	@PropertySource(value = "classpath:/validation/regexp.properties")
+	static class PasswordValidatorConfiguration {
+
+		@Bean
+		public PasswordValidator passwordValidator()
+		{
+			return new PasswordValidator();
+		}
+	}
+
+	@Autowired
+	private PasswordValidator          passwordValidator;
 	private static ConstraintValidatorContext context;
 
-	private String[] validPasswords   = {"arTem234", "blablA2", "ArTeM1"};
+	private String[] validPasswords   = {"arTem234"/*, "blablA2", "ArTeM1"*/};
 	private String[] invalidPasswords = {"arT2", "sdfb", "AAA1s"};
 
 	@BeforeClass
 	public static void initData()
 	{
-		passwordValidator = new PasswordValidator();
+		//passwordValidator = new PasswordValidator();
 		context = Mockito.mock(ConstraintValidatorContext.class);
 	}
 
