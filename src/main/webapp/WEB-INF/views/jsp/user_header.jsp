@@ -10,7 +10,6 @@
 <spring:message code="message.profile" var="profile"/>
 <spring:message code="message.go_to_main" var="home"/>
 <spring:message code="message.title.search" var="search"/>
-<spring:message code="message.post.send" var="send"/>
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container-fluid">
         <div class="navbar-header">

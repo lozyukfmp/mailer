@@ -17,7 +17,7 @@ import by.samsolutions.entity.CommentEntity;
 @Component
 public class CommentConverter implements Converter<CommentDto, CommentEntity>
 {
-	private DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy,HH:mm:ss");
+	private DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy, HH:mm:ss");
 
 	@Override
 	public CommentDto toDto(final CommentEntity commentEntity) throws ConverterException

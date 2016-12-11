@@ -22,6 +22,7 @@
     <spring:message code="message.registration.firstname" var="firstname"/>
     <spring:message code="message.registration.secondname" var="secondname"/>
     <spring:message code="message.registration.thirdname" var="thirdname"/>
+    <spring:message code="message.post.send" var="send"/>
 
     <title>${userPage}</title>
 
@@ -109,7 +110,7 @@
             </div>
         </div>
         <c:if test="${profile.username == pageContext.request.userPrincipal.name}">
-            <button style="margin-top: 10px; font-weight: bolder;" id="show-message-modal-button" class="btn btn-block btn-info">
+            <button style="font-size: 17px; font-weight: bolder;" id="view-create-message-modal-button" class="btn btn-block btn-info">
                     ${send} <span class="glyphicon glyphicon-send" aria-hidden="true"></span>
             </button>
         </c:if>

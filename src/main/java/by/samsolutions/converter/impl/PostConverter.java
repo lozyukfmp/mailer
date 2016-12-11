@@ -18,7 +18,7 @@ import by.samsolutions.entity.PostEntity;
 @Component
 public class PostConverter implements Converter<PostDto, PostEntity>
 {
-	private DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy,HH:mm:ss");
+	private DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy, HH:mm:ss");
 
 	@Autowired
 	private CommentConverter commentConverter;
