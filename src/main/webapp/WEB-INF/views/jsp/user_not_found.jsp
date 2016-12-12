@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -34,9 +35,11 @@
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 </head>
 <body>
-<jsp:include page="${request.contextPath}/userHeader"></jsp:include>
-<div class="container" style="margin: 80px 10px;">
-    <div class="jumbotron" style="margin-left: 15px; margin-right: 15px;">
+<security:authorize access="hasRole('ROLE_USER')">
+    <jsp:include page="${request.contextPath}/userHeader"></jsp:include>
+</security:authorize>
+<div class="container" style="margin-top: 85px;">
+    <div class="jumbotron">
         <h1>${userNotFoundTitle}</h1>
         <p>${userNotFoundMessage} : ${username}</p>
     </div>

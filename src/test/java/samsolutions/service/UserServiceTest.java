@@ -75,7 +75,7 @@ public class UserServiceTest
 	{
 		user = UserEntity.builder().password("password").username("username").build();
 
-		userDto = UserDto.builder().password("password").username("username").userProfileDto(new UserProfileDto()).build();
+		userDto = UserDto.builder().password("password").username("username").profile(new UserProfileDto()).build();
 
 		sucessUser = UserEntity.builder().password("password").username("username1").profile(new UserProfileEntity()).build();
 

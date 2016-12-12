@@ -34,11 +34,6 @@
 <security:authorize access="hasRole('ROLE_USER')">
     <a href="${userPage}">Back</a>
 </security:authorize>
-
-Failed URL: ${url}
-Exception: ${exception.message}
-<c:forEach items="${exception.stackTrace}" var="ste">    ${ste}
-</c:forEach>
 <script src="${bootstrapJs}"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 </body>

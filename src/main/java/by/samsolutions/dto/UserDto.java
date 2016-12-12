@@ -28,6 +28,8 @@ public class UserDto implements BaseDto
 	@NotEmpty
 	private String confirmPassword;
 
-	private UserProfileDto userProfileDto;
+	private boolean enabled;
+
+	private UserProfileDto profile;
 
 }

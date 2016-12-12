@@ -58,44 +58,6 @@ public class UserProfileServiceImpl extends GenericServiceImpl<UserProfileDto, U
 		}
 	}
 
-	/*@Autowired
-	private GenericDao<UserProfileEntity, String> userProfileDao;*/
-
-/*
-	@Override
-	@Transactional(readOnly = true)
-	public UserProfileEntity getUserProfile(final String username)
-	{
-		UserProfileEntity userProfile = userProfileDao.find(username);
-
-		if (userProfile != null && userProfile.getImageUrl() == null)
-		{
-			userProfile.setImageUrl(NO_AVATAR_IMAGE_URL);
-		}
-
-		return userProfile;
-	}
-
-	@Override
-	@Transactional
-	public UserProfileEntity updateUserProfile(final UserProfileDto userProfileDto)
-	{
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		userProfileDto.setUsername(auth.getName());
-
-		UserProfileEntity retrievedProfile = userProfileDao.find(userProfileDto.getUsername());
-
-		retrievedProfile.setUsername(userProfileDto.getUsername());
-		retrievedProfile.setEmail(userProfileDto.getEmail());
-		retrievedProfile.setFirstName(userProfileDto.getFirstName());
-		retrievedProfile.setSecondName(userProfileDto.getSecondName());
-		retrievedProfile.setThirdName(userProfileDto.getThirdName());
-		retrievedProfile.setImageUrl(retrievedProfile.getImageUrl());
-
-		return userProfileDao.update(retrievedProfile);
-	}
-*/
-
 	@Override
 	@Transactional
 	public UserProfileDto uploadUserPhoto(final String username, final String photoUrl) throws ServiceException

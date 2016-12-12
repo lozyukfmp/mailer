@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -65,9 +66,6 @@
                 <img src="${profile.imageUrl}" class="img-thumbnail" width="100%" height="300"/>
                 <c:if test="${profile.username == pageContext.request.userPrincipal.name}">
                     <div class="tool-panel">
-                        <a href="#">
-                            <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
-                        </a>
                         <a href="${pageContext.request.contextPath}/user/profile">
                             <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                         </a>
@@ -127,48 +125,32 @@
                             <strong>${message.username} | </strong>
                             <strong>${message.date}</strong>
                         </div>
-                        <c:choose>
-                            <c:when test="${message.imageUrl ne null}">
-                                <div class="panel-body message-image">
-                                    <img src="${message.imageUrl}" width='100%' height='300' class='img-thumbnail'/>
-                                    <div class="tool-panel"
-                                            <c:if test="${message.username ne pageContext.request.userPrincipal.name}">
-                                                style="width: 48px;"
-                                            </c:if>>
-                                        <a class="comment-message-button" href='#' data-id="${message.id}">
-                                            <span class='glyphicon glyphicon-comment' aria-hidden='true'></span>
+                        <div class="panel-body message-image">
+                            <img src="${message.imageUrl}" width='100%' height='300' class='img-thumbnail'/>
+                            <div class="tool-panel">
+                                <a class="comment-message-button" href='#' data-id="${message.id}">
+                                    <span class='glyphicon glyphicon-comment' aria-hidden='true'></span>
+                                </a>
+                                <c:choose>
+                                    <c:when test="${message.username == pageContext.request.userPrincipal.name}">
+                                        <a class="edit-message-button" href='#' data-id="${message.id}">
+                                            <span class='glyphicon glyphicon-pencil' aria-hidden='true'></span>
                                         </a>
-                                        <c:if test="${message.username == pageContext.request.userPrincipal.name}">
-                                            <a class="edit-message-button" href='#' data-id="${message.id}">
-                                                <span class='glyphicon glyphicon-pencil' aria-hidden='true'></span>
-                                            </a>
+                                        <a class="remove-message-button" href="#" data-id="${message.id}">
+                                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                        </a>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <security:authorize access="hasRole('ROLE_ADMIN')">
                                             <a class="remove-message-button" href="#" data-id="${message.id}">
                                                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                                             </a>
-                                        </c:if>
-                                    </div>
-                                </div>
-                                <div class="panel-footer">${message.text}</div>
-                            </c:when>
-                            <c:otherwise>
-                                <div class="panel-body message-image">
-                                    <p>${message.text}</p>
-                                    <div class="tool-panel">
-                                        <a class="comment-message-button" href='#' data-id="${message.id}">
-                                            <span class='glyphicon glyphicon-comment' aria-hidden='true'></span>
-                                        </a>
-                                        <c:if test="${message.username == pageContext.request.userPrincipal.name}">
-                                            <a class="edit-message-button" href='#' data-id="${message.id}">
-                                                <span class='glyphicon glyphicon-pencil' aria-hidden='true'></span>
-                                            </a>
-                                            <a class="remove-message-button" href="#" data-id="${message.id}">
-                                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                                            </a>
-                                        </c:if>
-                                    </div>
-                                </div>
-                            </c:otherwise>
-                        </c:choose>
+                                        </security:authorize>
+                                    </c:otherwise>
+                                </c:choose>
+                            </div>
+                        </div>
+                        <div class="panel-footer">${message.text}</div>
                     </div>
                 </c:forEach>
             </div>

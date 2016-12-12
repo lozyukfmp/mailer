@@ -180,10 +180,4 @@
     messagePagingContainer.on('click', '.turn-paging.paging-message', function () {
         showMessageList(2, selfUsername);
     });
-
-    return {
-        showMessageList: function (index, username) {
-            showMessageList(index, username);
-        }
-    };
 })();

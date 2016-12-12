@@ -1,6 +1,7 @@
 package by.samsolutions.service.impl;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,12 +12,14 @@ import org.springframework.transaction.annotation.Transactional;
 import by.samsolutions.converter.exception.ConverterException;
 import by.samsolutions.converter.impl.UserConverter;
 import by.samsolutions.dao.UserDao;
+import by.samsolutions.dao.exception.DaoException;
 import by.samsolutions.dto.UserDto;
 import by.samsolutions.entity.user.UserEntity;
 import by.samsolutions.entity.user.UserRoleEntity;
 import by.samsolutions.service.UserService;
 import by.samsolutions.service.exception.ServiceException;
 import by.samsolutions.service.exception.UserAlreadyExistsException;
+import by.samsolutions.service.exception.UserNotFoundException;
 
 @Service
 public class UserServiceImpl extends GenericServiceImpl<UserDto, UserEntity, String> implements UserService
@@ -69,37 +72,57 @@ public class UserServiceImpl extends GenericServiceImpl<UserDto, UserEntity, Str
 		}
 	}
 
-	/*@Override
-	@Transactional
-	public UserEntity createUserAccount(final UserDto accountDto)
+	@Override
+	@Transactional(readOnly = true)
+	public UserDto getWithProfileByUsername(final String username) throws ServiceException
 	{
-		if (userDao.find(accountDto.getUsername()) != null)
+		try
 		{
-			return null;
+			UserEntity userEntity = userDao.getByUsernameWithProfile(username);
+			UserDto userDto = userConverter.toDto(userEntity);
+
+			return userDto;
+		}
+		catch (DaoException e)
+		{
+			throw new UserNotFoundException();
+		}
+		catch (ConverterException e)
+		{
+			throw new ServiceException(e);
+		}
+	}
+
+	@Override
+	@Transactional
+	public void setUserEnabled(final String username, final Boolean enabled) throws ServiceException
+	{
+		try
+		{
+			userDao.setUserEnabled(username, enabled);
+		}
+		catch (DaoException e)
+		{
+			throw new ServiceException(e);
 		}
 
-		UserEntity user = new UserEntity();
+	}
 
-		UserRoleEntity userRole = new UserRoleEntity();
-		userRole.setRole("ROLE_USER");
-		Set<UserRoleEntity> userRoleSet = new HashSet<>();
-		userRoleSet.add(userRole);
-
-		UserProfileEntity userProfile = new UserProfileEntity();
-		userProfile.setUsername(accountDto.getUsername());
-		userProfile.setEmail(accountDto.getUserProfileDto().getEmail());
-		userProfile.setFirstName(accountDto.getUserProfileDto().getFirstName());
-		userProfile.setSecondName(accountDto.getUserProfileDto().getSecondName());
-		userProfile.setThirdName(accountDto.getUserProfileDto().getThirdName());
-
-		user.setUsername(accountDto.getUsername());
-		user.setPassword(passwordEncoder.encode(accountDto.getPassword()));
-		user.setUserRole(userRoleSet);
-		user.setEnabled(true);
-		user.setProfile(userProfile);
-
-		userDao.create(user);
-
-		return user;
-	}*/
+	@Override
+	@Transactional(readOnly = true)
+	public Collection<UserDto> getAll(final Integer userCount) throws ServiceException
+	{
+		try
+		{
+			return userConverter.toDtoCollection(userDao.getAll(userCount));
+		}
+		catch (ConverterException e)
+		{
+			throw new ServiceException(e);
+		}
+		catch (DaoException e)
+		{
+			throw new ServiceException(e);
+		}
+	}
 }

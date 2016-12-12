@@ -4,6 +4,16 @@
     background-color: transparent;
 }
 
+.btn-link,
+.btn-link:hover,
+.btn-link:focus {
+    color: white;
+}
+
+.table > tbody > tr > td {
+    vertical-align: middle;
+}
+
 .panel-primary .panel-body {
     padding: 0;
 }
@@ -13,7 +23,8 @@
     margin-bottom: 10px;
 }
 
-.panel-primary > .panel-heading > .panel-title {
+.panel-primary > .panel-heading > .panel-title,
+.panel-primary > .panel-heading > .col-md-4 > .panel-title {
     color: white;
     font-weight: bolder;
 }
@@ -39,8 +50,7 @@
     right: 0;
     bottom: 0;
     height: 40px;
-    width: 120px;
-
+    padding-right: 17px;
     background-color: rgba(39, 128, 227, 0.7);
 }
 
@@ -61,6 +71,7 @@
     margin-top: 12px;
     margin-left: 18px;
 }
+
 
 .message-image > .tool-panel > a:hover {
     margin-top: 8px;

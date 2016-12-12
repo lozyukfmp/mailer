@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <spring:message code="message.language" var="language"/>
 <spring:message code="message.russian" var="russian"/>
 <spring:message code="message.english" var="english"/>
@@ -26,17 +27,24 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li><a href="${pageContext.request.contextPath}/user/profile">${profile}</a></li>
-                <li><a href="${pageContext.request.contextPath}/user">${home}</a></li>
+                <security:authorize access="hasRole('ROLE_USER')">
+                    <li><a href="${pageContext.request.contextPath}/user/profile">${profile}</a></li>
+                    <li><a href="${pageContext.request.contextPath}/user">${home}</a></li>
+                </security:authorize>
+                <security:authorize access="hasRole('ROLE_ADMIN')">
+                    <li><a href="${pageContext.request.contextPath}/admin">${home}</a></li>
+                </security:authorize>
             </ul>
-            <form action="/user" class="navbar-form navbar-left">
-                <div class="form-group">
-                    <input type="text" class="form-control" name="username" placeholder="${search}">
-                </div>
-                <button type="submit" class="btn btn-warning btn-search">
-                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-                </button>
-            </form>
+            <security:authorize access="hasRole('ROLE_USER')">
+                <form action="/user" class="navbar-form navbar-left">
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="username" placeholder="${search}">
+                    </div>
+                    <button type="submit" class="btn btn-warning btn-search">
+                        <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                    </button>
+                </form>
+            </security:authorize>
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" type="button" data-toggle="dropdown">

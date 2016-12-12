@@ -1,7 +1,9 @@
 package by.samsolutions.controller;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -23,6 +25,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -87,6 +91,81 @@ public class UserController
 		modelAndView.setViewName("loginPage");
 
 		return modelAndView;
+	}
+
+	@GetMapping("/user/{username}")
+	public ModelAndView getUser(@PathVariable String username) throws ControllerException
+	{
+		ModelAndView modelAndView = new ModelAndView();
+
+		try
+		{
+			List<UserDto> userDtoCollection = Arrays.asList(userService.getWithProfileByUsername(username));
+			modelAndView.setViewName("userList");
+			modelAndView.addObject("userList", userDtoCollection);
+
+			return modelAndView;
+		}
+		catch (UserNotFoundException e)
+		{
+			modelAndView.setViewName("user_not_found");
+			modelAndView.addObject("username", username);
+
+			return modelAndView;
+		}
+		catch (ServiceException e)
+		{
+			throw new ControllerException(e);
+		}
+	}
+
+	@GetMapping("/user/all/{userCount}")
+	public ModelAndView getUserList(@PathVariable Integer userCount) throws ControllerException
+	{
+		try
+		{
+			Collection<UserDto> userDtoCollection = userService.getAll(userCount);
+			ModelAndView modelAndView = new ModelAndView();
+			modelAndView.setViewName("userList");
+			modelAndView.addObject("userList", userDtoCollection);
+
+			return modelAndView;
+		}
+		catch (ServiceException e)
+		{
+			throw new ControllerException(e);
+		}
+	}
+	@GetMapping("/admin")
+	public ModelAndView getAdminPage() throws ControllerException
+	{
+		try
+		{
+			Collection<UserDto> userDtoCollection = userService.getAll(2);
+
+			ModelAndView modelAndView = new ModelAndView();
+			modelAndView.setViewName("admin");
+			modelAndView.addObject("userList", userDtoCollection);
+
+			return modelAndView;
+		}
+		catch (ServiceException e)
+		{
+			throw new ControllerException(e);
+		}
+	}
+
+	@PostMapping("/enable/{username}/{enabled}")
+	public @ResponseBody ResponseEntity setUserEnabled(@PathVariable String username, @PathVariable Boolean enabled) throws ControllerException{
+		try
+		{
+			userService.setUserEnabled(username, enabled);
+			return new ResponseEntity(HttpStatus.OK);
+		}
+		catch (ServiceException e)
+		{
+			throw new ControllerException(e);
+		}
 	}
 
 	@GetMapping("/user")
@@ -191,7 +270,7 @@ public class UserController
 		{
 			if (!userBindingResult.hasErrors() && !userProfileBindingResult.hasErrors())
 			{
-				userDto.setUserProfileDto(userProfileDto);
+				userDto.setProfile(userProfileDto);
 				userService.create(userDto);
 			}
 

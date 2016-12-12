@@ -22,7 +22,14 @@ public class UserConverter implements Converter<UserDto, UserEntity>
 	@Override
 	public UserDto toDto(final UserEntity userEntity) throws ConverterException
 	{
-		return UserDto.builder().username(userEntity.getUsername()).build();
+		UserDto userDto = UserDto.builder().username(userEntity.getUsername()).enabled(userEntity.isEnabled()).build();
+
+		if (userEntity.getProfile() != null)
+		{
+			userDto.setProfile(userProfileConverter.toDto(userEntity.getProfile()));
+		}
+
+		return userDto;
 	}
 
 	@Override
@@ -31,7 +38,7 @@ public class UserConverter implements Converter<UserDto, UserEntity>
 		return UserEntity.builder()
 		                 .username(userDto.getUsername())
 		                 .password(userDto.getPassword())
-		                 .profile(userProfileConverter.toEntity(userDto.getUserProfileDto()))
+		                 .profile(userProfileConverter.toEntity(userDto.getProfile()))
 		                 .build();
 	}
 

@@ -19,7 +19,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter
 
 	@Autowired
 	@Qualifier("customUserDetailsService")
-	UserDetailsService userDetailsService;
+	private UserDetailsService userDetailsService;
+
 	@Autowired
 	private AuthSuccessHandler authSuccessHandler;
 
@@ -34,7 +35,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter
 
 		http.authorizeRequests()
 		    .antMatchers("/user*")
-		    .access("hasRole('ROLE_USER')")
+		    .access("hasRole('ROLE_USER') || hasRole('ROLE_ADMIN')")
 		    .antMatchers("/admin*")
 		    .access("hasRole('ROLE_ADMIN')")
 		    .and()
