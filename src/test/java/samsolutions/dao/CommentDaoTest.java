@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import by.samsolutions.dao.CommentDao;
 import by.samsolutions.dao.PostDao;
 import by.samsolutions.dao.UserDao;
+import by.samsolutions.dao.exception.DaoException;
 import by.samsolutions.entity.CommentEntity;
 import by.samsolutions.entity.PostEntity;
 import by.samsolutions.entity.user.UserEntity;
@@ -41,7 +42,7 @@ public class CommentDaoTest
 	private PostEntity post;
 
 	@Before
-	public void init()
+	public void init() throws DaoException
 	{
 		user = new UserEntity();
 		user.setUsername("username");
@@ -60,7 +61,7 @@ public class CommentDaoTest
 	@Test
 	@Transactional
 	@Rollback
-	public void testCreateComment()
+	public void testCreateComment() throws DaoException
 	{
 
 		CommentEntity comment = new CommentEntity();
@@ -82,7 +83,7 @@ public class CommentDaoTest
 	@Test
 	@Transactional
 	@Rollback
-	public void testUpdateComment()
+	public void testUpdateComment() throws DaoException
 	{
 
 		CommentEntity comment = new CommentEntity();
@@ -106,7 +107,7 @@ public class CommentDaoTest
 	@Test
 	@Transactional
 	@Rollback
-	public void testDeleteComment()
+	public void testDeleteComment() throws DaoException
 	{
 		CommentEntity comment = new CommentEntity();
 		comment.setText("Some comment text");
@@ -126,7 +127,7 @@ public class CommentDaoTest
 	@Test
 	@Transactional
 	@Rollback
-	public void testGetAllComments()
+	public void testGetAllComments() throws DaoException
 	{
 
 		CommentEntity firstComment = new CommentEntity();

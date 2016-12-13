@@ -1,5 +1,4 @@
-var messageAjax = (function () {
-
+var messageAjax = (function ($) {
     return {
         createMessage: function (messageForm, successCallback, errorCallback) {
             $.ajax({
@@ -54,6 +53,13 @@ var messageAjax = (function () {
                     callback(response);
                 }
             });
+        },
+        getValidationMap: function(callback) {
+            $.ajax({
+                type: "GET",
+                url: "validation",
+                success: callback
+            });
         }
     }
-})();
+})(jQuery);

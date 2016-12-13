@@ -8,9 +8,7 @@ import org.springframework.stereotype.Component;
 
 import by.samsolutions.converter.Converter;
 import by.samsolutions.converter.exception.ConverterException;
-import by.samsolutions.dto.CommentDto;
 import by.samsolutions.dto.UserDto;
-import by.samsolutions.entity.CommentEntity;
 import by.samsolutions.entity.user.UserEntity;
 
 @Component

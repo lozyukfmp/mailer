@@ -1,9 +1,9 @@
-var userAjax = (function () {
+var userAjax = (function ($) {
     return {
         setUserEnabled: function (username, value, callback) {
             $.ajax({
                 type: "POST",
-                url: "/enable/" + username + "/" + value,
+                url: "enable/" + username + "/" + value,
                 success: callback
             });
         },
@@ -26,4 +26,4 @@ var userAjax = (function () {
             });
         }
     };
-})();
+})(jQuery);

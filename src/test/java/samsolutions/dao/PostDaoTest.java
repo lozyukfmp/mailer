@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import by.samsolutions.dao.PostDao;
 import by.samsolutions.dao.UserDao;
+import by.samsolutions.dao.exception.DaoException;
 import by.samsolutions.entity.PostEntity;
 import by.samsolutions.entity.user.UserEntity;
 import samsolutions.configuration.HibernateTestConfiguration;
@@ -34,7 +35,7 @@ public class PostDaoTest
 	private UserEntity user;
 
 	@Before
-	public void init()
+	public void init() throws DaoException
 	{
 		user = new UserEntity();
 		user.setUsername("username");
@@ -46,7 +47,7 @@ public class PostDaoTest
 	@Test
 	@Transactional
 	@Rollback
-	public void testCreatePost()
+	public void testCreatePost() throws DaoException
 	{
 		PostEntity post = new PostEntity();
 		post.setText("Some post text");
@@ -65,7 +66,7 @@ public class PostDaoTest
 	@Test
 	@Transactional
 	@Rollback
-	public void testUpdatePost()
+	public void testUpdatePost() throws DaoException
 	{
 		PostEntity post = new PostEntity();
 		post.setText("Some post text");
@@ -88,7 +89,7 @@ public class PostDaoTest
 	@Test
 	@Transactional
 	@Rollback
-	public void testDeletePost()
+	public void testDeletePost() throws DaoException
 	{
 		PostEntity post = new PostEntity();
 		post.setText("Some post text");
@@ -107,7 +108,7 @@ public class PostDaoTest
 	@Test
 	@Transactional
 	@Rollback
-	public void testGetAllPosts()
+	public void testGetAllPosts() throws DaoException
 	{
 		PostEntity firstPost = new PostEntity();
 		firstPost.setText("First post text");

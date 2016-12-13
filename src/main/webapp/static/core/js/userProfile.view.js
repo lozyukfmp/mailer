@@ -1,4 +1,4 @@
-;(function () {
+;(function ($) {
     function initProfilePhoto() {
         userProfileAjax.getProfile(function (profile) {
             $("#user-image").fileinput('clear');
@@ -15,12 +15,9 @@
             });
 
             $(".file-preview").on('click', '.fileinput-remove', function () {
-
                 userProfileAjax.deleteProfilePhoto();
             });
         });
     }
-
     initProfilePhoto();
-    ;
-})();
+})(jQuery);

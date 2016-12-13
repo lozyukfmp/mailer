@@ -1,6 +1,6 @@
-$(document).ready(function () {
+$(document).ready(function ($) {
     $("#user-image").fileinput({
-        uploadUrl: "/user/profile/photo/upload",
+        uploadUrl: "profile/photo/upload",
         showCaption: false,
         showClose: true,
         browseClass: "btn btn-success",

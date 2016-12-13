@@ -1,4 +1,4 @@
-var commentAjax = (function () {
+var commentAjax = (function ($) {
     return {
         createComment: function (comment, callback) {
             $.ajax({
@@ -50,4 +50,4 @@ var commentAjax = (function () {
             });
         }
     }
-})();
+})(jQuery);

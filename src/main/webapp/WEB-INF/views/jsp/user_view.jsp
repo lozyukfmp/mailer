@@ -27,12 +27,10 @@
 
     <title>${userPage}</title>
 
-    <!-- Styles -->
     <spring:url value="/static/core/css/bootstrap.min.css" var="bootstrapCss"/>
     <spring:url value="/static/core/css/fileinput.min.css" var="fileInputCss"/>
     <spring:url value="/static/core/css/panel.custom.css" var="customPanelCss"/>
 
-    <!-- Javascript -->
     <spring:url value="/static/core/js/bootstrap.min.js" var="bootstrapJs"/>
     <spring:url value="/static/core/js/jquery-3.1.1.min.js" var="jqueryJs"/>
     <spring:url value="/static/core/js/fileinput.min.js" var="fileInputJs"/>
@@ -41,21 +39,17 @@
     <spring:url value="/static/core/js/message.ajax.js" var="messageAjaxJs"/>
     <spring:url value="/static/core/js/comment.ajax.js" var="commentAjaxJs"/>
     <spring:url value="/static/core/js/comment.view.js" var="commentViewJs"/>
+    <spring:url value="/static/core/js/search.validation.js" var="searchValidationJs"/>
+    <spring:url value="/static/core/pictures/favicon.ico" var="favicon"/>
 
-    <!-- Styles -->
     <link href="${bootstrapCss}" rel="stylesheet"/>
     <link href="${fileInputCss}" rel="stylesheet"/>
     <link href="${customPanelCss}" rel="stylesheet"/>
-
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
+    <link rel="shortcut icon" href="${favicon}" type="image/x-icon">
+    <link rel="icon" href="${favicon}" type="image/x-icon">
 </head>
 <body>
-<jsp:include page="${request.contextPath}/userHeader"></jsp:include>
+<jsp:include page="user_header.jsp"/>
 <div class="row" style="margin: 80px 10px;">
     <div class="col-md-3">
         <div class="panel panel-primary panel-image">
@@ -119,42 +113,9 @@
                 <h3 class="panel-title">${posts}</h3>
             </div>
             <div id="message-container" class="panel-body">
-                <c:forEach items="${messageList}" var="message">
-                    <div class="panel panel-default panel-message">
-                        <div class="panel-heading">
-                            <strong>${message.username} | </strong>
-                            <strong>${message.date}</strong>
-                        </div>
-                        <div class="panel-body message-image">
-                            <img src="${message.imageUrl}" width='100%' height='300' class='img-thumbnail'/>
-                            <div class="tool-panel">
-                                <a class="comment-message-button" href='#' data-id="${message.id}">
-                                    <span class='glyphicon glyphicon-comment' aria-hidden='true'></span>
-                                </a>
-                                <c:choose>
-                                    <c:when test="${message.username == pageContext.request.userPrincipal.name}">
-                                        <a class="edit-message-button" href='#' data-id="${message.id}">
-                                            <span class='glyphicon glyphicon-pencil' aria-hidden='true'></span>
-                                        </a>
-                                        <a class="remove-message-button" href="#" data-id="${message.id}">
-                                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                                        </a>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <security:authorize access="hasRole('ROLE_ADMIN')">
-                                            <a class="remove-message-button" href="#" data-id="${message.id}">
-                                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                                            </a>
-                                        </security:authorize>
-                                    </c:otherwise>
-                                </c:choose>
-                            </div>
-                        </div>
-                        <div class="panel-footer">${message.text}</div>
-                    </div>
-                </c:forEach>
+                <jsp:include page="messageList.jsp"/>
             </div>
-            <div class="panel-footer">
+            <div class="panel-footer" style="padding: 10px 15px;">
                 <div id="paging-message-container" class="panel-paging" data-paging="2">
                     <a class="more-paging paging-message" href="#">
                         <span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
@@ -180,8 +141,8 @@
                     </div>
                     <div class="form-group">
                         <div id="post-error"></div>
-                        <label for="post">${messageTitle}:</label>
-                        <textarea id="message-text" class="form-control" rows="5" id="post"></textarea>
+                        <label for="message-text">${messageTitle}:</label>
+                        <textarea id="message-text" class="form-control" rows="5"></textarea>
                     </div>
                     <div class="form-group">
                         <a href="#" id="create-message-button" class="btn btn-block btn-info">
@@ -207,7 +168,8 @@
     <div class="modal-dialog" style="margin-top: 150px;width: 300px;">
         <div class="modal-content">
             <div class="modal-body">
-                <label>${comment}:</label>
+                <div id="comment-error"></div>
+                <label for="create-comment-text">${comment}:</label>
                 <textarea id="create-comment-text" class="form-control" rows="5"></textarea>
                 <br>
                 <button id="create-comment-button" class="btn btn-block btn-info">
@@ -221,10 +183,11 @@
 <script src="${bootstrapJs}"></script>
 <script src="${fileInputJs}"></script>
 <script src="${fileInputCustomJs}"></script>
-<script src="${messageViewJs}"></script>
 <script src="${messageAjaxJs}"></script>
-<script src="${commentViewJs}"></script>
 <script src="${commentAjaxJs}"></script>
+<script src="${messageViewJs}"></script>
+<script src="${commentViewJs}"></script>
+<script src="${searchValidationJs}"></script>
 <script>
 </script>
 </body>

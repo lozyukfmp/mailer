@@ -1,14 +1,11 @@
 ;(function () {
 
     var validationMap;
-    $.ajax({
-        type: "GET",
-        url: "/validation",
-        success: function(response) {
-            validationMap = response;
-        }
+    
+    messageAjax.getValidationMap(function(response) {
+        validationMap = response;
     });
-
+    
     var messageContainer = $("#message-container");
     var messagePagingContainer = $("#paging-message-container");
 
@@ -180,4 +177,5 @@
     messagePagingContainer.on('click', '.turn-paging.paging-message', function () {
         showMessageList(2, selfUsername);
     });
+    
 })();

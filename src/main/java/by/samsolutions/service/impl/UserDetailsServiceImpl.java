@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import by.samsolutions.dao.UserDao;
+import by.samsolutions.dao.exception.DaoException;
 import by.samsolutions.entity.user.UserEntity;
 import by.samsolutions.entity.user.UserRoleEntity;
 
@@ -28,16 +29,23 @@ public class UserDetailsServiceImpl implements UserDetailsService
 	@Override
 	public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException
 	{
-		UserEntity user = userDao.find(username);
-
-		if (user == null)
+		try
 		{
-			throw new UsernameNotFoundException("UserEntity not found!");
+			UserEntity user = userDao.find(username);
+
+			if (user == null)
+			{
+				throw new UsernameNotFoundException("UserEntity not found!");
+			}
+
+			List<GrantedAuthority> authorities = buildUserAuthority(user.getUserRole());
+
+			return buildUserForAuthentication(user, authorities);
 		}
-
-		List<GrantedAuthority> authorities = buildUserAuthority(user.getUserRole());
-
-		return buildUserForAuthentication(user, authorities);
+		catch (DaoException e)
+		{
+			throw new UsernameNotFoundException(e.getMessage());
+		}
 	}
 
 	private List<GrantedAuthority> buildUserAuthority(final Collection<UserRoleEntity> userRoles)

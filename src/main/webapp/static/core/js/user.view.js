@@ -40,21 +40,27 @@
     refreshButton.on('click', function () {
         var index = $("#paging-user-container").attr("data-paging");
         showUserList(+index);
+        $("#error-div").fadeOut();
     });
 
     searchButton.on('click', function () {
-        userAjax.getUser(function(response) {
-            userContainer.html(response);
-            if($("input[type=checkbox]").length) {
-                $("input[type=checkbox]").off();
-                $("input[type=checkbox]").bootstrapToggle();
-                $("input[type=checkbox]").change(function() {
-                    userAjax.setUserEnabled($(this).attr('data-username'), $(this).prop('checked'), function () {
-                        console.log("SUCCESS");
+        if($(".username-field").val().trim() == "") {
+            $("#error-div").fadeIn();
+        } else {
+            $("#error-div").fadeOut();
+            userAjax.getUser(function(response) {
+                userContainer.html(response);
+                if($("input[type=checkbox]").length) {
+                    $("input[type=checkbox]").off();
+                    $("input[type=checkbox]").bootstrapToggle();
+                    $("input[type=checkbox]").change(function() {
+                        userAjax.setUserEnabled($(this).attr('data-username'), $(this).prop('checked'), function () {
+                            console.log("SUCCESS");
+                        });
                     });
-                });
-            }
-        }, usernameField.val());
+                }
+            }, usernameField.val());
+        }
     });
     
 })(jQuery);

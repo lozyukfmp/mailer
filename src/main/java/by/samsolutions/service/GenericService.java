@@ -2,7 +2,6 @@ package by.samsolutions.service;
 
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.List;
 
 import by.samsolutions.dto.BaseDto;
 import by.samsolutions.entity.BaseEntity;

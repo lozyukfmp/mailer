@@ -3,7 +3,6 @@ package samsolutions.validator;
 import javax.validation.ConstraintValidatorContext;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,10 +12,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import by.samsolutions.configuration.root.ValidatorConfiguration;
 import by.samsolutions.validation.EmailValidator;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -44,7 +41,6 @@ public class EmailValidatorTest
 	@BeforeClass
 	public static void initData()
 	{
-		//emailValidator = new EmailValidator();
 		context = Mockito.mock(ConstraintValidatorContext.class);
 	}
 

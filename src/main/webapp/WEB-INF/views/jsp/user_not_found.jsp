@@ -15,28 +15,22 @@
     <spring:message code="message.title.user" var="userPage"/>
 
     <title>${userPage}</title>
-    <!-- Styles -->
+
     <spring:url value="/static/core/css/bootstrap.min.css" var="bootstrapCss"/>
     <spring:url value="/static/core/css/panel.custom.css" var="customPanelCss"/>
-
-    <!-- Javascript -->
-    <spring:url value="/static/core/js/bootstrap.min.js" var="bootstrapJs"/>
     <spring:url value="/static/core/js/jquery-3.1.1.min.js" var="jqueryJs"/>
+    <spring:url value="/static/core/js/bootstrap.min.js" var="bootstrapJs"/>
+    <spring:url value="/static/core/js/search.validation.js" var="searchValidationJs"/>
+    <spring:url value="/static/core/pictures/favicon.ico" var="favicon"/>
 
-    <!-- Styles -->
     <link href="${bootstrapCss}" rel="stylesheet"/>
     <link href="${customPanelCss}" rel="stylesheet"/>
-
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <link rel="shortcut icon" href="${favicon}" type="image/x-icon">
+    <link rel="icon" href="${favicon}" type="image/x-icon">
 </head>
 <body>
 <security:authorize access="hasRole('ROLE_USER')">
-    <jsp:include page="${request.contextPath}/userHeader"></jsp:include>
+    <jsp:include page="user_header.jsp"/>
 </security:authorize>
 <div class="container" style="margin-top: 85px;">
     <div class="jumbotron">
@@ -46,5 +40,6 @@
 </div>
 <script src="${jqueryJs}"></script>
 <script src="${bootstrapJs}"></script>
+<script src="${searchValidationJs}"></script>
 </body>
 </html>

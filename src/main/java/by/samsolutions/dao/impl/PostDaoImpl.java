@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import by.samsolutions.dao.PostDao;
+import by.samsolutions.dao.exception.DaoException;
 import by.samsolutions.entity.PostEntity;
 
 @Repository
@@ -19,13 +20,21 @@ public class PostDaoImpl extends GenericDaoImpl<PostEntity, Integer>
 	}
 
 	@Override
-	public List<PostEntity> all(final String username, final Integer messageCount)
+	public List<PostEntity> all(final String username, final Integer messageCount) throws DaoException
 	{
-		List<PostEntity> postList = entityManager.createNamedQuery("Post.findAllByUsername", PostEntity.class)
-		                                         .setParameter("username", username)
-		                                         .setFirstResult(0)
-		                                         .setMaxResults(messageCount)
-		                                         .getResultList();
+		List<PostEntity> postList = null;
+		try
+		{
+			postList = entityManager.createNamedQuery("Post.findAllByUsername", PostEntity.class)
+			                                         .setParameter("username", username)
+			                                         .setFirstResult(0)
+			                                         .setMaxResults(messageCount)
+			                                         .getResultList();
+		}
+		catch (Exception e)
+		{
+			throw new DaoException(e);
+		}
 
 		postList.forEach(post -> post.setComments(Collections.EMPTY_SET));
 
@@ -33,11 +42,18 @@ public class PostDaoImpl extends GenericDaoImpl<PostEntity, Integer>
 	}
 
 	@Override
-	public PostEntity findWithComments(final Integer postId)
+	public PostEntity findWithComments(final Integer postId) throws DaoException
 	{
-		return entityManager.createNamedQuery("Post.findByIdWithComments", PostEntity.class)
-		                    .setParameter("id", postId)
-		                    .getSingleResult();
+		try
+		{
+			return entityManager.createNamedQuery("Post.findByIdWithComments", PostEntity.class)
+			                    .setParameter("id", postId)
+			                    .getSingleResult();
+		}
+		catch (Exception e)
+		{
+			throw new DaoException(e);
+		}
 	}
 
 }

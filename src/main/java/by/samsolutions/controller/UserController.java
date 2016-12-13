@@ -65,7 +65,7 @@ public class UserController
 	@Autowired
 	private PostService postService;
 
-	@GetMapping(value = "/login-page")
+	@GetMapping(value = "login-page")
 	public ModelAndView login(@RequestParam(value = "error", required = false) final String error,
 	                          @RequestParam(value = "logout", required = false) final String logout,
 	                          @RequestParam(value = "success", required = false) final String success)
@@ -93,7 +93,7 @@ public class UserController
 		return modelAndView;
 	}
 
-	@GetMapping("/user/{username}")
+	@GetMapping("user/{username}")
 	public ModelAndView getUser(@PathVariable String username) throws ControllerException
 	{
 		ModelAndView modelAndView = new ModelAndView();
@@ -136,7 +136,7 @@ public class UserController
 			throw new ControllerException(e);
 		}
 	}
-	@GetMapping("/admin")
+	@GetMapping("admin")
 	public ModelAndView getAdminPage() throws ControllerException
 	{
 		try
@@ -168,7 +168,7 @@ public class UserController
 		}
 	}
 
-	@GetMapping("/user")
+	@GetMapping("user")
 	public ModelAndView getUserPage(@RequestParam(required = false) String username) throws ControllerException
 	{
 
@@ -205,7 +205,7 @@ public class UserController
 		}
 	}
 
-	@GetMapping("/validation")
+	@GetMapping("validation")
 	public
 	@ResponseBody
 	ResponseEntity getRegexpMap(Locale locale)
@@ -214,6 +214,7 @@ public class UserController
 		String imageMessage = messageSource.getMessage("message.image.NotEmpty", null, locale);
 		String postMessage = messageSource.getMessage("message.post.NotEmpty", null, locale);
 		String longMessage = messageSource.getMessage("message.file.long", null, locale);
+		String emptyUsername = messageSource.getMessage("message.search.empty", null, locale);
 
 		Map<String, Map<String, String>> validationInformation = new HashMap<>();
 		Map<String, String> textMap = new HashMap<>();
@@ -222,14 +223,17 @@ public class UserController
 		Map<String, String> imageMap = new HashMap<>();
 		imageMap.put("message", imageMessage);
 		imageMap.put("long", longMessage);
+		Map<String, String> searchMap = new HashMap<>();
+		searchMap.put("message", emptyUsername);
 
 		validationInformation.put("text", textMap);
 		validationInformation.put("image", imageMap);
+		validationInformation.put("search", searchMap);
 
 		return new ResponseEntity(validationInformation, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/logout", method = RequestMethod.GET)
+	@GetMapping("logout")
 	public String logout(final HttpServletRequest request, final HttpServletResponse response)
 	{
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -241,7 +245,7 @@ public class UserController
 		return "redirect:/login-page?logout";
 	}
 
-	@RequestMapping(value = "/registration-page", method = RequestMethod.GET)
+	@GetMapping("registration-page")
 	public String showRegistrationForm(Model model, HttpSession session)
 	{
 
@@ -260,7 +264,7 @@ public class UserController
 		return "registration";
 	}
 
-	@RequestMapping(value = "/register", method = RequestMethod.POST)
+	@PostMapping("register")
 	public String registerUser(@ModelAttribute("user") @Valid final UserDto userDto, final BindingResult userBindingResult,
 	                           @ModelAttribute("userProfile") @Valid final UserProfileDto userProfileDto,
 	                           final BindingResult userProfileBindingResult, final Model model, final HttpSession session)

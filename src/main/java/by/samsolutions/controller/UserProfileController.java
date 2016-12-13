@@ -23,15 +23,12 @@ import org.springframework.web.servlet.ModelAndView;
 
 import by.samsolutions.controller.exception.ControllerException;
 import by.samsolutions.controller.util.FileUtil;
-import by.samsolutions.converter.exception.ConverterException;
-import by.samsolutions.converter.impl.UserProfileConverter;
 import by.samsolutions.dto.UserProfileDto;
-import by.samsolutions.entity.user.UserProfileEntity;
 import by.samsolutions.service.UserProfileService;
 import by.samsolutions.service.exception.ServiceException;
 
 @Controller
-@RequestMapping("/user")
+@RequestMapping("profile")
 public class UserProfileController
 {
 
@@ -44,7 +41,7 @@ public class UserProfileController
 	@Autowired
 	private UserProfileService userProfileService;
 
-	@GetMapping("/profile")
+	@GetMapping
 	public ModelAndView getUserProfileView() throws ControllerException
 	{
 		try
@@ -62,7 +59,7 @@ public class UserProfileController
 
 	}
 
-	@GetMapping("/profile/info")
+	@GetMapping("/info")
 	public
 	@ResponseBody
 	ResponseEntity<UserProfileDto> getUserProfile() throws ControllerException
@@ -82,7 +79,7 @@ public class UserProfileController
 		}
 	}
 
-	@PostMapping("/profile")
+	@PostMapping
 	public ModelAndView saveUserProfile(@ModelAttribute("userProfile") @Valid final UserProfileDto userProfileDto,
 	                                    final BindingResult userProfileBindingResult) throws ControllerException
 	{
@@ -92,6 +89,7 @@ public class UserProfileController
 			{
 				Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 				userProfileDto.setUsername(auth.getName());
+
 				userProfileService.update(userProfileDto);
 
 				return new ModelAndView("profile_view", "successProfileChange", "You've been changed profile successfully.");
@@ -106,7 +104,7 @@ public class UserProfileController
 
 	}
 
-	@PostMapping(value = "/profile/photo/upload")
+	@PostMapping("/photo/upload")
 	public
 	@ResponseBody
 	ResponseEntity<UserProfileDto> loadUserPhoto(@RequestParam("userImage") MultipartFile file) throws ControllerException
@@ -126,7 +124,7 @@ public class UserProfileController
 		}
 	}
 
-	@PostMapping(value = "/profile/photo/delete")
+	@PostMapping("/photo/delete")
 	public
 	@ResponseBody
 	ResponseEntity<UserProfileDto> deleteUserPhoto() throws ControllerException

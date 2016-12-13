@@ -19,6 +19,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import by.samsolutions.converter.impl.CommentConverter;
 import by.samsolutions.dao.CommentDao;
 import by.samsolutions.dao.GenericDao;
+import by.samsolutions.dao.exception.DaoException;
 import by.samsolutions.dto.CommentDto;
 import by.samsolutions.entity.CommentEntity;
 import by.samsolutions.entity.PostEntity;
@@ -70,7 +71,7 @@ public class CommentServiceTest
 	private final List<CommentEntity> commentList = new ArrayList<>();
 
 	@Before
-	public void initPostList()
+	public void initPostList() throws DaoException
 	{
 		final UserEntity user = UserEntity.builder().username("Artem").build();
 

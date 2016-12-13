@@ -20,19 +20,33 @@ public class UserDaoImpl extends GenericDaoImpl<UserEntity, String> implements U
 	}
 
 	@Override
-	public List<UserEntity> all()
+	public List<UserEntity> all() throws DaoException
 	{
-		return entityManager.createNamedQuery("User.findAll", UserEntity.class)
-		             .getResultList();
+		try
+		{
+			return entityManager.createNamedQuery("User.findAll", UserEntity.class)
+			             .getResultList();
+		}
+		catch (Exception e)
+		{
+			throw new DaoException(e);
+		}
 	}
 
 	@Override
-	public List<UserEntity> getAll(Integer userCount)
+	public List<UserEntity> getAll(Integer userCount) throws DaoException
 	{
-		return entityManager.createNamedQuery("User.findAllWithProfile", UserEntity.class)
-		                    .setFirstResult(0)
-		                    .setMaxResults(userCount)
-		                    .getResultList();
+		try
+		{
+			return entityManager.createNamedQuery("User.findAllWithProfile", UserEntity.class)
+			                    .setFirstResult(0)
+			                    .setMaxResults(userCount)
+			                    .getResultList();
+		}
+		catch (Exception e)
+		{
+			throw new DaoException(e);
+		}
 	}
 
 	@Override

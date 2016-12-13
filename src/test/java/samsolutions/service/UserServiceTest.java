@@ -16,6 +16,7 @@ import org.springframework.test.util.ReflectionTestUtils;
 import by.samsolutions.converter.impl.UserConverter;
 import by.samsolutions.converter.impl.UserProfileConverter;
 import by.samsolutions.dao.UserDao;
+import by.samsolutions.dao.exception.DaoException;
 import by.samsolutions.dto.UserDto;
 import by.samsolutions.dto.UserProfileDto;
 import by.samsolutions.entity.user.UserEntity;
@@ -71,7 +72,7 @@ public class UserServiceTest
 	private PasswordEncoder passwordEncoder;
 
 	@Before
-	public void init()
+	public void init() throws DaoException
 	{
 		user = UserEntity.builder().password("password").username("username").build();
 
@@ -94,16 +95,4 @@ public class UserServiceTest
 		userService.create(userDto);
 	}
 
-	/*@Test
-	public void testCreateUserSuccess()
-	{
-
-		UserEntity resultUser = userService.create(sucessUser);
-
-		Assert.assertNotNull(resultUser);
-		Assert.assertEquals(resultUser.getUsername(), user.getUsername());
-		Assert.assertTrue(passwordEncoder.matches(
-						user.getPassword(),
-						resultUser.getPassword()));
-	}*/
 }

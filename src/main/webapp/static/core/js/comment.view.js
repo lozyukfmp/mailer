@@ -1,8 +1,29 @@
-;(function () {
+;(function ($) {
 
     var viewMessageModal = $("#view-message-modal"),
         createCommentButton = $("#create-comment-button"),
-        createCommentModal = $("#create-comment-modal");
+        createCommentModal = $("#create-comment-modal"),
+        validationMap;
+
+    messageAjax.getValidationMap(function(response) {
+        validationMap = response;
+    });
+
+    function validate(validationMap, text) {
+        var commentErrorDiv = $("#comment-error");
+        var result = true;
+        commentErrorDiv.empty();
+
+        if(!(new RegExp(validationMap["text"]["regexp"])).test(text)) {
+            commentErrorDiv.html("<div class='alert alert-danger'>" +
+                validationMap["text"]["message"] +
+                "</div>");
+
+            result = false;
+        }
+
+        return result;
+    }
 
     function getCommentData(comment) {
         comment = comment || {};
@@ -38,19 +59,23 @@
 
         if (isEdit) {
             createCommentButton.on('click', function () {
-                commentAjax.updateComment(getCommentData(comment), function () {
-                    showCommentList($("#paging-comment-container").attr("data-paging"));
-                });
+                if(validate(validationMap, $("#create-comment-text").val())) {
+                    commentAjax.updateComment(getCommentData(comment), function () {
+                        showCommentList($("#paging-comment-container").attr("data-paging"));
+                    });
 
-                createCommentModal.modal("hide");
+                    createCommentModal.modal("hide");
+                }
             });
         } else {
             createCommentButton.on('click', function () {
-                commentAjax.createComment(getCommentData(), function () {
-                    showCommentList($("#paging-comment-container").attr("data-paging"));
-                });
+                if(validate(validationMap, $("#create-comment-text").val())) {
+                    commentAjax.createComment(getCommentData(), function () {
+                        showCommentList($("#paging-comment-container").attr("data-paging"));
+                    });
 
-                createCommentModal.modal("hide");
+                    createCommentModal.modal("hide");
+                }
             });
         }
     }
@@ -83,4 +108,4 @@
         showCommentList(2);
     });
 
-})();
+})(jQuery);

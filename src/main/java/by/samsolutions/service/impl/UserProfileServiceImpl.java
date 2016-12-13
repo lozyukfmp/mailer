@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import by.samsolutions.converter.exception.ConverterException;
 import by.samsolutions.converter.impl.UserProfileConverter;
 import by.samsolutions.dao.GenericDao;
+import by.samsolutions.dao.exception.DaoException;
 import by.samsolutions.dto.UserProfileDto;
 import by.samsolutions.entity.user.UserProfileEntity;
 import by.samsolutions.service.UserProfileService;
@@ -52,6 +53,32 @@ public class UserProfileServiceImpl extends GenericServiceImpl<UserProfileDto, U
 
 			return userProfileDto;
 		}
+		catch (DaoException e)
+		{
+			throw new ServiceException(e);
+		}
+		catch (ConverterException e)
+		{
+			throw new ServiceException(e);
+		}
+	}
+
+	@Override
+	@Transactional
+	public UserProfileDto update(final UserProfileDto dto) throws ServiceException
+	{
+		try
+		{
+			UserProfileEntity userProfileEntity = userProfileDao.find(dto.getUsername());
+			UserProfileEntity saveProfile = userProfileConverter.toEntity(dto);
+			saveProfile.setImageUrl(userProfileEntity.getImageUrl());
+
+			return userProfileConverter.toDto(userProfileDao.update(saveProfile));
+		}
+		catch (DaoException e)
+		{
+			throw new ServiceException(e);
+		}
 		catch (ConverterException e)
 		{
 			throw new ServiceException(e);
@@ -70,6 +97,10 @@ public class UserProfileServiceImpl extends GenericServiceImpl<UserProfileDto, U
 			UserProfileDto resultDto = userProfileConverter.toDto(updatedProfile);
 
 			return resultDto;
+		}
+		catch (DaoException e)
+		{
+			throw new ServiceException(e);
 		}
 		catch (ConverterException e)
 		{

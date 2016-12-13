@@ -12,11 +12,10 @@
 
     <!-- .css and .js -->
     <spring:url value="/static/core/css/bootstrap.min.css" var="bootstrapCss"/>
-    <%--<spring:url value="/static/core/css/custom.container.css" var="customContainerCss" />
-    <spring:url value="/static/core/css/welcome.css" var="welcomeCss" />
-    <spring:url value="/static/core/css/language_dropdown.css" var="languageDropdown" />--%>
-
+    <spring:url value="/static/core/css/panel.custom.css" var="customPanelCss"/>
     <spring:url value="/static/core/js/bootstrap.min.js" var="bootstrapJs"/>
+    <spring:url value="/static/core/js/jquery-3.1.1.min.js" var="jqueryJs"/>
+    <spring:url value="/static/core/pictures/favicon.ico" var="favicon"/>
 
     <!-- localization -->
     <spring:message code="message.welcome" var="welcome"/>
@@ -28,23 +27,21 @@
     <spring:message code="message.language" var="language"/>
     <spring:message code="message.russian" var="russian"/>
     <spring:message code="message.english" var="english"/>
+    <spring:message code="message.welcome.prefix" var="prefix"/>
+    <spring:message code="message.welcome.postfix" var="postfix"/>
 
     <link href="${bootstrapCss}" rel="stylesheet"/>
-    <link href="${loginCss}" rel="stylesheet"/>
-    <link href="${customContainerCss}" rel="stylesheet"/>
-    <link href="${languageDropdown}" rel="stylesheet"/>
-    <link href="${welcomeCss}" rel="stylesheet"/>
+    <link href="${customPanelCss}" rel="stylesheet"/>
+    <link rel="shortcut icon" href="${favicon}" type="image/x-icon">
+    <link rel="icon" href="${favicon}" type="image/x-icon">
 
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
 </head>
 <body>
 <div class="container" style="margin-top: 100px;">
-    <div class="jumbotron">
+    <div class="jumbotron" style="background-color: rgba(230, 230, 230, 0.66);">
         <div class="container">
-            <h1>${welcome}</h1>
+            <h1 style="color: #2780e3;font-size: 100px;font-weight: bolder;">${welcome}</h1>
+            <p>${prefix}<br><strong>${welcome}</strong> ${postfix}</p>
             <div class="btn-group">
                 <a href="#" class="btn btn-primary">${language}</a>
                 <a href="#" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
@@ -64,7 +61,7 @@
         </div>
     </div>
 </div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="${jqueryJs}"></script>
 <script src="${bootstrapJs}"></script>
 </body>
 </html>

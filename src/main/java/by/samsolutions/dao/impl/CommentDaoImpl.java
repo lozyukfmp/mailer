@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import by.samsolutions.dao.CommentDao;
+import by.samsolutions.dao.exception.DaoException;
 import by.samsolutions.entity.CommentEntity;
 
 @Repository
@@ -18,12 +19,19 @@ public class CommentDaoImpl extends GenericDaoImpl<CommentEntity, Integer>
 	}
 
 	@Override
-	public List<CommentEntity> findAllByPostId(final Integer postId, final Integer commentCount)
+	public List<CommentEntity> findAllByPostId(final Integer postId, final Integer commentCount) throws DaoException
 	{
-		return entityManager.createNamedQuery("Comment.findAllByPostId", CommentEntity.class)
-		                    .setParameter("id", postId)
-		                    .setFirstResult(0)
-		                    .setMaxResults(commentCount)
-		                    .getResultList();
+		try
+		{
+			return entityManager.createNamedQuery("Comment.findAllByPostId", CommentEntity.class)
+			                    .setParameter("id", postId)
+			                    .setFirstResult(0)
+			                    .setMaxResults(commentCount)
+			                    .getResultList();
+		}
+		catch (Exception e)
+		{
+			throw new DaoException(e);
+		}
 	}
 }

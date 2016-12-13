@@ -1,13 +1,13 @@
 package by.samsolutions.dao.impl;
 
 import java.io.Serializable;
-import java.util.Base64;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import by.samsolutions.dao.GenericDao;
+import by.samsolutions.dao.exception.DaoException;
 import by.samsolutions.entity.BaseEntity;
 
 public class GenericDaoImpl<T extends BaseEntity, PK extends Serializable> implements GenericDao<T, PK>
@@ -29,32 +29,60 @@ public class GenericDaoImpl<T extends BaseEntity, PK extends Serializable> imple
 	}
 
 	@Override
-	public T create(final T t)
+	public T create(final T t) throws DaoException
 	{
-		entityManager.persist(t);
-		return t;
+		try
+		{
+			entityManager.persist(t);
+			return t;
+		}
+		catch (Exception e)
+		{
+			throw new DaoException(e);
+		}
 	}
 
 	@Override
-	public void delete(final PK id)
+	public void delete(final PK id) throws DaoException
 	{
-		entityManager.remove(entityManager.getReference(type, id));
+		try
+		{
+			entityManager.remove(entityManager.getReference(type, id));
+		}
+		catch (Exception e)
+		{
+			throw new DaoException(e);
+		}
 	}
 
 	@Override
-	public T find(final PK id)
+	public T find(final PK id) throws DaoException
 	{
-		return (T) entityManager.find(type, id);
+		try
+		{
+			return (T) entityManager.find(type, id);
+		}
+		catch (Exception e)
+		{
+			throw new DaoException(e);
+		}
 	}
 
 	@Override
-	public T update(final T t)
+	public T update(final T t) throws DaoException
 	{
-		return entityManager.merge(t);
+		try
+		{
+			return entityManager.merge(t);
+		}
+		catch (Exception e)
+		{
+			throw new DaoException(e);
+		}
 	}
 
 	@Override
-	public List<T> all()
+	public List<T> all() throws DaoException
 	{
 		return null;
 	}

@@ -23,6 +23,7 @@ import by.samsolutions.converter.impl.PostConverter;
 import by.samsolutions.dao.CommentDao;
 import by.samsolutions.dao.GenericDao;
 import by.samsolutions.dao.PostDao;
+import by.samsolutions.dao.exception.DaoException;
 import by.samsolutions.dto.PostDto;
 import by.samsolutions.entity.PostEntity;
 import by.samsolutions.entity.user.UserEntity;
@@ -91,7 +92,7 @@ public class PostServiceTest
 	private final List<PostEntity> postList = new ArrayList<>();
 
 	@Before
-	public void initPostList()
+	public void initPostList() throws DaoException
 	{
 		final UserEntity user = UserEntity.builder().username("Artem").build();
 

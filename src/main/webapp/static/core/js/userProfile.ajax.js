@@ -1,4 +1,4 @@
-var userProfileAjax = (function () {
+var userProfileAjax = (function ($) {
     return {
         updateProfile: function (profile, callback) {
             $.ajax({
@@ -25,8 +25,8 @@ var userProfileAjax = (function () {
         deleteProfilePhoto: function () {
             $.ajax({
                 type: "POST",
-                url: "/user/profile/photo/delete",
+                url: "profile/photo/delete",
             });
         }
     };
-})();
+})(jQuery);

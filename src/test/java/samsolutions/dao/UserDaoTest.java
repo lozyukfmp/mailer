@@ -15,6 +15,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import by.samsolutions.dao.UserDao;
+import by.samsolutions.dao.exception.DaoException;
 import by.samsolutions.entity.user.UserEntity;
 import by.samsolutions.entity.user.UserProfileEntity;
 import by.samsolutions.entity.user.UserRoleEntity;
@@ -56,7 +57,7 @@ public class UserDaoTest
 	@Test
 	@Transactional
 	@Rollback
-	public void testCreateUser()
+	public void testCreateUser() throws DaoException
 	{
 		userDao.create(user);
 
@@ -71,7 +72,7 @@ public class UserDaoTest
 	@Test
 	@Transactional
 	@Rollback
-	public void testUpdateUserProfile()
+	public void testUpdateUserProfile() throws DaoException
 	{
 		userDao.create(user);
 
@@ -89,7 +90,7 @@ public class UserDaoTest
 	@Test
 	@Transactional
 	@Rollback
-	public void testDeleteUser()
+	public void testDeleteUser() throws DaoException
 	{
 		user = userDao.create(user);
 
@@ -103,7 +104,7 @@ public class UserDaoTest
 	@Test
 	@Transactional
 	@Rollback
-	public void testGetAllUsers()
+	public void testGetAllUsers() throws DaoException
 	{
 		userDao.create(user);
 

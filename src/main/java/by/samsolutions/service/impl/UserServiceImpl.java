@@ -66,6 +66,10 @@ public class UserServiceImpl extends GenericServiceImpl<UserDto, UserEntity, Str
 
 			return resultDto;
 		}
+		catch (DaoException e)
+		{
+			throw new ServiceException(e);
+		}
 		catch (ConverterException e)
 		{
 			throw new ServiceException(e);

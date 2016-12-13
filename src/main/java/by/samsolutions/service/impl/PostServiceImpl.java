@@ -1,7 +1,6 @@
 package by.samsolutions.service.impl;
 
 import java.util.Collection;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,6 +10,7 @@ import by.samsolutions.converter.exception.ConverterException;
 import by.samsolutions.converter.impl.PostConverter;
 import by.samsolutions.dao.CommentDao;
 import by.samsolutions.dao.PostDao;
+import by.samsolutions.dao.exception.DaoException;
 import by.samsolutions.dto.PostDto;
 import by.samsolutions.entity.CommentEntity;
 import by.samsolutions.entity.PostEntity;
@@ -56,6 +56,10 @@ public class PostServiceImpl extends GenericServiceImpl<PostDto, PostEntity, Int
 
 			return resultDto;
 		}
+		catch (DaoException e)
+		{
+			throw new ServiceException(e);
+		}
 		catch (ConverterException e)
 		{
 			throw new ServiceException(e);
@@ -70,6 +74,10 @@ public class PostServiceImpl extends GenericServiceImpl<PostDto, PostEntity, Int
 		{
 			Collection<PostEntity> postEntityCollection = postDao.all(username, messageCount);
 			return postConverter.toDtoCollection(postEntityCollection);
+		}
+		catch (DaoException e)
+		{
+			throw new ServiceException(e);
 		}
 		catch (ConverterException e)
 		{

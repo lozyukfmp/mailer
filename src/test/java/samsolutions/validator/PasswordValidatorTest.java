@@ -14,7 +14,6 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import by.samsolutions.configuration.root.ValidatorConfiguration;
 import by.samsolutions.validation.PasswordValidator;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -42,7 +41,6 @@ public class PasswordValidatorTest
 	@BeforeClass
 	public static void initData()
 	{
-		//passwordValidator = new PasswordValidator();
 		context = Mockito.mock(ConstraintValidatorContext.class);
 	}
 

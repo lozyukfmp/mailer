@@ -14,6 +14,7 @@
     <spring:message code="message.view" var="view"/>
     <spring:message code="message.title.search" var="search"/>
     <spring:message code="message.title.admin" var="admin"/>
+    <spring:message code="message.search.empty" var="emptySearch"/>
 
     <title>${admin}</title>
 
@@ -25,33 +26,34 @@
     <spring:url value="/static/core/js/bootstrap-toggle.min.js" var="bootstrapToggleJs"/>
     <spring:url value="/static/core/js/user.view.js" var="userViewJs"/>
     <spring:url value="/static/core/js/user.ajax.js" var="userAjaxJs"/>
+    <spring:url value="/static/core/js/search.validation.js" var="searchValidationJs"/>
+    <spring:url value="/static/core/pictures/favicon.ico" var="favicon"/>
 
-    <!-- Bootstrap -->
     <link href="${bootstrapCss}" rel="stylesheet"/>
     <link href="${bootstrapToggleCss}" rel="stylesheet"/>
     <link href="${customPanelCss}" rel="stylesheet"/>
-
-
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
+    <link rel="shortcut icon" href="${favicon}" type="image/x-icon">
+    <link rel="icon" href="${favicon}" type="image/x-icon">
 </head>
 <body>
-<jsp:include page="${request.contextPath}/userHeader"></jsp:include>
+<jsp:include page="user_header.jsp"/>
 <div class="container" style="margin-top: 80px;">
     <div class="panel panel-primary">
         <div class="col-md-12 panel-heading">
             <div class="col-md-4" style="margin-top: 10px;">
                 <h3 class="panel-title">${users}</h3>
             </div>
-            <div class="col-md-4" style="text-align: center">
+            <div class="col-md-6" style="text-align: center">
                 <div class="form-inline">
-                    <a href="#" id="refresh-button" class="btn btn-link"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span></a>
-                    <div class="form-group">
+                    <a href="#" id="refresh-button" class="btn btn-link"><span class="glyphicon glyphicon-refresh"
+                                                                               aria-hidden="true"></span></a>
+                    <div class="form-group" style="position: relative;">
                         <input type="text" class="username-field form-control" name="username" placeholder="${search}">
+                        <div id="error-div" style="display: none; z-index: 100;">
+                            <div class="alert alert-danger">
+                                ${emptySearch}
+                            </div>
+                        </div>
                     </div>
                     <a href="#" id="search-by-username" type="submit" class="btn btn-warning btn-search">
                         <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
@@ -62,37 +64,7 @@
         <div class="panel-body">
             <table class="table table-hover">
                 <tbody id="user-container">
-                    <c:forEach items="${userList}" var="user">
-                        <c:if test="${user.username ne pageContext.request.userPrincipal.name}">
-                            <tr>
-                                <td>
-                                    <img src="${user.profile.imageUrl}" class="img-thumbnail" width="90" height="100"/>
-                                </td>
-                                <td>
-                                    <h4>${user.username}</h4>
-                                    <h4>${user.profile.email}</h4>
-                                </td>
-                                <td>
-                                    <c:choose>
-                                        <c:when test="${user.enabled}">
-                                            <input type="checkbox" checked data-username="${user.username}" data-on="${unblocked}" data-off="${blocked}" data-toggle="toggle" data-onstyle="success" data-offstyle="danger">
-                                        </c:when>
-                                        <c:otherwise>
-                                            <input type="checkbox" data-username="${user.username}" data-on="${unblocked}" data-off="${blocked}" data-toggle="toggle" data-onstyle="success" data-offstyle="danger">
-                                        </c:otherwise>
-                                    </c:choose>
-                                </td>
-                                <td>
-                                    <form action="/user" class="form-inline">
-                                        <input type="hidden" name="username" value="${user.username}"/>
-                                        <button type="submit" class="btn btn-warning">
-                                            ${view} <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
-                                        </button>
-                                    </form>
-                                </td>
-                            </tr>
-                        </c:if>
-                    </c:forEach>
+                <jsp:include page="userList.jsp"/>
                 </tbody>
             </table>
         </div>
@@ -113,5 +85,6 @@
 <script src="${bootstrapToggleJs}"></script>
 <script src="${userAjaxJs}"></script>
 <script src="${userViewJs}"></script>
+<script src="${searchValidationJs}"></script>
 </body>
 </html>

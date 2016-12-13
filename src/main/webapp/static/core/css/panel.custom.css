@@ -1,3 +1,6 @@
+body {
+    background: url("../pictures/background/background.jpg");
+}
 .panel-primary {
     border: none;
     box-shadow: none;
@@ -125,7 +128,10 @@
         width: 142px;
     }
 }
-
+#message-container {
+    height: 800px;
+    overflow-y: auto;
+}
 form .col-sm-6 {
     padding-left: 0;
     padding-right: 0;
@@ -184,4 +190,9 @@ form .col-sm-6 .btn-block {
 .file-preview,
 .file-drop-zone {
     border-radius: 0;
+}
+
+#error-div {
+    position: absolute;
+    width: inherit;
 }

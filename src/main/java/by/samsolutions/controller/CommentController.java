@@ -17,13 +17,12 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import by.samsolutions.controller.exception.ControllerException;
-import by.samsolutions.converter.impl.CommentConverter;
 import by.samsolutions.dto.CommentDto;
 import by.samsolutions.service.CommentService;
 import by.samsolutions.service.exception.ServiceException;
 
 @RestController
-@RequestMapping("/comment")
+@RequestMapping("comment")
 public class CommentController
 {
 	@Autowired

@@ -12,19 +12,15 @@
 
     <spring:url value="/static/core/css/bootstrap.min.css" var="bootstrapCss"/>
     <spring:url value="/static/core/css/panel.custom.css" var="customPanelCss"/>
-    <%--<spring:url value="/static/core/css/custom.container.css" var="customContainerCss" />--%>
-    <%-- <spring:url value="/static/core/css/language_dropdown.css" var="languageDropdown" />--%>
-
     <spring:url value="/static/core/js/bootstrap.min.js" var="bootstrapJs"/>
+    <spring:url value="/static/core/js/jquery-3.1.1.min.js" var="jqueryJs"/>
+    <spring:url value="/static/core/pictures/favicon.ico" var="favicon"/>
 
-    <!-- Bootstrap -->
     <link href="${bootstrapCss}" rel="stylesheet"/>
     <link href="${customPanelCss}" rel="stylesheet"/>
+    <link rel="shortcut icon" href="${favicon}" type="image/x-icon">
+    <link rel="icon" href="${favicon}" type="image/x-icon">
 
-    <%--<link href="${customContainerCss}" rel="stylesheet" />--%>
-    <%--<link href="${languageDropdown}" rel="stylesheet" />--%>
-
-    <!-- localization -->
     <spring:message code="message.login.username" var="username"/>
     <spring:message code="message.login.password" var="password"/>
     <spring:message code="message.registration.confirm" var="confirm"/>
@@ -41,13 +37,6 @@
     <spring:message code="message.go_to_welcome" var="goToWelcome"/>
     <spring:message code="message.user_exist" var="userExistMessage"/>
     <spring:message code="message.registration" var="registration"/>
-
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
 </head>
 <body>
 <div class="container" style="margin-top: 80px;">
@@ -277,8 +266,8 @@
                                 <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a href="${pageContext.request.contextPath}?lang=ru_RU">${russian}</a></li>
-                                <li><a href="${pageContext.request.contextPath}?lang=en">${english}</a></li>
+                                <li><a href="?lang=ru_RU">${russian}</a></li>
+                                <li><a href="?lang=en">${english}</a></li>
                             </ul>
                         </div>
                     </div>
@@ -287,7 +276,7 @@
         </div>
     </div>
 </div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="${jqueryJs}"></script>
 <script src="${bootstrapJs}"></script>
 </body>
 </html>

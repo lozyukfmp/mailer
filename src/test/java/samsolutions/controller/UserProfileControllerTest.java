@@ -70,7 +70,7 @@ public class UserProfileControllerTest
 	@WithMockUser(username = "ArtemLozyuk")
 	public void testGetUserProfile() throws Exception
 	{
-		mockMvc.perform(get("/user/profile"))
+		mockMvc.perform(get("/profile"))
 		       .andExpect(view().name("profile_view"))
 		       .andExpect(model().attribute("userProfile", hasProperty("username", is("ArtemLozyuk"))))
 		       .andExpect(model().attribute("userProfile", hasProperty("firstName", is("Artem"))))
@@ -79,44 +79,11 @@ public class UserProfileControllerTest
 		       .andExpect(model().attribute("userProfile", hasProperty("email", is("lozyuk-artem@mail.ru"))));
 	}
 
-	/*@Test
-	public void testSaveUserProfile() throws Exception
-	{
-		mockMvc.perform(post("/user/profile").param("firstName", "Artem")
-		                                     .param("secondName", "Lozyuk")
-		                                     .param("thirdName", "Nicolaevich")
-		                                     .param("username", "ArtemLozyuk")
-		                                     .param("email", "lozyuk-artem@mail.ru"))
-		       .andExpect(view().name("profile_view"))
-		       .andExpect(model().hasNoErrors())
-		       .andExpect(model().attribute("successProfileChange", "You've been changed profile successfully."))
-		       .andExpect(model().attribute("userProfile", hasProperty("firstName", is("Artem"))))
-		       .andExpect(model().attribute("userProfile", hasProperty("secondName", is("Lozyuk"))))
-		       .andExpect(model().attribute("userProfile", hasProperty("thirdName", is("Nicolaevich"))))
-		       .andExpect(model().attribute("userProfile", hasProperty("email", is("lozyuk-artem@mail.ru"))));
-	}
-
-	@Test
-	public void testFailSaveUserProfile() throws Exception
-	{
-		mockMvc.perform(post("/user/profile").param("firstName", "Artem")
-		                                     .param("secondName", "Lozyuk")
-		                                     .param("thirdName", "Nicolaevich")
-		                                     .param("username", "ArtemLozyuk")
-		                                     .param("email", "lozyuk-mail.ru"))
-		       .andExpect(view().name("profile_view"))
-		       .andExpect(model().hasErrors())
-		       .andExpect(model().attribute("userProfile", hasProperty("firstName", is("Artem"))))
-		       .andExpect(model().attribute("userProfile", hasProperty("secondName", is("Lozyuk"))))
-		       .andExpect(model().attribute("userProfile", hasProperty("thirdName", is("Nicolaevich"))))
-		       .andExpect(model().attribute("userProfile", hasProperty("email", is("lozyuk-mail.ru"))));
-	}*/
-
 	@Test
 	@WithMockUser(username = "ArtemLozyuk")
 	public void testGetUserProfileJson() throws Exception
 	{
-		mockMvc.perform(get("/user/profile/info"))
+		mockMvc.perform(get("/profile/info"))
 		       .andExpect(status().isOk())
 		       .andExpect(jsonPath("$.firstName", is("Artem")))
 		       .andExpect(jsonPath("$.secondName", is("Lozyuk")))

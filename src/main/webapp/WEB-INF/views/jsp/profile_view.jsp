@@ -16,11 +16,13 @@
     <spring:url value="/static/core/css/panel.custom.css" var="customPanelCss"/>
 
     <!--Javascript-->
+    <spring:url value="/static/core/js/jquery-3.1.1.min.js" var="jqueryJs"/>
     <spring:url value="/static/core/js/bootstrap.min.js" var="bootstrapJs"/>
     <spring:url value="/static/core/js/fileinput.min.js" var="fileInputJs"/>
     <spring:url value="/static/core/js/fileinput.custom.js" var="fileInputCustomJs"/>
     <spring:url value="/static/core/js/userProfile.ajax.js" var="userProfileAjaxJs"/>
     <spring:url value="/static/core/js/userProfile.view.js" var="userProfileViewJs"/>
+    <spring:url value="/static/core/js/search.validation.js" var="searchValidationJs"/>
 
     <!-- Styles -->
     <link href="${bootstrapCss}" rel="stylesheet"/>
@@ -53,13 +55,6 @@
     <spring:message code="message.change" var="change"/>
     <spring:message code="message.successProfileChange" var="profileChange"/>
     <spring:message code="message.title.photo" var="photo"/>
-
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
 </head>
 <body>
 <jsp:include page="${request.contextPath}/userHeader"></jsp:include>
@@ -203,11 +198,12 @@
         </div>
     </div>
 </div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="${jqueryJs}"></script>
 <script src="${bootstrapJs}"></script>
 <script src="${fileInputJs}"></script>
 <script src="${fileInputCustomJs}"></script>
 <script src="${userProfileAjaxJs}"></script>
 <script src="${userProfileViewJs}"></script>
+<script src="${searchValidationJs}"></script>
 </body>
 </html>

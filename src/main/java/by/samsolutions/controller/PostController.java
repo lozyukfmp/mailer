@@ -34,7 +34,7 @@ import by.samsolutions.service.PostService;
 import by.samsolutions.service.exception.ServiceException;
 
 @RestController
-@RequestMapping("/post")
+@RequestMapping("post")
 public class PostController
 {
 
@@ -93,6 +93,8 @@ public class PostController
 
 			ModelAndView modelAndView = new ModelAndView();
 			modelAndView.addObject("message", postDto);
+			modelAndView.addObject("commentList", postDto.getComments());
+
 			modelAndView.setViewName("message");
 
 			return modelAndView;
@@ -103,7 +105,7 @@ public class PostController
 		}
 	}
 
-	@PostMapping(value = "/create")
+	@PostMapping("/create")
 	public
 	@ResponseBody
 	ResponseEntity createPost(@RequestParam(value = "postImage", required = false) MultipartFile file,
