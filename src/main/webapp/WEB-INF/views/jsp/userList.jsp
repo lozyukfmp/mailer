@@ -17,18 +17,20 @@
             <td>
                 <c:choose>
                     <c:when test="${user.enabled}">
-                        <input type="checkbox" checked data-username="${user.username}" data-on="${unblocked}" data-off="${blocked}" data-toggle="toggle" data-onstyle="success" data-offstyle="danger">
+                        <input type="checkbox" checked data-username="${user.username}" data-on="${unblocked}"
+                               data-off="${blocked}" data-toggle="toggle" data-onstyle="success" data-offstyle="danger">
                     </c:when>
                     <c:otherwise>
-                        <input type="checkbox" data-username="${user.username}" data-on="${unblocked}" data-off="${blocked}" data-toggle="toggle" data-onstyle="success" data-offstyle="danger">
+                        <input type="checkbox" data-username="${user.username}" data-on="${unblocked}" data-off="${blocked}"
+                               data-toggle="toggle" data-onstyle="success" data-offstyle="danger">
                     </c:otherwise>
                 </c:choose>
             </td>
             <td>
-                <form action="/user" class="form-inline">
+                <form action="user" class="form-inline">
                     <input type="hidden" name="username" value="${user.username}"/>
                     <button type="submit" class="btn btn-warning">
-                        ${view} <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+                            ${view} <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
                     </button>
                 </form>
             </td>

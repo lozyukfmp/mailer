@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -24,8 +26,12 @@ import by.samsolutions.service.exception.UserNotFoundException;
 @Service
 public class UserServiceImpl extends GenericServiceImpl<UserDto, UserEntity, String> implements UserService
 {
+	private static final Logger logger = LogManager.getLogger(UserServiceImpl.class);
+
 	private UserDao       userDao;
 	private UserConverter userConverter;
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	public UserServiceImpl()
 	{
@@ -40,13 +46,11 @@ public class UserServiceImpl extends GenericServiceImpl<UserDto, UserEntity, Str
 		this.userConverter = userConverter;
 	}
 
-	@Autowired
-	private PasswordEncoder passwordEncoder;
-
 	@Override
 	@Transactional
 	public UserDto create(final UserDto dto) throws ServiceException
 	{
+		logger.trace("CREATING USER : " + dto);
 		try
 		{
 			UserEntity userEntity = userConverter.toEntity(dto);
@@ -66,12 +70,9 @@ public class UserServiceImpl extends GenericServiceImpl<UserDto, UserEntity, Str
 
 			return resultDto;
 		}
-		catch (DaoException e)
+		catch (DaoException | ConverterException e)
 		{
-			throw new ServiceException(e);
-		}
-		catch (ConverterException e)
-		{
+			logger.error(e.getMessage(), e);
 			throw new ServiceException(e);
 		}
 	}
@@ -80,6 +81,7 @@ public class UserServiceImpl extends GenericServiceImpl<UserDto, UserEntity, Str
 	@Transactional(readOnly = true)
 	public UserDto getWithProfileByUsername(final String username) throws ServiceException
 	{
+		logger.trace("GETTING USER WITH PROFILE : " + username);
 		try
 		{
 			UserEntity userEntity = userDao.getByUsernameWithProfile(username);
@@ -87,13 +89,10 @@ public class UserServiceImpl extends GenericServiceImpl<UserDto, UserEntity, Str
 
 			return userDto;
 		}
-		catch (DaoException e)
+		catch (DaoException | ConverterException e)
 		{
+			logger.error(e.getMessage(), e);
 			throw new UserNotFoundException();
-		}
-		catch (ConverterException e)
-		{
-			throw new ServiceException(e);
 		}
 	}
 
@@ -101,12 +100,14 @@ public class UserServiceImpl extends GenericServiceImpl<UserDto, UserEntity, Str
 	@Transactional
 	public void setUserEnabled(final String username, final Boolean enabled) throws ServiceException
 	{
+		logger.trace("TRYING TO LOCK/UNLOCK USER WITH USERNAME = " + username);
 		try
 		{
 			userDao.setUserEnabled(username, enabled);
 		}
 		catch (DaoException e)
 		{
+			logger.error(e.getMessage(), e);
 			throw new ServiceException(e);
 		}
 
@@ -116,16 +117,14 @@ public class UserServiceImpl extends GenericServiceImpl<UserDto, UserEntity, Str
 	@Transactional(readOnly = true)
 	public Collection<UserDto> getAll(final Integer userCount) throws ServiceException
 	{
+		logger.trace("GETTING USERS COUNT = " + userCount);
 		try
 		{
 			return userConverter.toDtoCollection(userDao.getAll(userCount));
 		}
-		catch (ConverterException e)
+		catch (DaoException | ConverterException e)
 		{
-			throw new ServiceException(e);
-		}
-		catch (DaoException e)
-		{
+			logger.error(e.getMessage(), e);
 			throw new ServiceException(e);
 		}
 	}

@@ -3,7 +3,7 @@ var userProfileAjax = (function ($) {
         updateProfile: function (profile, callback) {
             $.ajax({
                 type: "POST",
-                url: "profile/update",
+                url: "/profile/update",
                 dataType: 'json',
                 beforeSend: function (xhr) {
                     xhr.setRequestHeader("Accept", "application/json");

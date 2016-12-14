@@ -5,6 +5,8 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,6 +34,8 @@ import by.samsolutions.service.exception.ServiceException;
 public class UserProfileController
 {
 
+	private static final Logger logger = LogManager.getLogger(UserProfileController.class);
+
 	@Autowired
 	HttpServletRequest request;
 
@@ -44,6 +48,8 @@ public class UserProfileController
 	@GetMapping
 	public ModelAndView getUserProfileView() throws ControllerException
 	{
+		logger.trace("GETTING USER PROFILE VIEW");
+
 		try
 		{
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -54,6 +60,7 @@ public class UserProfileController
 		}
 		catch (ServiceException e)
 		{
+			logger.error(e.getMessage(), e);
 			throw new ControllerException(e);
 		}
 
@@ -64,6 +71,8 @@ public class UserProfileController
 	@ResponseBody
 	ResponseEntity<UserProfileDto> getUserProfile() throws ControllerException
 	{
+		logger.trace("GETTING USER PROFILE JSON");
+
 		try
 		{
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -75,6 +84,7 @@ public class UserProfileController
 		}
 		catch (ServiceException e)
 		{
+			logger.error(e);
 			throw new ControllerException(e);
 		}
 	}
@@ -83,6 +93,8 @@ public class UserProfileController
 	public ModelAndView saveUserProfile(@ModelAttribute("userProfile") @Valid final UserProfileDto userProfileDto,
 	                                    final BindingResult userProfileBindingResult) throws ControllerException
 	{
+		logger.trace("SAVING USER PROFILE :" + userProfileDto);
+
 		try
 		{
 			if (!userProfileBindingResult.hasErrors())
@@ -99,6 +111,7 @@ public class UserProfileController
 		}
 		catch (ServiceException e)
 		{
+			logger.error(e.getMessage(), e);
 			throw new ControllerException(e);
 		}
 
@@ -109,6 +122,8 @@ public class UserProfileController
 	@ResponseBody
 	ResponseEntity<UserProfileDto> loadUserPhoto(@RequestParam("userImage") MultipartFile file) throws ControllerException
 	{
+		logger.trace("UPLOADING PHOTO " + file.getOriginalFilename());
+
 		try
 		{
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -120,6 +135,7 @@ public class UserProfileController
 		}
 		catch (ServiceException | IOException e)
 		{
+			logger.error(e.getMessage(), e);
 			throw new ControllerException(e);
 		}
 	}
@@ -129,6 +145,8 @@ public class UserProfileController
 	@ResponseBody
 	ResponseEntity<UserProfileDto> deleteUserPhoto() throws ControllerException
 	{
+		logger.trace("DELETING PHOTO");
+
 		try
 		{
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -139,6 +157,7 @@ public class UserProfileController
 		}
 		catch (ServiceException e)
 		{
+			logger.error(e.getMessage(), e);
 			throw new ControllerException(e);
 		}
 	}

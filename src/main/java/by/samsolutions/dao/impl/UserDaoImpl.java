@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.persistence.NoResultException;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Repository;
 
 import by.samsolutions.dao.UserDao;
@@ -13,6 +15,7 @@ import by.samsolutions.entity.user.UserEntity;
 @Repository
 public class UserDaoImpl extends GenericDaoImpl<UserEntity, String> implements UserDao
 {
+	private static final Logger logger = LogManager.getLogger(UserDaoImpl.class);
 
 	public UserDaoImpl()
 	{
@@ -22,13 +25,14 @@ public class UserDaoImpl extends GenericDaoImpl<UserEntity, String> implements U
 	@Override
 	public List<UserEntity> all() throws DaoException
 	{
+		logger.trace("GETTING ALL USERS");
 		try
 		{
-			return entityManager.createNamedQuery("User.findAll", UserEntity.class)
-			             .getResultList();
+			return entityManager.createNamedQuery("User.findAll", UserEntity.class).getResultList();
 		}
 		catch (Exception e)
 		{
+			logger.error(e.getMessage(), e);
 			throw new DaoException(e);
 		}
 	}
@@ -36,6 +40,7 @@ public class UserDaoImpl extends GenericDaoImpl<UserEntity, String> implements U
 	@Override
 	public List<UserEntity> getAll(Integer userCount) throws DaoException
 	{
+		logger.trace("GETTING ALL USERS (COUNT = " + userCount + " )");
 		try
 		{
 			return entityManager.createNamedQuery("User.findAllWithProfile", UserEntity.class)
@@ -45,6 +50,7 @@ public class UserDaoImpl extends GenericDaoImpl<UserEntity, String> implements U
 		}
 		catch (Exception e)
 		{
+			logger.error(e.getMessage(), e);
 			throw new DaoException(e);
 		}
 	}
@@ -52,6 +58,7 @@ public class UserDaoImpl extends GenericDaoImpl<UserEntity, String> implements U
 	@Override
 	public UserEntity getByUsernameWithProfile(final String username) throws DaoException
 	{
+		logger.trace("GETTING USER WITH PROFILE , USERNAME = " + username);
 		try
 		{
 			return entityManager.createNamedQuery("User.findWithProfileByUsername", UserEntity.class)
@@ -60,6 +67,7 @@ public class UserDaoImpl extends GenericDaoImpl<UserEntity, String> implements U
 		}
 		catch (NoResultException e)
 		{
+			logger.error(e.getMessage(), e);
 			throw new DaoException(e);
 		}
 	}
@@ -67,9 +75,19 @@ public class UserDaoImpl extends GenericDaoImpl<UserEntity, String> implements U
 	@Override
 	public void setUserEnabled(final String username, final Boolean enabled) throws DaoException
 	{
-		entityManager.createNamedQuery("User.setEnabled")
-		             .setParameter("enabled", enabled)
-		             .setParameter("username", username)
-		             .executeUpdate();
+		logger.trace("TRYING TO LOCK/UNLOCK USER (USERNAME = " + username + ").");
+		try
+		{
+
+			entityManager.createNamedQuery("User.setEnabled")
+			             .setParameter("enabled", enabled)
+			             .setParameter("username", username)
+			             .executeUpdate();
+		}
+		catch (Exception e)
+		{
+			logger.error(e.getMessage(), e);
+			throw new DaoException(e);
+		}
 	}
 }

@@ -20,21 +20,9 @@ import by.samsolutions.validation.PasswordValidator;
 @ContextConfiguration
 public class PasswordValidatorTest
 {
-	@Configuration
-	@PropertySource(value = "classpath:/validation/regexp.properties")
-	static class PasswordValidatorConfiguration {
-
-		@Bean
-		public PasswordValidator passwordValidator()
-		{
-			return new PasswordValidator();
-		}
-	}
-
-	@Autowired
-	private PasswordValidator          passwordValidator;
 	private static ConstraintValidatorContext context;
-
+	@Autowired
+	private        PasswordValidator          passwordValidator;
 	private String[] validPasswords   = {"arTem234"/*, "blablA2", "ArTeM1"*/};
 	private String[] invalidPasswords = {"arT2", "sdfb", "AAA1s"};
 
@@ -61,6 +49,18 @@ public class PasswordValidatorTest
 		{
 			boolean valid = passwordValidator.isValid(password, context);
 			Assert.assertEquals(false, valid);
+		}
+	}
+
+	@Configuration
+	@PropertySource(value = "classpath:/validation/regexp.properties")
+	static class PasswordValidatorConfiguration
+	{
+
+		@Bean
+		public PasswordValidator passwordValidator()
+		{
+			return new PasswordValidator();
 		}
 	}
 }

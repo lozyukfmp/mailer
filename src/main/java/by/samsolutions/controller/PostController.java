@@ -8,6 +8,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
@@ -38,6 +40,8 @@ import by.samsolutions.service.exception.ServiceException;
 public class PostController
 {
 
+	private static final Logger logger = LogManager.getLogger(PostController.class);
+
 	@Autowired
 	private HttpServletRequest request;
 
@@ -53,6 +57,7 @@ public class PostController
 	@GetMapping("/all/{username}/{messageCount}")
 	public ModelAndView getPostList(@PathVariable String username, @PathVariable Integer messageCount) throws ControllerException
 	{
+		logger.trace("GETTING POSTS(COUNT = " + messageCount + ") WITH USERNAME = " + username);
 		try
 		{
 			Collection<PostDto> postDtoCollection = postService.getAll(username, messageCount);
@@ -65,6 +70,7 @@ public class PostController
 		}
 		catch (ServiceException e)
 		{
+			logger.error(e);
 			throw new ControllerException(e);
 		}
 	}
@@ -72,6 +78,7 @@ public class PostController
 	@GetMapping("/{id}")
 	public ResponseEntity<PostDto> getPost(@PathVariable Integer id) throws ControllerException
 	{
+		logger.trace("GETTING POST BY ID = " + id);
 		try
 		{
 			PostDto postDto = postService.find(id);
@@ -80,6 +87,7 @@ public class PostController
 		}
 		catch (ServiceException e)
 		{
+			logger.error(e);
 			throw new ControllerException(e);
 		}
 	}
@@ -87,6 +95,7 @@ public class PostController
 	@GetMapping("/view/{id}")
 	public ModelAndView getPostView(@PathVariable Integer id) throws ControllerException
 	{
+		logger.trace("GETTING POST VIEW BY ID = " + id);
 		try
 		{
 			PostDto postDto = postService.find(id);
@@ -101,6 +110,7 @@ public class PostController
 		}
 		catch (ServiceException e)
 		{
+			logger.error(e);
 			throw new ControllerException(e);
 		}
 	}
@@ -109,8 +119,9 @@ public class PostController
 	public
 	@ResponseBody
 	ResponseEntity createPost(@RequestParam(value = "postImage", required = false) MultipartFile file,
-	                                   @RequestParam("postMessage") String postMessage, Locale locale) throws ControllerException
+	                          @RequestParam("postMessage") String postMessage, Locale locale) throws ControllerException
 	{
+		logger.trace("CREATING POST " + postMessage);
 		try
 		{
 			PostDto post = new ObjectMapper().readValue(postMessage, PostDto.class);
@@ -124,12 +135,14 @@ public class PostController
 		}
 		catch (TooLargeFileException e)
 		{
+			logger.error(e.getMessage(), e);
 			Map<String, String> response = new HashMap<>();
 			response.put("error", messageSource.getMessage("message.file.long", null, locale));
 			return new ResponseEntity(response, HttpStatus.BAD_REQUEST);
 		}
 		catch (ServiceException | IOException e)
 		{
+			logger.error(e.getMessage(), e);
 			throw new ControllerException(e);
 		}
 
@@ -141,6 +154,7 @@ public class PostController
 	ResponseEntity updatePost(@RequestParam(value = "postImage", required = false) MultipartFile file,
 	                          @RequestParam("postMessage") String postMessage, Locale locale) throws ControllerException
 	{
+		logger.trace("UPDATING POST " + postMessage);
 		try
 		{
 			PostDto post = new ObjectMapper().readValue(postMessage, PostDto.class);
@@ -153,12 +167,14 @@ public class PostController
 		}
 		catch (TooLargeFileException e)
 		{
+			logger.error(e.getMessage(), e);
 			Map<String, String> response = new HashMap<>();
 			response.put("error", messageSource.getMessage("message.file.long", null, locale));
 			return new ResponseEntity(response, HttpStatus.BAD_REQUEST);
 		}
 		catch (ServiceException | IOException e)
 		{
+			logger.error(e.getMessage(), e);
 			throw new ControllerException(e);
 		}
 
@@ -169,6 +185,7 @@ public class PostController
 	@ResponseBody
 	ResponseEntity<PostDto> deletePost(@PathVariable Integer id) throws ControllerException
 	{
+		logger.trace("DELETING POST WITH ID = " + id);
 		try
 		{
 			postService.delete(id);
@@ -176,6 +193,7 @@ public class PostController
 		}
 		catch (ServiceException e)
 		{
+			logger.error(e.getMessage(), e);
 			throw new ControllerException(e);
 		}
 	}

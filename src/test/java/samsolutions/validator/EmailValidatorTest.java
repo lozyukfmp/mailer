@@ -20,21 +20,9 @@ import by.samsolutions.validation.EmailValidator;
 @ContextConfiguration
 public class EmailValidatorTest
 {
-	@Configuration
-	@PropertySource(value = "classpath:/validation/regexp.properties")
-	static class EmailValidatorConfiguration {
-
-		@Bean
-		public EmailValidator emailValidator()
-		{
-			return new EmailValidator();
-		}
-	}
-
-	@Autowired
-	private EmailValidator             emailValidator;
 	private static ConstraintValidatorContext context;
-
+	@Autowired
+	private        EmailValidator             emailValidator;
 	private String[] validEmails   = {"arTem234@mail.com", "blablA2@mail.ru", "ArTeM1@gmail.com"};
 	private String[] invalidEmails = {"arT2.com", "sdfb.sdfs", "AAA1s.sfsdf"};
 
@@ -61,6 +49,18 @@ public class EmailValidatorTest
 		{
 			boolean valid = emailValidator.isValid(email, context);
 			Assert.assertEquals(false, valid);
+		}
+	}
+
+	@Configuration
+	@PropertySource(value = "classpath:/validation/regexp.properties")
+	static class EmailValidatorConfiguration
+	{
+
+		@Bean
+		public EmailValidator emailValidator()
+		{
+			return new EmailValidator();
 		}
 	}
 }

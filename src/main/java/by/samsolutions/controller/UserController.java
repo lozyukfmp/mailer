@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
@@ -27,8 +29,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -49,6 +49,7 @@ import by.samsolutions.service.exception.UserNotFoundException;
 @SessionAttributes({"user", "userProfile"})
 public class UserController
 {
+	private static final Logger logger = LogManager.getLogger(UserController.class);
 
 	@Autowired
 	private MessageSource messageSource;
@@ -65,12 +66,13 @@ public class UserController
 	@Autowired
 	private PostService postService;
 
-	@GetMapping(value = "login-page")
+	@GetMapping("login-page")
 	public ModelAndView login(@RequestParam(value = "error", required = false) final String error,
 	                          @RequestParam(value = "logout", required = false) final String logout,
 	                          @RequestParam(value = "success", required = false) final String success)
 	{
 
+		logger.trace("GETTING LOGIN PAGE");
 		ModelAndView modelAndView = new ModelAndView();
 
 		if (error != null)
@@ -96,6 +98,8 @@ public class UserController
 	@GetMapping("user/{username}")
 	public ModelAndView getUser(@PathVariable String username) throws ControllerException
 	{
+		logger.trace("GETTING USER WITH USERNAME = " + username);
+
 		ModelAndView modelAndView = new ModelAndView();
 
 		try
@@ -108,6 +112,7 @@ public class UserController
 		}
 		catch (UserNotFoundException e)
 		{
+			logger.info("USER WITH USERNAME " + username + " NOT FOUND", e);
 			modelAndView.setViewName("user_not_found");
 			modelAndView.addObject("username", username);
 
@@ -115,6 +120,7 @@ public class UserController
 		}
 		catch (ServiceException e)
 		{
+			logger.error(e.getMessage(), e);
 			throw new ControllerException(e);
 		}
 	}
@@ -122,6 +128,7 @@ public class UserController
 	@GetMapping("/user/all/{userCount}")
 	public ModelAndView getUserList(@PathVariable Integer userCount) throws ControllerException
 	{
+		logger.trace("GETTING USER LIST (COUNT = " + userCount + ")");
 		try
 		{
 			Collection<UserDto> userDtoCollection = userService.getAll(userCount);
@@ -133,12 +140,15 @@ public class UserController
 		}
 		catch (ServiceException e)
 		{
+			logger.error(e.getMessage(), e);
 			throw new ControllerException(e);
 		}
 	}
+
 	@GetMapping("admin")
 	public ModelAndView getAdminPage() throws ControllerException
 	{
+		logger.trace("GETTING ADMIN PAGE");
 		try
 		{
 			Collection<UserDto> userDtoCollection = userService.getAll(2);
@@ -151,12 +161,17 @@ public class UserController
 		}
 		catch (ServiceException e)
 		{
+			logger.error(e.getMessage(), e);
 			throw new ControllerException(e);
 		}
 	}
 
 	@PostMapping("/enable/{username}/{enabled}")
-	public @ResponseBody ResponseEntity setUserEnabled(@PathVariable String username, @PathVariable Boolean enabled) throws ControllerException{
+	public
+	@ResponseBody
+	ResponseEntity setUserEnabled(@PathVariable String username, @PathVariable Boolean enabled) throws ControllerException
+	{
+		logger.trace("TRYING TO LOCK/UNLOCK USER : " + username);
 		try
 		{
 			userService.setUserEnabled(username, enabled);
@@ -164,6 +179,7 @@ public class UserController
 		}
 		catch (ServiceException e)
 		{
+			logger.error(e.getMessage(), e);
 			throw new ControllerException(e);
 		}
 	}
@@ -171,6 +187,7 @@ public class UserController
 	@GetMapping("user")
 	public ModelAndView getUserPage(@RequestParam(required = false) String username) throws ControllerException
 	{
+		logger.trace("GETTING USER PAGE");
 
 		if (username == null)
 		{
@@ -194,6 +211,7 @@ public class UserController
 		}
 		catch (UserNotFoundException e)
 		{
+			logger.info("USER WITH USERNAME : " + username + " NOT FOUND", e);
 			modelAndView.setViewName("user_not_found");
 			modelAndView.addObject("username", username);
 
@@ -201,6 +219,7 @@ public class UserController
 		}
 		catch (ServiceException e)
 		{
+			logger.error(e.getMessage(), e);
 			throw new ControllerException(e);
 		}
 	}
@@ -210,6 +229,8 @@ public class UserController
 	@ResponseBody
 	ResponseEntity getRegexpMap(Locale locale)
 	{
+
+		logger.trace("GETTING VALIDATION MAP");
 
 		String imageMessage = messageSource.getMessage("message.image.NotEmpty", null, locale);
 		String postMessage = messageSource.getMessage("message.post.NotEmpty", null, locale);
@@ -236,6 +257,8 @@ public class UserController
 	@GetMapping("logout")
 	public String logout(final HttpServletRequest request, final HttpServletResponse response)
 	{
+		logger.trace("LOGGIN OUT");
+
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		if (auth != null)
 		{
@@ -248,6 +271,8 @@ public class UserController
 	@GetMapping("registration-page")
 	public String showRegistrationForm(Model model, HttpSession session)
 	{
+
+		logger.trace("GETTING REGISTRATION PAGE");
 
 		Model sessionModel = (Model) session.getAttribute("model");
 		if (sessionModel != null)
@@ -270,6 +295,9 @@ public class UserController
 	                           final BindingResult userProfileBindingResult, final Model model, final HttpSession session)
 					throws ControllerException
 	{
+
+		logger.trace("REGISTERING USER");
+
 		try
 		{
 			if (!userBindingResult.hasErrors() && !userProfileBindingResult.hasErrors())
@@ -292,6 +320,7 @@ public class UserController
 		}
 		catch (UserAlreadyExistsException e)
 		{
+			logger.info("USER ALREADY EXISTS (USERNAME = " + userDto.getUsername() + "). ", e);
 			model.addAttribute("usernameExist", "User with the same username already exists");
 			session.setAttribute("model", model);
 
@@ -299,6 +328,7 @@ public class UserController
 		}
 		catch (ServiceException e)
 		{
+			logger.error(e);
 			throw new ControllerException(e);
 		}
 	}

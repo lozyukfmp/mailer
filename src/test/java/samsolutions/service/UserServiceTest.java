@@ -30,44 +30,16 @@ import by.samsolutions.service.impl.UserServiceImpl;
 @ContextConfiguration
 public class UserServiceTest
 {
-	@Configuration
-	static class UserServiceConfiguration {
-
-		@Bean
-		public UserDao userDao() {
-			return Mockito.mock(UserDao.class);
-		}
-
-		@Bean
-		public UserConverter userConverter() {
-			return new UserConverter();
-		}
-
-		@Bean
-		public UserProfileConverter userProfileConverter() {
-			return new UserProfileConverter();
-		}
-
-		@Bean
-		public PasswordEncoder passwordEncoder(){
-			return new BCryptPasswordEncoder();
-		}
-	}
-
 	private UserService userService;
 	private UserEntity  user;
 	private UserDto     userDto;
 	private UserEntity  sucessUser;
-
 	@Autowired
 	private UserDao userDao;
-
 	@Autowired
 	private UserConverter userConverter;
-
 	@Autowired
 	private UserProfileConverter userProfileConverter;
-
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
@@ -93,6 +65,35 @@ public class UserServiceTest
 	public void testCreateUserFailure() throws ServiceException
 	{
 		userService.create(userDto);
+	}
+
+	@Configuration
+	static class UserServiceConfiguration
+	{
+
+		@Bean
+		public UserDao userDao()
+		{
+			return Mockito.mock(UserDao.class);
+		}
+
+		@Bean
+		public UserConverter userConverter()
+		{
+			return new UserConverter();
+		}
+
+		@Bean
+		public UserProfileConverter userProfileConverter()
+		{
+			return new UserProfileConverter();
+		}
+
+		@Bean
+		public PasswordEncoder passwordEncoder()
+		{
+			return new BCryptPasswordEncoder();
+		}
 	}
 
 }

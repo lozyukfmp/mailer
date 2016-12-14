@@ -12,6 +12,8 @@ import by.samsolutions.service.exception.ServiceException;
 public interface UserService extends GenericService<UserDto, UserEntity, String>
 {
 	Collection<UserDto> getAll(Integer userCount) throws ServiceException;
+
 	UserDto getWithProfileByUsername(String username) throws ServiceException;
+
 	void setUserEnabled(String username, Boolean enabled) throws ServiceException;
 }

@@ -60,7 +60,7 @@
                 <img src="${profile.imageUrl}" class="img-thumbnail" width="100%" height="300"/>
                 <c:if test="${profile.username == pageContext.request.userPrincipal.name}">
                     <div class="tool-panel">
-                        <a href="${pageContext.request.contextPath}/user/profile">
+                        <a href="${pageContext.request.contextPath}/profile">
                             <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                         </a>
                     </div>
@@ -102,7 +102,8 @@
             </div>
         </div>
         <c:if test="${profile.username == pageContext.request.userPrincipal.name}">
-            <button style="font-size: 17px; font-weight: bolder;" id="view-create-message-modal-button" class="btn btn-block btn-info">
+            <button style="font-size: 17px; font-weight: bolder;" id="view-create-message-modal-button"
+                    class="btn btn-block btn-info">
                     ${send} <span class="glyphicon glyphicon-send" aria-hidden="true"></span>
             </button>
         </c:if>

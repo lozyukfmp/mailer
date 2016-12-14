@@ -28,10 +28,12 @@ import lombok.NoArgsConstructor;
 @Builder
 @Table(name = "user")
 @NamedQueries({
-				@NamedQuery(name = "User.setEnabled", query = "update UserEntity u set u.enabled = :enabled where u.username = :username"),
+				@NamedQuery(name = "User.setEnabled", query = "update UserEntity u set u.enabled = :enabled where u.username = " +
+								":username"),
 				@NamedQuery(name = "User.findAll", query = "select u from UserEntity u"),
 				@NamedQuery(name = "User.findAllWithProfile", query = "select u from UserEntity u left join fetch u.profile"),
-				@NamedQuery(name = "User.findWithProfileByUsername", query = "select u from UserEntity u left join fetch u.profile where u.username = :username")
+				@NamedQuery(name = "User.findWithProfileByUsername", query = "select u from UserEntity u left join fetch u.profile where" +
+								" u.username = :username")
 })
 public class UserEntity implements BaseEntity
 {

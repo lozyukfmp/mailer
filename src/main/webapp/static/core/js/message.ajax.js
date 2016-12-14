@@ -54,7 +54,7 @@ var messageAjax = (function ($) {
                 }
             });
         },
-        getValidationMap: function(callback) {
+        getValidationMap: function (callback) {
             $.ajax({
                 type: "GET",
                 url: "validation",

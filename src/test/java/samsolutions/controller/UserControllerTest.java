@@ -1,7 +1,6 @@
 package samsolutions.controller;
 
 import java.util.Arrays;
-import java.util.Date;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -19,9 +18,6 @@ import by.samsolutions.controller.UserController;
 import by.samsolutions.dto.PostDto;
 import by.samsolutions.dto.UserDto;
 import by.samsolutions.dto.UserProfileDto;
-import by.samsolutions.entity.PostEntity;
-import by.samsolutions.entity.user.UserEntity;
-import by.samsolutions.entity.user.UserProfileEntity;
 import by.samsolutions.service.PostService;
 import by.samsolutions.service.UserProfileService;
 import by.samsolutions.service.UserService;
@@ -30,7 +26,7 @@ import samsolutions.configuration.WebTestConfiguration;
 
 import static org.hamcrest.Matchers.*;
 import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -59,12 +55,12 @@ public class UserControllerTest
 	public void init() throws ServiceException
 	{
 		UserProfileDto userProfile = UserProfileDto.builder()
-		                                              .username("ArtemLozyuk")
-		                                              .firstName("Artem")
-		                                              .secondName("Lozyuk")
-		                                              .thirdName("Nicolaevich")
-		                                              .email("lozyuk-artem@mail.ru")
-		                                              .build();
+		                                           .username("ArtemLozyuk")
+		                                           .firstName("Artem")
+		                                           .secondName("Lozyuk")
+		                                           .thirdName("Nicolaevich")
+		                                           .email("lozyuk-artem@mail.ru")
+		                                           .build();
 
 		PostDto firstPost = PostDto.builder().id("1").text("Some firstPost text").username("ArtemLozyuk").build();
 		PostDto secondPost = PostDto.builder().id("2").text("Some secondPost text").username("ArtemLozyuk").build();

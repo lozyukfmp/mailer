@@ -1,11 +1,11 @@
 ;(function () {
 
     var validationMap;
-    
-    messageAjax.getValidationMap(function(response) {
+
+    messageAjax.getValidationMap(function (response) {
         validationMap = response;
     });
-    
+
     var messageContainer = $("#message-container");
     var messagePagingContainer = $("#paging-message-container");
 
@@ -26,15 +26,15 @@
         var image = $("#post-image")[0].files[0];
         var result = true;
 
-        if(imageUrl == undefined && image == undefined) {
+        if (imageUrl == undefined && image == undefined) {
             imageErrorDiv.html("<div class='alert alert-danger'>" +
-            validationMap["image"]["message"] + 
-            "</div>");
+                validationMap["image"]["message"] +
+                "</div>");
 
             result = false;
         }
 
-        if(!(new RegExp(validationMap["text"]["regexp"])).test(text)) {
+        if (!(new RegExp(validationMap["text"]["regexp"])).test(text)) {
             postErrorDiv.html("<div class='alert alert-danger'>" +
                 validationMap["text"]["message"] +
                 "</div>");
@@ -93,26 +93,26 @@
 
         if (isEdit) {
             createMessageButton.on('click', function () {
-                if(validate(validationMap, createMessageModal.find("img").attr('src'), $("#message-text").val())) {
+                if (validate(validationMap, createMessageModal.find("img").attr('src'), $("#message-text").val())) {
                     messageAjax.updateMessage(getMessageData(message), function () {
                         showMessageList($("#paging-message-container").attr("data-paging"), selfUsername);
                         createMessageModal.modal("hide");
-                    }, function(response) {
+                    }, function (response) {
                         var imageErrorDiv = $("#image-error");
                         var responseObj = $.parseJSON(response.responseText);
                         imageErrorDiv.html("<div class='alert alert-danger'>" +
-                            responseObj.error + 
+                            responseObj.error +
                             "</div>");
                     });
                 }
             });
         } else {
             createMessageButton.on('click', function () {
-                if(validate(validationMap, createMessageModal.find("img").attr('src'), $("#message-text").val())) {
+                if (validate(validationMap, createMessageModal.find("img").attr('src'), $("#message-text").val())) {
                     messageAjax.createMessage(getMessageData(message), function () {
                         showMessageList($("#paging-message-container").attr("data-paging"), selfUsername);
                         createMessageModal.modal("hide");
-                    }, function(response) {
+                    }, function (response) {
                         var imageErrorDiv = $("#image-error");
                         var responseObj = $.parseJSON(response.responseText);
                         imageErrorDiv.html("<div class='alert alert-danger'>" +
@@ -120,7 +120,7 @@
                             "</div>");
                     });
 
-                    
+
                 }
 
             });
@@ -177,5 +177,5 @@
     messagePagingContainer.on('click', '.turn-paging.paging-message', function () {
         showMessageList(2, selfUsername);
     });
-    
+
 })();

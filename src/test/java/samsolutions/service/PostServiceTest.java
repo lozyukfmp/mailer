@@ -37,41 +37,7 @@ import static org.mockito.Matchers.any;
 @ContextConfiguration
 public class PostServiceTest
 {
-	@Configuration
-	static class PostServiceConfiguration
-	{
-
-		@Bean
-		public PostDao postDao()
-		{
-			return Mockito.mock(PostDao.class);
-		}
-
-		@Bean
-		public CommentDao commentDao()
-		{
-			return Mockito.mock(CommentDao.class);
-		}
-
-		@Bean
-		public PostConverter postConverter()
-		{
-			return new PostConverter();
-		}
-
-		@Bean
-		public CommentConverter commentConverter()
-		{
-			return new CommentConverter();
-		}
-
-		@Bean
-		public GenericDao<UserEntity, String> userDao()
-		{
-			return Mockito.mock(GenericDao.class);
-		}
-	}
-
+	private final List<PostEntity> postList = new ArrayList<>();
 	@Autowired
 	private PostDao postDao;
 
@@ -88,8 +54,6 @@ public class PostServiceTest
 	private GenericDao<UserEntity, String> userDao;
 
 	private PostService postService;
-
-	private final List<PostEntity> postList = new ArrayList<>();
 
 	@Before
 	public void initPostList() throws DaoException
@@ -212,5 +176,40 @@ public class PostServiceTest
 		final Collection<PostDto> posts = postService.getAll("Artem", 2);
 
 		Assert.assertEquals(posts.size(), 2);
+	}
+
+	@Configuration
+	static class PostServiceConfiguration
+	{
+
+		@Bean
+		public PostDao postDao()
+		{
+			return Mockito.mock(PostDao.class);
+		}
+
+		@Bean
+		public CommentDao commentDao()
+		{
+			return Mockito.mock(CommentDao.class);
+		}
+
+		@Bean
+		public PostConverter postConverter()
+		{
+			return new PostConverter();
+		}
+
+		@Bean
+		public CommentConverter commentConverter()
+		{
+			return new CommentConverter();
+		}
+
+		@Bean
+		public GenericDao<UserEntity, String> userDao()
+		{
+			return Mockito.mock(GenericDao.class);
+		}
 	}
 }

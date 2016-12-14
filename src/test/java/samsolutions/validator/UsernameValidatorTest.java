@@ -18,10 +18,9 @@ import samsolutions.configuration.ValidatorTestConfiguration;
 @ContextConfiguration(classes = ValidatorTestConfiguration.class)
 public class UsernameValidatorTest
 {
-	@Autowired
-	private UsernameValidator          usernameValidator;
 	private static ConstraintValidatorContext context;
-
+	@Autowired
+	private        UsernameValidator          usernameValidator;
 	private String[] validUsernameList   = {"arTem234", "bla_blA2", "ArTeM1"};
 	private String[] invalidUsernameList = {"arT2", "sd@fb1", "AAA12$"};
 

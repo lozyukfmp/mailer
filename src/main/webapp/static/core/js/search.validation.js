@@ -1,6 +1,6 @@
-(function($) {
+(function ($) {
     $(".navbar-form.navbar-left").submit(function () {
-        if($("#username-field").val().trim() == "") {
+        if ($("#username-field").val().trim() == "") {
             $("#error-div").fadeIn();
             return false;
         } else {

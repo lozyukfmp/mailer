@@ -23,11 +23,14 @@
     <spring:url value="/static/core/js/userProfile.ajax.js" var="userProfileAjaxJs"/>
     <spring:url value="/static/core/js/userProfile.view.js" var="userProfileViewJs"/>
     <spring:url value="/static/core/js/search.validation.js" var="searchValidationJs"/>
+    <spring:url value="/static/core/pictures/favicon.ico" var="favicon"/>
 
     <!-- Styles -->
     <link href="${bootstrapCss}" rel="stylesheet"/>
     <link href="${fileInputCss}" rel="stylesheet"/>
     <link href="${customPanelCss}" rel="stylesheet"/>
+    <link rel="shortcut icon" href="${favicon}" type="image/x-icon">
+    <link rel="icon" href="${favicon}" type="image/x-icon">
 
     <!-- localization -->
     <spring:message code="message.login.username" var="username"/>
@@ -57,7 +60,7 @@
     <spring:message code="message.title.photo" var="photo"/>
 </head>
 <body>
-<jsp:include page="${request.contextPath}/userHeader"></jsp:include>
+<jsp:include page="user_header.jsp"></jsp:include>
 <div class="row" style="margin: 80px 10px;">
     <div class="col-md-4">
         <div class="panel panel-primary">

@@ -4,6 +4,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -22,6 +24,8 @@ import by.samsolutions.entity.user.UserRoleEntity;
 public class UserDetailsServiceImpl implements UserDetailsService
 {
 
+	private static final Logger logger = LogManager.getLogger(UserDetailsServiceImpl.class);
+
 	@Autowired
 	private UserDao userDao;
 
@@ -29,6 +33,7 @@ public class UserDetailsServiceImpl implements UserDetailsService
 	@Override
 	public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException
 	{
+		logger.trace("GETTING USER WITH USERNAME = " + username);
 		try
 		{
 			UserEntity user = userDao.find(username);
@@ -44,6 +49,7 @@ public class UserDetailsServiceImpl implements UserDetailsService
 		}
 		catch (DaoException e)
 		{
+			logger.error(e.getMessage(), e);
 			throw new UsernameNotFoundException(e.getMessage());
 		}
 	}

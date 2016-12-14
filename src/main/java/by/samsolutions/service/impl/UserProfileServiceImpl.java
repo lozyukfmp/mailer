@@ -1,5 +1,7 @@
 package by.samsolutions.service.impl;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +20,7 @@ import by.samsolutions.service.exception.UserNotFoundException;
 public class UserProfileServiceImpl extends GenericServiceImpl<UserProfileDto, UserProfileEntity, String>
 				implements UserProfileService
 {
+	private static final Logger logger = LogManager.getLogger(UserProfileServiceImpl.class);
 
 	private GenericDao<UserProfileEntity, String> userProfileDao;
 	private UserProfileConverter                  userProfileConverter;
@@ -40,6 +43,7 @@ public class UserProfileServiceImpl extends GenericServiceImpl<UserProfileDto, U
 	@Transactional
 	public UserProfileDto find(final String id) throws ServiceException
 	{
+		logger.trace("GETTING USER PROFILE BY USERNAME = " + id);
 		try
 		{
 			UserProfileEntity userProfileEntity = userProfileDao.find(id);
@@ -53,12 +57,9 @@ public class UserProfileServiceImpl extends GenericServiceImpl<UserProfileDto, U
 
 			return userProfileDto;
 		}
-		catch (DaoException e)
+		catch (DaoException | ConverterException e)
 		{
-			throw new ServiceException(e);
-		}
-		catch (ConverterException e)
-		{
+			logger.error(e.getMessage(), e);
 			throw new ServiceException(e);
 		}
 	}
@@ -67,6 +68,7 @@ public class UserProfileServiceImpl extends GenericServiceImpl<UserProfileDto, U
 	@Transactional
 	public UserProfileDto update(final UserProfileDto dto) throws ServiceException
 	{
+		logger.trace("UPDATING USER PROFILE : " + dto);
 		try
 		{
 			UserProfileEntity userProfileEntity = userProfileDao.find(dto.getUsername());
@@ -75,12 +77,9 @@ public class UserProfileServiceImpl extends GenericServiceImpl<UserProfileDto, U
 
 			return userProfileConverter.toDto(userProfileDao.update(saveProfile));
 		}
-		catch (DaoException e)
+		catch (DaoException | ConverterException e)
 		{
-			throw new ServiceException(e);
-		}
-		catch (ConverterException e)
-		{
+			logger.error(e.getMessage(), e);
 			throw new ServiceException(e);
 		}
 	}
@@ -89,6 +88,7 @@ public class UserProfileServiceImpl extends GenericServiceImpl<UserProfileDto, U
 	@Transactional
 	public UserProfileDto uploadUserPhoto(final String username, final String photoUrl) throws ServiceException
 	{
+		logger.trace("UPLOADING PHOTO (USERNAME = " + username + ", PHOTO_URL = " + photoUrl + ").");
 		try
 		{
 			UserProfileEntity userProfile = userProfileDao.find(username);
@@ -98,12 +98,9 @@ public class UserProfileServiceImpl extends GenericServiceImpl<UserProfileDto, U
 
 			return resultDto;
 		}
-		catch (DaoException e)
+		catch (DaoException | ConverterException e)
 		{
-			throw new ServiceException(e);
-		}
-		catch (ConverterException e)
-		{
+			logger.error(e.getMessage(), e);
 			throw new ServiceException(e);
 		}
 	}

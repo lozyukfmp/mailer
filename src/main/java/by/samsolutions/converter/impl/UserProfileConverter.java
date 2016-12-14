@@ -21,14 +21,14 @@ public class UserProfileConverter implements Converter<UserProfileDto, UserProfi
 	@Override
 	public UserProfileDto toDto(final UserProfileEntity userProfile) throws ConverterException
 	{
-		UserProfileDto userProfileDto =  UserProfileDto.builder()
-		                     .username(userProfile.getUsername())
-		                     .email(userProfile.getEmail())
-		                     .firstName(userProfile.getFirstName())
-		                     .secondName(userProfile.getSecondName())
-		                     .thirdName(userProfile.getThirdName())
-		                     .imageUrl(userProfile.getImageUrl())
-		                     .build();
+		UserProfileDto userProfileDto = UserProfileDto.builder()
+		                                              .username(userProfile.getUsername())
+		                                              .email(userProfile.getEmail())
+		                                              .firstName(userProfile.getFirstName())
+		                                              .secondName(userProfile.getSecondName())
+		                                              .thirdName(userProfile.getThirdName())
+		                                              .imageUrl(userProfile.getImageUrl())
+		                                              .build();
 
 		if (userProfile.getImageUrl() == null)
 		{

@@ -2,7 +2,6 @@ package by.samsolutions.controller.util;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -30,7 +29,7 @@ public class FileUtil
 
 		if (file != null && !file.isEmpty())
 		{
-			if(file.getSize() > maxFileSize)
+			if (file.getSize() > maxFileSize)
 			{
 				throw new TooLargeFileException();
 			}

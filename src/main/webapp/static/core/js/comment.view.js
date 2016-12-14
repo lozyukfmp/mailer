@@ -5,7 +5,7 @@
         createCommentModal = $("#create-comment-modal"),
         validationMap;
 
-    messageAjax.getValidationMap(function(response) {
+    messageAjax.getValidationMap(function (response) {
         validationMap = response;
     });
 
@@ -14,7 +14,7 @@
         var result = true;
         commentErrorDiv.empty();
 
-        if(!(new RegExp(validationMap["text"]["regexp"])).test(text)) {
+        if (!(new RegExp(validationMap["text"]["regexp"])).test(text)) {
             commentErrorDiv.html("<div class='alert alert-danger'>" +
                 validationMap["text"]["message"] +
                 "</div>");
@@ -59,7 +59,7 @@
 
         if (isEdit) {
             createCommentButton.on('click', function () {
-                if(validate(validationMap, $("#create-comment-text").val())) {
+                if (validate(validationMap, $("#create-comment-text").val())) {
                     commentAjax.updateComment(getCommentData(comment), function () {
                         showCommentList($("#paging-comment-container").attr("data-paging"));
                     });
@@ -69,7 +69,7 @@
             });
         } else {
             createCommentButton.on('click', function () {
-                if(validate(validationMap, $("#create-comment-text").val())) {
+                if (validate(validationMap, $("#create-comment-text").val())) {
                     commentAjax.createComment(getCommentData(), function () {
                         showCommentList($("#paging-comment-container").attr("data-paging"));
                     });

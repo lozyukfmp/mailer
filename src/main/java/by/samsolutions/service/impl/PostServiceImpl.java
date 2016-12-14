@@ -2,6 +2,8 @@ package by.samsolutions.service.impl;
 
 import java.util.Collection;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +22,8 @@ import by.samsolutions.service.exception.ServiceException;
 @Service
 public class PostServiceImpl extends GenericServiceImpl<PostDto, PostEntity, Integer> implements PostService
 {
+	private static final Logger logger = LogManager.getLogger(PostServiceImpl.class);
+
 	private PostDao       postDao;
 	private PostConverter postConverter;
 
@@ -42,6 +46,7 @@ public class PostServiceImpl extends GenericServiceImpl<PostDto, PostEntity, Int
 	@Override
 	public PostDto find(final Integer id) throws ServiceException
 	{
+		logger.trace("GETTING POST BY ID = " + id);
 		try
 		{
 			PostEntity post = postDao.find(id);
@@ -56,12 +61,9 @@ public class PostServiceImpl extends GenericServiceImpl<PostDto, PostEntity, Int
 
 			return resultDto;
 		}
-		catch (DaoException e)
+		catch (DaoException | ConverterException e)
 		{
-			throw new ServiceException(e);
-		}
-		catch (ConverterException e)
-		{
+			logger.error(e.getMessage(), e);
 			throw new ServiceException(e);
 		}
 	}
@@ -70,17 +72,15 @@ public class PostServiceImpl extends GenericServiceImpl<PostDto, PostEntity, Int
 	@Transactional(readOnly = true)
 	public Collection<PostDto> getAll(final String username, final Integer messageCount) throws ServiceException
 	{
+		logger.trace("GETTING POSTS BY USERNAME = " + username);
 		try
 		{
 			Collection<PostEntity> postEntityCollection = postDao.all(username, messageCount);
 			return postConverter.toDtoCollection(postEntityCollection);
 		}
-		catch (DaoException e)
+		catch (DaoException | ConverterException e)
 		{
-			throw new ServiceException(e);
-		}
-		catch (ConverterException e)
-		{
+			logger.error(e.getMessage(), e);
 			throw new ServiceException(e);
 		}
 	}

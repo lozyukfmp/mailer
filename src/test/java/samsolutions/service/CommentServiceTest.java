@@ -34,28 +34,7 @@ import static org.mockito.Matchers.any;
 @ContextConfiguration
 public class CommentServiceTest
 {
-	@Configuration
-	static class CommentServiceConfiguration
-	{
-		@Bean
-		public CommentDao commentDao()
-		{
-			return Mockito.mock(CommentDao.class);
-		}
-
-		@Bean
-		public CommentConverter commentConverter()
-		{
-			return new CommentConverter();
-		}
-
-		@Bean
-		public GenericDao<UserEntity, String> userDao()
-		{
-			return Mockito.mock(GenericDao.class);
-		}
-	}
-
+	private final List<CommentEntity> commentList = new ArrayList<>();
 	@Autowired
 	private GenericDao<UserEntity, String> userDao;
 
@@ -68,7 +47,6 @@ public class CommentServiceTest
 	private CommentService commentService;
 
 	private PostEntity post;
-	private final List<CommentEntity> commentList = new ArrayList<>();
 
 	@Before
 	public void initPostList() throws DaoException
@@ -199,5 +177,27 @@ public class CommentServiceTest
 		final Collection<CommentDto> comments = commentService.getCommentListByPostId(1, 2);
 
 		Assert.assertEquals(comments.size(), 2);
+	}
+
+	@Configuration
+	static class CommentServiceConfiguration
+	{
+		@Bean
+		public CommentDao commentDao()
+		{
+			return Mockito.mock(CommentDao.class);
+		}
+
+		@Bean
+		public CommentConverter commentConverter()
+		{
+			return new CommentConverter();
+		}
+
+		@Bean
+		public GenericDao<UserEntity, String> userDao()
+		{
+			return Mockito.mock(GenericDao.class);
+		}
 	}
 }

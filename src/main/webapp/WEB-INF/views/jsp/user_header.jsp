@@ -46,7 +46,7 @@
                     </button>
                     <div id="error-div" style="display: none;">
                         <div class="alert alert-danger">
-                            ${emptySearch}
+                                ${emptySearch}
                         </div>
                     </div>
                 </form>

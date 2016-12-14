@@ -3,10 +3,8 @@ package samsolutions.configuration;
 import org.mockito.Mockito;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.PropertySource;
 
-import by.samsolutions.configuration.root.ValidatorConfiguration;
 import by.samsolutions.controller.CommentController;
 import by.samsolutions.controller.PostController;
 import by.samsolutions.controller.UserController;

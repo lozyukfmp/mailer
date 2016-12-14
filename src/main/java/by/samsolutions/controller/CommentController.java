@@ -2,6 +2,8 @@ package by.samsolutions.controller;
 
 import java.util.Collection;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +27,8 @@ import by.samsolutions.service.exception.ServiceException;
 @RequestMapping("comment")
 public class CommentController
 {
+	private static final Logger logger = LogManager.getLogger(CommentController.class);
+
 	@Autowired
 	private CommentService commentService;
 
@@ -32,6 +36,7 @@ public class CommentController
 	public ModelAndView getCommentListByPostId(@PathVariable final Integer postId, @PathVariable final Integer commentIndex)
 					throws ControllerException
 	{
+		logger.trace("GETTING COMMENTS(COUNT = " + commentIndex + ") BY POST_ID = " + postId);
 		try
 		{
 			Collection<CommentDto> commentDtoCollection = commentService.getCommentListByPostId(postId, commentIndex);
@@ -44,6 +49,7 @@ public class CommentController
 		}
 		catch (ServiceException e)
 		{
+			logger.error(e);
 			throw new ControllerException(e);
 		}
 
@@ -54,6 +60,7 @@ public class CommentController
 	@ResponseBody
 	ResponseEntity<CommentDto> getComment(@PathVariable final Integer id) throws ControllerException
 	{
+		logger.trace("GETTING COMMENT BY COMMENT_ID = " + id);
 		try
 		{
 			CommentDto commentDto = commentService.find(id);
@@ -62,6 +69,7 @@ public class CommentController
 		}
 		catch (ServiceException e)
 		{
+			logger.error(e);
 			throw new ControllerException(e);
 		}
 	}
@@ -74,6 +82,7 @@ public class CommentController
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		comment.setUsername(auth.getName());
 
+		logger.trace("CREATING COMMENT " + comment);
 		try
 		{
 			CommentDto resultDto = commentService.create(comment);
@@ -82,6 +91,7 @@ public class CommentController
 		}
 		catch (ServiceException e)
 		{
+			logger.error(e);
 			throw new ControllerException(e);
 		}
 
@@ -92,6 +102,7 @@ public class CommentController
 	@ResponseBody
 	ResponseEntity<CommentDto> updateComment(@RequestBody CommentDto comment) throws ControllerException
 	{
+		logger.trace("UPDATING COMMENT " + comment);
 		try
 		{
 			CommentDto resultDto = commentService.update(comment);
@@ -100,6 +111,7 @@ public class CommentController
 		}
 		catch (ServiceException e)
 		{
+			logger.error(e);
 			throw new ControllerException(e);
 		}
 	}
@@ -109,6 +121,7 @@ public class CommentController
 	@ResponseBody
 	ResponseEntity<CommentDto> deleteComment(@PathVariable Integer id) throws ControllerException
 	{
+		logger.trace("DELETING COMMENT WITH ID = " + id);
 		try
 		{
 			commentService.delete(id);
@@ -116,6 +129,7 @@ public class CommentController
 		}
 		catch (ServiceException e)
 		{
+			logger.error(e);
 			throw new ControllerException(e);
 		}
 

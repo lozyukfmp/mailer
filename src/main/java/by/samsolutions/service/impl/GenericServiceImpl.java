@@ -3,6 +3,8 @@ package by.samsolutions.service.impl;
 import java.io.Serializable;
 import java.util.Collection;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +21,7 @@ import by.samsolutions.service.exception.ServiceException;
 public class GenericServiceImpl<Dto extends BaseDto, Entity extends BaseEntity, PK extends Serializable>
 				implements GenericService<Dto, Entity, PK>
 {
+	private static final Logger logger = LogManager.getLogger(GenericServiceImpl.class);
 
 	private GenericDao<Entity, PK> genericDao;
 	private Converter<Dto, Entity> converter;
@@ -38,6 +41,7 @@ public class GenericServiceImpl<Dto extends BaseDto, Entity extends BaseEntity, 
 	@Transactional
 	public Dto create(final Dto dto) throws ServiceException
 	{
+		logger.trace("CREATING DTO : " + dto);
 		try
 		{
 			Entity entity = converter.toEntity(dto);
@@ -45,12 +49,9 @@ public class GenericServiceImpl<Dto extends BaseDto, Entity extends BaseEntity, 
 			Dto resultDto = converter.toDto(genericDao.create(entity));
 			return resultDto;
 		}
-		catch (DaoException e)
+		catch (DaoException | ConverterException e)
 		{
-			throw new ServiceException(e);
-		}
-		catch (ConverterException e)
-		{
+			logger.error(e.getMessage(), e);
 			throw new ServiceException(e);
 		}
 	}
@@ -59,12 +60,14 @@ public class GenericServiceImpl<Dto extends BaseDto, Entity extends BaseEntity, 
 	@Transactional
 	public void delete(final PK id) throws ServiceException
 	{
+		logger.trace("DELETING DTO : ID = " + id);
 		try
 		{
 			genericDao.delete(id);
 		}
 		catch (DaoException e)
 		{
+			logger.error(e.getMessage(), e);
 			throw new ServiceException(e);
 		}
 	}
@@ -73,18 +76,16 @@ public class GenericServiceImpl<Dto extends BaseDto, Entity extends BaseEntity, 
 	@Transactional(readOnly = true)
 	public Dto find(final PK id) throws ServiceException
 	{
+		logger.trace("GETTING DTO : ID = " + id);
 		try
 		{
 			Entity entity = genericDao.find(id);
 			Dto resultDto = converter.toDto(entity);
 			return resultDto;
 		}
-		catch (DaoException e)
+		catch (DaoException | ConverterException e)
 		{
-			throw new ServiceException(e);
-		}
-		catch (ConverterException e)
-		{
+			logger.error(e.getMessage(), e);
 			throw new ServiceException(e);
 		}
 	}
@@ -93,18 +94,16 @@ public class GenericServiceImpl<Dto extends BaseDto, Entity extends BaseEntity, 
 	@Transactional
 	public Dto update(final Dto dto) throws ServiceException
 	{
+		logger.trace("UPDATING DTO : " + dto);
 		try
 		{
 			Entity entity = converter.toEntity(dto);
 			Dto resultDto = converter.toDto(genericDao.update(entity));
 			return resultDto;
 		}
-		catch (DaoException e)
+		catch (DaoException | ConverterException e)
 		{
-			throw new ServiceException(e);
-		}
-		catch (ConverterException e)
-		{
+			logger.error(e.getMessage(), e);
 			throw new ServiceException(e);
 		}
 	}
@@ -113,18 +112,16 @@ public class GenericServiceImpl<Dto extends BaseDto, Entity extends BaseEntity, 
 	@Transactional(readOnly = true)
 	public Collection<Dto> all() throws ServiceException
 	{
+		logger.trace("GETTING DTO LIST");
 		try
 		{
 			Collection<Entity> entityCollection = genericDao.all();
 			Collection<Dto> dtoCollection = converter.toDtoCollection(entityCollection);
 			return dtoCollection;
 		}
-		catch (DaoException e)
+		catch (DaoException | ConverterException e)
 		{
-			throw new ServiceException(e);
-		}
-		catch (ConverterException e)
-		{
+			logger.error(e.getMessage(), e);
 			throw new ServiceException(e);
 		}
 
