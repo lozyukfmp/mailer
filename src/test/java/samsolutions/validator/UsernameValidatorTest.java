@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import by.samsolutions.validation.UsernameValidator;
+import by.samsolutions.imgcloud.validation.UsernameValidator;
 import samsolutions.configuration.ValidatorTestConfiguration;
 
 @RunWith(SpringJUnit4ClassRunner.class)

@@ -4,9 +4,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
-import by.samsolutions.validation.EmailValidator;
-import by.samsolutions.validation.PasswordValidator;
-import by.samsolutions.validation.UsernameValidator;
+import by.samsolutions.imgcloud.validation.EmailValidator;
+import by.samsolutions.imgcloud.validation.PasswordValidator;
+import by.samsolutions.imgcloud.validation.UsernameValidator;
 
 @Configuration
 @PropertySource(value = "classpath:/validation/regexp.properties")

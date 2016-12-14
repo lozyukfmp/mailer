@@ -14,11 +14,11 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import by.samsolutions.dao.PostDao;
-import by.samsolutions.dao.UserDao;
-import by.samsolutions.dao.exception.DaoException;
-import by.samsolutions.entity.PostEntity;
-import by.samsolutions.entity.user.UserEntity;
+import by.samsolutions.imgcloud.dao.PostDao;
+import by.samsolutions.imgcloud.dao.UserDao;
+import by.samsolutions.imgcloud.dao.exception.DaoException;
+import by.samsolutions.imgcloud.entity.PostEntity;
+import by.samsolutions.imgcloud.entity.user.UserEntity;
 import samsolutions.configuration.HibernateTestConfiguration;
 
 @DirtiesContext

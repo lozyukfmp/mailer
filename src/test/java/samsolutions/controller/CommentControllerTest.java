@@ -15,11 +15,11 @@ import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import by.samsolutions.configuration.web.SpringWebConfig;
-import by.samsolutions.controller.CommentController;
-import by.samsolutions.dto.CommentDto;
-import by.samsolutions.service.CommentService;
-import by.samsolutions.service.exception.ServiceException;
+import by.samsolutions.imgcloud.configuration.web.SpringWebConfig;
+import by.samsolutions.imgcloud.controller.CommentController;
+import by.samsolutions.imgcloud.dto.CommentDto;
+import by.samsolutions.imgcloud.service.CommentService;
+import by.samsolutions.imgcloud.service.exception.ServiceException;
 import samsolutions.configuration.WebTestConfiguration;
 
 import static org.hamcrest.Matchers.*;

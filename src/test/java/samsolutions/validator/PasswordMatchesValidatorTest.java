@@ -7,8 +7,8 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import by.samsolutions.dto.UserDto;
-import by.samsolutions.validation.PasswordMatchesValidator;
+import by.samsolutions.imgcloud.dto.UserDto;
+import by.samsolutions.imgcloud.validation.PasswordMatchesValidator;
 
 public class PasswordMatchesValidatorTest
 {

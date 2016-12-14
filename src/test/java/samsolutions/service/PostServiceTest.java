@@ -18,18 +18,18 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.util.ReflectionTestUtils;
 
-import by.samsolutions.converter.impl.CommentConverter;
-import by.samsolutions.converter.impl.PostConverter;
-import by.samsolutions.dao.CommentDao;
-import by.samsolutions.dao.GenericDao;
-import by.samsolutions.dao.PostDao;
-import by.samsolutions.dao.exception.DaoException;
-import by.samsolutions.dto.PostDto;
-import by.samsolutions.entity.PostEntity;
-import by.samsolutions.entity.user.UserEntity;
-import by.samsolutions.service.PostService;
-import by.samsolutions.service.exception.ServiceException;
-import by.samsolutions.service.impl.PostServiceImpl;
+import by.samsolutions.imgcloud.converter.impl.CommentConverter;
+import by.samsolutions.imgcloud.converter.impl.PostConverter;
+import by.samsolutions.imgcloud.dao.CommentDao;
+import by.samsolutions.imgcloud.dao.GenericDao;
+import by.samsolutions.imgcloud.dao.PostDao;
+import by.samsolutions.imgcloud.dao.exception.DaoException;
+import by.samsolutions.imgcloud.dto.PostDto;
+import by.samsolutions.imgcloud.entity.PostEntity;
+import by.samsolutions.imgcloud.entity.user.UserEntity;
+import by.samsolutions.imgcloud.service.PostService;
+import by.samsolutions.imgcloud.service.exception.ServiceException;
+import by.samsolutions.imgcloud.service.impl.PostServiceImpl;
 
 import static org.mockito.Matchers.any;
 

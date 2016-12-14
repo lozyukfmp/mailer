@@ -16,17 +16,17 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import by.samsolutions.converter.impl.CommentConverter;
-import by.samsolutions.dao.CommentDao;
-import by.samsolutions.dao.GenericDao;
-import by.samsolutions.dao.exception.DaoException;
-import by.samsolutions.dto.CommentDto;
-import by.samsolutions.entity.CommentEntity;
-import by.samsolutions.entity.PostEntity;
-import by.samsolutions.entity.user.UserEntity;
-import by.samsolutions.service.CommentService;
-import by.samsolutions.service.exception.ServiceException;
-import by.samsolutions.service.impl.CommentServiceImpl;
+import by.samsolutions.imgcloud.converter.impl.CommentConverter;
+import by.samsolutions.imgcloud.dao.CommentDao;
+import by.samsolutions.imgcloud.dao.GenericDao;
+import by.samsolutions.imgcloud.dao.exception.DaoException;
+import by.samsolutions.imgcloud.dto.CommentDto;
+import by.samsolutions.imgcloud.entity.CommentEntity;
+import by.samsolutions.imgcloud.entity.PostEntity;
+import by.samsolutions.imgcloud.entity.user.UserEntity;
+import by.samsolutions.imgcloud.service.CommentService;
+import by.samsolutions.imgcloud.service.exception.ServiceException;
+import by.samsolutions.imgcloud.service.impl.CommentServiceImpl;
 
 import static org.mockito.Matchers.any;
 

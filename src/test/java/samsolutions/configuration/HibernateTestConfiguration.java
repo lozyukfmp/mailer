@@ -18,7 +18,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @EnableTransactionManagement
-@ComponentScan("by.samsolutions.dao")
+@ComponentScan("by.samsolutions.imgcloud.dao")
 public class HibernateTestConfiguration
 {
 	private static final String PROPERTY_NAME_DATABASE_DRIVER   = "org.hsqldb.jdbcDriver";
@@ -55,7 +55,7 @@ public class HibernateTestConfiguration
 	{
 		LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
 		em.setDataSource(dataSource());
-		em.setPackagesToScan(new String[] {"by.samsolutions.entity"});
+		em.setPackagesToScan(new String[] {"by.samsolutions.imgcloud.entity"});
 
 		JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
 		em.setJpaVendorAdapter(vendorAdapter);

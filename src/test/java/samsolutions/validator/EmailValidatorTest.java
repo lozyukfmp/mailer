@@ -14,7 +14,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import by.samsolutions.validation.EmailValidator;
+import by.samsolutions.imgcloud.validation.EmailValidator;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration

@@ -13,18 +13,18 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.util.ReflectionTestUtils;
 
-import by.samsolutions.converter.impl.UserConverter;
-import by.samsolutions.converter.impl.UserProfileConverter;
-import by.samsolutions.dao.UserDao;
-import by.samsolutions.dao.exception.DaoException;
-import by.samsolutions.dto.UserDto;
-import by.samsolutions.dto.UserProfileDto;
-import by.samsolutions.entity.user.UserEntity;
-import by.samsolutions.entity.user.UserProfileEntity;
-import by.samsolutions.service.UserService;
-import by.samsolutions.service.exception.ServiceException;
-import by.samsolutions.service.exception.UserAlreadyExistsException;
-import by.samsolutions.service.impl.UserServiceImpl;
+import by.samsolutions.imgcloud.converter.impl.UserConverter;
+import by.samsolutions.imgcloud.converter.impl.UserProfileConverter;
+import by.samsolutions.imgcloud.dao.UserDao;
+import by.samsolutions.imgcloud.dao.exception.DaoException;
+import by.samsolutions.imgcloud.dto.UserDto;
+import by.samsolutions.imgcloud.dto.UserProfileDto;
+import by.samsolutions.imgcloud.entity.user.UserEntity;
+import by.samsolutions.imgcloud.entity.user.UserProfileEntity;
+import by.samsolutions.imgcloud.service.UserService;
+import by.samsolutions.imgcloud.service.exception.ServiceException;
+import by.samsolutions.imgcloud.service.exception.UserAlreadyExistsException;
+import by.samsolutions.imgcloud.service.impl.UserServiceImpl;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration

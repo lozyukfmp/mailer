@@ -13,11 +13,11 @@ import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import by.samsolutions.configuration.web.SpringWebConfig;
-import by.samsolutions.controller.UserProfileController;
-import by.samsolutions.dto.UserProfileDto;
-import by.samsolutions.service.UserProfileService;
-import by.samsolutions.service.exception.ServiceException;
+import by.samsolutions.imgcloud.configuration.web.SpringWebConfig;
+import by.samsolutions.imgcloud.controller.UserProfileController;
+import by.samsolutions.imgcloud.dto.UserProfileDto;
+import by.samsolutions.imgcloud.service.UserProfileService;
+import by.samsolutions.imgcloud.service.exception.ServiceException;
 import samsolutions.configuration.WebTestConfiguration;
 
 import static org.hamcrest.Matchers.hasProperty;

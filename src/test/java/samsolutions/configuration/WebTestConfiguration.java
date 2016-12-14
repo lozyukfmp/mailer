@@ -5,14 +5,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
-import by.samsolutions.controller.CommentController;
-import by.samsolutions.controller.PostController;
-import by.samsolutions.controller.UserController;
-import by.samsolutions.controller.UserProfileController;
-import by.samsolutions.service.CommentService;
-import by.samsolutions.service.PostService;
-import by.samsolutions.service.UserProfileService;
-import by.samsolutions.service.UserService;
+import by.samsolutions.imgcloud.controller.CommentController;
+import by.samsolutions.imgcloud.controller.PostController;
+import by.samsolutions.imgcloud.controller.UserController;
+import by.samsolutions.imgcloud.controller.UserProfileController;
+import by.samsolutions.imgcloud.service.CommentService;
+import by.samsolutions.imgcloud.service.PostService;
+import by.samsolutions.imgcloud.service.UserProfileService;
+import by.samsolutions.imgcloud.service.UserService;
 
 @Configuration
 @PropertySource(value = "classpath:/validation/regexp.properties")
