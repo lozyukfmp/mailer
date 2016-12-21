@@ -1,4 +1,4 @@
-;(function () {
+;(function ($) {
 
     var validationMap;
 
@@ -34,7 +34,7 @@
             result = false;
         }
 
-        if (!(new RegExp(validationMap["text"]["regexp"])).test(text)) {
+        if (!(new RegExp(validationMap["text"]["regexp"])).test(text.trim())) {
             postErrorDiv.html("<div class='alert alert-danger'>" +
                 validationMap["text"]["message"] +
                 "</div>");
@@ -178,4 +178,4 @@
         showMessageList(2, selfUsername);
     });
 
-})();
+})(jQuery);

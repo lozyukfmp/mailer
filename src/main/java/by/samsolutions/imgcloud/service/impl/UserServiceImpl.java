@@ -3,6 +3,8 @@ package by.samsolutions.imgcloud.service.impl;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Iterator;
+import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -79,15 +81,13 @@ public class UserServiceImpl extends GenericServiceImpl<UserDto, UserEntity, Str
 
 	@Override
 	@Transactional(readOnly = true)
-	public UserDto getWithProfileByUsername(final String username) throws ServiceException
+	public Collection<UserDto> getWithProfileByUsername(final String username) throws ServiceException
 	{
 		logger.trace("GETTING USER WITH PROFILE : " + username);
 		try
 		{
-			UserEntity userEntity = userDao.getByUsernameWithProfile(username);
-			UserDto userDto = userConverter.toDto(userEntity);
-
-			return userDto;
+			Collection<UserEntity> userEntity = userDao.getByUsernameWithProfile(username);
+			return userConverter.toDtoCollection(userEntity);
 		}
 		catch (DaoException | ConverterException e)
 		{
@@ -123,6 +123,68 @@ public class UserServiceImpl extends GenericServiceImpl<UserDto, UserEntity, Str
 			return userConverter.toDtoCollection(userDao.getAll(userCount));
 		}
 		catch (DaoException | ConverterException e)
+		{
+			logger.error(e.getMessage(), e);
+			throw new ServiceException(e);
+		}
+	}
+
+	@Override
+	@Transactional
+	public void addAdminRole(final String username) throws ServiceException
+	{
+		try
+		{
+			UserEntity userEntity = userDao.find(username);
+
+			UserRoleEntity userRoleEntity = UserRoleEntity.builder().username(userEntity.getUsername()).role("ROLE_ADMIN").build();
+
+			userEntity.getUserRole().add(userRoleEntity);
+
+			userDao.update(userEntity);
+		}
+		catch (DaoException e)
+		{
+			throw new ServiceException(e);
+		}
+	}
+
+	@Override
+	@Transactional
+	public void deleteAdminRole(final String username) throws ServiceException
+	{
+		try
+		{
+			UserEntity userEntity = userDao.find(username);
+			Iterator<UserRoleEntity> iterator = userEntity.getUserRole().iterator();
+			while (iterator.hasNext())
+			{
+				if (iterator.next().getRole().equals("ROLE_ADMIN"))
+				{
+					iterator.remove();
+				}
+			}
+
+			userDao.update(userEntity);
+		}
+		catch (DaoException e)
+		{
+			throw new ServiceException(e);
+		}
+	}
+
+	@Override
+	@Transactional
+	public boolean isEnabled(final String username) throws ServiceException
+	{
+		logger.trace("CHECKING IF ENABLED , USERNAME = " + username);
+		try
+		{
+			UserEntity userEntity = userDao.find(username);
+
+			return userEntity.isEnabled();
+		}
+		catch (DaoException e)
 		{
 			logger.error(e.getMessage(), e);
 			throw new ServiceException(e);

@@ -6,27 +6,32 @@
     var usernameField = $(".username-field");
     var searchButton = $("#search-by-username");
 
+    function initInputs($) {
+        $("input[type=checkbox]").off();
+        $("input[type=checkbox]").bootstrapToggle();
+        $("input[type=checkbox].enb").change(function () {
+            userAjax.setUserEnabled($(this).attr('data-username'), $(this).prop('checked'), function () {
+                console.log("SUCCESS");
+            });
+        });
+        $("input[type=checkbox].adm").change(function () {
+            userAjax.setAdmin($(this).attr('data-username'), $(this).prop('checked'), function () {
+                console.log("SUCCESS");
+            });
+        });
+    }
+
     function showUserList(userCount) {
         userAjax.getUserList(function (userList) {
             userContainer.html(userList);
             $("#paging-user-container").attr("data-paging", userCount);
             if ($("input[type=checkbox]").length) {
-                $("input[type=checkbox]").off();
-                $("input[type=checkbox]").bootstrapToggle();
-                $("input[type=checkbox]").change(function () {
-                    userAjax.setUserEnabled($(this).attr('data-username'), $(this).prop('checked'), function () {
-                        console.log("SUCCESS");
-                    });
-                });
+               initInputs($);
             }
         }, userCount);
     }
 
-    $("td > input").change(function () {
-        userAjax.setUserEnabled($(this).attr('data-username'), $(this).prop('checked'), function () {
-            console.log("SUCCESS");
-        });
-    });
+    initInputs($);
 
     userPagingContainer.on('click', '.more-paging.paging-user', function () {
         var index = $("#paging-user-container").attr("data-paging");
@@ -51,13 +56,7 @@
             userAjax.getUser(function (response) {
                 userContainer.html(response);
                 if ($("input[type=checkbox]").length) {
-                    $("input[type=checkbox]").off();
-                    $("input[type=checkbox]").bootstrapToggle();
-                    $("input[type=checkbox]").change(function () {
-                        userAjax.setUserEnabled($(this).attr('data-username'), $(this).prop('checked'), function () {
-                            console.log("SUCCESS");
-                        });
-                    });
+                    initInputs($);
                 }
             }, usernameField.val());
         }

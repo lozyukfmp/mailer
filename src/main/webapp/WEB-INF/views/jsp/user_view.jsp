@@ -54,7 +54,7 @@
     <div class="col-md-3">
         <div class="panel panel-primary panel-image">
             <div class="panel-heading">
-                <h3 class="panel-title">${photo}</h3>
+                <h3 class="panel-title">${profile.username}</h3>
             </div>
             <div class="panel-body user-image" data-username="${profile.username}">
                 <img src="${profile.imageUrl}" class="img-thumbnail" width="100%" height="300"/>

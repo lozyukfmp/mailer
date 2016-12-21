@@ -56,14 +56,14 @@ public class UserDaoImpl extends GenericDaoImpl<UserEntity, String> implements U
 	}
 
 	@Override
-	public UserEntity getByUsernameWithProfile(final String username) throws DaoException
+	public List<UserEntity> getByUsernameWithProfile(final String username) throws DaoException
 	{
-		logger.trace("GETTING USER WITH PROFILE , USERNAME = " + username);
+		logger.trace("GETTING USERS WITH PROFILE , USERNAME LIKE = " + username);
 		try
 		{
-			return entityManager.createNamedQuery("User.findWithProfileByUsername", UserEntity.class)
-			                    .setParameter("username", username)
-			                    .getSingleResult();
+			return entityManager.createNamedQuery("User.findWithProfileByQuery", UserEntity.class)
+			                    .setParameter("username", "%" + username + "%")
+			                    .getResultList();
 		}
 		catch (NoResultException e)
 		{

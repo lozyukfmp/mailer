@@ -7,6 +7,13 @@ var userAjax = (function ($) {
                 success: callback
             });
         },
+        setAdmin: function (username, value, callback) {
+            $.ajax({
+                type: "POST",
+                url: "admin-role/" + username + "/" + value,
+                success: callback
+            });
+        },
         getUser: function (callback, username) {
             $.ajax({
                 type: "GET",

@@ -14,7 +14,7 @@
         var result = true;
         commentErrorDiv.empty();
 
-        if (!(new RegExp(validationMap["text"]["regexp"])).test(text)) {
+        if (!(new RegExp(validationMap["text"]["regexp"])).test(text.trim())) {
             commentErrorDiv.html("<div class='alert alert-danger'>" +
                 validationMap["text"]["message"] +
                 "</div>");

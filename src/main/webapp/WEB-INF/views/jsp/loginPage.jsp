@@ -28,6 +28,7 @@
     <spring:message code="message.successRegistration" var="successMessage"/>
     <spring:message code="message.error" var="errorMessage"/>
     <spring:message code="message.logout" var="logoutMessage"/>
+    <spring:message code="message.blocked" var="blockedMessage"/>
 
     <link href="${bootstrapCss}" rel="stylesheet"/>
     <link href="${customPanelCss}" rel="stylesheet"/>
@@ -58,6 +59,12 @@
                     <div class="alert alert-success">
                         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                         <strong>${successMessage}</strong>
+                    </div>
+                </c:if>
+                <c:if test="${not empty blocked}">
+                    <div class="alert alert-danger">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <strong>${blockedMessage}</strong>
                     </div>
                 </c:if>
                 <c:url value="/login" var="loginUrl"/>

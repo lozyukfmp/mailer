@@ -127,7 +127,7 @@ public class UserProfileController
 		try
 		{
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-			String photoUrl = fileUtil.saveImageToDisk(request, file, null);
+			String photoUrl = fileUtil.saveImageToDisk(file, null);
 
 			UserProfileDto userProfileDto = userProfileService.uploadUserPhoto(auth.getName(), photoUrl);
 

@@ -9,7 +9,7 @@ public interface UserDao extends GenericDao<UserEntity, String>
 {
 	Collection<UserEntity> getAll(Integer userCount) throws DaoException;
 
-	UserEntity getByUsernameWithProfile(String username) throws DaoException;
+	Collection<UserEntity> getByUsernameWithProfile(String username) throws DaoException;
 
 	void setUserEnabled(String username, Boolean enabled) throws DaoException;
 }

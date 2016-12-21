@@ -46,7 +46,7 @@
                 <h3 class="panel-title">${registration}</h3>
             </div>
             <div class="panel-body">
-                <form action="/register" method="POST" enctype="utf-8">
+                <form action="register" method="POST" enctype="utf-8">
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                     <div class="col-sm-6">
                         <c:if test="${not empty usernameExist}">

@@ -6,8 +6,6 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,9 +39,6 @@ public class PostController
 {
 
 	private static final Logger logger = LogManager.getLogger(PostController.class);
-
-	@Autowired
-	private HttpServletRequest request;
 
 	@Autowired
 	private MessageSource messageSource;
@@ -127,7 +122,7 @@ public class PostController
 			PostDto post = new ObjectMapper().readValue(postMessage, PostDto.class);
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 			post.setUsername(auth.getName());
-			post.setImageUrl(fileUtil.saveImageToDisk(request, file, post.getImageUrl()));
+			post.setImageUrl(fileUtil.saveImageToDisk(file, post.getImageUrl()));
 
 			PostDto resultDto = postService.create(post);
 
@@ -160,7 +155,7 @@ public class PostController
 			PostDto post = new ObjectMapper().readValue(postMessage, PostDto.class);
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 			post.setUsername(auth.getName());
-			post.setImageUrl(fileUtil.saveImageToDisk(request, file, post.getImageUrl()));
+			post.setImageUrl(fileUtil.saveImageToDisk(file, post.getImageUrl()));
 			PostDto resultDto = postService.update(post);
 
 			return new ResponseEntity<>(resultDto, HttpStatus.OK);

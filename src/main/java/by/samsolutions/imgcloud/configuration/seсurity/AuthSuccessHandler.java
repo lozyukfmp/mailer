@@ -45,11 +45,7 @@ public class AuthSuccessHandler extends SimpleUrlAuthenticationSuccessHandler
 
 		List<String> roles = authorities.stream().map(authority -> authority.getAuthority()).collect(Collectors.toList());
 
-		if (isAdmin(roles))
-		{
-			url = "/admin";
-		}
-		else if (isUser(roles))
+		if (isAdmin(roles) || isUser(roles))
 		{
 			url = "/user";
 		}

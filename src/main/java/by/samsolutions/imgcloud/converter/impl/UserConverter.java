@@ -2,6 +2,7 @@ package by.samsolutions.imgcloud.converter.impl;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -26,6 +27,9 @@ public class UserConverter implements Converter<UserDto, UserEntity>
 		{
 			userDto.setProfile(userProfileConverter.toDto(userEntity.getProfile()));
 		}
+
+		userDto.setAdmin(userEntity.getUserRole().stream().anyMatch(userRoleEntity -> userRoleEntity.getRole().equals
+						("ROLE_ADMIN")));
 
 		return userDto;
 	}

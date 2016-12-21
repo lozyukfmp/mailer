@@ -1,7 +1,10 @@
 package by.samsolutions.imgcloud.dto;
 
+import java.util.Set;
+
 import org.hibernate.validator.constraints.NotEmpty;
 
+import by.samsolutions.imgcloud.entity.user.UserRoleEntity;
 import by.samsolutions.imgcloud.validation.PasswordMatches;
 import by.samsolutions.imgcloud.validation.ValidPassword;
 import by.samsolutions.imgcloud.validation.ValidUsername;
@@ -29,7 +32,7 @@ public class UserDto implements BaseDto
 	private String confirmPassword;
 
 	private boolean enabled;
-
+	private boolean admin;
 	private UserProfileDto profile;
 
 }

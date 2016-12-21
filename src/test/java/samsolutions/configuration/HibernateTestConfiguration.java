@@ -27,7 +27,7 @@ public class HibernateTestConfiguration
 	private static final String PROPERTY_NAME_DATABASE_PASSWORD = "";
 
 	private static final String PROPERTY_NAME_HIBERNATE_DIALECT      = "org.hibernate.dialect.HSQLDialect";
-	private static final String PROPERTY_NAME_HIBERNATE_SHOW_SQL     = "true";
+	private static final String PROPERTY_NAME_HIBERNATE_SHOW_SQL     = "false";
 	private static final String PROPERTY_NAME_HIBERNATE_HBM2DDL_AUTO = "create";
 
 	@Bean

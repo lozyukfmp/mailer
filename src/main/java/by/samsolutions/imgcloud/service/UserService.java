@@ -13,7 +13,13 @@ public interface UserService extends GenericService<UserDto, UserEntity, String>
 {
 	Collection<UserDto> getAll(Integer userCount) throws ServiceException;
 
-	UserDto getWithProfileByUsername(String username) throws ServiceException;
+	Collection<UserDto> getWithProfileByUsername(String username) throws ServiceException;
 
 	void setUserEnabled(String username, Boolean enabled) throws ServiceException;
+
+	boolean isEnabled(String username) throws ServiceException;
+
+	void addAdminRole(String username) throws ServiceException;
+
+	void deleteAdminRole(String username) throws ServiceException;
 }

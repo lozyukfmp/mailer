@@ -2,8 +2,8 @@ package by.samsolutions.imgcloud.controller.util;
 
 import java.io.File;
 import java.io.IOException;
-
-import javax.servlet.http.HttpServletRequest;
+import java.nio.file.Files;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
@@ -23,7 +23,7 @@ public class FileUtil
 	@Value("${maxFileSize}")
 	private Long maxFileSize;
 
-	public String saveImageToDisk(final HttpServletRequest request, final MultipartFile file, final String requestImageUrl)
+	public String saveImageToDisk(final MultipartFile file, final String requestImageUrl)
 					throws TooLargeFileException, IOException
 	{
 
@@ -38,19 +38,17 @@ public class FileUtil
 			String username = auth.getName();
 
 			String imageUrl;
-			String pathToUploads = request.getServletContext().getRealPath(uploadsDir);
-			//String pathToUploads = uploadsDir + File.separator + username;
+			String pathToUploads = uploadsDir + File.separator + username;
 
 			if (!new File(pathToUploads).exists())
 			{
 				new File(pathToUploads).mkdir();
 			}
 
-			//String orgName = (new Date()).getTime() + file.getOriginalFilename();
-			String orgName = file.getOriginalFilename();
+			String time = Long.toString((new Date()).getTime());
+			String orgName = time + file.getOriginalFilename();
 			String filePath = pathToUploads + File.separator + orgName;
-			imageUrl = request.getContextPath() + uploadsDir + orgName;
-			//imageUrl = orgName;
+			imageUrl = "img" + File.separator + username + File.separator + orgName;
 			File dest = new File(filePath);
 			file.transferTo(dest);
 
@@ -61,5 +59,18 @@ public class FileUtil
 			return requestImageUrl;
 		}
 
+	}
+
+	public byte[] getImageFromDisk(String username, String imageUrl) throws IOException
+	{
+
+		File file = new File(uploadsDir + File.separator + username + File.separator + imageUrl);
+
+		if (file.exists())
+		{
+			return Files.readAllBytes(file.toPath());
+		}
+
+		return null;
 	}
 }

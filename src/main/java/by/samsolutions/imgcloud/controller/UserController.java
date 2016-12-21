@@ -1,9 +1,7 @@
 package by.samsolutions.imgcloud.controller;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -39,10 +37,10 @@ import by.samsolutions.imgcloud.dto.PostDto;
 import by.samsolutions.imgcloud.dto.UserDto;
 import by.samsolutions.imgcloud.dto.UserProfileDto;
 import by.samsolutions.imgcloud.service.PostService;
-import by.samsolutions.imgcloud.service.exception.UserAlreadyExistsException;
 import by.samsolutions.imgcloud.service.UserProfileService;
 import by.samsolutions.imgcloud.service.UserService;
 import by.samsolutions.imgcloud.service.exception.ServiceException;
+import by.samsolutions.imgcloud.service.exception.UserAlreadyExistsException;
 import by.samsolutions.imgcloud.service.exception.UserNotFoundException;
 
 @Controller
@@ -104,7 +102,7 @@ public class UserController
 
 		try
 		{
-			List<UserDto> userDtoCollection = Arrays.asList(userService.getWithProfileByUsername(username));
+			Collection<UserDto> userDtoCollection = userService.getWithProfileByUsername(username);
 			modelAndView.setViewName("userList");
 			modelAndView.addObject("userList", userDtoCollection);
 
@@ -134,6 +132,27 @@ public class UserController
 			Collection<UserDto> userDtoCollection = userService.getAll(userCount);
 			ModelAndView modelAndView = new ModelAndView();
 			modelAndView.setViewName("userList");
+			modelAndView.addObject("userList", userDtoCollection);
+
+			return modelAndView;
+		}
+		catch (ServiceException e)
+		{
+			logger.error(e.getMessage(), e);
+			throw new ControllerException(e);
+		}
+	}
+
+	@GetMapping("search")
+	public ModelAndView getSearchPage() throws ControllerException
+	{
+		logger.trace("GETTING SEARCH PAGE");
+		try
+		{
+			Collection<UserDto> userDtoCollection = userService.getAll(2);
+
+			ModelAndView modelAndView = new ModelAndView();
+			modelAndView.setViewName("search");
 			modelAndView.addObject("userList", userDtoCollection);
 
 			return modelAndView;
@@ -184,6 +203,32 @@ public class UserController
 		}
 	}
 
+	@PostMapping("/admin-role/{username}/{enabled}")
+	public
+	@ResponseBody
+	ResponseEntity toggleAdminRole(@PathVariable String username, @PathVariable Boolean enabled) throws ControllerException
+	{
+		logger.trace("TRYING TO ADD/DELETE ADMIN ROLE : " + username);
+		try
+		{
+			if (enabled)
+			{
+				userService.addAdminRole(username);
+			}
+			else
+			{
+				userService.deleteAdminRole(username);
+			}
+
+			return new ResponseEntity(HttpStatus.OK);
+		}
+		catch (ServiceException e)
+		{
+			logger.error(e.getMessage(), e);
+			throw new ControllerException(e);
+		}
+	}
+
 	@GetMapping("user")
 	public ModelAndView getUserPage(@RequestParam(required = false) String username) throws ControllerException
 	{
@@ -199,6 +244,7 @@ public class UserController
 
 		try
 		{
+
 			UserProfileDto userProfileDto = userProfileService.find(username);
 			Collection<PostDto> postDtoCollection = postService.getAll(username, 2);
 
