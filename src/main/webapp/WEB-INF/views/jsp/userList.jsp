@@ -10,15 +10,15 @@
 <c:forEach items="${userList}" var="user">
     <c:if test="${user.username ne pageContext.request.userPrincipal.name}">
         <tr>
-            <td>
+            <td style="border: none;">
                 <img src="${user.profile.imageUrl}" class="img-thumbnail" width="90" height="100"/>
             </td>
-            <td>
+            <td style="border: none;">
                 <h4>${user.username}</h4>
                 <h4>${user.profile.email}</h4>
             </td>
             <security:authorize access="hasRole('ROLE_ADMIN')">
-                <td>
+                <td style="border: none;">
                     <c:choose>
                         <c:when test="${user.enabled}">
                             <input class="enb" type="checkbox" checked data-username="${user.username}" data-on="${unblocked}"
@@ -30,7 +30,7 @@
                         </c:otherwise>
                     </c:choose>
                 </td>
-                <td>
+                <td style="border: none;">
                     <c:choose>
                         <c:when test="${user.admin}">
                             <input class="adm" type="checkbox" checked data-username="${user.username}" data-on="${isAdmin}"
@@ -43,7 +43,7 @@
                     </c:choose>
                 </td>
             </security:authorize>
-            <td>
+            <td style="border: none;">
                 <form action="user" class="form-inline">
                     <input type="hidden" name="username" value="${user.username}"/>
                     <button type="submit" class="btn btn-warning">

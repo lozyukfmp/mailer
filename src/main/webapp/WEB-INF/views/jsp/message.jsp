@@ -17,7 +17,7 @@
         </c:if>
         <div class="panel-footer">${message.text}</div>
     </div>
-    <button id="view-create-comment-modal-button" class="btn btn-block btn-info" href='#' style="margin-bottom: 15px;">
+    <button id="view-create-comment-modal-button" class="btn btn-block btn-info btn-raised" href='#' style="margin-bottom: 15px;">
         ${comment} <span class='glyphicon glyphicon-comment' aria-hidden='true'></span>
     </button>
     <div class="panel panel-default">
@@ -30,8 +30,8 @@
             </div>
         </div>
         <div class="panel-footer">
-            <div id="paging-comment-container" class="panel-paging" data-paging="2">
-                <a class="more-paging paging-comment" href="#">
+            <div id="paging-comment-container" style="text-align: center" class="panel-paging" data-paging="2">
+                <a class="more-paging paging-comment" style="margin-right: 15px;" href="#">
                     <span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
                 </a>
                 <a class="turn-paging paging-comment" href="#">

@@ -14,6 +14,8 @@
     <spring:url value="/static/core/css/panel.custom.css" var="customPanelCss"/>
     <spring:url value="/static/core/js/jquery-3.1.1.min.js" var="jquery"/>
     <spring:url value="/static/core/js/bootstrap.min.js" var="bootstrapJs"/>
+    <spring:url value="/static/core/js/material.min.js" var="materialJs"/>
+    <spring:url value="/static/core/js/ripples.min.js" var="ripplesJs"/>
     <spring:url value="/static/core/pictures/favicon.ico" var="favicon"/>
 
     <spring:message code="message.login.username" var="username"/>
@@ -31,16 +33,26 @@
     <spring:message code="message.blocked" var="blockedMessage"/>
 
     <link href="${bootstrapCss}" rel="stylesheet"/>
-    <link href="${customPanelCss}" rel="stylesheet"/>
     <link rel="shortcut icon" href="${favicon}" type="image/x-icon">
     <link rel="icon" href="${favicon}" type="image/x-icon">
+
+    <!-- Material Design fonts -->
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700">
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" type="text/css" href="${bootstrapCss}">
+
+    <!-- Bootstrap Material Design -->
+    <link rel="stylesheet" type="text/css" href="/static/core/css/bootstrap-material-design.css">
+    <link rel="stylesheet" type="text/css" href="/static/core/css/ripples.min.css">
 </head>
 <body>
-<div class="container" style="margin-top: 80px;">
+<div class="container" style="margin-top: 25px;">
     <div class="col-md-4 col-md-offset-4">
-        <div class="panel panel-primary">
+        <div class="panel panel-info">
             <div class="panel-heading">
-                <h3 class="panel-title">${modalLogin}</h3>
+                <h3 class="panel-title" style="font-weight: bold;">${modalLogin}</h3>
             </div>
             <div class="panel-body">
                 <c:if test="${not empty error}">
@@ -76,35 +88,29 @@
                         <input type="password" class="form-control" name="password" placeholder="${password}" required/>
                     </div>
                     <div class="form-group">
-                        <button type="submit" name="login" class="btn btn-block btn-primary">
+                        <button type="submit" name="login" class="btn btn-raised btn-block btn-info">
                             <h3 class="panel-title" style="font-weight: bolder;">${login}</h3>
                         </button>
                     </div>
                 </form:form>
             </div>
             <div class="panel-footer">
-                <div class="btn-group btn-group-justified">
-                    <div class="col-sm-4">
-                        <a href="${pageContext.request.contextPath}/welcome">
+                    <a class="btn btn-info btn-group btn-group-justified" href="${pageContext.request.contextPath}/welcome">
                             ${goToWelcome}
-                        </a>
-                    </div>
-                    <div class="col-sm-4">
-                        <a href="${pageContext.request.contextPath}/registration-page">
+                    </a>
+                    <a class="btn btn-info btn-group btn-group-justified" href="${pageContext.request.contextPath}/registration-page">
                             ${register}
+                    </a>
+                    <div class="btn-group btn-group-justified">
+                        <a href="#" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                            ${language}
+                            <span class="caret"></span>
+                            <div class="ripple-container"></div>
                         </a>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="btn-group">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                ${language}
-                                <span class="caret"></span>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a href="?lang=ru_RU">${russian}</a></li>
-                                <li><a href="?lang=en">${english}</a></li>
-                            </ul>
-                        </div>
+                        <ul class="dropdown-menu">
+                            <li><a href="${pageContext.request.contextPath}?lang=ru_RU">${russian}</a></li>
+                            <li><a href="${pageContext.request.contextPath}?lang=en">${english}</a></li>
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -113,5 +119,10 @@
 </div>
 <script src="${jquery}"></script>
 <script src="${bootstrapJs}"></script>
+<script src="${ripplesJs}"></script>
+<script src="${materialJs}"></script>
+<script>
+    $.material.init();
+</script>
 </body>
 </html>

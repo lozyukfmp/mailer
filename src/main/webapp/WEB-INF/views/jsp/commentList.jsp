@@ -9,27 +9,26 @@
         </div>
         <div class="panel-body">
                 ${comment.text}
-            <c:choose>
-                <c:when test="${comment.username == pageContext.request.userPrincipal.name}">
-                    <div class="tool-panel">
-                        <a class="edit-comment-button" href='#' data-id="${comment.id}">
+            <div class="btn-group btn-group-justified">
+                <c:choose>
+                    <c:when test="${comment.username == pageContext.request.userPrincipal.name}">
+                        <a class="btn btn-info edit-comment-button" href='#' data-id="${comment.id}">
                             <span class='glyphicon glyphicon-pencil' aria-hidden='true'></span>
                         </a>
-                        <a class="remove-comment-button" href="#" data-id="${comment.id}">
+                        <a class="btn btn-info remove-comment-button" href="#" data-id="${comment.id}">
                             <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                         </a>
-                    </div>
-                </c:when>
-                <c:otherwise>
-                    <security:authorize access="hasRole('ROLE_ADMIN')">
-                        <div class="tool-panel">
-                            <a class="remove-comment-button" href="#" data-id="${comment.id}">
+                    </c:when>
+                    <c:otherwise>
+                        <security:authorize access="hasRole('ROLE_ADMIN')">
+                            <a class="btn btn-info remove-comment-button" href="#" data-id="${comment.id}">
                                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                             </a>
-                        </div>
-                    </security:authorize>
-                </c:otherwise>
-            </c:choose>
+                        </security:authorize>
+                    </c:otherwise>
+                </c:choose>
+            </div>
+
         </div>
     </div>
 </c:forEach>

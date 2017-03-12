@@ -14,6 +14,8 @@
     <spring:url value="/static/core/css/bootstrap.min.css" var="bootstrapCss"/>
     <spring:url value="/static/core/css/panel.custom.css" var="customPanelCss"/>
     <spring:url value="/static/core/js/bootstrap.min.js" var="bootstrapJs"/>
+    <spring:url value="/static/core/js/material.min.js" var="materialJs"/>
+    <spring:url value="/static/core/js/ripples.min.js" var="ripplesJs"/>
     <spring:url value="/static/core/js/jquery-3.1.1.min.js" var="jqueryJs"/>
     <spring:url value="/static/core/pictures/favicon.ico" var="favicon"/>
 
@@ -30,31 +32,40 @@
     <spring:message code="message.welcome.prefix" var="prefix"/>
     <spring:message code="message.welcome.postfix" var="postfix"/>
 
-    <link href="${bootstrapCss}" rel="stylesheet"/>
     <link href="${customPanelCss}" rel="stylesheet"/>
     <link rel="shortcut icon" href="${favicon}" type="image/x-icon">
     <link rel="icon" href="${favicon}" type="image/x-icon">
+    <!-- Material Design fonts -->
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700">
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" type="text/css" href="${bootstrapCss}">
+
+    <!-- Bootstrap Material Design -->
+    <link rel="stylesheet" type="text/css" href="/static/core/css/bootstrap-material-design.css">
+    <link rel="stylesheet" type="text/css" href="/static/core/css/ripples.min.css">
 
 </head>
 <body>
-<div class="container" style="margin-top: 100px;">
-    <div class="jumbotron" style="background-color: rgba(230, 230, 230, 0.66);">
+<div class="container" style="margin-top: 25px;">
+    <div class="jumbotron">
         <div class="container">
             <h1 style="color: #2780e3;font-size: 100px;font-weight: bolder;">${welcome}</h1>
             <p>${prefix}<br><strong>${welcome}</strong> ${postfix}</p>
             <div class="btn-group">
-                <a href="#" class="btn btn-primary">${language}</a>
-                <a href="#" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
+                <a href="#" class="btn btn-primary btn-raised">${language}<div class="ripple-container"></div></a>
+                <a href="#" class="btn btn-primary btn-raised dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span><div class="ripple-container"></div></a>
                 <ul class="dropdown-menu">
                     <li><a href="${pageContext.request.contextPath}?lang=ru_RU">${russian}</a></li>
                     <li><a href="${pageContext.request.contextPath}?lang=en">${english}</a></li>
                 </ul>
             </div>
             <div class="btn-group">
-                <a href="${pageContext.request.contextPath}/login-page" class="btn btn-info">
+                <a href="${pageContext.request.contextPath}/login-page" class="btn btn-raised btn-info">
                     ${login}
                 </a>
-                <a href="${pageContext.request.contextPath}/registration-page" class="btn btn-primary">
+                <a href="${pageContext.request.contextPath}/registration-page" class="btn btn-raised btn-warning">
                     ${register}
                 </a>
             </div>
@@ -63,5 +74,10 @@
 </div>
 <script src="${jqueryJs}"></script>
 <script src="${bootstrapJs}"></script>
+<script src="${ripplesJs}"></script>
+<script src="${materialJs}"></script>
+<script>
+    $.material.init();
+</script>
 </body>
 </html>

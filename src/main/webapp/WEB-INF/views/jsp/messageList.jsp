@@ -9,22 +9,22 @@
         </div>
         <div class="panel-body message-image">
             <img src="${message.imageUrl}" width='100%' height='300' class='img-thumbnail'/>
-            <div class="tool-panel">
-                <a class="comment-message-button" href='#' data-id="${message.id}">
+            <div class="btn-group btn-group-justified">
+                <a class="btn btn-info comment-message-button" href='#' data-id="${message.id}">
                     <span class='glyphicon glyphicon-comment' aria-hidden='true'></span>
                 </a>
                 <c:choose>
                     <c:when test="${message.username == pageContext.request.userPrincipal.name}">
-                        <a class="edit-message-button" href='#' data-id="${message.id}">
+                        <a class="btn btn-info edit-message-button" href='#' data-id="${message.id}">
                             <span class='glyphicon glyphicon-pencil' aria-hidden='true'></span>
                         </a>
-                        <a class="remove-message-button" href="#" data-id="${message.id}">
+                        <a class="btn btn-info remove-message-button" href="#" data-id="${message.id}">
                             <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                         </a>
                     </c:when>
                     <c:otherwise>
                         <security:authorize access="hasRole('ROLE_ADMIN')">
-                            <a class="remove-message-button" href="#" data-id="${message.id}">
+                            <a class="btn btn-info remove-message-button" href="#" data-id="${message.id}">
                                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                             </a>
                         </security:authorize>

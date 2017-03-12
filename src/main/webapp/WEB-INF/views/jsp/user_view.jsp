@@ -33,6 +33,8 @@
 
     <spring:url value="/static/core/js/bootstrap.min.js" var="bootstrapJs"/>
     <spring:url value="/static/core/js/jquery-3.1.1.min.js" var="jqueryJs"/>
+    <spring:url value="/static/core/js/material.min.js" var="materialJs"/>
+    <spring:url value="/static/core/js/ripples.min.js" var="ripplesJs"/>
     <spring:url value="/static/core/js/fileinput.min.js" var="fileInputJs"/>
     <spring:url value="/static/core/js/fileinput.custom.js" var="fileInputCustomJs"/>
     <spring:url value="/static/core/js/message.view.js" var="messageViewJs"/>
@@ -44,39 +46,41 @@
 
     <link href="${bootstrapCss}" rel="stylesheet"/>
     <link href="${fileInputCss}" rel="stylesheet"/>
-    <link href="${customPanelCss}" rel="stylesheet"/>
     <link rel="shortcut icon" href="${favicon}" type="image/x-icon">
     <link rel="icon" href="${favicon}" type="image/x-icon">
+    <!-- Material Design fonts -->
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700">
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" type="text/css" href="${bootstrapCss}">
+
+    <!-- Bootstrap Material Design -->
+    <link rel="stylesheet" type="text/css" href="/static/core/css/bootstrap-material-design.css">
+    <link rel="stylesheet" type="text/css" href="/static/core/css/ripples.min.css">
 </head>
 <body>
 <jsp:include page="user_header.jsp"/>
 <div class="row" style="margin: 80px 10px;">
     <div class="col-md-3">
-        <div class="panel panel-primary panel-image">
+        <div class="panel panel-info panel-image">
             <div class="panel-heading">
-                <h3 class="panel-title">${profile.username}</h3>
+                <h3 class="panel-title" style="font-weight: bold;">${profile.username}</h3>
             </div>
             <div class="panel-body user-image" data-username="${profile.username}">
                 <img src="${profile.imageUrl}" class="img-thumbnail" width="100%" height="300"/>
-                <c:if test="${profile.username == pageContext.request.userPrincipal.name}">
-                    <div class="tool-panel">
-                        <a href="${pageContext.request.contextPath}/profile">
-                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                        </a>
-                    </div>
-                </c:if>
             </div>
         </div>
         <div class="panel-group" id="accordion">
-            <div class="panel panel-primary">
+            <div class="panel panel-info">
                 <div class="panel-heading">
-                    <h4 class="panel-title">
+                    <h4 class="panel-title" style="font-weight: bold;">
                         <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">
                             ${personal}</a>
                     </h4>
                 </div>
                 <div id="collapse1" class="panel-collapse collapse in">
-                    <div class="panel-body">
+                    <div class="panel-body" style="border-top: none;">
                         <table class="table table-striped table-hover ">
                             <tbody>
                             <tr>
@@ -102,23 +106,23 @@
             </div>
         </div>
         <c:if test="${profile.username == pageContext.request.userPrincipal.name}">
-            <button style="font-size: 17px; font-weight: bolder;" id="view-create-message-modal-button"
-                    class="btn btn-block btn-info">
+            <button id="view-create-message-modal-button"
+                    class="btn btn-block btn-info btn-raised">
                     ${send} <span class="glyphicon glyphicon-send" aria-hidden="true"></span>
             </button>
         </c:if>
     </div>
-    <div class="col-md-9">
-        <div class="panel panel-primary">
+    <div class="col-md-4">
+        <div class="panel panel-info">
             <div class="panel-heading">
-                <h3 class="panel-title">${posts}</h3>
+                <h3 class="panel-title" style="font-weight: bold;">${posts}</h3>
             </div>
             <div id="message-container" class="panel-body">
                 <jsp:include page="messageList.jsp"/>
             </div>
             <div class="panel-footer" style="padding: 10px 15px;">
-                <div id="paging-message-container" class="panel-paging" data-paging="2">
-                    <a class="more-paging paging-message" href="#">
+                <div id="paging-message-container" style="text-align: center;" class="panel-paging" data-paging="2">
+                    <a class="more-paging paging-message" style="margin-right: 15px;" href="#">
                         <span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
                     </a>
                     <a class="turn-paging paging-message" href="#">
@@ -146,7 +150,7 @@
                         <textarea id="message-text" class="form-control" rows="5"></textarea>
                     </div>
                     <div class="form-group">
-                        <a href="#" id="create-message-button" class="btn btn-block btn-info">
+                        <a href="#" id="create-message-button" class="btn btn-block btn-info btn-raised">
                             <span class="glyphicon glyphicon-send" aria-hidden="true"></span>
                         </a>
                     </div>
@@ -157,7 +161,7 @@
 </div>
 <div class="modal fade" id="view-message-modal" tabindex="-1"
      role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-    <div class="modal-dialog">
+    <div class="modal-dialog" style="width: 400px;">
         <div class="modal-content">
             <div class="modal-body">
             </div>
@@ -173,7 +177,7 @@
                 <label for="create-comment-text">${comment}:</label>
                 <textarea id="create-comment-text" class="form-control" rows="5"></textarea>
                 <br>
-                <button id="create-comment-button" class="btn btn-block btn-info">
+                <button id="create-comment-button" class="btn btn-block btn-info btn-raised">
                     <span class='glyphicon glyphicon-comment' aria-hidden='true'></span>
                 </button>
             </div>
@@ -182,6 +186,8 @@
 </div>
 <script src="${jqueryJs}"></script>
 <script src="${bootstrapJs}"></script>
+<script src="${ripplesJs}"></script>
+<script src="${materialJs}"></script>
 <script src="${fileInputJs}"></script>
 <script src="${fileInputCustomJs}"></script>
 <script src="${messageAjaxJs}"></script>
@@ -190,6 +196,7 @@
 <script src="${commentViewJs}"></script>
 <script src="${searchValidationJs}"></script>
 <script>
+    $.material.init();
 </script>
 </body>
 </html>

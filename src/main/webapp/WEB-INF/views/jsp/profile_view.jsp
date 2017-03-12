@@ -18,6 +18,8 @@
     <!--Javascript-->
     <spring:url value="/static/core/js/jquery-3.1.1.min.js" var="jqueryJs"/>
     <spring:url value="/static/core/js/bootstrap.min.js" var="bootstrapJs"/>
+    <spring:url value="/static/core/js/material.min.js" var="materialJs"/>
+    <spring:url value="/static/core/js/ripples.min.js" var="ripplesJs"/>
     <spring:url value="/static/core/js/fileinput.min.js" var="fileInputJs"/>
     <spring:url value="/static/core/js/fileinput.custom.js" var="fileInputCustomJs"/>
     <spring:url value="/static/core/js/userProfile.ajax.js" var="userProfileAjaxJs"/>
@@ -28,9 +30,20 @@
     <!-- Styles -->
     <link href="${bootstrapCss}" rel="stylesheet"/>
     <link href="${fileInputCss}" rel="stylesheet"/>
-    <link href="${customPanelCss}" rel="stylesheet"/>
     <link rel="shortcut icon" href="${favicon}" type="image/x-icon">
     <link rel="icon" href="${favicon}" type="image/x-icon">
+    <link rel="shortcut icon" href="${favicon}" type="image/x-icon">
+    <link rel="icon" href="${favicon}" type="image/x-icon">
+    <!-- Material Design fonts -->
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700">
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" type="text/css" href="${bootstrapCss}">
+
+    <!-- Bootstrap Material Design -->
+    <link rel="stylesheet" type="text/css" href="/static/core/css/bootstrap-material-design.css">
+    <link rel="stylesheet" type="text/css" href="/static/core/css/ripples.min.css">
 
     <!-- localization -->
     <spring:message code="message.login.username" var="username"/>
@@ -62,8 +75,8 @@
 <body>
 <jsp:include page="user_header.jsp"></jsp:include>
 <div class="row" style="margin: 80px 10px;">
-    <div class="col-md-4">
-        <div class="panel panel-primary">
+    <div class="col-md-3">
+        <div class="panel panel-info">
             <div class="panel-heading">
                 <h3 class="panel-title">${photo}</h3>
             </div>
@@ -75,7 +88,7 @@
         </div>
     </div>
     <div class="col-md-4">
-        <div class="panel panel-primary">
+        <div class="panel panel-info">
             <div class="panel-heading">
                 <h3 class="panel-title">${profile}</h3>
             </div>
@@ -192,7 +205,7 @@
                         </c:choose>
                     </spring:bind>
                     <div class="form-group">
-                        <button type="submit" class="btn btn-block btn-primary">
+                        <button type="submit" class="btn btn-block btn-info btn-raised">
                             <h3 class="panel-title" style="font-weight: bolder;">${change}</h3>
                         </button>
                     </div>

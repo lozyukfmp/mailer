@@ -14,12 +14,23 @@
     <spring:url value="/static/core/css/panel.custom.css" var="customPanelCss"/>
     <spring:url value="/static/core/js/bootstrap.min.js" var="bootstrapJs"/>
     <spring:url value="/static/core/js/jquery-3.1.1.min.js" var="jqueryJs"/>
+    <spring:url value="/static/core/js/material.min.js" var="materialJs"/>
+    <spring:url value="/static/core/js/ripples.min.js" var="ripplesJs"/>
     <spring:url value="/static/core/pictures/favicon.ico" var="favicon"/>
 
     <link href="${bootstrapCss}" rel="stylesheet"/>
-    <link href="${customPanelCss}" rel="stylesheet"/>
     <link rel="shortcut icon" href="${favicon}" type="image/x-icon">
     <link rel="icon" href="${favicon}" type="image/x-icon">
+    <!-- Material Design fonts -->
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700">
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" type="text/css" href="${bootstrapCss}">
+
+    <!-- Bootstrap Material Design -->
+    <link rel="stylesheet" type="text/css" href="/static/core/css/bootstrap-material-design.css">
+    <link rel="stylesheet" type="text/css" href="/static/core/css/ripples.min.css">
 
     <spring:message code="message.login.username" var="username"/>
     <spring:message code="message.login.password" var="password"/>
@@ -39,11 +50,11 @@
     <spring:message code="message.registration" var="registration"/>
 </head>
 <body>
-<div class="container" style="margin-top: 80px;">
+<div class="container" style="margin-top: 25px;">
     <div class="col-sm-6 col-sm-offset-3">
-        <div class="panel panel-primary">
+        <div class="panel panel-info">
             <div class="panel-heading">
-                <h3 class="panel-title">${registration}</h3>
+                <h3 class="panel-title" style="font-weight: bold;">${registration}</h3>
             </div>
             <div class="panel-body">
                 <form action="register" method="POST" enctype="utf-8">
@@ -241,36 +252,29 @@
                         </spring:bind>
                     </div>
                     <div class="col-sm-6 col-sm-offset-6">
-                        <button type="submit" class="btn btn-block btn-primary">
+                        <button type="submit" class="btn btn-block btn-info btn-raised" style="padding: 8px 0px;">
                             <h3 class="panel-title" style="font-weight: bolder;">${register}</h3>
                         </button>
                     </div>
                 </form>
             </div>
             <div class="panel-footer">
+                <a class="btn btn-info btn-group btn-group-justified" href="${pageContext.request.contextPath}/welcome">
+                    ${goToWelcome}
+                </a>
+                <a class="btn btn-info btn-group btn-group-justified" href="${pageContext.request.contextPath}/login-page">
+                    ${login}
+                </a>
                 <div class="btn-group btn-group-justified">
-                    <div class="col-sm-4">
-                        <a href="${pageContext.request.contextPath}/welcome">
-                            ${goToWelcome}
-                        </a>
-                    </div>
-                    <div class="col-sm-4">
-                        <a href="${pageContext.request.contextPath}/login-page">
-                            ${login}
-                        </a>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="btn-group">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                ${language}
-                                <span class="caret"></span>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a href="?lang=ru_RU">${russian}</a></li>
-                                <li><a href="?lang=en">${english}</a></li>
-                            </ul>
-                        </div>
-                    </div>
+                    <a href="#" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        ${language}
+                        <span class="caret"></span>
+                        <div class="ripple-container"></div>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="${pageContext.request.contextPath}?lang=ru_RU">${russian}</a></li>
+                        <li><a href="${pageContext.request.contextPath}?lang=en">${english}</a></li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -278,5 +282,10 @@
 </div>
 <script src="${jqueryJs}"></script>
 <script src="${bootstrapJs}"></script>
+<script src="${ripplesJs}"></script>
+<script src="${materialJs}"></script>
+<script>
+    $.material.init();
+</script>
 </body>
 </html>
