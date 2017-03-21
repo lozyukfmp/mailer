@@ -1,5 +1,11 @@
 package by.samsolutions.imgcloud.converter.impl;
 
+import by.samsolutions.imgcloud.converter.Converter;
+import by.samsolutions.imgcloud.converter.exception.ConverterException;
+import by.samsolutions.imgcloud.dto.CommentDto;
+import by.samsolutions.imgcloud.nodeentity.CommentNodeEntity;
+import org.springframework.stereotype.Component;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -7,26 +13,17 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
-import org.springframework.stereotype.Component;
-
-import by.samsolutions.imgcloud.converter.Converter;
-import by.samsolutions.imgcloud.converter.exception.ConverterException;
-import by.samsolutions.imgcloud.dto.CommentDto;
-import by.samsolutions.imgcloud.entity.CommentEntity;
-
 @Component
-public class CommentConverter implements Converter<CommentDto, CommentEntity>
-{
+public class CommentConverter implements Converter<CommentDto, CommentNodeEntity> {
 	private DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy, HH:mm:ss");
 
 	@Override
-	public CommentDto toDto(final CommentEntity commentEntity) throws ConverterException
-	{
+	public CommentDto toDto(final CommentNodeEntity commentEntity) throws ConverterException {
 		try
 		{
 			return CommentDto.builder()
-			                 .id(Integer.toString(commentEntity.getId()))
-			                 .postId(Integer.toString(commentEntity.getPostId()))
+			                 .id(Long.toString(commentEntity.getUuid()))
+			                 .postId(Long.toString(commentEntity.getPostId()))
 			                 .text(commentEntity.getText())
 			                 .username(commentEntity.getUsername())
 			                 .date(formatter.format(commentEntity.getDate()))
@@ -39,26 +36,23 @@ public class CommentConverter implements Converter<CommentDto, CommentEntity>
 	}
 
 	@Override
-	public CommentEntity toEntity(final CommentDto commentDto) throws ConverterException
+	public CommentNodeEntity toEntity(final CommentDto commentDto) throws ConverterException
 	{
 		try
 		{
-			CommentEntity commentEntity = CommentEntity.builder()
-			                                           .postId(Integer.parseInt(commentDto.getPostId()))
+			CommentNodeEntity commentEntity = CommentNodeEntity.builder()
+			                                           .postId(Long.parseLong(commentDto.getPostId()))
 			                                           .text(commentDto.getText())
 			                                           .username(commentDto.getUsername())
 			                                           .build();
-			if (commentDto.getId() != null)
-			{
-				commentEntity.setId(Integer.parseInt(commentDto.getId()));
+			if (commentDto.getId() != null) {
+				commentEntity.setUuid(Long.parseLong(commentDto.getId()));
 			}
 
-			if (commentDto.getDate() == null)
-			{
-				commentEntity.setDate(new Date());
+			if (commentDto.getDate() == null) {
+				commentEntity.setDate((new Date()));
 			}
-			else
-			{
+			else {
 				commentEntity.setDate(formatter.parse(commentDto.getDate()));
 			}
 
@@ -76,19 +70,19 @@ public class CommentConverter implements Converter<CommentDto, CommentEntity>
 	}
 
 	@Override
-	public Collection<CommentDto> toDtoCollection(final Collection<CommentEntity> commentEntities) throws ConverterException
+	public Collection<CommentDto> toDtoCollection(final Collection<CommentNodeEntity> commentEntities) throws ConverterException
 	{
 		Collection<CommentDto> dtoCollection = new ArrayList<>();
-		for (CommentEntity commentEntity : commentEntities)
+		for (CommentNodeEntity commentEntity : commentEntities)
 			dtoCollection.add(toDto(commentEntity));
 
 		return dtoCollection;
 	}
 
 	@Override
-	public Collection<CommentEntity> toEntityCollection(final Collection<CommentDto> commentDtos) throws ConverterException
+	public Collection<CommentNodeEntity> toEntityCollection(final Collection<CommentDto> commentDtos) throws ConverterException
 	{
-		Collection<CommentEntity> dtoCollection = new ArrayList<>();
+		Collection<CommentNodeEntity> dtoCollection = new ArrayList<>();
 		for (CommentDto commentDto : commentDtos)
 			dtoCollection.add(toEntity(commentDto));
 

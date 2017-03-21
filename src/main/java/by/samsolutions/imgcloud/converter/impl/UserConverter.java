@@ -1,25 +1,23 @@
 package by.samsolutions.imgcloud.converter.impl;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.stream.Collectors;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import by.samsolutions.imgcloud.converter.Converter;
 import by.samsolutions.imgcloud.converter.exception.ConverterException;
 import by.samsolutions.imgcloud.dto.UserDto;
-import by.samsolutions.imgcloud.entity.user.UserEntity;
+import by.samsolutions.imgcloud.nodeentity.user.UserNodeEntity;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.Collection;
 
 @Component
-public class UserConverter implements Converter<UserDto, UserEntity>
+public class UserConverter implements Converter<UserDto, UserNodeEntity>
 {
 	@Autowired
 	private UserProfileConverter userProfileConverter;
 
 	@Override
-	public UserDto toDto(final UserEntity userEntity) throws ConverterException
+	public UserDto toDto(final UserNodeEntity userEntity) throws ConverterException
 	{
 		UserDto userDto = UserDto.builder().username(userEntity.getUsername()).enabled(userEntity.isEnabled()).build();
 
@@ -35,9 +33,9 @@ public class UserConverter implements Converter<UserDto, UserEntity>
 	}
 
 	@Override
-	public UserEntity toEntity(final UserDto userDto) throws ConverterException
+	public UserNodeEntity toEntity(final UserDto userDto) throws ConverterException
 	{
-		return UserEntity.builder()
+		return UserNodeEntity.builder()
 		                 .username(userDto.getUsername())
 		                 .password(userDto.getPassword())
 		                 .profile(userProfileConverter.toEntity(userDto.getProfile()))
@@ -45,19 +43,19 @@ public class UserConverter implements Converter<UserDto, UserEntity>
 	}
 
 	@Override
-	public Collection<UserDto> toDtoCollection(final Collection<UserEntity> userEntities) throws ConverterException
+	public Collection<UserDto> toDtoCollection(final Collection<UserNodeEntity> userEntities) throws ConverterException
 	{
 		Collection<UserDto> dtoCollection = new ArrayList<>();
-		for (UserEntity userEntity : userEntities)
+		for (UserNodeEntity userEntity : userEntities)
 			dtoCollection.add(toDto(userEntity));
 
 		return dtoCollection;
 	}
 
 	@Override
-	public Collection<UserEntity> toEntityCollection(final Collection<UserDto> userDtos) throws ConverterException
+	public Collection<UserNodeEntity> toEntityCollection(final Collection<UserDto> userDtos) throws ConverterException
 	{
-		Collection<UserEntity> dtoCollection = new ArrayList<>();
+		Collection<UserNodeEntity> dtoCollection = new ArrayList<>();
 		for (UserDto userDto : userDtos)
 			dtoCollection.add(toEntity(userDto));
 

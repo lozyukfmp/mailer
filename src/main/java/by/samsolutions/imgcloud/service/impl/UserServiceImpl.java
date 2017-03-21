@@ -1,32 +1,29 @@
 package by.samsolutions.imgcloud.service.impl;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.stream.Collectors;
-
+import by.samsolutions.imgcloud.converter.exception.ConverterException;
+import by.samsolutions.imgcloud.converter.impl.UserConverter;
+import by.samsolutions.imgcloud.dao.UserDao;
+import by.samsolutions.imgcloud.dto.UserDto;
+import by.samsolutions.imgcloud.nodeentity.user.UserNodeEntity;
+import by.samsolutions.imgcloud.nodeentity.user.UserRoleNodeEntity;
+import by.samsolutions.imgcloud.service.UserService;
+import by.samsolutions.imgcloud.service.exception.ServiceException;
+import by.samsolutions.imgcloud.service.exception.UserAlreadyExistsException;
+import by.samsolutions.imgcloud.service.exception.UserNotFoundException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import by.samsolutions.imgcloud.converter.exception.ConverterException;
-import by.samsolutions.imgcloud.converter.impl.UserConverter;
-import by.samsolutions.imgcloud.dao.UserDao;
-import by.samsolutions.imgcloud.dao.exception.DaoException;
-import by.samsolutions.imgcloud.dto.UserDto;
-import by.samsolutions.imgcloud.entity.user.UserEntity;
-import by.samsolutions.imgcloud.entity.user.UserRoleEntity;
-import by.samsolutions.imgcloud.service.exception.UserAlreadyExistsException;
-import by.samsolutions.imgcloud.service.UserService;
-import by.samsolutions.imgcloud.service.exception.ServiceException;
-import by.samsolutions.imgcloud.service.exception.UserNotFoundException;
+import java.util.*;
 
 @Service
-public class UserServiceImpl extends GenericServiceImpl<UserDto, UserEntity, String> implements UserService
+public class UserServiceImpl extends GenericServiceImpl<UserDto, UserNodeEntity, Long> implements UserService
 {
 	private static final Logger logger = LogManager.getLogger(UserServiceImpl.class);
 
@@ -48,31 +45,48 @@ public class UserServiceImpl extends GenericServiceImpl<UserDto, UserEntity, Str
 		this.userConverter = userConverter;
 	}
 
-	@Override
+    @Override
+    @Transactional
+    public UserDto findByUsername(String username) throws ServiceException {
+        logger.trace("GETTING USER WITH USERNAME : " + username);
+        try
+        {
+            UserNodeEntity userEntity = userDao.findByUsername(username);
+            return userConverter.toDto(userEntity);
+        }
+        catch (ConverterException e)
+        {
+            logger.error(e.getMessage(), e);
+            throw new UserNotFoundException();
+        }
+    }
+
+    @Override
 	@Transactional
 	public UserDto create(final UserDto dto) throws ServiceException
 	{
 		logger.trace("CREATING USER : " + dto);
 		try
 		{
-			UserEntity userEntity = userConverter.toEntity(dto);
+			UserNodeEntity userEntity = userConverter.toEntity(dto);
 
-			if (userDao.find(userEntity.getUsername()) != null)
+			if (userDao.findByUsername(userEntity.getUsername()) != null)
 			{
 				throw new UserAlreadyExistsException();
 			}
 
-			UserRoleEntity userRole = UserRoleEntity.builder().username(userEntity.getUsername()).role("ROLE_USER").build();
+			UserRoleNodeEntity userRole = UserRoleNodeEntity.builder()
+                    .username(userEntity.getUsername())
+					.role("ROLE_USER").build();
 			userEntity.setUserRole(new HashSet<>(Arrays.asList(userRole)));
 			userEntity.setEnabled(true);
 			userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
-
-			UserEntity resultEntity = userDao.create(userEntity);
+            UserNodeEntity resultEntity = userDao.save(userEntity);
 			UserDto resultDto = userConverter.toDto(resultEntity);
 
 			return resultDto;
 		}
-		catch (DaoException | ConverterException e)
+		catch (ConverterException e)
 		{
 			logger.error(e.getMessage(), e);
 			throw new ServiceException(e);
@@ -86,10 +100,10 @@ public class UserServiceImpl extends GenericServiceImpl<UserDto, UserEntity, Str
 		logger.trace("GETTING USER WITH PROFILE : " + username);
 		try
 		{
-			Collection<UserEntity> userEntity = userDao.getByUsernameWithProfile(username);
+			Collection<UserNodeEntity> userEntity = userDao.findByUsernameContaining(username);
 			return userConverter.toDtoCollection(userEntity);
 		}
-		catch (DaoException | ConverterException e)
+		catch (ConverterException e)
 		{
 			logger.error(e.getMessage(), e);
 			throw new UserNotFoundException();
@@ -103,9 +117,13 @@ public class UserServiceImpl extends GenericServiceImpl<UserDto, UserEntity, Str
 		logger.trace("TRYING TO LOCK/UNLOCK USER WITH USERNAME = " + username);
 		try
 		{
-			userDao.setUserEnabled(username, enabled);
+			UserNodeEntity userNodeEntity = userDao.findByUsername(username);
+			if (userNodeEntity != null) {
+				userNodeEntity.setEnabled(enabled);
+				userDao.save(userNodeEntity);
+			}
 		}
-		catch (DaoException e)
+		catch (Exception e)
 		{
 			logger.error(e.getMessage(), e);
 			throw new ServiceException(e);
@@ -120,9 +138,12 @@ public class UserServiceImpl extends GenericServiceImpl<UserDto, UserEntity, Str
 		logger.trace("GETTING USERS COUNT = " + userCount);
 		try
 		{
-			return userConverter.toDtoCollection(userDao.getAll(userCount));
+			Pageable pageRequest = new PageRequest(0, userCount, Sort.Direction.DESC, "username");
+			List<UserNodeEntity> userEntityCollection = new ArrayList<>();
+            userDao.findByUsername(pageRequest).forEach(entity -> userEntityCollection.add(entity));
+			return userConverter.toDtoCollection(userEntityCollection);
 		}
-		catch (DaoException | ConverterException e)
+		catch (Exception e)
 		{
 			logger.error(e.getMessage(), e);
 			throw new ServiceException(e);
@@ -135,15 +156,13 @@ public class UserServiceImpl extends GenericServiceImpl<UserDto, UserEntity, Str
 	{
 		try
 		{
-			UserEntity userEntity = userDao.find(username);
-
-			UserRoleEntity userRoleEntity = UserRoleEntity.builder().username(userEntity.getUsername()).role("ROLE_ADMIN").build();
-
+			UserNodeEntity userEntity = userDao.findByUsername(username);
+			UserRoleNodeEntity userRoleEntity = UserRoleNodeEntity.builder().username(userEntity.getUsername()).role("ROLE_ADMIN").build();
 			userEntity.getUserRole().add(userRoleEntity);
 
-			userDao.update(userEntity);
+			userDao.save(userEntity);
 		}
-		catch (DaoException e)
+		catch (Exception e)
 		{
 			throw new ServiceException(e);
 		}
@@ -151,24 +170,19 @@ public class UserServiceImpl extends GenericServiceImpl<UserDto, UserEntity, Str
 
 	@Override
 	@Transactional
-	public void deleteAdminRole(final String username) throws ServiceException
-	{
-		try
-		{
-			UserEntity userEntity = userDao.find(username);
-			Iterator<UserRoleEntity> iterator = userEntity.getUserRole().iterator();
-			while (iterator.hasNext())
-			{
-				if (iterator.next().getRole().equals("ROLE_ADMIN"))
-				{
+	public void deleteAdminRole(final String username) throws ServiceException {
+		try {
+			UserNodeEntity userEntity = userDao.findByUsername(username);
+			Iterator<UserRoleNodeEntity> iterator = userEntity.getUserRole().iterator();
+			while (iterator.hasNext()) {
+				if (iterator.next().getRole().equals("ROLE_ADMIN")) {
 					iterator.remove();
 				}
 			}
 
-			userDao.update(userEntity);
+			userDao.save(userEntity);
 		}
-		catch (DaoException e)
-		{
+		catch (Exception e) {
 			throw new ServiceException(e);
 		}
 	}
@@ -180,11 +194,11 @@ public class UserServiceImpl extends GenericServiceImpl<UserDto, UserEntity, Str
 		logger.trace("CHECKING IF ENABLED , USERNAME = " + username);
 		try
 		{
-			UserEntity userEntity = userDao.find(username);
+			UserNodeEntity userEntity = userDao.findByUsername(username);
 
 			return userEntity.isEnabled();
 		}
-		catch (DaoException e)
+		catch (Exception e)
 		{
 			logger.error(e.getMessage(), e);
 			throw new ServiceException(e);

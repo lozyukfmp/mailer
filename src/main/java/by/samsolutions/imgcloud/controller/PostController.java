@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import by.samsolutions.imgcloud.dto.CommentDto;
+import by.samsolutions.imgcloud.service.CommentService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,9 +37,7 @@ import by.samsolutions.imgcloud.service.exception.ServiceException;
 
 @RestController
 @RequestMapping("post")
-public class PostController
-{
-
+public class PostController {
 	private static final Logger logger = LogManager.getLogger(PostController.class);
 
 	@Autowired
@@ -48,6 +48,7 @@ public class PostController
 
 	@Autowired
 	private PostService postService;
+	private CommentService commentService;
 
 	@GetMapping("/all/{username}/{messageCount}")
 	public ModelAndView getPostList(@PathVariable String username, @PathVariable Integer messageCount) throws ControllerException
@@ -71,7 +72,7 @@ public class PostController
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<PostDto> getPost(@PathVariable Integer id) throws ControllerException
+	public ResponseEntity<PostDto> getPost(@PathVariable Long id) throws ControllerException
 	{
 		logger.trace("GETTING POST BY ID = " + id);
 		try
@@ -88,13 +89,13 @@ public class PostController
 	}
 
 	@GetMapping("/view/{id}")
-	public ModelAndView getPostView(@PathVariable Integer id) throws ControllerException
+	public ModelAndView getPostView(@PathVariable Long id) throws ControllerException
 	{
 		logger.trace("GETTING POST VIEW BY ID = " + id);
 		try
 		{
 			PostDto postDto = postService.find(id);
-
+			//postDto.setComments(commentService.getCommentListByPostId(id, 2));
 			ModelAndView modelAndView = new ModelAndView();
 			modelAndView.addObject("message", postDto);
 			modelAndView.addObject("commentList", postDto.getComments());
@@ -178,7 +179,7 @@ public class PostController
 	@PostMapping("/delete/{id}")
 	public
 	@ResponseBody
-	ResponseEntity<PostDto> deletePost(@PathVariable Integer id) throws ControllerException
+	ResponseEntity<PostDto> deletePost(@PathVariable Long id) throws ControllerException
 	{
 		logger.trace("DELETING POST WITH ID = " + id);
 		try

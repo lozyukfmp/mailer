@@ -1,13 +1,11 @@
 package by.samsolutions.imgcloud.dao;
 
-import java.util.List;
+import by.samsolutions.imgcloud.nodeentity.PostNodeEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
-import by.samsolutions.imgcloud.dao.exception.DaoException;
-import by.samsolutions.imgcloud.entity.PostEntity;
-
-public interface PostDao extends GenericDao<PostEntity, Integer>
-{
-	List<PostEntity> all(String username, Integer messageCount) throws DaoException;
-
-	PostEntity findWithComments(Integer postId) throws DaoException;
+public interface PostDao extends BaseDao<PostNodeEntity, Long> {
+	Page<PostNodeEntity> findByUsername(String username, Pageable pageable);
+    PostNodeEntity findByUuid(Long uuid);
+    Long removeByUuid(Long uuid);
 }

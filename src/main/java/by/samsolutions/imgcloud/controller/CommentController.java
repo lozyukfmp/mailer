@@ -33,9 +33,8 @@ public class CommentController
 	private CommentService commentService;
 
 	@GetMapping("/all/{postId}/{commentIndex}")
-	public ModelAndView getCommentListByPostId(@PathVariable final Integer postId, @PathVariable final Integer commentIndex)
-					throws ControllerException
-	{
+	public ModelAndView getCommentListByPostId(@PathVariable final Long postId, @PathVariable final Integer commentIndex)
+					throws ControllerException {
 		logger.trace("GETTING COMMENTS(COUNT = " + commentIndex + ") BY POST_ID = " + postId);
 		try
 		{
@@ -58,8 +57,7 @@ public class CommentController
 	@GetMapping("/{id}")
 	public
 	@ResponseBody
-	ResponseEntity<CommentDto> getComment(@PathVariable final Integer id) throws ControllerException
-	{
+	ResponseEntity<CommentDto> getComment(@PathVariable final Long id) throws ControllerException {
 		logger.trace("GETTING COMMENT BY COMMENT_ID = " + id);
 		try
 		{
@@ -77,8 +75,7 @@ public class CommentController
 	@PostMapping("/create")
 	public
 	@ResponseBody
-	ResponseEntity<CommentDto> createComment(@RequestBody final CommentDto comment) throws ControllerException
-	{
+	ResponseEntity<CommentDto> createComment(@RequestBody final CommentDto comment) throws ControllerException {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		comment.setUsername(auth.getName());
 
@@ -100,8 +97,7 @@ public class CommentController
 	@PostMapping("/update")
 	public
 	@ResponseBody
-	ResponseEntity<CommentDto> updateComment(@RequestBody CommentDto comment) throws ControllerException
-	{
+	ResponseEntity<CommentDto> updateComment(@RequestBody CommentDto comment) throws ControllerException {
 		logger.trace("UPDATING COMMENT " + comment);
 		try
 		{
@@ -119,8 +115,7 @@ public class CommentController
 	@PostMapping("/delete/{id}")
 	public
 	@ResponseBody
-	ResponseEntity<CommentDto> deleteComment(@PathVariable Integer id) throws ControllerException
-	{
+	ResponseEntity<CommentDto> deleteComment(@PathVariable Long id) throws ControllerException {
 		logger.trace("DELETING COMMENT WITH ID = " + id);
 		try
 		{

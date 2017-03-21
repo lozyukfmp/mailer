@@ -1,15 +1,14 @@
 package by.samsolutions.imgcloud.dao;
 
-import java.util.Collection;
+import by.samsolutions.imgcloud.nodeentity.user.UserNodeEntity;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Component;
 
-import by.samsolutions.imgcloud.dao.exception.DaoException;
-import by.samsolutions.imgcloud.entity.user.UserEntity;
+import java.util.List;
 
-public interface UserDao extends GenericDao<UserEntity, String>
-{
-	Collection<UserEntity> getAll(Integer userCount) throws DaoException;
-
-	Collection<UserEntity> getByUsernameWithProfile(String username) throws DaoException;
-
-	void setUserEnabled(String username, Boolean enabled) throws DaoException;
+@Component
+public interface UserDao extends BaseDao<UserNodeEntity, Long> {
+	List<UserNodeEntity> findByUsername(Pageable pageable);
+    UserNodeEntity findByUsername(String username);
+    List<UserNodeEntity> findByUsernameContaining(String username);
 }

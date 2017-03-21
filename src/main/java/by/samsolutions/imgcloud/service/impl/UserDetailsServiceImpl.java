@@ -1,9 +1,8 @@
 package by.samsolutions.imgcloud.service.impl;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.stream.Collectors;
-
+import by.samsolutions.imgcloud.dao.UserDao;
+import by.samsolutions.imgcloud.nodeentity.user.UserNodeEntity;
+import by.samsolutions.imgcloud.nodeentity.user.UserRoleNodeEntity;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +14,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import by.samsolutions.imgcloud.dao.UserDao;
-import by.samsolutions.imgcloud.dao.exception.DaoException;
-import by.samsolutions.imgcloud.entity.user.UserEntity;
-import by.samsolutions.imgcloud.entity.user.UserRoleEntity;
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service("customUserDetailsService")
 public class UserDetailsServiceImpl implements UserDetailsService
@@ -36,7 +34,7 @@ public class UserDetailsServiceImpl implements UserDetailsService
 		logger.trace("GETTING USER WITH USERNAME = " + username);
 		try
 		{
-			UserEntity user = userDao.find(username);
+			UserNodeEntity user = userDao.findByUsername(username);
 
 			if (user == null)
 			{
@@ -47,20 +45,20 @@ public class UserDetailsServiceImpl implements UserDetailsService
 
 			return buildUserForAuthentication(user, authorities);
 		}
-		catch (DaoException e)
+		catch (Exception e)
 		{
 			logger.error(e.getMessage(), e);
 			throw new UsernameNotFoundException(e.getMessage());
 		}
 	}
 
-	private List<GrantedAuthority> buildUserAuthority(final Collection<UserRoleEntity> userRoles)
+	private List<GrantedAuthority> buildUserAuthority(final Collection<UserRoleNodeEntity> userRoles)
 	{
 
 		return userRoles.stream().map(role -> new SimpleGrantedAuthority(role.getRole())).collect(Collectors.toList());
 	}
 
-	private org.springframework.security.core.userdetails.User buildUserForAuthentication(final UserEntity user,
+	private org.springframework.security.core.userdetails.User buildUserForAuthentication(final UserNodeEntity user,
 	                                                                                      final List<GrantedAuthority> authorities)
 	{
 		return new org.springframework.security.core.userdetails.

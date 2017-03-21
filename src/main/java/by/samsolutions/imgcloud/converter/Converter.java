@@ -1,10 +1,10 @@
 package by.samsolutions.imgcloud.converter;
 
-import java.util.Collection;
-
 import by.samsolutions.imgcloud.converter.exception.ConverterException;
 import by.samsolutions.imgcloud.dto.BaseDto;
-import by.samsolutions.imgcloud.entity.BaseEntity;
+import by.samsolutions.imgcloud.nodeentity.BaseEntity;
+
+import java.util.Collection;
 
 public interface Converter<Dto extends BaseDto, Entity extends BaseEntity>
 {

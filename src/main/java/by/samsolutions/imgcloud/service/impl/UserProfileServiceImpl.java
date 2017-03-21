@@ -1,28 +1,26 @@
 package by.samsolutions.imgcloud.service.impl;
 
+import by.samsolutions.imgcloud.converter.exception.ConverterException;
+import by.samsolutions.imgcloud.converter.impl.UserProfileConverter;
+import by.samsolutions.imgcloud.dao.UserProfileDao;
+import by.samsolutions.imgcloud.dto.UserProfileDto;
+import by.samsolutions.imgcloud.nodeentity.user.UserProfileNodeEntity;
+import by.samsolutions.imgcloud.service.UserProfileService;
+import by.samsolutions.imgcloud.service.exception.ServiceException;
+import by.samsolutions.imgcloud.service.exception.UserNotFoundException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import by.samsolutions.imgcloud.converter.exception.ConverterException;
-import by.samsolutions.imgcloud.converter.impl.UserProfileConverter;
-import by.samsolutions.imgcloud.dao.GenericDao;
-import by.samsolutions.imgcloud.dao.exception.DaoException;
-import by.samsolutions.imgcloud.dto.UserProfileDto;
-import by.samsolutions.imgcloud.entity.user.UserProfileEntity;
-import by.samsolutions.imgcloud.service.UserProfileService;
-import by.samsolutions.imgcloud.service.exception.UserNotFoundException;
-import by.samsolutions.imgcloud.service.exception.ServiceException;
-
 @Service
-public class UserProfileServiceImpl extends GenericServiceImpl<UserProfileDto, UserProfileEntity, String>
+public class UserProfileServiceImpl extends GenericServiceImpl<UserProfileDto, UserProfileNodeEntity, Long>
 				implements UserProfileService
 {
 	private static final Logger logger = LogManager.getLogger(UserProfileServiceImpl.class);
 
-	private GenericDao<UserProfileEntity, String> userProfileDao;
+	private UserProfileDao userProfileDao;
 	private UserProfileConverter                  userProfileConverter;
 
 	public UserProfileServiceImpl()
@@ -31,7 +29,7 @@ public class UserProfileServiceImpl extends GenericServiceImpl<UserProfileDto, U
 	}
 
 	@Autowired
-	public UserProfileServiceImpl(@Autowired GenericDao<UserProfileEntity, String> userProfileDao,
+	public UserProfileServiceImpl(@Autowired UserProfileDao userProfileDao,
 	                              @Autowired UserProfileConverter userProfileConverter)
 	{
 		super(userProfileDao, userProfileConverter);
@@ -41,12 +39,12 @@ public class UserProfileServiceImpl extends GenericServiceImpl<UserProfileDto, U
 
 	@Override
 	@Transactional
-	public UserProfileDto find(final String id) throws ServiceException
+	public UserProfileDto findByUsername(final String id) throws ServiceException
 	{
 		logger.trace("GETTING USER PROFILE BY USERNAME = " + id);
 		try
 		{
-			UserProfileEntity userProfileEntity = userProfileDao.find(id);
+			UserProfileNodeEntity userProfileEntity = userProfileDao.findByUsername(id);
 
 			if (userProfileEntity == null)
 			{
@@ -57,7 +55,7 @@ public class UserProfileServiceImpl extends GenericServiceImpl<UserProfileDto, U
 
 			return userProfileDto;
 		}
-		catch (DaoException | ConverterException e)
+		catch (ConverterException e)
 		{
 			logger.error(e.getMessage(), e);
 			throw new ServiceException(e);
@@ -71,13 +69,13 @@ public class UserProfileServiceImpl extends GenericServiceImpl<UserProfileDto, U
 		logger.trace("UPDATING USER PROFILE : " + dto);
 		try
 		{
-			UserProfileEntity userProfileEntity = userProfileDao.find(dto.getUsername());
-			UserProfileEntity saveProfile = userProfileConverter.toEntity(dto);
+			UserProfileNodeEntity userProfileEntity = userProfileDao.findByUsername(dto.getUsername());
+			UserProfileNodeEntity saveProfile = userProfileConverter.toEntity(dto);
 			saveProfile.setImageUrl(userProfileEntity.getImageUrl());
 
-			return userProfileConverter.toDto(userProfileDao.update(saveProfile));
+			return userProfileConverter.toDto(userProfileDao.save(saveProfile));
 		}
-		catch (DaoException | ConverterException e)
+		catch (Exception e)
 		{
 			logger.error(e.getMessage(), e);
 			throw new ServiceException(e);
@@ -91,14 +89,14 @@ public class UserProfileServiceImpl extends GenericServiceImpl<UserProfileDto, U
 		logger.trace("UPLOADING PHOTO (USERNAME = " + username + ", PHOTO_URL = " + photoUrl + ").");
 		try
 		{
-			UserProfileEntity userProfile = userProfileDao.find(username);
+			UserProfileNodeEntity userProfile = userProfileDao.findByUsername(username);
 			userProfile.setImageUrl(photoUrl);
-			UserProfileEntity updatedProfile = userProfileDao.update(userProfile);
+			UserProfileNodeEntity updatedProfile = userProfileDao.save(userProfile);
 			UserProfileDto resultDto = userProfileConverter.toDto(updatedProfile);
 
 			return resultDto;
 		}
-		catch (DaoException | ConverterException e)
+		catch (Exception e)
 		{
 			logger.error(e.getMessage(), e);
 			throw new ServiceException(e);

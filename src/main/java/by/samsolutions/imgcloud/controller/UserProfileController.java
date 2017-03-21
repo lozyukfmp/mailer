@@ -54,7 +54,7 @@ public class UserProfileController
 		{
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
-			UserProfileDto userProfileDto = userProfileService.find(auth.getName());
+			UserProfileDto userProfileDto = userProfileService.findByUsername(auth.getName());
 
 			return new ModelAndView("profile_view", "userProfile", userProfileDto);
 		}
@@ -77,7 +77,7 @@ public class UserProfileController
 		{
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
-			UserProfileDto userProfileDto = userProfileService.find(auth.getName());
+			UserProfileDto userProfileDto = userProfileService.findByUsername(auth.getName());
 
 			return new ResponseEntity<>(userProfileDto, HttpStatus.OK);
 

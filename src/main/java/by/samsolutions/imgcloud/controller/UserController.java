@@ -245,7 +245,7 @@ public class UserController
 		try
 		{
 
-			UserProfileDto userProfileDto = userProfileService.find(username);
+			UserProfileDto userProfileDto = userProfileService.findByUsername(username);
 			Collection<PostDto> postDtoCollection = postService.getAll(username, 2);
 
 			modelAndView.setViewName("user_view");

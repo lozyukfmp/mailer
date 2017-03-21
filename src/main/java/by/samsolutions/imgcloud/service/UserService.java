@@ -1,16 +1,17 @@
 package by.samsolutions.imgcloud.service;
 
-import java.util.Collection;
-
+import by.samsolutions.imgcloud.dto.UserDto;
+import by.samsolutions.imgcloud.nodeentity.user.UserNodeEntity;
+import by.samsolutions.imgcloud.service.exception.ServiceException;
 import org.springframework.stereotype.Service;
 
-import by.samsolutions.imgcloud.dto.UserDto;
-import by.samsolutions.imgcloud.entity.user.UserEntity;
-import by.samsolutions.imgcloud.service.exception.ServiceException;
+import java.util.Collection;
 
 @Service
-public interface UserService extends GenericService<UserDto, UserEntity, String>
+public interface UserService extends GenericService<UserDto, UserNodeEntity, Long>
 {
+	UserDto findByUsername(String username) throws ServiceException;
+
 	Collection<UserDto> getAll(Integer userCount) throws ServiceException;
 
 	Collection<UserDto> getWithProfileByUsername(String username) throws ServiceException;

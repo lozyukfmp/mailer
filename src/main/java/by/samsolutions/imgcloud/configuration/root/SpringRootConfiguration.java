@@ -7,7 +7,4 @@ import org.springframework.context.annotation.PropertySource;
 @Configuration
 @ComponentScan("by.samsolutions.imgcloud.*")
 @PropertySource(value = {"classpath:/common/common.properties", "classpath:/validation/regexp.properties"})
-public class SpringRootConfiguration
-{
-
-}
+public class SpringRootConfiguration {}

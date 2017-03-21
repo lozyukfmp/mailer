@@ -1,11 +1,11 @@
 package by.samsolutions.imgcloud.service;
 
+import by.samsolutions.imgcloud.dto.BaseDto;
+import by.samsolutions.imgcloud.nodeentity.BaseEntity;
+import by.samsolutions.imgcloud.service.exception.ServiceException;
+
 import java.io.Serializable;
 import java.util.Collection;
-
-import by.samsolutions.imgcloud.dto.BaseDto;
-import by.samsolutions.imgcloud.entity.BaseEntity;
-import by.samsolutions.imgcloud.service.exception.ServiceException;
 
 public interface GenericService<Dto extends BaseDto, Entity extends BaseEntity, PK extends Serializable>
 {

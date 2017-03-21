@@ -1,15 +1,14 @@
 package by.samsolutions.imgcloud.service;
 
-import java.util.Collection;
-
+import by.samsolutions.imgcloud.dto.PostDto;
+import by.samsolutions.imgcloud.nodeentity.PostNodeEntity;
+import by.samsolutions.imgcloud.service.exception.ServiceException;
 import org.springframework.stereotype.Service;
 
-import by.samsolutions.imgcloud.dto.PostDto;
-import by.samsolutions.imgcloud.entity.PostEntity;
-import by.samsolutions.imgcloud.service.exception.ServiceException;
+import java.util.Collection;
 
 @Service
-public interface PostService extends GenericService<PostDto, PostEntity, Integer>
+public interface PostService extends GenericService<PostDto, PostNodeEntity, Long>
 {
 
 	Collection<PostDto> getAll(String username, Integer messageCount) throws ServiceException;

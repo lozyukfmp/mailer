@@ -11,12 +11,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class PostDto implements BaseDto
-{
-	private String                 id;
-	private String                 text;
-	private String                 imageUrl;
-	private String                 username;
-	private String                 date;
+public class PostDto implements BaseDto {
+	private String id;
+	private String text;
+	private String imageUrl;
+	private String username;
+	private String date;
 	private Collection<CommentDto> comments;
 }
