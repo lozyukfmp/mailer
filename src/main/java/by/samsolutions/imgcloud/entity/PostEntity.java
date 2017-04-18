@@ -39,7 +39,7 @@ public class PostEntity implements BaseEntity
 	private final static Long serialVersionUID = 5L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "post_id")
 	private int id;
 

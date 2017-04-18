@@ -18,9 +18,9 @@ import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
-@EnableWebMvc
 @Configuration
-@ComponentScan("by.samsolutions.imgcloud.*")
+@ComponentScan("by.samsolutions.imgcloud")
+@EnableWebMvc
 public class SpringWebConfig extends WebMvcConfigurerAdapter
 {
 

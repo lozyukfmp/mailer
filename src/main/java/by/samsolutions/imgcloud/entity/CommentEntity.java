@@ -34,7 +34,7 @@ public class CommentEntity implements BaseEntity
 	private final static Long serialVersionUID = 4L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "comment_id")
 	private int id;
 

@@ -17,6 +17,8 @@
     <spring:url value="/static/core/js/material.min.js" var="materialJs"/>
     <spring:url value="/static/core/js/ripples.min.js" var="ripplesJs"/>
     <spring:url value="/static/core/pictures/favicon.ico" var="favicon"/>
+    <spring:url value="/static/core/css/bootstrap-material-design.css" var="materialCss"/>
+    <spring:url value="/static/core/css/ripples.min.css" var="ripplesCss"/>
 
     <link href="${bootstrapCss}" rel="stylesheet"/>
     <link rel="shortcut icon" href="${favicon}" type="image/x-icon">
@@ -29,8 +31,8 @@
     <link rel="stylesheet" type="text/css" href="${bootstrapCss}">
 
     <!-- Bootstrap Material Design -->
-    <link rel="stylesheet" type="text/css" href="/static/core/css/bootstrap-material-design.css">
-    <link rel="stylesheet" type="text/css" href="/static/core/css/ripples.min.css">
+    <link rel="stylesheet" type="text/css" href="${materialCss}">
+    <link rel="stylesheet" type="text/css" href="${ripplesCss}">
 
     <spring:message code="message.login.username" var="username"/>
     <spring:message code="message.login.password" var="password"/>

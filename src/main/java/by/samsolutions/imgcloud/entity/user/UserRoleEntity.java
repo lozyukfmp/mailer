@@ -27,7 +27,7 @@ public class UserRoleEntity implements BaseEntity
 	private final static Long serialVersionUID = 3L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "user_role_id", unique = true, nullable = false)
 	private int id;
 

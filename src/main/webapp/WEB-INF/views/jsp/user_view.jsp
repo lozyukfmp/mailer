@@ -30,6 +30,8 @@
     <spring:url value="/static/core/css/bootstrap.min.css" var="bootstrapCss"/>
     <spring:url value="/static/core/css/fileinput.min.css" var="fileInputCss"/>
     <spring:url value="/static/core/css/panel.custom.css" var="customPanelCss"/>
+    <spring:url value="/static/core/css/bootstrap-material-design.css" var="materialCss"/>
+    <spring:url value="/static/core/css/ripples.min.css" var="ripplesCss"/>
 
     <spring:url value="/static/core/js/bootstrap.min.js" var="bootstrapJs"/>
     <spring:url value="/static/core/js/jquery-3.1.1.min.js" var="jqueryJs"/>
@@ -56,8 +58,8 @@
     <link rel="stylesheet" type="text/css" href="${bootstrapCss}">
 
     <!-- Bootstrap Material Design -->
-    <link rel="stylesheet" type="text/css" href="/static/core/css/bootstrap-material-design.css">
-    <link rel="stylesheet" type="text/css" href="/static/core/css/ripples.min.css">
+    <link rel="stylesheet" type="text/css" href="${materialCss}">
+    <link rel="stylesheet" type="text/css" href="${ripplesCss}">
 </head>
 <body>
 <jsp:include page="user_header.jsp"/>

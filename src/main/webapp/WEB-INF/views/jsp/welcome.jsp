@@ -18,6 +18,8 @@
     <spring:url value="/static/core/js/ripples.min.js" var="ripplesJs"/>
     <spring:url value="/static/core/js/jquery-3.1.1.min.js" var="jqueryJs"/>
     <spring:url value="/static/core/pictures/favicon.ico" var="favicon"/>
+    <spring:url value="/static/core/css/bootstrap-material-design.css" var="materialCss"/>
+    <spring:url value="/static/core/css/ripples.min.css" var="ripplesCss"/>
 
     <!-- localization -->
     <spring:message code="message.welcome" var="welcome"/>
@@ -32,7 +34,6 @@
     <spring:message code="message.welcome.prefix" var="prefix"/>
     <spring:message code="message.welcome.postfix" var="postfix"/>
 
-    <link href="${customPanelCss}" rel="stylesheet"/>
     <link rel="shortcut icon" href="${favicon}" type="image/x-icon">
     <link rel="icon" href="${favicon}" type="image/x-icon">
     <!-- Material Design fonts -->
@@ -41,10 +42,11 @@
 
     <!-- Bootstrap -->
     <link rel="stylesheet" type="text/css" href="${bootstrapCss}">
+    <link href="${customPanelCss}" rel="stylesheet"/>
 
     <!-- Bootstrap Material Design -->
-    <link rel="stylesheet" type="text/css" href="/static/core/css/bootstrap-material-design.css">
-    <link rel="stylesheet" type="text/css" href="/static/core/css/ripples.min.css">
+    <link rel="stylesheet" type="text/css" href="${materialCss}">
+    <link rel="stylesheet" type="text/css" href="${ripplesCss}">
 
 </head>
 <body>
