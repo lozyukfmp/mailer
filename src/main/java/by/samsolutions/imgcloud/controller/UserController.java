@@ -1,15 +1,15 @@
 package by.samsolutions.imgcloud.controller;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
-
+import by.samsolutions.imgcloud.controller.exception.ControllerException;
+import by.samsolutions.imgcloud.dto.PostDto;
+import by.samsolutions.imgcloud.dto.UserDto;
+import by.samsolutions.imgcloud.dto.UserProfileDto;
+import by.samsolutions.imgcloud.service.PostService;
+import by.samsolutions.imgcloud.service.UserProfileService;
+import by.samsolutions.imgcloud.service.UserService;
+import by.samsolutions.imgcloud.service.exception.ServiceException;
+import by.samsolutions.imgcloud.service.exception.UserAlreadyExistsException;
+import by.samsolutions.imgcloud.service.exception.UserNotFoundException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,25 +23,17 @@ import org.springframework.security.web.authentication.logout.SecurityContextLog
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import by.samsolutions.imgcloud.controller.exception.ControllerException;
-import by.samsolutions.imgcloud.dto.PostDto;
-import by.samsolutions.imgcloud.dto.UserDto;
-import by.samsolutions.imgcloud.dto.UserProfileDto;
-import by.samsolutions.imgcloud.service.PostService;
-import by.samsolutions.imgcloud.service.UserProfileService;
-import by.samsolutions.imgcloud.service.UserService;
-import by.samsolutions.imgcloud.service.exception.ServiceException;
-import by.samsolutions.imgcloud.service.exception.UserAlreadyExistsException;
-import by.samsolutions.imgcloud.service.exception.UserNotFoundException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 @Controller
 @SessionAttributes({"user", "userProfile"})

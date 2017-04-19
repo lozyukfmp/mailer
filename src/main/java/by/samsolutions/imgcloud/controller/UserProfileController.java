@@ -5,6 +5,7 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import com.dropbox.core.DbxException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -137,8 +138,10 @@ public class UserProfileController
 		{
 			logger.error(e.getMessage(), e);
 			throw new ControllerException(e);
-		}
-	}
+		} catch (DbxException e) {
+            throw new ControllerException(e);
+        }
+    }
 
 	@PostMapping("/photo/delete")
 	public

@@ -36,17 +36,17 @@ public class JpaConfiguration
 	@Bean
 	public DataSource dataSource()
 	{
-		/*DriverManagerDataSource dataSource = new DriverManagerDataSource();
+		DriverManagerDataSource dataSource = new DriverManagerDataSource();
 		dataSource.setDriverClassName(environment.getRequiredProperty("jdbc.driverClassName"));
 		dataSource.setUrl(environment.getRequiredProperty("jdbc.url"));
 		dataSource.setUsername(environment.getRequiredProperty("jdbc.username"));
 		dataSource.setPassword(environment.getRequiredProperty("jdbc.password"));
-		return dataSource;*/
+		return dataSource;
 
-		final JndiDataSourceLookup dsLookup = new JndiDataSourceLookup();
+		/*final JndiDataSourceLookup dsLookup = new JndiDataSourceLookup();
 		dsLookup.setResourceRef(true);
 		DataSource dataSource = dsLookup.getDataSource("jdbc/DefaultDB");
-		return dataSource;
+		return dataSource;*/
 	}
 
 	private Properties hibernateProperties()

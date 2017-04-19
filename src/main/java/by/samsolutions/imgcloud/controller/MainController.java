@@ -5,6 +5,8 @@ import java.io.OutputStream;
 
 import javax.servlet.http.HttpServletResponse;
 
+import by.samsolutions.imgcloud.controller.exception.ControllerException;
+import com.dropbox.core.DbxException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +54,7 @@ public class MainController
 	}
 
 	@GetMapping(value = "img/{username}/{imageName}.{imageType}")
-	public void getImage(@PathVariable String username, @PathVariable String imageName, @PathVariable String imageType, HttpServletResponse response) throws IOException
+	public void getImage(@PathVariable String username, @PathVariable String imageName, @PathVariable String imageType, HttpServletResponse response) throws IOException, DbxException
 	{
 		byte[] result = fileUtil.getImageFromDisk(username, imageName + "." + imageType);
 		response.setContentLength(result.length);

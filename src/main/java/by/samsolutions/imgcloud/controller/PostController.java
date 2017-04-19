@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import com.dropbox.core.DbxException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -139,9 +140,11 @@ public class PostController
 		{
 			logger.error(e.getMessage(), e);
 			throw new ControllerException(e);
-		}
+		} catch (DbxException e) {
+            throw new ControllerException(e);
+        }
 
-	}
+    }
 
 	@PostMapping("/update")
 	public
@@ -171,9 +174,11 @@ public class PostController
 		{
 			logger.error(e.getMessage(), e);
 			throw new ControllerException(e);
-		}
+		} catch (DbxException e) {
+            throw new ControllerException(e);
+        }
 
-	}
+    }
 
 	@PostMapping("/delete/{id}")
 	public

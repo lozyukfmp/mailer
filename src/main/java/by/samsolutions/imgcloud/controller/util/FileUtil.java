@@ -1,10 +1,15 @@
 package by.samsolutions.imgcloud.controller.util;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.Date;
+import java.util.Locale;
 
+import by.samsolutions.imgcloud.dto.PostDto;
+import com.dropbox.core.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -23,8 +28,11 @@ public class FileUtil
 	@Value("${maxFileSize}")
 	private Long maxFileSize;
 
+	@Value("${accessToken}")
+	private String accessToken;
+
 	public String saveImageToDisk(final MultipartFile file, final String requestImageUrl)
-					throws TooLargeFileException, IOException
+					throws TooLargeFileException, IOException, DbxException
 	{
 
 		if (file != null && !file.isEmpty())
@@ -37,22 +45,22 @@ public class FileUtil
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 			String username = auth.getName();
 
-			String imageUrl;
-			String pathToUploads = uploadsDir + File.separator + username;
+            DbxRequestConfig reqConfig = new DbxRequestConfig("Social_Graph/1.0",
+                    Locale.getDefault().toString());
 
-			if (!new File(pathToUploads).exists())
-			{
-				new File(pathToUploads).mkdir();
-			}
+            DbxClient client = new DbxClient(reqConfig, accessToken);
 
-			String time = Long.toString((new Date()).getTime());
-			String orgName = time + file.getOriginalFilename();
-			String filePath = pathToUploads + File.separator + orgName;
-			imageUrl = "img" + File.separator + username + File.separator + orgName;
-			File dest = new File(filePath);
-			file.transferTo(dest);
+            String time = Long.toString((new Date()).getTime());
+            String fileName = "/" + username + "/" + time + file.getOriginalFilename();
 
-			return imageUrl;
+            try {
+                client.uploadFile(fileName,
+                        DbxWriteMode.add(), file.getSize(), file.getInputStream());
+            } finally {
+                file.getInputStream().close();
+            }
+
+			return "img" + fileName;
 		}
 		else
 		{
@@ -61,16 +69,18 @@ public class FileUtil
 
 	}
 
-	public byte[] getImageFromDisk(String username, String imageUrl) throws IOException
+	public byte[] getImageFromDisk(String username, String imageUrl) throws IOException, DbxException
 	{
+        DbxRequestConfig reqConfig = new DbxRequestConfig("Social_Graph/1.0",
+                Locale.getDefault().toString());
 
-		File file = new File(uploadsDir + File.separator + username + File.separator + imageUrl);
+        DbxClient client = new DbxClient(reqConfig, accessToken);
 
-		if (file.exists())
-		{
-			return Files.readAllBytes(file.toPath());
-		}
+        String path = "/" + username + "/" + imageUrl;
 
-		return null;
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        client.getFile(path , null, outputStream);
+
+		return outputStream.toByteArray();
 	}
 }

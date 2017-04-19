@@ -2,10 +2,7 @@ package by.samsolutions.imgcloud.controller.exception;
 
 public class ControllerException extends Exception
 {
-	public ControllerException()
-	{
-
-	}
+	public ControllerException() {}
 
 	public ControllerException(Exception e)
 	{
