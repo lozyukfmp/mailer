@@ -32,7 +32,7 @@ public class FileUtil
 	private String accessToken;
 
 	public String saveImageToDisk(final MultipartFile file, final String requestImageUrl)
-					throws TooLargeFileException, IOException, DbxException
+					throws TooLargeFileException, IOException
 	{
 
 		if (file != null && !file.isEmpty())
@@ -45,20 +45,20 @@ public class FileUtil
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 			String username = auth.getName();
 
-            DbxRequestConfig reqConfig = new DbxRequestConfig("Social_Graph/1.0",
+           /* DbxRequestConfig reqConfig = new DbxRequestConfig("Social_Graph/1.0",
                     Locale.getDefault().toString());
 
-            DbxClient client = new DbxClient(reqConfig, accessToken);
+            DbxClient client = new DbxClient(reqConfig, accessToken);*/
 
             String time = Long.toString((new Date()).getTime());
-            String fileName = "/" + username + "/" + time + file.getOriginalFilename();
+            String fileName = File.separator + username + File.separator + time + file.getOriginalFilename();
 
-            try {
+          /*  try {
                 client.uploadFile(fileName,
                         DbxWriteMode.add(), file.getSize(), file.getInputStream());
             } finally {
                 file.getInputStream().close();
-            }
+            }*/
 
 			return "img" + fileName;
 		}
@@ -76,10 +76,10 @@ public class FileUtil
 
         DbxClient client = new DbxClient(reqConfig, accessToken);
 
-        String path = "/" + username + "/" + imageUrl;
+        String path = File.separator + username + File.separator + imageUrl;
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        client.getFile(path , null, outputStream);
+        DbxEntry.File file = client.getFile(path , null, outputStream);
 
 		return outputStream.toByteArray();
 	}

@@ -3,19 +3,7 @@ package by.samsolutions.imgcloud.entity;
 import java.util.Collection;
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -53,8 +41,12 @@ public class PostEntity implements BaseEntity
 	@Column(name = "post_date")
 	private Date date;
 
-	@Column(name = "image_url")
-	private String imageUrl;
+	@Lob
+	@Column(name = "image")
+	private byte[] image;
+
+    @Column(name = "image_url")
+    private String imageUrl;
 
 	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name = "post_id", updatable = false)

@@ -1,15 +1,15 @@
 package by.samsolutions.imgcloud.converter.impl;
 
-import java.util.ArrayList;
-import java.util.Collection;
-
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
-
 import by.samsolutions.imgcloud.converter.Converter;
 import by.samsolutions.imgcloud.converter.exception.ConverterException;
 import by.samsolutions.imgcloud.dto.UserProfileDto;
 import by.samsolutions.imgcloud.entity.user.UserProfileEntity;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
 
 @Component
 public class UserProfileConverter implements Converter<UserProfileDto, UserProfileEntity>
@@ -21,40 +21,40 @@ public class UserProfileConverter implements Converter<UserProfileDto, UserProfi
 	@Override
 	public UserProfileDto toDto(final UserProfileEntity userProfile) throws ConverterException
 	{
-		UserProfileDto userProfileDto = UserProfileDto.builder()
-		                                              .username(userProfile.getUsername())
-		                                              .email(userProfile.getEmail())
-		                                              .firstName(userProfile.getFirstName())
-		                                              .secondName(userProfile.getSecondName())
-		                                              .thirdName(userProfile.getThirdName())
-		                                              .imageUrl(userProfile.getImageUrl())
-		                                              .build();
+        UserProfileDto userProfileDto = UserProfileDto.builder()
+                .username(userProfile.getUsername())
+                .email(userProfile.getEmail())
+                .firstName(userProfile.getFirstName())
+                .secondName(userProfile.getSecondName())
+                .thirdName(userProfile.getThirdName())
+                .imageUrl(userProfile.getImageUrl())
+                .build();
+        if (userProfile.getImageUrl() == null)
+        {
+            userProfileDto.setImageUrl(NO_AVATAR_IMAGE_URL);
+        }
+        return userProfileDto;
 
-		if (userProfile.getImageUrl() == null)
-		{
-			userProfileDto.setImageUrl(NO_AVATAR_IMAGE_URL);
-		}
-
-		return userProfileDto;
 	}
 
 	@Override
 	public UserProfileEntity toEntity(final UserProfileDto userProfileDto) throws ConverterException
 	{
+        UserProfileEntity userProfileEntity = UserProfileEntity.builder()
+                .username(userProfileDto.getUsername())
+                .email(userProfileDto.getEmail())
+                .firstName(userProfileDto.getFirstName())
+                .secondName(userProfileDto.getSecondName())
+                .thirdName(userProfileDto.getThirdName())
+                .build();
 
-		UserProfileEntity userProfileEntity = UserProfileEntity.builder()
-		                                                       .username(userProfileDto.getUsername())
-		                                                       .email(userProfileDto.getEmail())
-		                                                       .firstName(userProfileDto.getFirstName())
-		                                                       .secondName(userProfileDto.getSecondName())
-		                                                       .thirdName(userProfileDto.getThirdName())
-		                                                       .build();
-		if (userProfileDto.getImageUrl() == null)
-		{
-			userProfileEntity.setImageUrl(NO_AVATAR_IMAGE_URL);
-		}
+        if (userProfileDto.getImageUrl() == null)
+        {
+            userProfileEntity.setImageUrl(NO_AVATAR_IMAGE_URL);
+        }
 
-		return userProfileEntity;
+        return userProfileEntity;
+
 	}
 
 	@Override
@@ -77,5 +77,10 @@ public class UserProfileConverter implements Converter<UserProfileDto, UserProfi
 			dtoCollection.add(toEntity(userProfileDto));
 
 		return dtoCollection;
+	}
+
+	private byte[] getNoAvatarImage(String url) throws IOException {
+		//return Files.readAllBytes(new File(url).toPath());
+        return null;
 	}
 }

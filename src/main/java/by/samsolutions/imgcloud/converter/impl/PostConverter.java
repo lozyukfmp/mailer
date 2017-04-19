@@ -33,6 +33,7 @@ public class PostConverter implements Converter<PostDto, PostEntity>
 			                         .text(postEntity.getText())
 			                         .username(postEntity.getUsername())
 			                         .imageUrl(postEntity.getImageUrl())
+					.image(postEntity.getImage())
 			                         .date(formatter.format(postEntity.getDate()))
 			                         .build();
 
@@ -59,6 +60,7 @@ public class PostConverter implements Converter<PostDto, PostEntity>
 			                                  .text(postDto.getText())
 			                                  .username(postDto.getUsername())
 			                                  .imageUrl(postDto.getImageUrl())
+												.image(postDto.getImage())
 			                                  .build();
 
 			if (postDto.getId() != null)

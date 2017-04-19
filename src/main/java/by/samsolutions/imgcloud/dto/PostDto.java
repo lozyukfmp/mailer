@@ -16,6 +16,7 @@ public class PostDto implements BaseDto
 	private String                 id;
 	private String                 text;
 	private String                 imageUrl;
+	private byte[]                 image;
 	private String                 username;
 	private String                 date;
 	private Collection<CommentDto> comments;

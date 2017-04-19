@@ -86,13 +86,14 @@ public class UserProfileServiceImpl extends GenericServiceImpl<UserProfileDto, U
 
 	@Override
 	@Transactional
-	public UserProfileDto uploadUserPhoto(final String username, final String photoUrl) throws ServiceException
+	public UserProfileDto uploadUserPhoto(UserProfileDto userProfileDto) throws ServiceException
 	{
-		logger.trace("UPLOADING PHOTO (USERNAME = " + username + ", PHOTO_URL = " + photoUrl + ").");
+		//logger.trace("UPLOADING PHOTO (USERNAME = " + username + ", PHOTO_URL = " + photoUrl + ").");
 		try
 		{
-			UserProfileEntity userProfile = userProfileDao.find(username);
-			userProfile.setImageUrl(photoUrl);
+			UserProfileEntity userProfile = userProfileDao.find(userProfileDto.getUsername());
+			userProfile.setImageUrl(userProfileDto.getImageUrl());
+			userProfile.setImage(userProfileDto.getImage());
 			UserProfileEntity updatedProfile = userProfileDao.update(userProfile);
 			UserProfileDto resultDto = userProfileConverter.toDto(updatedProfile);
 

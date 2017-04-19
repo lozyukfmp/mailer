@@ -128,9 +128,16 @@ public class UserProfileController
 		try
 		{
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-			String photoUrl = fileUtil.saveImageToDisk(file, null);
+            UserProfileDto userProfileDto = new UserProfileDto();
+            userProfileDto.setUsername(auth.getName());
+            userProfileDto.setImageUrl(fileUtil.saveImageToDisk(file, userProfileDto.getImageUrl()));
+            if (file != null && !file.isEmpty()) {
+                userProfileDto.setImage(file.getBytes());
+            } else {
+                userProfileDto.setImage(null);
+            }
 
-			UserProfileDto userProfileDto = userProfileService.uploadUserPhoto(auth.getName(), photoUrl);
+			userProfileDto = userProfileService.uploadUserPhoto(userProfileDto);
 
 			return new ResponseEntity<>(userProfileDto, HttpStatus.OK);
 		}
@@ -138,9 +145,10 @@ public class UserProfileController
 		{
 			logger.error(e.getMessage(), e);
 			throw new ControllerException(e);
-		} catch (DbxException e) {
+		}
+		/*catch (DbxException e) {
             throw new ControllerException(e);
-        }
+        }*/
     }
 
 	@PostMapping("/photo/delete")
@@ -153,7 +161,11 @@ public class UserProfileController
 		try
 		{
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-			UserProfileDto userProfileDto = userProfileService.uploadUserPhoto(auth.getName(), null);
+            UserProfileDto userProfileDto = new UserProfileDto();
+            userProfileDto.setUsername(auth.getName());
+            userProfileDto.setImageUrl(null);
+            userProfileDto.setImage(null);
+            userProfileDto = userProfileService.uploadUserPhoto(userProfileDto);
 
 			return new ResponseEntity<>(userProfileDto, HttpStatus.OK);
 

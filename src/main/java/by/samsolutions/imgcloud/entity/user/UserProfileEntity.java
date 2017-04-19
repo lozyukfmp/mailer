@@ -1,9 +1,6 @@
 package by.samsolutions.imgcloud.entity.user;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import by.samsolutions.imgcloud.entity.BaseEntity;
 import lombok.AllArgsConstructor;
@@ -38,6 +35,10 @@ public class UserProfileEntity implements BaseEntity
 	@Column(name = "email")
 	private String email;
 
-	@Column(name = "image_url")
-	private String imageUrl;
+	@Lob
+	@Column(name = "image")
+	private byte[] image;
+
+    @Column(name = "image_url")
+    private String imageUrl;
 }

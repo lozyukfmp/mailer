@@ -9,5 +9,5 @@ import by.samsolutions.imgcloud.service.exception.ServiceException;
 @Service
 public interface UserProfileService extends GenericService<UserProfileDto, UserProfileEntity, String>
 {
-	UserProfileDto uploadUserPhoto(String username, String photoUrl) throws ServiceException;
+	UserProfileDto uploadUserPhoto(UserProfileDto userProfileDto) throws ServiceException;
 }

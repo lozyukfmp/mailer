@@ -123,26 +123,32 @@ public class PostController
 			PostDto post = new ObjectMapper().readValue(postMessage, PostDto.class);
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 			post.setUsername(auth.getName());
-			post.setImageUrl(fileUtil.saveImageToDisk(file, post.getImageUrl()));
+            post.setImageUrl(fileUtil.saveImageToDisk(file, post.getImageUrl()));
+            if (file != null && !file.isEmpty()) {
+                post.setImage(file.getBytes());
+            } else {
+                post.setImage(null);
+            }
 
 			PostDto resultDto = postService.create(post);
 
 			return new ResponseEntity<>(resultDto, HttpStatus.OK);
 		}
-		catch (TooLargeFileException e)
+		/*catch (TooLargeFileException e)
 		{
 			logger.error(e.getMessage(), e);
 			Map<String, String> response = new HashMap<>();
 			response.put("error", messageSource.getMessage("message.file.long", null, locale));
 			return new ResponseEntity(response, HttpStatus.BAD_REQUEST);
-		}
+		}*/
 		catch (ServiceException | IOException e)
 		{
 			logger.error(e.getMessage(), e);
 			throw new ControllerException(e);
-		} catch (DbxException e) {
+		}
+		/*catch (DbxException e) {
             throw new ControllerException(e);
-        }
+        }*/
 
     }
 
@@ -158,25 +164,32 @@ public class PostController
 			PostDto post = new ObjectMapper().readValue(postMessage, PostDto.class);
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 			post.setUsername(auth.getName());
-			post.setImageUrl(fileUtil.saveImageToDisk(file, post.getImageUrl()));
+            post.setImageUrl(fileUtil.saveImageToDisk(file, post.getImageUrl()));
+            if (file != null && !file.isEmpty()) {
+                post.setImage(file.getBytes());
+            } else {
+                post.setImage(null);
+            }
+
 			PostDto resultDto = postService.update(post);
 
 			return new ResponseEntity<>(resultDto, HttpStatus.OK);
 		}
-		catch (TooLargeFileException e)
+		/*catch (TooLargeFileException e)
 		{
 			logger.error(e.getMessage(), e);
 			Map<String, String> response = new HashMap<>();
 			response.put("error", messageSource.getMessage("message.file.long", null, locale));
 			return new ResponseEntity(response, HttpStatus.BAD_REQUEST);
-		}
+		}*/
 		catch (ServiceException | IOException e)
 		{
 			logger.error(e.getMessage(), e);
 			throw new ControllerException(e);
-		} catch (DbxException e) {
+		}
+		/*catch (DbxException e) {
             throw new ControllerException(e);
-        }
+        }*/
 
     }
 
