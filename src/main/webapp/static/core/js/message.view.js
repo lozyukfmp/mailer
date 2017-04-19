@@ -50,7 +50,7 @@
 
         var formData = new FormData();
         var image = $("#post-image")[0].files[0];
-        message.imageUrl = createMessageModal.find("img").attr('src');
+       /* message.imageUrl = createMessageModal.find("img").attr('src');*/
         message.text = $("#message-text").val();
 
         formData.append("postImage", image);

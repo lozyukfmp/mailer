@@ -72,10 +72,12 @@ public class UserProfileServiceImpl extends GenericServiceImpl<UserProfileDto, U
 		try
 		{
 			UserProfileEntity userProfileEntity = userProfileDao.find(dto.getUsername());
-			UserProfileEntity saveProfile = userProfileConverter.toEntity(dto);
-			saveProfile.setImageUrl(userProfileEntity.getImageUrl());
+			userProfileEntity.setEmail(dto.getEmail());
+			userProfileEntity.setFirstName(dto.getFirstName());
+			userProfileEntity.setSecondName(dto.getSecondName());
+			userProfileEntity.setThirdName(dto.getThirdName());
 
-			return userProfileConverter.toDto(userProfileDao.update(saveProfile));
+			return userProfileConverter.toDto(userProfileDao.update(userProfileEntity));
 		}
 		catch (DaoException | ConverterException e)
 		{
@@ -91,9 +93,7 @@ public class UserProfileServiceImpl extends GenericServiceImpl<UserProfileDto, U
 		//logger.trace("UPLOADING PHOTO (USERNAME = " + username + ", PHOTO_URL = " + photoUrl + ").");
 		try
 		{
-			UserProfileEntity userProfile = userProfileDao.find(userProfileDto.getUsername());
-			userProfile.setImageUrl(userProfileDto.getImageUrl());
-			userProfile.setImage(userProfileDto.getImage());
+			UserProfileEntity userProfile = userProfileConverter.toEntity(userProfileDto);
 			UserProfileEntity updatedProfile = userProfileDao.update(userProfile);
 			UserProfileDto resultDto = userProfileConverter.toDto(updatedProfile);
 

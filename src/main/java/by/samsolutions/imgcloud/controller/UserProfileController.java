@@ -131,11 +131,6 @@ public class UserProfileController
             UserProfileDto userProfileDto = new UserProfileDto();
             userProfileDto.setUsername(auth.getName());
             userProfileDto.setImageUrl(fileUtil.saveImageToDisk(file, userProfileDto.getImageUrl()));
-            if (file != null && !file.isEmpty()) {
-                userProfileDto.setImage(file.getBytes());
-            } else {
-                userProfileDto.setImage(null);
-            }
 
 			userProfileDto = userProfileService.uploadUserPhoto(userProfileDto);
 
@@ -164,7 +159,6 @@ public class UserProfileController
             UserProfileDto userProfileDto = new UserProfileDto();
             userProfileDto.setUsername(auth.getName());
             userProfileDto.setImageUrl(null);
-            userProfileDto.setImage(null);
             userProfileDto = userProfileService.uploadUserPhoto(userProfileDto);
 
 			return new ResponseEntity<>(userProfileDto, HttpStatus.OK);

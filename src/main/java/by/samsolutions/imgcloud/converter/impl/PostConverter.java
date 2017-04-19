@@ -7,7 +7,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
+import by.samsolutions.imgcloud.controller.util.FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.codec.Base64;
 import org.springframework.stereotype.Component;
 
 import by.samsolutions.imgcloud.converter.Converter;
@@ -23,17 +25,21 @@ public class PostConverter implements Converter<PostDto, PostEntity>
 	@Autowired
 	private CommentConverter commentConverter;
 
+	@Autowired
+	private FileUtil fileUtil;
+
 	@Override
 	public PostDto toDto(final PostEntity postEntity) throws ConverterException
 	{
 		try
 		{
+
+
 			PostDto postDto = PostDto.builder()
 			                         .id(Integer.toString(postEntity.getId()))
 			                         .text(postEntity.getText())
 			                         .username(postEntity.getUsername())
-			                         .imageUrl(postEntity.getImageUrl())
-					.image(postEntity.getImage())
+			                         .imageUrl(fileUtil.encodeToBase64String(postEntity.getImage()))
 			                         .date(formatter.format(postEntity.getDate()))
 			                         .build();
 
@@ -56,12 +62,11 @@ public class PostConverter implements Converter<PostDto, PostEntity>
 	{
 		try
 		{
-			PostEntity postEntity = PostEntity.builder()
-			                                  .text(postDto.getText())
-			                                  .username(postDto.getUsername())
-			                                  .imageUrl(postDto.getImageUrl())
-												.image(postDto.getImage())
-			                                  .build();
+            PostEntity postEntity = PostEntity.builder()
+                    .text(postDto.getText())
+                    .username(postDto.getUsername())
+                    .image(fileUtil.decodeToByteArray(postDto.getImageUrl()))
+                    .build();
 
 			if (postDto.getId() != null)
 			{

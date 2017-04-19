@@ -39,6 +39,4 @@ public class UserProfileEntity implements BaseEntity
 	@Column(name = "image")
 	private byte[] image;
 
-    @Column(name = "image_url")
-    private String imageUrl;
 }

@@ -13,6 +13,7 @@ import com.dropbox.core.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.codec.Base64;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -60,8 +61,9 @@ public class FileUtil
                 file.getInputStream().close();
             }*/
 
-			return "img" + fileName;
-		}
+			/*return "img" + fileName;*/
+            return encodeToBase64String(file.getBytes());
+        }
 		else
 		{
 			return requestImageUrl;
@@ -83,4 +85,25 @@ public class FileUtil
 
 		return outputStream.toByteArray();
 	}
+
+	public String encodeToBase64String(byte[] byteArray) {
+        if (byteArray != null) {
+            byte[] encodedBytes = Base64.encode(byteArray);
+            StringBuffer stringBuffer = new StringBuffer();
+            stringBuffer.append("data:image/png;base64,");
+            stringBuffer.append(new String(encodedBytes));
+            return stringBuffer.toString();
+        }
+
+        return null;
+    }
+
+	public byte[] decodeToByteArray(String base64String) {
+        if (base64String != null) {
+            String[] sourceArray = base64String.split(",");
+            return Base64.decode(sourceArray[1].getBytes());
+        }
+
+        return null;
+    }
 }

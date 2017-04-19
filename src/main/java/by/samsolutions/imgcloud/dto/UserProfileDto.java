@@ -30,8 +30,6 @@ public class UserProfileDto implements BaseDto
 
 	private String imageUrl;
 
-	private byte[] image;
-
 	private String username;
 
 }

@@ -124,11 +124,6 @@ public class PostController
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 			post.setUsername(auth.getName());
             post.setImageUrl(fileUtil.saveImageToDisk(file, post.getImageUrl()));
-            if (file != null && !file.isEmpty()) {
-                post.setImage(file.getBytes());
-            } else {
-                post.setImage(null);
-            }
 
 			PostDto resultDto = postService.create(post);
 
@@ -165,11 +160,6 @@ public class PostController
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 			post.setUsername(auth.getName());
             post.setImageUrl(fileUtil.saveImageToDisk(file, post.getImageUrl()));
-            if (file != null && !file.isEmpty()) {
-                post.setImage(file.getBytes());
-            } else {
-                post.setImage(null);
-            }
 
 			PostDto resultDto = postService.update(post);
 

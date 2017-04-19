@@ -45,9 +45,6 @@ public class PostEntity implements BaseEntity
 	@Column(name = "image")
 	private byte[] image;
 
-    @Column(name = "image_url")
-    private String imageUrl;
-
 	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name = "post_id", updatable = false)
 	private Collection<CommentEntity> comments;
