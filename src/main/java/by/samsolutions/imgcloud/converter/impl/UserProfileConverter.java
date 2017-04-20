@@ -84,9 +84,4 @@ public class UserProfileConverter implements Converter<UserProfileDto, UserProfi
 
 		return dtoCollection;
 	}
-
-	private byte[] getNoAvatarImage(String url) throws IOException {
-		//return Files.readAllBytes(new File(url).toPath());
-        return null;
-	}
 }

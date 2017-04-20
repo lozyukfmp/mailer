@@ -2,6 +2,7 @@ package by.samsolutions.imgcloud.service;
 
 import java.util.Collection;
 
+import by.samsolutions.imgcloud.dto.UserProfileDto;
 import org.springframework.stereotype.Service;
 
 import by.samsolutions.imgcloud.dto.UserDto;
@@ -14,6 +15,8 @@ public interface UserService extends GenericService<UserDto, UserEntity, String>
 	Collection<UserDto> getAll(Integer userCount) throws ServiceException;
 
 	Collection<UserDto> getWithProfileByUsername(String username) throws ServiceException;
+
+	Collection<UserDto> getWithProfileByFullName(UserProfileDto userProfileDto) throws ServiceException;
 
 	void setUserEnabled(String username, Boolean enabled) throws ServiceException;
 

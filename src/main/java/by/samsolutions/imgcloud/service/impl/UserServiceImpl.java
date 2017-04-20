@@ -6,6 +6,8 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.stream.Collectors;
 
+import by.samsolutions.imgcloud.dto.UserProfileDto;
+import by.samsolutions.imgcloud.entity.user.UserProfileEntity;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -185,6 +187,22 @@ public class UserServiceImpl extends GenericServiceImpl<UserDto, UserEntity, Str
 			return userEntity.isEnabled();
 		}
 		catch (DaoException e)
+		{
+			logger.error(e.getMessage(), e);
+			throw new ServiceException(e);
+		}
+	}
+
+	@Override
+	@Transactional
+	public Collection<UserDto> getWithProfileByFullName(UserProfileDto userProfileDto) throws ServiceException {
+		try
+		{
+			return userConverter.toDtoCollection(userDao.getWithProfileByFullName(userProfileDto.getFirstName(),
+					userProfileDto.getSecondName(),
+					userProfileDto.getThirdName()));
+		}
+		catch (DaoException | ConverterException e)
 		{
 			logger.error(e.getMessage(), e);
 			throw new ServiceException(e);

@@ -11,5 +11,7 @@ public interface UserDao extends GenericDao<UserEntity, String>
 
 	Collection<UserEntity> getByUsernameWithProfile(String username) throws DaoException;
 
+	Collection<UserEntity> getWithProfileByFullName(String firstName, String secondName, String thirdName) throws DaoException;
+
 	void setUserEnabled(String username, Boolean enabled) throws DaoException;
 }

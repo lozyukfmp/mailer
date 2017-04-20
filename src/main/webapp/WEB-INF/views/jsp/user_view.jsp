@@ -12,6 +12,7 @@
 
     <spring:message code="message.title.comments" var="comments"/>
     <spring:message code="message.title.posts" var="posts"/>
+    <spring:message code="message.title.friends" var="friends"/>
     <spring:message code="message.title.photo" var="photo"/>
     <spring:message code="message.title.personal" var="personal"/>
     <spring:message code="message.title.control" var="control"/>
@@ -114,7 +115,7 @@
             </button>
         </c:if>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-5">
         <div class="panel panel-info">
             <div class="panel-heading">
                 <h3 class="panel-title" style="font-weight: bold;">${posts}</h3>
@@ -130,6 +131,18 @@
                     <a class="turn-paging paging-message" href="#">
                         <span class="glyphicon glyphicon-triangle-top" aria-hidden="true"></span>
                     </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title" style="font-weight: bold;">${friends}</h3>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <jsp:include page="friendsList.jsp"/>
                 </div>
             </div>
         </div>

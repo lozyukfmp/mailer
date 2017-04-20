@@ -22,6 +22,15 @@ var userProfileAjax = (function ($) {
                 }
             });
         },
+        getPossibleFriends: function (callback) {
+            $.ajax({
+                type: "GET",
+                url: "profile/info/list",
+                success: function (profileList) {
+                    callback(profileList);
+                }
+            });
+        },
         deleteProfilePhoto: function () {
             $.ajax({
                 type: "POST",

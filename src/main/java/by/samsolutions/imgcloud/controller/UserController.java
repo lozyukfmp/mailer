@@ -237,12 +237,16 @@ public class UserController
 		try
 		{
 
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
 			UserProfileDto userProfileDto = userProfileService.find(username);
 			Collection<PostDto> postDtoCollection = postService.getAll(username, 2);
+			Collection<UserDto> userDtoCollection = userService.getWithProfileByFullName(userProfileDto);
 
 			modelAndView.setViewName("user_view");
 			modelAndView.addObject("profile", userProfileDto);
 			modelAndView.addObject("messageList", postDtoCollection);
+			modelAndView.addObject("friendsList", userDtoCollection);
 
 			return modelAndView;
 

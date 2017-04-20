@@ -1,5 +1,6 @@
 package by.samsolutions.imgcloud.dao.impl;
 
+import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.NoResultException;
@@ -90,4 +91,22 @@ public class UserDaoImpl extends GenericDaoImpl<UserEntity, String> implements U
 			throw new DaoException(e);
 		}
 	}
+
+    @Override
+    public Collection<UserEntity> getWithProfileByFullName(String firstName, String secondName, String thirdName) throws DaoException {
+        try
+        {
+
+            return entityManager.createNamedQuery("User.findWithProfileByFullName")
+                    .setParameter("firstName", firstName)
+                    .setParameter("secondName", secondName)
+                    .setParameter("thirdName", thirdName)
+                    .getResultList();
+        }
+        catch (Exception e)
+        {
+            logger.error(e.getMessage(), e);
+            throw new DaoException(e);
+        }
+    }
 }

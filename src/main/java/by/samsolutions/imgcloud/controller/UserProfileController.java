@@ -1,11 +1,10 @@
 package by.samsolutions.imgcloud.controller;
 
-import java.io.IOException;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-
-import com.dropbox.core.DbxException;
+import by.samsolutions.imgcloud.controller.exception.ControllerException;
+import by.samsolutions.imgcloud.controller.util.FileUtil;
+import by.samsolutions.imgcloud.dto.UserProfileDto;
+import by.samsolutions.imgcloud.service.UserProfileService;
+import by.samsolutions.imgcloud.service.exception.ServiceException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,20 +14,14 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import by.samsolutions.imgcloud.controller.exception.ControllerException;
-import by.samsolutions.imgcloud.controller.util.FileUtil;
-import by.samsolutions.imgcloud.dto.UserProfileDto;
-import by.samsolutions.imgcloud.service.UserProfileService;
-import by.samsolutions.imgcloud.service.exception.ServiceException;
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+import java.io.IOException;
+import java.util.Collection;
 
 @Controller
 @RequestMapping("profile")

@@ -33,7 +33,9 @@ import lombok.NoArgsConstructor;
 				@NamedQuery(name = "User.findAll", query = "select u from UserEntity u"),
 				@NamedQuery(name = "User.findAllWithProfile", query = "select u from UserEntity u left join fetch u.profile"),
 				@NamedQuery(name = "User.findWithProfileByQuery", query = "select u from UserEntity u left join fetch u.profile where" +
-								" u.username like :username")
+								" u.username like :username"),
+				@NamedQuery(name = "User.findWithProfileByFullName", query = "select u from UserEntity u left join fetch u.profile where" +
+								" u.profile.firstName = :firstName or u.profile.secondName = :secondName or u.profile.thirdName = :thirdName")
 })
 public class UserEntity implements BaseEntity
 {
